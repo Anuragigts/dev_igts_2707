@@ -6,7 +6,7 @@ class Dashboard extends CI_Controller {
         $this->load->library('form_validation');   
         $this->load->model('dashboard_model');
     }
-    
+    //index funs
      public function index(){
         //print_r( $this->session->all_userdata());
         $data = array(
