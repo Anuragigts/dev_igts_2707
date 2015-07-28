@@ -115,7 +115,7 @@
                   <!-- END Alert menu-->
                   <!-- START Contacts button-->
                   <li>
-                      <a href="#" title="Logout">
+                      <a href="<?= base_url();?>dashboard/logout" title="Logout">
                         <em class="fa fa-sign-out"></em>
                      </a>
                   </li>

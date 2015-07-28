@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller {
     //index funs
      public function index(){
         //print_r( $this->session->all_userdata());
+//         if($this->session->userdata('user_type') == ""){ redirect("/");}
         $data = array(
               'title'         => 'SC :: DASHBOARD',
               'metakeyword'   => '',
@@ -17,5 +18,9 @@ class Dashboard extends CI_Controller {
              );
        
         $this->load->view('layout/inner_template',$data);
+    }
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect('/');
     }
 }

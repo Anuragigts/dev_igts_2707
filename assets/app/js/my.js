@@ -3,5 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
+$(function(){
+        /*  Not to allow special characters for email */
+	$('.email').keyup(function()
+	{
+		var yourInput = $(this).val();
+                re = /[` ~!#$%^&*()|+\-=?;:'",<>\{\}\[\]\\\/]/gi;
+                var isSplChar = re.test(yourInput);
+                if(isSplChar)
+                {
+                        var no_spl_char = yourInput.replace(/[` ~!#$%^&*()|+\-=?;:'",<>\{\}\[\]\\\/]/gi, '');
+                        $(this).val(no_spl_char);
+                }
+	});
+ 
+});

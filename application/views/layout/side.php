@@ -28,8 +28,9 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                   </li>
-                  <li class="dashboard ">
-                     <a href="<?php echo base_url()?>dashboard" title="Dashboard">
+
+                  <li class="dashboard">
+					<a href="<?php echo base_url()?>dashboard" title="Dashboard">
                         <em class="fa fa-dashboard "></em>
                         <div class="pull-right label label-info">4</div>
                         <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
@@ -137,20 +138,22 @@
                         </li>
                      </ul>
                   </li>
-                   <li class=" ">
+                   <li class="module_object create_module_object view_module_object">
                      <a href="#services" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-cogs"></em>
                         <span>Services Type</span>
                      </a>
                      <ul id="services" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Services Type</li>
-                        <li class=" ">
-                           <a href="#" title="Create Services Type">
+                        <li class="sidebar-subnav-header module_object create_module_object">Services Type</li>
+                        <li class="create_module_object">
+                           <a href="<?= base_url()?>module_object/create_module_object" title="Horizontal">
+
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Services Type">
+						<li class="view_module_object">
+                           <a href="<?= base_url()?>module_object/view_module_object" title="Horizontal">
+
                               <span>View</span>
                            </a>
                         </li>

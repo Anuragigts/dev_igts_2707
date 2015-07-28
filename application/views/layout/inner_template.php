@@ -34,7 +34,7 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/jquery/dist/jquery.js"></script>
    <!-- BOOTSTRAP-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/bootstrap/dist/js/bootstrap.js"></script>
-   
+
 </head>
 
 <body>
@@ -95,6 +95,12 @@
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
    
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
+   
+      <!-- To make Active Class -->
+   <script>
+        var cl = "<?php echo $this->uri->segment(2);?>";
+        $('.'+cl).addClass('active');
+   </script>
 </body>
      <?php echo $this->load->view('layout/script');?>
 </html>

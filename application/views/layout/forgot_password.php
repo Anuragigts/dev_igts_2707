@@ -24,13 +24,12 @@
 <body>
    <div class="wrapper">
       <div class="block-center mt-xl wd-xl">
-            <?php if($this->session->flashdata('err') != ""){ ?>
-            <div class="alert alert-danger" align="center"><?php echo ($this->session->flashdata('err'))?$this->session->flashdata('err'):''?></div>
-            <?php } ?>
-            <?php if($this->session->flashdata('msg') != ""){ ?>
-            <div class="alert alert-success" align="center"><?php echo ($this->session->flashdata('msg'))?$this->session->flashdata('msg'):''?></div>
-            <?php }?>
-                
+        <?php if($this->session->flashdata('err') != ""){ ?>
+        <div class="alert alert-danger" align="center"><?php echo ($this->session->flashdata('err'))?$this->session->flashdata('err'):''?></div>
+        <?php } ?>
+        <?php if($this->session->flashdata('msg') != ""){ ?>
+        <div class="alert alert-success" align="center"><?php echo ($this->session->flashdata('msg'))?$this->session->flashdata('msg'):''?></div>
+        <?php }?>
          <!-- START panel-->
          <div class="panel panel-dark panel-flat">
             <div class="panel-heading text-center">
@@ -39,30 +38,17 @@
                </a>
             </div>
             <div class="panel-body">
-               <p class="text-center pv">SIGN IN TO CONTINUE.</p>
-               <form role="form" data-parsley-validate="" novalidate="" class="mb-lg" method="post" action="">
+               <p class="text-center pv">PASSWORD RESET</p>
+               <form role="form" method="post" action="" novalidate="true">
+                  <p class="text-center">Fill with your mail to receive instructions on how to reset your password.</p>
                   <div class="form-group has-feedback">
-                     <input id="exampleInputEmail1" name="login_email" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email" value="<?= set_value("login_email");?>">
+                     <label for="resetInputEmail1" class="text-muted">Email address</label>
+                     <input id="resetInputEmail1" name="reset_email" type="email" placeholder="Enter email"  value="<?= set_value("reset_email");?>" autocomplete="off" class="form-control email">
                      <span class="fa fa-envelope form-control-feedback text-muted"></span>
-                     <span class="red"><?php echo form_error('login_email');?></span>
+                     <span class="red"><?= form_error('reset_email');?></span>
                   </div>
-                  <div class="form-group has-feedback">
-                     <input id="exampleInputPassword1" name="login_password" type="password" placeholder="Password" required class="form-control">
-                     <span class="fa fa-lock form-control-feedback text-muted"></span>
-                     <span class="red"><?php echo form_error('login_password');?></span>
-                  </div>
-                  <div class="clearfix">
-<!--                     <div class="checkbox c-checkbox pull-left mt0">
-                        <label>
-                           <input type="checkbox" value="" name="remember">
-                           <span class="fa fa-check"></span>Remember Me</label>
-                     </div>-->
-                     <div class="text-center"><a href="<?= base_url();?>forgot_password" class="text-muted">Forgot your password?</a>
-                     </div>
-                  </div>
-                   <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
+                  <input type="submit" class="btn btn-danger btn-block" value="Reset" name="forgot_password">
                </form>
-               
             </div>
          </div>
          <!-- END panel-->
