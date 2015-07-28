@@ -5,7 +5,13 @@ class Login extends CI_Controller {
 	
 	public function index()
 	{
-		// i9ndex
-		$this->load->view('welcome_message');
+             $data = array(
+              'title'         => 'SC :: LOGIN',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'login'
+             );
+       
+            $this->load->view('layout/login',$data);		
 	}
 }
