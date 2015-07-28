@@ -17,7 +17,12 @@
             <div class="nav-wrapper">
                <!-- START Left navbar-->
                <ul class="nav navbar-nav">
-                 
+                 <li>                    
+                     <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                     <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
+                        <em class="fa fa-navicon"></em>
+                     </a>
+                  </li>
                   <!-- START User avatar toggle-->
                   <li>
                      <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->

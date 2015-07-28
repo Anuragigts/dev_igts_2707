@@ -162,6 +162,73 @@
                         <span data-localize="sidebar.nav.DASHBOARD">View Modules</span>
                      </a>                    
                   </li>  
+                  
+                   <li class="nav-heading ">
+                     <span data-localize="sidebar.heading.COMPONENTS">Services</span>
+                  </li>
+                   <li class=" ">
+                     <a href="#recharge" title="Layouts" data-toggle="collapse">
+                        <em class="fa fa-mobile"></em>
+                        <span>Recharge</span>
+                     </a>
+                     <ul id="recharge" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Recharge</li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Mobile</span>
+                           </a>
+                        </li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>DTH</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class=" ">
+                     <a href="#utility" title="Layouts" data-toggle="collapse">
+                        <em class="fa fa-plug"></em>
+                        <span>Utility</span>
+                     </a>
+                     <ul id="utility" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Utility</li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Electricity</span>
+                           </a>
+                        </li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Gas</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class=" ">
+                     <a href="#dmr" title="Layouts" data-toggle="collapse">
+                        <em class="fa fa-rupee"></em>
+                        <span>DMR</span>
+                     </a>
+                     <ul id="dmr" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">DMR</li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Register For DMR</span>
+                           </a>
+                        </li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Add Beneficiary</span>
+                           </a>
+                        </li>
+                        <li class=" ">
+                           <a href="#" title="Horizontal">
+                              <span>Money Transfer</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
