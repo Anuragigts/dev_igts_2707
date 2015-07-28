@@ -28,7 +28,7 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                   </li>
-                  <li class="active ">
+                  <li class="dashboard ">
                      <a href="<?php echo base_url()?>dashboard" title="Dashboard">
                         <em class="fa fa-dashboard "></em>
                         <div class="pull-right label label-info">4</div>
@@ -46,12 +46,12 @@
                      <ul id="master" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Master Distributor</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">                               
+                           <a href="#" title="Create Master Distributor">                               
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Master Distributor">
                               <span>View</span>
                            </a>
                         </li>
@@ -66,12 +66,12 @@
                      <ul id="super" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Super Distributor</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Create Super Distributor">
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Super Distributor">
                               <span>View</span>
                            </a>
                         </li>
@@ -85,12 +85,12 @@
                      <ul id="dist" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Distributor</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Create Distributor">
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Distributor">
                               <span>View</span>
                            </a>
                         </li>
@@ -104,12 +104,12 @@
                      <ul id="agent" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Agent</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Create Agent">
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Agent">
                               <span>View</span>
                            </a>
                         </li>
@@ -126,12 +126,12 @@
                      <ul id="pack" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Package</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Create Package">
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Package">
                               <span>View</span>
                            </a>
                         </li>
@@ -145,12 +145,12 @@
                      <ul id="services" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Services Type</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Create Services Type">
                               <span>Create</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="View Services Type">
                               <span>View</span>
                            </a>
                         </li>
@@ -166,20 +166,20 @@
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
                   </li>
-                   <li class=" ">
+                   <li class="recharge ">
                      <a href="#recharge" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-mobile"></em>
                         <span>Recharge</span>
                      </a>
                      <ul id="recharge" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Recharge</li>
-                        <li class=" ">
-                           <a href="#" title="Horizontal">
+                        <li class="mobile_recharge ">
+                           <a href="<?php echo base_url();?>recharge/mobile_recharge" title="Mobile Recharge">
                               <span>Mobile</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="DTH Recharge">
                               <span>DTH</span>
                            </a>
                         </li>
@@ -193,12 +193,12 @@
                      <ul id="utility" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Utility</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Electricity Payment">
                               <span>Electricity</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Gas Payment">
                               <span>Gas</span>
                            </a>
                         </li>
@@ -212,17 +212,17 @@
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Register For DMR">
                               <span>Register For DMR</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Add Beneficiary">
                               <span>Add Beneficiary</span>
                            </a>
                         </li>
                         <li class=" ">
-                           <a href="#" title="Horizontal">
+                           <a href="#" title="Money Transfer">
                               <span>Money Transfer</span>
                            </a>
                         </li>

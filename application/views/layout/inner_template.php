@@ -96,5 +96,5 @@
    
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
 </body>
-
+     <?php echo $this->load->view('layout/script');?>
 </html>
