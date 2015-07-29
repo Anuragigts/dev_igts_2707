@@ -11,3 +11,12 @@ and open the template in the editor.
 .red{
     color:red !important;
 }
+.padding-3{
+    padding:3px;
+}
+.success{
+    color:green;
+}
+.error{
+    color:red;
+}

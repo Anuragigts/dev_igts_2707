@@ -119,20 +119,20 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
                   </li>
-                   <li class=" ">
+                   <li class="package create_package view_package">
                      <a href="#pack" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-database"></em>
                         <span>Package</span>
                      </a>
                      <ul id="pack" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Package</li>
-                        <li class=" ">
-                           <a href="#" title="Create Package">
+                        <li class="create_package">
+                           <a href="<?= base_url()?>package/create_package" title="Create Package">
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Package">
+                        <li class="view_package">
+                           <a href="<?= base_url()?>package/view_package" title="View Package">
                               <span>View</span>
                            </a>
                         </li>
@@ -146,14 +146,12 @@
                      <ul id="services" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header module_object create_module_object">Services Type</li>
                         <li class="create_module_object">
-                           <a href="<?= base_url()?>module_object/create_module_object" title="Horizontal">
-
+                           <a href="<?= base_url()?>module_object/create_module_object" title="Create Module Object">
                               <span>Create</span>
                            </a>
                         </li>
-						<li class="view_module_object">
-                           <a href="<?= base_url()?>module_object/view_module_object" title="Horizontal">
-
+                        <li class="view_module_object">
+                           <a href="<?= base_url()?>module_object/view_module_object" title="View Module Objects">
                               <span>View</span>
                            </a>
                         </li>

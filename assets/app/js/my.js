@@ -18,3 +18,9 @@ $(function(){
 	});
  
 });
+ function validateR(element,replacement){
+        //  IE
+        if(! element)
+         element = window.event.srcElement;
+         element.value = element.value.replace(new RegExp(element.getAttribute('ruleset'), 'gi'), replacement);
+}

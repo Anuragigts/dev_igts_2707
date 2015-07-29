@@ -36,7 +36,17 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/jquery/dist/jquery.js"></script>
    <!-- BOOTSTRAP-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/bootstrap/dist/js/bootstrap.js"></script>
-
+    <!-- DATATABLES CSS -->
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/datatables-colvis/css/dataTables.colVis.css">
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/css/dataTables.bootstrap.css">
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <!--- Accordions -->
+    <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery-ui.js"></script>
+    <script>
+        $(function() {
+                $( "#accordion" ).accordion();
+        });
+    </script> 
 </head>
 
 <body>
@@ -143,16 +153,15 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/demo/demo-vector-map.js"></script>
+    <!-- DATATABLES-->
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/datatables-colvis/js/dataTables.colVis.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/js/dataTables.bootstrap.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/js/dataTables.bootstrapPagination.js"></script>
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
-   
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
    
-      <!-- To make Active Class -->
-   <script>
-        var cl = "<?php echo $this->uri->segment(2);?>";
-        $('.'+cl).addClass('active');
-   </script>
 </body>
      <?php echo $this->load->view('layout/script');?>
 </html>

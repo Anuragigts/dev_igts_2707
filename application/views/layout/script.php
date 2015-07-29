@@ -85,4 +85,20 @@
    
      
     
+$(function(){
+$('.save').click(function()
+	{
+		var comm    = $(".val_comm").val();
+		var mod    = $(this).attr("mod");
+                $.post('<?=base_url()?>package/insert_commission',
+                        {'mod':mod,'comm':comm},function(response){
+                            if(response == 1){
+                                $('.success').html("Your Commission Amount has been Saved");
+                            }
+                            else{
+                                $('.error').html("Your Commission Amount has not been saved");
+                            }
+                });
+	});
+});
 </script>
