@@ -186,6 +186,11 @@
                               <span>DTH</span>
                            </a>
                         </li>
+                        <li class="recharge_details ">
+                           <a href="<?php echo base_url();?>recharge/recharge_details" title="Recharge Details">
+                              <span>Details</span>
+                           </a>
+                        </li>
                      </ul>
                   </li>
                   <li class=" ">

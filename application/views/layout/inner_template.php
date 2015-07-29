@@ -17,9 +17,11 @@
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/animate.css/animate.min.css">
    <!-- WHIRL (spinners)-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/whirl/dist/whirl.css">
-   <!-- =============== PAGE VENDOR STYLES ===============-->
-   <!-- WEATHER ICONS-->
-   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/weather-icons/css/weather-icons.min.css">
+  
+   <!-- DATATABLES-->
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/datatables-colvis/css/dataTables.colVis.css">
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/css/dataTables.bootstrap.css">
+   
    <!-- =============== BOOTSTRAP STYLES ===============-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/bootstrap.css" id="bscss">
    <!-- =============== APP STYLES ===============-->
@@ -38,14 +40,56 @@
 </head>
 
 <body>
+<!--       <button class="btn btn-primary btn-lg" data-toggle="modal" 
+          data-target="#myModal">
+          Launch demo modal
+       </button>
+
+        Modal 
+       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+          aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+             <div class="modal-content">
+                <div class="modal-header">
+                   <button type="button" class="close" 
+                      data-dismiss="modal" aria-hidden="true">
+                         &times;
+                   </button>
+                   <h4 class="modal-title" id="myModalLabel">
+                      This Modal title
+                   </h4>
+                </div>
+                <div class="modal-body">
+                   Add some text here
+                </div>
+                <div class="modal-footer">
+                   <button type="button" class="btn btn-default" 
+                      data-dismiss="modal">Close
+                   </button>
+                   <button type="button" class="btn btn-primary">
+                      Submit changes
+                   </button>
+                </div>
+             </div>
+         </div>
+       </div>-->
+
    <div class="wrapper">
       <!-- top navbar-->
       <?php echo $this->load->view('layout/header');?>
       <!-- sidebar-->
        <?php echo $this->load->view('layout/side');?>
       <!-- offsidebar-->
-      
+     
       <?php echo $this->load->view($content);?>
+      <div class="modal fade" id="loading" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">      
+            <div class="modal-dialog ">
+                <center>
+                    <img src="<?php echo $this->config->item('assets_url') ?>app/img/load.gif" class="img img-responsive"/>
+                </center>
+            </div>
+        </div>
       <!-- Page footer-->
       <footer>
          <span>&copy; 2015 - Swami Communications</span>
@@ -69,6 +113,14 @@
    <!--<script src="<?php echo $this->config->item('assets_url') ?>vendor/jquery-localize-i18n/dist/jquery.localize.js"></script>-->
    <!-- RTL demo-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/demo/demo-rtl.js"></script>
+   
+   <!-- DATATABLES-->
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/datatables-colvis/js/dataTables.colVis.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/js/dataTables.bootstrap.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/vendor/datatable-bootstrap/js/dataTables.bootstrapPagination.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/js/demo/demo-datatable.js"></script>
+   
    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
    <!-- FLOT CHART-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/Flot/jquery.flot.js"></script>

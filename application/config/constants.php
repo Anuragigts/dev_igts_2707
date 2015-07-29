@@ -36,8 +36,12 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
-
-define('OPERATOR', 'https://sphirelabs-mobile-number-portability-india-operator-v1.p.mashape.com/index.php');
+define('OPERATOR',  'https://sphirelabs-mobile-number-portability-india-operator-v1.p.mashape.com/index.php');
+define('TARIF',     'https://tariff-plan-api-datayuge.p.mashape.com/index.php');
+// Mobile rechage
+define('RECHARGEURL', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
+// action
+define('RECHARGEACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
 
 
 /* End of file constants.php */
