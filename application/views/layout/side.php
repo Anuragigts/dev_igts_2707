@@ -181,8 +181,8 @@
                               <span>Mobile</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="DTH Recharge">
+                        <li class="dth_recharge ">
+                           <a href="<?php echo base_url();?>recharge/dth_recharge" title="DTH Recharge">
                               <span>DTH</span>
                            </a>
                         </li>
