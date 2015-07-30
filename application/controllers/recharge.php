@@ -49,7 +49,31 @@ class Recharge extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'recharge_dth'
              );
-       
+         if($this->input->post('recharge')){
+            $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
+            $this->form_validation->set_rules('code','Operator Code','required');
+            $this->form_validation->set_rules('oprator_name','Operator Name','required');
+            $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
+           // $this->form_validation->set_rules('circle','Circle','required');
+             if($this->form_validation->run() == TRUE){
+                 $recharge_type = 2;
+                $result = $this->recharge_model->doRecharge( $recharge_type);
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                    redirect('recharge/dth_recharge');
+                }
+                else if($result == 2){
+                    $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                   redirect('recharge/dth_recharge');
+                }else{
+                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                    redirect('recharge/dth_recharge');
+                }
+            }
+       }
+        
+        $operator_type = 2;
+        $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
         $this->load->view('layout/inner_template',$data);
     }
     

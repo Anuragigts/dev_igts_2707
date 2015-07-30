@@ -214,7 +214,7 @@ class Recharge_model extends CI_Model
             return $query->result();
         }
         else{
-            return 0;
+            return array();
         } 
     }
 }

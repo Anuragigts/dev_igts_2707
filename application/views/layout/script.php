@@ -82,7 +82,20 @@
         var amt = $(this).attr('get-pl-val');
         $('#amount').val(amt);
     });
-   
+    
+    // Get city by ajax
+    $('#state').change(function(){
+        var id =  $('option:selected', this).attr('state_id');//$('#state').val();
+       
+        $.post('<?php echo base_url();?>dmr/getCity',{'state':id},function(response){
+                //alert(response);
+                if(response != ""){
+                        $('#city').html(response);							
+                }else{
+                      $('#city').html("<option value=''>Select</option>");
+                }					
+            });
+    });
      
     
 $(function(){

@@ -210,16 +210,16 @@
                         </li>
                      </ul>
                   </li>
-                  <li class=" ">
+                  <li class="dmr">
                      <a href="#dmr" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-rupee"></em>
                         <span>DMR</span>
                      </a>
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
-                        <li class=" ">
-                           <a href="#" title="Register For DMR">
-                              <span>Register For DMR</span>
+                        <li class="sender_registration">
+                           <a href="<?php echo base_url();?>dmr/sender_registration" title="Register For DMR">
+                              <span>Sender Registration</span>
                            </a>
                         </li>
                         <li class=" ">
