@@ -55,7 +55,7 @@ class Module_object_model extends CI_Model
                 $data  =  array (
                         'module_id'         =>  $module_name,
                         'sub_module_id'     =>  $sub_module_name,
-                        'modules_obj_name'  =>  strtolower($module_object_name)
+                        'modules_obj_name'  =>  $module_object_name
                 );
                 $this->db->insert('modules_object',$data);
                 if($this->db->affected_rows() > 0){
@@ -74,6 +74,16 @@ class Module_object_model extends CI_Model
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
+                }
+                else{
+                    return 0;
+                }             
+        }
+        public function delete_module_project($del_id){
+                $this->db->delete('modules_object', array('modules_obj_id' => $del_id)); 
+                $this->db->delete('commission_details', array('modules_object_id' => $del_id)); 
+                if($this->db->affected_rows() > 0){
+                    return 1;
                 }
                 else{
                     return 0;

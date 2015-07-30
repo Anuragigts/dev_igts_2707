@@ -77,4 +77,16 @@ class Module_object extends CI_Controller {
                 $data['view_module']    =   $this->module_object_model->view_module_object();
                 $this->load->view('layout/inner_template',$data);		
 	}
+        public function delete_module_project(){
+                $del_id =   $this->uri->segment(3);
+                $del    =   $this->module_object_model->delete_module_project($del_id);
+                if($del == 1){
+                        $this->session->set_flashdata("msg","Module Object has been deleted successfully");
+                        redirect("module_object/view_module_object");
+                }
+                else{
+                        $this->session->set_flashdata("err","Internal error occurred while deleting module Object");
+                        redirect("module_object/view_module_object");
+                }
+	}
 }

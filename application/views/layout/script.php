@@ -99,19 +99,28 @@
      
     
 $(function(){
-$('.save').click(function()
-	{
-		var comm    = $(".val_comm").val();
-		var mod    = $(this).attr("mod");
-                $.post('<?=base_url()?>package/insert_commission',
-                        {'mod':mod,'comm':comm},function(response){
-                            if(response == 1){
-                                $('.success').html("Your Commission Amount has been Saved");
-                            }
-                            else{
-                                $('.error').html("Your Commission Amount has not been saved");
-                            }
-                });
+        $('#country-id').change(function(){
+		var country    =    $("#country-id").val();
+                if(country != "Select Country" ) {
+                    $.post('<?=base_url()?>common/state',
+                            {'country':country},function(response){
+                                $('#state-id').html(response);
+                    });
+                }else{
+                        $('#state-id').html('<option value="Select State"> Select State </option>');
+                        $('#city-id').html('<option value="Select City"> Select City </option>');
+                }                
+	});
+        $('#state-id').change(function(){
+		var state    =    $("#state-id").val();
+                if(state != "Select State" ) {
+                    $.post('<?=base_url()?>common/city',
+                            {'state':state},function(response){
+                                $('#city-id').html(response);
+                    });
+                }else{
+                        $('#city-id').html('<option value="Select City"> Select City </option>');
+                }                
 	});
 });
 </script>

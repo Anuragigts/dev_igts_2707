@@ -39,20 +39,20 @@
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Users</span>
                   </li>
-                  <li class=" ">
+                  <li class="master_distributor create_master_distributor">
                      <a href="#master" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Master Distributor</span>
                      </a>
                      <ul id="master" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Master Distributor</li>
-                        <li class=" ">
-                           <a href="#" title="Create Master Distributor">                               
+                        <li class="create_master_distributor ">
+                           <a href="<?=base_url();?>master_distributor/create_master_distributor" title="Create Master Distributor">                               
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Master Distributor">
+                        <li class="view_master_distributor">
+                           <a href="<?=base_url();?>master_distributor/view_master_distributor" title="View Master Distributor">
                               <span>View</span>
                            </a>
                         </li>

@@ -24,13 +24,7 @@
 <body>
    <div class="wrapper">
       <div class="block-center mt-xl wd-xl">
-            <?php if($this->session->flashdata('err') != ""){ ?>
-            <div class="alert alert-danger" align="center"><?php echo ($this->session->flashdata('err'))?$this->session->flashdata('err'):''?></div>
-            <?php } ?>
-            <?php if($this->session->flashdata('msg') != ""){ ?>
-            <div class="alert alert-success" align="center"><?php echo ($this->session->flashdata('msg'))?$this->session->flashdata('msg'):''?></div>
-            <?php }?>
-                
+        <?php   $this->load->view("layout/success_error");?>
          <!-- START panel-->
          <div class="panel panel-dark panel-flat">
             <div class="panel-heading text-center">

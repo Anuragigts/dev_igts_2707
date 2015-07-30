@@ -9,10 +9,10 @@ class Package extends CI_Controller {
         }
 	public function create_package(){
                 $data = array(
-                 'title'         => 'SC :: CREATE PACKAGE',
-                 'metakeyword'   => 'SC :: CREATE PACKAGE',
-                 'metadesc'      => 'SC :: CREATE PACKAGE',
-                 'content'       => 'create_package'
+                        'title'         => 'SC :: CREATE PACKAGE',
+                        'metakeyword'   => 'SC :: CREATE PACKAGE',
+                        'metadesc'      => 'SC :: CREATE PACKAGE',
+                        'content'       => 'create_package'
                 );
                 if($this->input->post('create_package')){
                     $this->form_validation->set_rules("usertype","User Type","callback_select_usertype");
@@ -54,20 +54,20 @@ class Package extends CI_Controller {
         }
         public function view_package(){
                 $data = array(
-                 'title'         => 'SC :: VIEW PACKAGE',
-                 'metakeyword'   => 'SC :: VIEW PACKAGE',
-                 'metadesc'      => 'SC :: VIEW PACKAGE',
-                 'content'       => 'view_package'
+                        'title'         => 'SC :: VIEW PACKAGE',
+                        'metakeyword'   => 'SC :: VIEW PACKAGE',
+                        'metadesc'      => 'SC :: VIEW PACKAGE',
+                        'content'       => 'view_package'
                 );
                 $data['view_package']   =  $this->package_model->view_package();
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function create_commission(){
                 $data = array(
-                 'title'         => 'SC :: COMMISSION',
-                 'metakeyword'   => 'SC :: COMMISSION',
-                 'metadesc'      => 'SC :: COMMISSION',
-                 'content'       => 'create_commission'
+                        'title'         => 'SC :: COMMISSION',
+                        'metakeyword'   => 'SC :: COMMISSION',
+                        'metadesc'      => 'SC :: COMMISSION',
+                        'content'       => 'create_commission'
                 );
                 $data['recharge']   =   $this->package_model->get_recharge();
                 $data['utility']    =   $this->package_model->get_utility();
@@ -88,6 +88,29 @@ class Package extends CI_Controller {
                 }
                 $this->load->view('layout/inner_template',$data);		
 	}
+        public function view_package_details(){
+                $id     =   $this->uri->segment(3);
+                if($id  != ''){
+                        $this->session->set_userdata("view_id",$id);
+                        $val    =   $this->session->userdata("view_id");
+                        $g_id   =   $val;
+                }
+                else{
+                        $g_id   =   $this->session->userdata("view_id");
+                }
+                $data = array(
+                        'title'         => 'SC :: VIEW PACKAGE DETAILS',
+                        'metakeyword'   => 'SC :: VIEW PACKAGE DETAILS',
+                        'metadesc'      => 'SC :: VIEW PACKAGE DETAILS',
+                        'content'       => 'view_package_details'
+                );
+                $data["view_det"]   =   $this->package_model->view_package_details($g_id);
+                $this->load->view('layout/inner_template',$data);
+        }
+        public function package_off_actdeact(){
+                $ins    =   $this->package_model->package_off_actdeact();
+                echo $ins;
+        }
 //        public function insert_commission(){
 //                $ins    =   $this->package_model->insert_package_object();
 //                echo $ins;

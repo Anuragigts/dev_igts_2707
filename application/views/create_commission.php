@@ -11,7 +11,7 @@
              <li class="active">Create Commission</li>
           </ol> Create Commission
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">Quick View of Commissions</span>
+          <span class="text-sm hidden-xs">For the creation of Commissions</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -20,10 +20,10 @@
                <div class="row">
                   <div class="col-lg-12">
                      <div class="panel panel-default">
-                        <div class="panel-heading">
+<!--                        <div class="panel-heading">
                            Create Commission
-                            <!--| <small>Zero Configuration</small>-->
-                        </div>
+                            | <small>Zero Configuration</small>
+                        </div>-->
                         <div class="panel-body">
                             <form method="post" action="">
                            <div id="accordion">
@@ -39,7 +39,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->module_name);?></div>
                                             <div class="col-sm-2 col-xs-2"><?= ucfirst($rec->sub_module_name);?></div>
                                             <div class="col-sm-2 col-xs-2">
-                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
+                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  value="<?= set_value('commission-'.$rec->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -59,7 +59,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= $ut->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $ut->sub_module_name;?></div>
                                             <div class="col-sm-1 col-xs-1">
-                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>" value="<?= set_value('commissionut[]');?>"/>
+                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>"  value="<?= set_value('commission-'.$ut->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -79,7 +79,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= $dr->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $dr->sub_module_name;?></div>
                                             <div class="col-sm-1 col-xs-1">
-                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"/>
+                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"   value="<?= set_value('commission-'.$dr->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
                                             </div>
                                         </div>
                                     <?php } ?>

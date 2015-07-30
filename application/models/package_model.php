@@ -114,6 +114,7 @@ class Package_model extends CI_Model
                             'p_created_by'      => $val
                     );
                 $this->db->insert('package',$data);
+                $ins_id     =   $this->db->insert_id();
                 if($this->db->affected_rows() > 0){
                         foreach($val1 as $id){
                             if($this->input->post('commission-'.$id->modules_obj_id)){
@@ -123,7 +124,7 @@ class Package_model extends CI_Model
                                     $comm_amt   =   0;
                             }
                             $comm   =   array(
-                                    'package_id'            =>  $this->db->insert_id(),
+                                    'package_id'            =>  $ins_id,
                                     'modules_object_id'     =>  $id->modules_obj_id,
                                     'commission_amt'        =>  $comm_amt,
                                     'c_created_by'          =>  $val
@@ -147,10 +148,44 @@ class Package_model extends CI_Model
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
-                    return $query->result();
+                        return $query->result();
                 }
                 else{
-                    return array();
+                        return array();
                 } 
+        }
+        public function view_package_details($g_id){
+                $this->db->select('p.*,c.*,u.user_type as type_name,l.first_name,o.modules_obj_name,m.module_name,s.sub_module_name');
+                $this->db->from('package as p');
+                $this->db->join('user_type as u','u.user_type_id = p.user_type','inner');
+                $this->db->join('profile as l','l.login_id = p.p_created_by','inner');
+                $this->db->join('commission_details as c','p.package_id = c.package_id','inner');
+                $this->db->join('modules_object as o','c.modules_object_id = o.modules_obj_id','inner');
+                $this->db->join('module as m','m.module_id = o.module_id','inner');
+                $this->db->join('sub_module as s','s.sub_module_id = o.sub_module_id','inner');
+                $this->db->where('p.package_id',$g_id);
+                $query = $this->db->get();
+                //echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                        return $query->result();
+                }
+                else{
+                        return array();
+                }  
+        }
+        public function package_off_actdeact(){
+                $status     =   $this->input->post('status');
+                $pkg        =   $this->input->post('pkg');
+                $upd        =   array(
+                        'status'    =>  $status
+                );
+                $this->db->where('package_id',$pkg);
+                $this->db->update('package',$upd);
+                if($this->db->affected_rows() > 0){
+                        return 1;
+                }
+                else{
+                        return 0;
+                }
         }
 }
