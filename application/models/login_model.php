@@ -16,6 +16,7 @@ class Login_model extends CI_Model
                 $this->db->where('l.login_email',$email);
                 $this->db->where('l.login_password',md5($pass));
                 $this->db->where('l.is_confirm','confirm');
+                $this->db->where('l.status',1);
                 $query = $this->db->get();
                 if($this->db->affected_rows() > 0){
                     return $query->row();

@@ -39,7 +39,7 @@
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Users</span>
                   </li>
-                  <li class="master_distributor create_master_distributor">
+                  <li class="master_distributor create_master_distributor view_master_distributor edit_master_distributor">
                      <a href="#master" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Master Distributor</span>
@@ -51,7 +51,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_master_distributor">
+                        <li class="view_master_distributor edit_master_distributor">
                            <a href="<?=base_url();?>master_distributor/view_master_distributor" title="View Master Distributor">
                               <span>View</span>
                            </a>
@@ -59,58 +59,58 @@
                      </ul>
                   </li>
                  
-                  <li class=" ">
+                  <li class="super_distributor view_super_distributor create_super_distributor">
                      <a href="#super" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Super Distributor</span>
                      </a>
                      <ul id="super" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Super Distributor</li>
-                        <li class=" ">
-                           <a href="#" title="Create Super Distributor">
+                        <li class="create_super_distributor">
+                           <a href="<?= base_url();?>super_distributor/create_super_distributor" title="Create Super Distributor">
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Super Distributor">
+                        <li class="view_super_distributor">
+                           <a href="<?= base_url();?>super_distributor/view_super_distributor" title="View Super Distributor">
                               <span>View</span>
                            </a>
                         </li>
                      </ul>
                   </li>
-                  <li class=" ">
+                  <li class="distributor create_distributor view_distributor">
                      <a href="#dist" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-male"></em>
                         <span>Distributor</span>
                      </a>
                      <ul id="dist" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Distributor</li>
-                        <li class=" ">
-                           <a href="#" title="Create Distributor">
+                        <li class="create_distributor">
+                           <a href="<?= base_url();?>distributor/create_distributor" title="Create Distributor">
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Distributor">
+                        <li class="view_distributor">
+                           <a href="<?= base_url();?>distributor/view_distributor" title="View Distributor">
                               <span>View</span>
                            </a>
                         </li>
                      </ul>
                   </li>
-                  <li class=" ">
+                  <li class="agent create_agent view_agent">
                      <a href="#agent" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-child"></em>
                         <span>Agent</span>
                      </a>
                      <ul id="agent" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Agent</li>
-                        <li class=" ">
-                           <a href="#" title="Create Agent">
+                        <li class="create_agent">
+                           <a href="<?= base_url();?>agent/create_agent" title="Create Agent">
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="View Agent">
+                        <li class="view_agent">
+                           <a href="<?= base_url();?>agent/view_agent" title="View Agent">
                               <span>View</span>
                            </a>
                         </li>

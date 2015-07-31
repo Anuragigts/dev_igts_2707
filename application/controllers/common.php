@@ -31,4 +31,32 @@ class Common extends CI_Controller {
                 }
                 echo $opt;
         }
+	public function packages(){
+                $pkg    =   $this->common_model->getPackages();
+                $opt    =   '<option value="Select Package"> Select Package </option>';
+                foreach($pkg as $pg){ 
+                        $opt    .=  '<option value="'.$pg->package_id.'">'.ucfirst($pg->package_name).'</option>';
+                }
+                echo $opt;
+        }
+	public function superdistributors(){
+                $val    =   $this->common_model->getSuperdistributors();
+                $opt    =   '<option value="Select Super Distributor"> Select Super Distributor </option>';
+                foreach($val as $pg){ 
+                        $opt    .=  '<option value="'.$pg->login_id.'">'.ucfirst($pg->first_name." ".$pg->middle_name." ".$pg->last_name).'</option>';
+                }
+                echo $opt;
+        }
+	public function distributors(){
+                $val    =   $this->common_model->getDistributors();
+                $opt    =   '<option value="Select Distributor"> Select Distributor </option>';
+                foreach($val as $pg){ 
+                        $opt    .=  '<option value="'.$pg->login_id.'">'.ucfirst($pg->first_name." ".$pg->middle_name." ".$pg->last_name).'</option>';
+                }
+                echo $opt;
+        }
+        public function common_off_actdeact(){
+                $ins    =   $this->common_model->common_off_actdeact();
+                echo $ins;
+        }
 }

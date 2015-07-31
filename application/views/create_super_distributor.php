@@ -8,10 +8,10 @@
              </li>
              <li><a href="#">Elements</a>
              </li>-->
-             <li class="active">Create Master Distributor</li>
-          </ol> Create Master Distributor
+             <li class="active">Create Super Distributor</li>
+          </ol> Create Super Distributor
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For the creation of Master Distributor</span>
+          <span class="text-sm hidden-xs">For the creation of Super Distributor</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -73,29 +73,40 @@
                                    <option value="Select City"> Select City </option>
                                </select>
                                <span class="red"><?= form_error('city');?></span>
-                            </div>
+                            </div> 
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Package Name<span class="red">*</span></label>
-                               <select class="form-control" name="package">
-                                   <option value="Select Package"> Select Package </option>
-                                   <?php foreach($pkg as $pg){ ?>
-                                   <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>    
-                                   <?php } ?>
-                               </select>
-                               <span class="red"><?= form_error('package');?></span>
+                                <label>Master Distributor<span class="red">*</span></label>
+                                <select class="form-control" name="master" id="master-id" val-dis="2">
+                                    <option value="Select Master Distributor"> Select Master Distributor </option>
+                                    <?php foreach($master as $mt){ ?>
+                                        <option value="<?= $mt->login_id;?>"><?= ucfirst($mt->first_name." ".$mt->middle_name." ".$mt->last_name);?></option>    
+                                        <?php } ?>
+                                </select>
+                                <span class="red"><?= form_error('master');?></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Mobile No<span class="red">*</span></label>
-                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="15">
-                                <span class="red"><?= form_error('mobile_no');?></span>
-                            </div>
-                        </div>
+                               <label>Package Name <span class="red">*</span></label>
+                               <select class="form-control" name="package" id="package">
+                                   <option value="Select Package"> Select Package </option>
+                               </select>
+                               <span class="red"><?= form_error('package');?></span>
+                            </div> 
+                        </div>                                   
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Mobile No<span class="red">*</span></label>
+                               <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="15">
+                               <span class="red"><?= form_error('mobile_no');?></span>
+                           </div>
+                        </div>                                   
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
@@ -103,8 +114,6 @@
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password<span class="red">*</span></label>
@@ -112,6 +121,8 @@
                                 <span class="red"><?= form_error('password');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password<span class="red">*</span></label>
@@ -119,8 +130,6 @@
                                 <span class="red"><?= form_error('con_password');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>
@@ -131,7 +140,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="submit" class="btn btn-sm btn-info" value="Create Master Distributor" name="create_master_distributor">
+                            <input type="submit" class="btn btn-sm btn-info" value="Create Super Distributor" name="create_super_distributor">
                         </div>
                     </div>
                     </form>

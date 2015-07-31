@@ -61,19 +61,36 @@ class Master_distributor_model extends CI_Model{
                     }
         }
         public function view_master_distributor(){
-                $this->db->select('l.*,p.*,g.package_name');
+                $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
                 $this->db->join('commission as c','c.login_id = l.login_id','inner');
                 $this->db->join('package as g','g.package_id = c.package_id','inner');
-                $this->db->where('l.is_confirm','confirm');
+                $this->db->where('l.user_type',2);
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
                 }
                 else{
-                    return 0;
+                    return array();
+                } 
+        }
+        public function edit_master_distributor($val){
+                $this->db->select('l.*,p.*,g.package_name,g.package_id');
+                $this->db->from('login as l');
+                $this->db->join('profile as p','l.login_id = p.login_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','inner');
+                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->where('l.user_type',2);
+                $this->db->where('l.login_id',$val);
+                $query = $this->db->get();
+//                echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->row();
+                }
+                else{
+                    return array();
                 } 
         }
         public function getMasterPackages(){
@@ -88,6 +105,42 @@ class Master_distributor_model extends CI_Model{
                 else{
                     return array();
                 } 
+        }
+        public function update_master_distributor($valu){
+                $ses_id             =   $this->session->userdata("login_id");
+                $first_name         =   $this->input->post("first_name");
+                $last_name          =   $this->input->post("last_name");
+                $country            =   $this->input->post("country");
+                $state              =   $this->input->post("state");
+                $city               =   $this->input->post("city");
+                $address            =   $this->input->post("address");
+                $pkg_id             =   $this->input->post("package");
+                        $ins   =   array(
+                                "first_name"            =>     $first_name,
+                                "last_name"             =>     $last_name,
+                                "country"               =>     $country,
+                                "state"                 =>     $state,
+                                "city"                  =>     $city,
+                                "updated_by"            =>     $ses_id,
+                                "updated_on"            =>     date("Y-m-d H:i:s"),
+                                "address"               =>     $address
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("profile",$ins);
+                        $var1   =  $this->db->affected_rows(); 
+                        $ins_comm   =   array(
+                                "package_id"            =>     $pkg_id,
+                                "status"                =>     1
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("commission",$ins_comm);
+                        $var2  =   $this->db->affected_rows();
+                        if($var1 == 1 && ( $var2 == 0 || $var2 == 1)){
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
         }
 }
 

@@ -40,7 +40,7 @@
                                             <th><?= ucfirst($view->package_remarks);?></th>
                                             <th><?= ucfirst($view->first_name);?></th>
                                             <th>
-                                                <a href="javascsript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
+                                                <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->
                                                     <label class="switch switch-sm">
                                                         <input type="checkbox" <?php echo ($view->status == 0)?"":"checked=checked";?> class="checkbox-inline <?php echo ($view->status == 0)?'activate':'deactivate';?>" package="<?= $view->package_id;?>" pkg_name="<?= ucfirst($view->package_name);?>">

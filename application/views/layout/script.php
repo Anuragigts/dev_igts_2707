@@ -102,10 +102,10 @@ $(function(){
         $('#country-id').change(function(){
 		var country    =    $("#country-id").val();
                 if(country != "Select Country" ) {
-                    $.post('<?=base_url()?>common/state',
-                            {'country':country},function(response){
-                                $('#state-id').html(response);
-                    });
+                        $.post('<?=base_url()?>common/state',
+                                    {'country':country},function(response){
+                                    $('#state-id').html(response);
+                        });
                 }else{
                         $('#state-id').html('<option value="Select State"> Select State </option>');
                         $('#city-id').html('<option value="Select City"> Select City </option>');
@@ -114,13 +114,123 @@ $(function(){
         $('#state-id').change(function(){
 		var state    =    $("#state-id").val();
                 if(state != "Select State" ) {
-                    $.post('<?=base_url()?>common/city',
-                            {'state':state},function(response){
-                                $('#city-id').html(response);
-                    });
+                        $.post('<?=base_url()?>common/city',
+                                    {'state':state},function(response){
+                                    $('#city-id').html(response);
+                        });
                 }else{
                         $('#city-id').html('<option value="Select City"> Select City </option>');
                 }                
 	});
+        $('#master-id').change(function(){
+		var master    =    $("#master-id").val();
+		var valdist   =    $(this).attr("val-dis");
+                if(master != "Select Master Distributor" ) {
+                        $.post('<?=base_url()?>common/packages',
+                                    {'master':master,'valdist':valdist},function(response){
+                                    $('#package').html(response);
+                        });
+                }else{
+                        $('#package').html('<option value="Select Package"> Select Package </option>');
+                }                
+	});
+        $('#master-id-super').change(function(){
+		var master    =    $("#master-id-super").val();
+                if(master != "Select Master Distributor" ) {
+                        $.post('<?=base_url()?>common/superdistributors',
+                                    {'master':master},function(response){
+                                    $('#super-id').html(response);
+                        });
+                }else{
+                        $('#super-id').html('<option value="Select Super Distributor"> Select Super Distributor </option>');
+                }                
+	});
+        $('#super-id').change(function(){
+		var master    =    $("#super-id").val();
+		var valdist   =    $(this).attr("val-dis");
+                if(master != "Select Super Distributor" ) {
+                        $.post('<?=base_url()?>common/packages',
+                                    {'master':master,'valdist':valdist},function(response){
+                                    $('#package').html(response);
+                        });
+                }else{
+                        $('#package').html('<option value="Select Package"> Select Package </option>');
+                }                
+	});
+        $('#master-id-super-val').change(function(){
+		var master    =    $("#master-id-super-val").val();
+                if(master != "Select Master Distributor" ) {
+                        $.post('<?=base_url()?>common/superdistributors',
+                                    {'master':master},function(response){
+                                    $('#super-id-val').html(response);
+                        });
+                }else{
+                        $('#super-id-val').html('<option value="Select Super Distributor"> Select Super Distributor </option>');
+                }                
+	});
+        $('#super-id-val').change(function(){
+		var master    =    $("#super-id-val").val();
+		var valdist   =    $(this).attr("val-dis");
+                if(master != "Select Distributor" ) {
+                        $.post('<?=base_url()?>common/distributors',
+                                    {'master':master,'valdist':valdist},function(response){
+                                    $('#distributor').html(response);
+                        });
+                }else{
+                        $('#distributor').html('<option value="Select Distributor"> Select Distributor </option>');
+                }                
+	});
+        $('#distributor').change(function(){
+		var master    =    $("#distributor").val();
+		var valdist   =    $(this).attr("val-dis");
+                if(master != "Select Distributor" ) {
+                        $.post('<?=base_url()?>common/packages',
+                                    {'master':master,'valdist':valdist},function(response){
+                                    $('#package').html(response);
+                        });
+                }else{
+                        $('#package').html('<option value="Select Package"> Select Package </option>');
+                }                           
+	});
 });
+    $('.activate').click(function(){
+            var login         =   $(this).attr("login");
+            var user_name    =   $(this).attr("user_name");
+//            var avr = $(".activate").is(':checked') ? 1 : 0;
+            var status      =   1;
+             $.post('<?=base_url()?>common/common_off_actdeact',
+                {'status':status,'login':login},function(response){
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Activated");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not activated");
+                                $(".success").html("");
+                        }
+            });
+    });
+    $('.deactivate').click(function(){
+            var login         =   $(this).attr("login");
+            var user_name     =   $(this).attr("user_name");
+//            var avr = $(".activate").is(':checked') ? 1 : 0;
+            var status      =   0;
+             $.post('<?=base_url()?>common/common_off_actdeact',
+                {'status':status,'login':login},function(response){
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Deactivated");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not Deactivated");
+                                $(".success").html("");
+                        }
+            });
+    });
 </script>

@@ -8,10 +8,10 @@
              </li>
              <li><a href="#">Elements</a>
              </li>-->
-             <li class="active">Create Master Distributor</li>
-          </ol> Create Master Distributor
+             <li class="active">Create Distributor</li>
+          </ol> Create Distributor
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For the creation of Master Distributor</span>
+          <span class="text-sm hidden-xs">For the creation of Distributor</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -73,19 +73,39 @@
                                    <option value="Select City"> Select City </option>
                                </select>
                                <span class="red"><?= form_error('city');?></span>
+                            </div> 
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Master Distributor<span class="red">*</span></label>
+                                <select class="form-control" name="master" id="master-id-super">
+                                    <option value="Select Master Distributor"> Select Master Distributor </option>
+                                    <?php foreach($master as $mt){ ?>
+                                        <option value="<?= $mt->login_id;?>"><?= ucfirst($mt->first_name." ".$mt->middle_name." ".$mt->last_name);?></option>
+                                        <?php } ?>
+                                </select>
+                                <span class="red"><?= form_error('master');?></span>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Super Distributor<span class="red">*</span></label>
+                                <select class="form-control" name="super" id="super-id"  val-dis="3">
+                                    <option value="Select Super Distributor"> Select Super Distributor </option>
+                                </select>
+                                <span class="red"><?= form_error('super');?></span>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Package Name<span class="red">*</span></label>
-                               <select class="form-control" name="package">
-                                   <option value="Select Package"> Select Package </option>
-                                   <?php foreach($pkg as $pg){ ?>
-                                   <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>    
-                                   <?php } ?>
-                               </select>
-                               <span class="red"><?= form_error('package');?></span>
-                            </div>
+                                <label>Package Name <span class="red">*</span></label>
+                                <select class="form-control" name="package" id="package">
+                                    <option value="Select Package"> Select Package </option>
+                                </select>
+                                <span class="red"><?= form_error('package');?></span>
+                             </div>
                         </div>
                     </div>
                     <div class="row">
@@ -128,15 +148,16 @@
                                <span class="red"><?= form_error('address');?></span>
                             </div>
                         </div>
+                        <div class="col-sm-6"></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="submit" class="btn btn-sm btn-info" value="Create Master Distributor" name="create_master_distributor">
+                            <input type="submit" class="btn btn-sm btn-info" value="Create Distributor" name="create_distributor">
                         </div>
                     </div>
                     </form>
             <!-- END panel-->
-                  </div>
+                </div>
             </div>
         </div>
     </div>
