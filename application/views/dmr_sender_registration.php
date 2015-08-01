@@ -48,20 +48,20 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                        <label for="Mobile" >First Name<font class="red">*</font></label>
-                                        <input name="first_name" class="form-control" type="text" value="<?= set_value("first_name"); ?>" >
+                                       <input name="first_name" class="form-control" placeholder="First Name" type="text" value="<?= set_value("first_name"); ?>" >
                                         <span class="red"><?=  form_error('first_name');?></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                        <label for="code" >Middle Name<font class="red">*</font></label>
-                                        <input name="middle_name" id="code" class="form-control" type="text" value="<?= set_value("middle_name"); ?>" >
+                                        <input name="middle_name" id="code" placeholder="Middle Name" class="form-control" type="text" value="<?= set_value("middle_name"); ?>" >
                                         <span class="red"><?=  form_error('middle_name');?></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile">Last Name<font class="red">*</font> </label>
-                                    <input name="last_name" id="name" class="form-control" type="text" value="<?= set_value("last_name"); ?>">
+                                    <input name="last_name" id="name" placeholder="Last Name" class="form-control" type="text" value="<?= set_value("last_name"); ?>">
                                     <span class="red"><?=  form_error('last_name');?></span>
                                 </div>
                             </div>
@@ -71,8 +71,8 @@
                         <div class="panel panel-default">                            
                             <div class="panel-body">
                                 <div class="col-lg-4">
-                                    <label for="Mobile" >Mothers Name<font class="red">*</font></label>
-                                    <input name="m_name" class="form-control" type="text" value="<?= set_value("m_name"); ?>" >
+                                    <label for="Mobile" >Mother's Name<font class="red">*</font></label>
+                                    <input name="m_name" placeholder="Mother's Name" class="form-control" type="text" value="<?= set_value("m_name"); ?>" >
                                     <span class="red"><?=  form_error('m_name');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -82,12 +82,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Email<font class="red">*</font></label>
-                                    <input name="email" class="form-control" type="email" value="<?= set_value("email"); ?>">
+                                    <input name="email" placeholder="Email" class="form-control" type="email" value="<?= set_value("email"); ?>">
                                     <span class="red"><?=  form_error('email');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Mobile<font class="red">*</font></label>
-                                    <input name="mobile" class="form-control" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                    <input name="mobile" class="form-control" placeholder="Mobile" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                     <span class="red"><?=  form_error('mobile');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -115,12 +115,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                      <label for="Mobile" >Address<font class="red">*</font></label>
-                                    <input name="add" class="form-control" type="text" value="<?= set_value("add"); ?>">
+                                    <input name="add" placeholder="Address" class="form-control" type="text" value="<?= set_value("add"); ?>">
                                     <span class="red"><?=  form_error('add');?></span>
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="Mobile" >ZIP<font class="red">*</font></label>
-                                    <input name="zip" class="form-control" type="text" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                                    <label for="Mobile" >ZIP Code<font class="red">*</font></label>
+                                    <input name="zip" placeholder="ZIP Code" class="form-control" type="text" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
                                     <span class="red"><?=  form_error('zip');?></span>
                                 </div>
                                  <div class="col-lg-4">
@@ -148,12 +148,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                       <label for="Mobile" >ID Proof<font class="red">*</font></label>
-                                    <input name="id_proof" class="form-control" type="text" value="<?= set_value("id_proof"); ?>">
+                                    <input name="id_proof" placeholder="ID Proof" class="form-control" type="text" value="<?= set_value("id_proof"); ?>">
                                     <span class="red"><?=  form_error('id_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                       <label for="Mobile" >ID Proof URL<font class="red">*</font></label>
-                                    <input name="id_proof_url" class="form-control" type="url" value="<?= set_value("id_proof_url"); ?>">
+                                    <input name="id_proof_url" placeholder="ID Proof URL" class="form-control" type="url" value="<?= set_value("id_proof_url"); ?>">
                                     <span class="red"><?=  form_error('id_proof_url');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -173,12 +173,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                       <label for="Mobile" >Address Proof<font class="red">*</font></label>
-                                    <input name="address_proof" class="form-control" type="text" value="<?= set_value("address_proof"); ?>">
+                                    <input name="address_proof" placeholder="Address Proof" class="form-control" type="text" value="<?= set_value("address_proof"); ?>">
                                     <span class="red"><?=  form_error('address_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                       <label for="Mobile" >Address Proof URL<font class="red">*</font></label>
-                                    <input name="address_proof_url" class="form-control" type="url" value="<?= set_value("address_proof_url"); ?>">
+                                    <input name="address_proof_url" placeholder="Address Proof URL" class="form-control" type="url" value="<?= set_value("address_proof_url"); ?>">
                                     <span class="red"><?=  form_error('address_proof_url');?></span>
                                 </div>
                                
@@ -241,7 +241,55 @@
                                                    <div class="col-lg-4 top-5">
                                                        <label><b>Serial Number : </b></label> <?php echo $sender_details->serial_no;?>
                                                    </div>
+                                                   <?php if($sender_details->pin ==''){?>
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <br><br>
+                                                            <div class="col-lg-offset-3 col-lg-6">
+                                                                <!-- START panel tab-->
+                                                                   <!-- Tab panes-->
+                                                                   <div class=" p0 bg-white">                        
+                                                                      <div id="dth_tab" role="tabpanel" class="tab-pane active">
+                                                                         <!-- START table responsive-->
+                                                                         <div class="list-group mb0">
+                                                                             <div class="panel panel-default">
+                                                                                  <div class="panel-heading"> Please enter your 4 digits pin number, which we have sent on your mobile number with card.</div>
+                                                                                  <div class="panel-body">                                       
+                                                                                      <form method="post"class="form-horizontal" autocomplete="off"> 
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-lg-3 control-label">PIN<font class="red">*</font></label>
+                                                                                              <div class="col-lg-9">
+                                                                                                  <input name="otp" id="code" class="form-control" type="password" value="<?= set_value("otp"); ?>" placeholder="****">
+                                                                                                  <span class="red"><?=  form_error('otp');?></span>
+                                                                                              </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                           <div class="col-lg-offset-3 col-lg-4">
+                                                                                               <input type="submit" class="btn btn-sm btn-info" name="verify_pin" value="Verify" />                                                
+                                                                                           </div>
+                                                                                           <div class="col-lg-4">                            
+                                                                                              
+                                                                                           </div>
+                                                                                        </div>
+                                                                                     </form>
+                                                                                  </div>
+                                                                               </div>
+                                                                               <!-- END panel-->
+                                                                         </div>
+                                                                         <!-- END table responsive-->
+
+                                                                      </div>
+                                                                   </div>
+
+                                                                <!-- END panel tab-->
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                   <?php }?>
+                                            
                                            <?php }?>
+                                            
                                         </div>
                                     </div>
                                </div>

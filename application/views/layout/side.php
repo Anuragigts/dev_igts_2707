@@ -222,9 +222,14 @@
                               <span>Sender Registration</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="Add Beneficiary">
+                        <li class="addBeneficiary ">
+                           <a href="<?php echo base_url();?>dmr/addBeneficiary" title="Add Beneficiary">
                               <span>Add Beneficiary</span>
+                           </a>
+                        </li>
+                        <li class="viewBeneficiary ">
+                           <a href="<?php echo base_url();?>dmr/viewBeneficiary" title="Add Beneficiary">
+                              <span>View Beneficiary</span>
                            </a>
                         </li>
                         <li class=" ">
