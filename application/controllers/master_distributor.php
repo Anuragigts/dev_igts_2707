@@ -147,4 +147,24 @@ class Master_distributor extends CI_Controller {
                 $cou    =  $this->common_model->getallCities();
                 return $cou;
         }
+        public function master_distributor_details(){
+                $data = array(
+                        'title'         => 'SC :: VIEW MASTER DISTRIBUTOR',
+                        'metakeyword'   => 'SC :: VIEW MASTER DISTRIBUTOR',
+                        'metadesc'      => 'SC :: VIEW MASTER DISTRIBUTOR',
+                        'content'       => 'view_master_distributor_details'
+                );
+                $val    = $this->uri->segment(3);
+                if($val !=  ''){
+                        $this->session->set_userdata('det',$val);
+                        $id     =   $this->session->userdata('det');
+                }
+                else{
+                        $id     =   $this->session->userdata('det');
+                }
+                    $type   =  2;
+                    $data['view']       =   $this->common_model->details($id,$type);
+//                    $data['super']      =   $this->master_distributor_model->super_distributor_details($id);
+                $this->load->view('layout/inner_template',$data);    
+        }
 }

@@ -195,7 +195,7 @@ $(function(){
 });
     $('.activate').click(function(){
             var login         =   $(this).attr("login");
-            var user_name    =   $(this).attr("user_name");
+            var user_name     =   $(this).attr("user_name");
 //            var avr = $(".activate").is(':checked') ? 1 : 0;
             var status      =   1;
              $.post('<?=base_url()?>common/common_off_actdeact',
@@ -233,4 +233,53 @@ $(function(){
                         }
             });
     });
+function showSupers(str,user) {
+    $("#user_val_super").html("Super Distributors under this "+user);
+    if (str.length == 0) { 
+        document.getElementById("txtSuperval").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtSuperval").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", "<?=base_url();?>common/getallSupers/" + str, true);
+        xmlhttp.send();
+    }
+}
+function showDistributors(str,user) {
+    $("#user_val").html("Distributors   under this "+user);
+    if (str.length == 0) { 
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", "<?=base_url();?>common/getallDistributors/" + str, true);
+        xmlhttp.send();
+    }
+}
+function showAgents(str,user) {
+    $("#dis_user_val").html("Agents under this "+user);
+    if (str.length == 0) { 
+        document.getElementById("txtHint_val").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint_val").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", "<?=base_url();?>common/getAgents/" + str, true);
+        xmlhttp.send();
+    }
+}
+
 </script>

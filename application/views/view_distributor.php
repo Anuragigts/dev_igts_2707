@@ -19,6 +19,8 @@
             <!-- START DATATABLE 1 -->
                <div class="row">
                   <div class="col-lg-12">
+                        <p class="success"></p>
+                        <p class="error"></p>
                         <div class="panel-body">
                            <table id="datatable1" class="table table-striped table-hover">
                               <thead>
@@ -27,16 +29,33 @@
                                     <th>Name</th>
                                     <th width="20%">Mobile No.</th>
                                     <th width="35%">Email</th>
+                                    <th></th>
                                  </tr>
                               </thead>
                               <tbody>
-                                  <?php foreach ($view_dis as $view){?>
-                                        <tr>
-                                           
+                                  <?php foreach ($view_dis as $view){
+                                        $name   =   ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);
+                                        ?>
+                                        <tr>                                           
                                             <th><?= ucfirst($view->package_name);?></th>
-                                            <th><?= ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);?></th>
+                                            <th><?= $name;?></th>
                                             <th><?= $view->mobile;?></th>
                                             <th><?= ucfirst($view->login_email);?></th>
+                                            <th>
+                                                <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
+                                                    <!--<i class="success fa fa-check-circle-o"></i>-->
+                                                    <label class="switch switch-sm">
+                                                        <input type="checkbox" <?php echo ($view->status == 0)?"":"checked=checked";?> class="checkbox-inline <?php echo ($view->status == 0)?'activate':'deactivate';?>" login="<?= $view->login_id;?>" user_name="<?= $name;?>">
+                                                        <span></span>
+                                                    </label>
+                                                </a>
+                                                <a href="<?= base_url();?>distributor/distributor_details/<?= $view->login_id;?>" title="View Complete Details">
+                                                    <i class="fa fa-search-plus"></i>
+                                                </a>
+                                                <a href="<?= base_url();?>distributor/edit_distributor/<?= $view->login_id;?>" title="Edit Details">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </th>
                                          </tr>
                                   <?php }?>
                               </tbody>

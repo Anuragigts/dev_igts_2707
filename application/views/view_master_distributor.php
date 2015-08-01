@@ -50,7 +50,7 @@
                                                         <span></span>
                                                     </label>
                                                 </a>
-                                                <a href="<?= base_url();?>master_distributor/master_distributor_details/<?= $view->package_id;?>" title="View Complete Details">
+                                                <a href="<?= base_url();?>master_distributor/master_distributor_details/<?= $view->login_id;?>" title="View Complete Details">
                                                     <i class="fa fa-search-plus"></i>
                                                 </a>
                                                 <a href="<?= base_url();?>master_distributor/edit_master_distributor/<?= $view->login_id;?>" title="Edit Details">

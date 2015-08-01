@@ -59,4 +59,40 @@ class Common extends CI_Controller {
                 $ins    =   $this->common_model->common_off_actdeact();
                 echo $ins;
         }
+        public function getallSupers(){
+                $val    = $this->uri->segment(3);
+                if($val !=  ''){
+                        $this->session->set_userdata('dis1',$val);
+                        $id     =   $this->session->userdata('dis1');
+                }
+                else{
+                        $id     =   $this->session->userdata('dis1');
+                }
+                $view["get"]   =   $this->common_model->getallSupers($id);
+                $this->load->view('super',$view);    
+        }
+        public function getallDistributors(){
+                $val    = $this->uri->segment(3);
+                if($val !=  ''){
+                        $this->session->set_userdata('dis',$val);
+                        $id     =   $this->session->userdata('dis');
+                }
+                else{
+                        $id     =   $this->session->userdata('dis');
+                }
+                $view["get"]   =   $this->common_model->getallDistributors($id);
+                $this->load->view('distributor',$view);    
+        }
+        public function getAgents(){
+                $val    = $this->uri->segment(3);
+                if($val !=  ''){
+                        $this->session->set_userdata('dis',$val);
+                        $id     =   $this->session->userdata('dis');
+                }
+                else{
+                        $id     =   $this->session->userdata('dis');
+                }
+                $view["get"]   =   $this->common_model->getAgents($id);
+                $this->load->view('agents',$view);    
+        }
 }
