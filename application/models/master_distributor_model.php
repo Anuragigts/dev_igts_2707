@@ -29,7 +29,7 @@ class Master_distributor_model extends CI_Model{
                 $this->db->insert("login",$data);
                 $val_id     =   $this->db->insert_id();
                     if($this->db->affected_rows()   >   0){
-                        $ins   =   array(
+                        $ins             =   array(
                                 "login_id"              =>     $val_id,
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
@@ -42,13 +42,28 @@ class Master_distributor_model extends CI_Model{
                                 "address"               =>     $address,
                                 "admin_id"              =>     $ses_id
                         );
-                        $ins_comm   =   array(
+                        $ins_comm        =   array(
                                 "login_id"              =>     $val_id,
                                 "package_id"            =>     $pkg_id,
                                 "status"                =>     1
                         );
+                        $ins_access      =   array(
+                                "login_id"              =>      $val_id,
+                                "recharge"              =>      0,
+                                "prepaid_mobile"        =>      0,
+                                "postpaid_mobile"       =>      0,
+                                'data_card'             =>      0,
+                                "dth"                   =>      0,
+                                "utility"               =>      0,
+                                "electricity"           =>      0,
+                                "gas"                   =>      0,
+                                "dmr"                   =>      0,
+                                "add_beneficiary"       =>      0,
+                                "money_transfer"        =>      0
+                        );
                         $this->db->insert("profile",$ins);
                         $this->db->insert("commission",$ins_comm);
+                        $this->db->insert("module_access",$ins_access);
                         if($this->db->affected_rows()   >   0){
                                 return 1;
                         }

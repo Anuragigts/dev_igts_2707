@@ -60,7 +60,7 @@ class Common_model extends CI_Model
                     return $query->result();
                 }
                 else{
-                    return 0;
+                    return array();
                 } 
         }
         public function getPackages(){
@@ -79,7 +79,7 @@ class Common_model extends CI_Model
                     return $query->result();
                 }
                 else{
-                    return 0;
+                    return array();
                 } 
         }
         public function getallPackages(){
@@ -91,7 +91,7 @@ class Common_model extends CI_Model
                     return $query->result();
                 }
                 else{
-                    return 0;
+                    return array();
                 } 
         }
         
@@ -240,6 +240,23 @@ class Common_model extends CI_Model
                     return array();
                 } 
         }
+        public function allDistributors(){
+                $this->db->select('l.*,p.*,g.package_name');
+                $this->db->from('login as l');
+                $this->db->join('profile as p','l.login_id = p.login_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','inner');
+                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->where('l.user_type',4);
+//                $this->db->where('l.user_type',3);
+                $query = $this->db->get();
+//                echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->result();
+                }
+                else{
+                    return array();
+                } 
+        }
         public function details($id,$type){
                 $this->db->select('l.*,p.*,g.package_name,g.package_id,o.Country_name,s.State_name,y.City_name');
                 $this->db->from('login as l');
@@ -255,6 +272,48 @@ class Common_model extends CI_Model
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->row();
+                }
+                else{
+                    return array();
+                } 
+        }
+        public function access_details($valu){
+                $this->db->select('recharge,utility,dmr');
+                $this->db->from('module_access');
+                $this->db->where('login_id',$valu);
+                $query = $this->db->get();
+//                echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->row();
+                }
+                else{
+                    return array();
+                } 
+        }
+        public function update_access($valu){
+                $dmr            =   $this->input->post("dmr");
+                $recharge       =   $this->input->post("recharge");
+                $utility        =   $this->input->post("utility");
+                $data           =   array(
+                        "recharge"              =>      $recharge,
+                        "prepaid_mobile"        =>      $recharge,
+                        "postpaid_mobile"       =>      $recharge,
+                        'data_card'             =>      $recharge,
+                        "dth"                   =>      $recharge,
+                        "utility"               =>      $utility,
+                        "electricity"           =>      $utility,
+                        "gas"                   =>      $utility,
+                        "dmr"                   =>      $dmr,
+                        "add_beneficiary"       =>      $dmr,
+                        "money_transfer"        =>      $dmr
+                );
+//                print_r($data);exit;
+                $this->db->where('login_id',$valu);
+                $this->db->update('module_access',$data);
+//                $query = $this->db->get();
+//                echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return 1;
                 }
                 else{
                     return array();

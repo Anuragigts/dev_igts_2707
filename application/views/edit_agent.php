@@ -8,10 +8,10 @@
              </li>
              <li><a href="#">Elements</a>
              </li>-->
-             <li class="active">Edit Distributor</li>
-          </ol> Edit Distributor
+             <li class="active">Edit Agent</li>
+          </ol> Edit Agent
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For updating Distributor</span>
+          <span class="text-sm hidden-xs">For editing  Agent</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -20,7 +20,7 @@
             <!-- START panel--> 
             <div class="panel panel-default">
 <!--                    <div class="panel-heading">
-                       Edit Commission
+                       Create Commission
                         | <small>Zero Configuration</small>
                     </div>-->
             <div class="panel-body">
@@ -132,6 +132,25 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
+                                <label>Distributor<span class="red">*</span></label>
+                                <select class="form-control" name="distributor" id="distributor" val-dis="4">
+                                    <option value="Select Distributor"> Select Distributor </option>
+                                    <?php foreach($dis as $ds){ 
+                                            if($view->distributor_id == $ds->login_id){ ?>
+                                            <option value="<?= $ds->login_id;?>" selected="selected"><?= ucfirst($ds->first_name." ".$ds->middle_name." ".$ds->last_name);?></option>
+                                            <?php } else { ?>
+                                            <option value="<?= $ds->login_id;?>"><?= ucfirst($ds->first_name." ".$ds->middle_name." ".$ds->last_name);?></option>
+                                            <?php } ?>
+                                    <?php }
+                                    ?>
+                                </select>
+                                <span class="red"><?= form_error('distributor');?></span>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Package Name <span class="red">*</span></label>
                                 <select class="form-control" name="package" id="package">
                                     <option value="Select Package"> Select Package </option>
@@ -147,10 +166,9 @@
                                    ?>
                                 </select>
                                 <span class="red"><?= form_error('package');?></span>
-                             </div>
+                             </div> 
                         </div>
-                    </div>
-                    <div class="row">
+                        
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
@@ -158,6 +176,8 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
@@ -165,8 +185,6 @@
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>
@@ -174,16 +192,15 @@
                                <span class="red"><?= form_error('address');?></span>
                             </div>
                         </div>
-                        <div class="col-sm-6"></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="submit" class="btn btn-sm btn-info" value="Update Distributor" name="update_distributor">
+                            <input type="submit" class="btn btn-sm btn-info" value="Update Agent" name="update_agent">
                         </div>
                     </div>
                     </form>
             <!-- END panel-->
-                </div>
+                  </div>
             </div>
         </div>
     </div>

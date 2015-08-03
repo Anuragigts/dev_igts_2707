@@ -48,7 +48,7 @@
                                <select class="form-control" name="country" id="country-id">
                                    <option value="Select Country"> Select Country </option>
                                    <?php foreach($val as $op){ ?>
-                                            <option value="<?= $op->Country_id;?>" <?= set_select('country',$op->Country_id);?>><?= $op->Country_name;?></option>
+                                            <option value="<?= $op->Country_id;?>"><?= $op->Country_name;?></option>
                                     <?php }
                                     ?>
                                </select>
@@ -112,7 +112,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
-                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="15">
+                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>

@@ -56,6 +56,9 @@
                                                 <a href="<?= base_url();?>master_distributor/edit_master_distributor/<?= $view->login_id;?>" title="Edit Details">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
+                                                <a href="<?= base_url();?>master_distributor/module_access/<?= $view->login_id;?>" title="Module Access">
+                                                    <i class="fa fa-paw"></i>
+                                                </a>
                                             </th>
                                          </tr>
                                   <?php }?>

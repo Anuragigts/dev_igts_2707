@@ -21,7 +21,7 @@
            <div class="col-sm-6">
             <!-- START panel-->
                   <div class="panel panel-default">
-                     <div class="panel-heading">Create Module Object</div>
+                     <!--<div class="panel-heading">Create Module Object</div>-->
                        <div class="panel-body">
                            <form role="form" action="" method="post">
                                <div class="form-group">

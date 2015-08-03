@@ -37,9 +37,9 @@
                                         <div class="row padding-3">
                                             <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->modules_obj_name);?></div>
                                             <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->module_name);?></div>
-                                            <div class="col-sm-2 col-xs-2"><?= ucfirst($rec->sub_module_name);?></div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  value="<?= set_value('commission-'.$rec->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
+                                            <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->sub_module_name);?></div>
+                                            <div class="col-sm-3 col-xs-3">
+                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  value="<?= set_value('commission-'.$rec->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -58,8 +58,8 @@
                                             <div class="col-sm-3 col-xs-3"><?= $ut->modules_obj_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $ut->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $ut->sub_module_name;?></div>
-                                            <div class="col-sm-1 col-xs-1">
-                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>"  value="<?= set_value('commission-'.$ut->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
+                                            <div class="col-sm-3 col-xs-3">
+                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>"  value="<?= set_value('commission-'.$ut->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -78,8 +78,8 @@
                                             <div class="col-sm-3 col-xs-3"><?= $dr->modules_obj_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $dr->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $dr->sub_module_name;?></div>
-                                            <div class="col-sm-1 col-xs-1">
-                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"   value="<?= set_value('commission-'.$dr->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20"/>
+                                            <div class="col-sm-3 col-xs-3">
+                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"   value="<?= set_value('commission-'.$dr->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>

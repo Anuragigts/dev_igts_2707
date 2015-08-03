@@ -49,8 +49,23 @@ class Super_distributor_model extends CI_Model{
                                 "package_id"            =>     $pkg_id,
                                 "status"                =>     1
                         );
+                        $ins_access      =   array(
+                                "login_id"              =>      $val_id,
+                                "recharge"              =>      0,
+                                "prepaid_mobile"        =>      0,
+                                "postpaid_mobile"       =>      0,
+                                'data_card'             =>      0,
+                                "dth"                   =>      0,
+                                "utility"               =>      0,
+                                "electricity"           =>      0,
+                                "gas"                   =>      0,
+                                "dmr"                   =>      0,
+                                "add_beneficiary"       =>      0,
+                                "money_transfer"        =>      0
+                        );
                         $this->db->insert("profile",$ins);
                         $this->db->insert("commission",$ins_comm);
+                        $this->db->insert("module_access",$ins_access);
                         if($this->db->affected_rows()   >   0){
                                 return 1;
                         }

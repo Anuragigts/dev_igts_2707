@@ -53,8 +53,23 @@ class Agent_model extends CI_Model{
                                 "package_id"            =>     $pkg_id,
                                 "status"                =>     1
                         );
+                        $ins_access      =   array(
+                                "login_id"              =>      $val_id,
+                                "recharge"              =>      0,
+                                "prepaid_mobile"        =>      0,
+                                "postpaid_mobile"       =>      0,
+                                'data_card'             =>      0,
+                                "dth"                   =>      0,
+                                "utility"               =>      0,
+                                "electricity"           =>      0,
+                                "gas"                   =>      0,
+                                "dmr"                   =>      0,
+                                "add_beneficiary"       =>      0,
+                                "money_transfer"        =>      0
+                        );
                         $this->db->insert("profile",$ins);
                         $this->db->insert("commission",$ins_comm);
+                        $this->db->insert("module_access",$ins_access);
                         if($this->db->affected_rows()   >   0){
                                 return 1;
                         }
@@ -82,6 +97,66 @@ class Agent_model extends CI_Model{
                 else{
                     return array();
                 } 
+        }
+        public function edit_agent($val){
+                $this->db->select('l.*,p.*,g.package_name,g.package_id');
+                $this->db->from('login as l');
+                $this->db->join('profile as p','l.login_id = p.login_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','inner');
+                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->where('l.user_type',5);
+                $this->db->where('l.login_id',$val);
+                $query = $this->db->get();
+//                echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->row();
+                }
+                else{
+                    return array();
+                } 
+        }
+        public function update_agent($valu){
+                $ses_id             =   $this->session->userdata("login_id");
+                $first_name         =   $this->input->post("first_name");
+                $last_name          =   $this->input->post("last_name");
+                $country            =   $this->input->post("country");
+                $state              =   $this->input->post("state");
+                $city               =   $this->input->post("city");
+                $address            =   $this->input->post("address");
+                $master             =   $this->input->post("master");
+                $super              =   $this->input->post("super");
+                $dis_id             =   $this->input->post("distributor");
+                $pkg_id             =   $this->input->post("package");
+                        $ins   =   array(
+                                "first_name"            =>     $first_name,
+                                "last_name"             =>     $last_name,
+                                "country"               =>     $country,
+                                "state"                 =>     $state,
+                                "city"                  =>     $city,
+                                "master_distributor_id" =>     $master,
+                                "super_distributor_id"  =>     $super,
+                                "distributor_id"        =>     $dis_id,
+                                "updated_by"            =>     $ses_id,
+                                "updated_on"            =>     date("Y-m-d H:i:s"),
+                                "address"               =>     $address
+                        );
+//                        print_r($ins);exit;
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("profile",$ins);
+                        $var1   =  $this->db->affected_rows(); 
+                        $ins_comm   =   array(
+                                "package_id"            =>     $pkg_id,
+                                "status"                =>     1
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("commission",$ins_comm);
+                        $var2  =   $this->db->affected_rows();
+                        if($var1 == 1 && ( $var2 == 0 || $var2 == 1)){
+                                return 1;
+                        }
+                        else{
+                                return 0;
+                        }
         }
 }
 

@@ -95,4 +95,49 @@ class Common extends CI_Controller {
                 $view["get"]   =   $this->common_model->getAgents($id);
                 $this->load->view('agents',$view);    
         }
+        public function update_access(){
+                $data = array(
+                        'title'         => 'SC :: ACCESS MASTER DISTRIBUTOR',
+                        'metakeyword'   => 'SC :: ACCESS MASTER DISTRIBUTOR',
+                        'metadesc'      => 'SC :: ACCESS MASTER DISTRIBUTOR',
+                        'content'       => 'module_access'
+                );
+                $uri11    = $this->uri->segment(1);
+                $uri21    = $this->uri->segment(2);
+                $valu    = $this->uri->segment(3);
+                if($uri11 !=  ""){
+                        $this->session->set_userdata("uri1",$uri11);
+                        $uri1   =   $this->session->userdata("uri1");
+                }
+                else{
+                        $uri1   =   $this->session->userdata("uri1");
+                }
+                if($uri21 !=  ""){
+                        $this->session->set_userdata("uri2",$uri21);
+                        $uri2   =   $this->session->userdata("uri2");
+                }
+                else{
+                        $uri2   =   $this->session->userdata("uri2");
+                }
+                if($valu !=  ""){
+                        $this->session->set_userdata("value",$valu);
+                        $valu   =   $this->session->userdata("value");
+                }
+                else{
+                        $valu   =   $this->session->userdata("value");
+                }
+                if($this->input->post('save')){
+                        $get    =   $this->common_model->update_access($valu);
+                                if($get == 1){
+                                        $this->session->set_flashdata("msg","Module Access has been updated successfully");
+                                        redirect($uri1."/".$uri2."/".$valu);
+                                }
+                                else{
+                                        $this->session->set_flashdata("err","Internal error occurred while updating module access");
+                                        redirect($uri1."/".$uri2."/".$valu);
+                                }
+                }
+                $data['access']   =  $this->common_model->access_details($valu);
+                $this->load->view('layout/inner_template',$data);
+        }
 }

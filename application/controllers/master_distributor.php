@@ -18,7 +18,7 @@ class Master_distributor extends CI_Controller {
                 if($this->input->post('create_master_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",       "required|min_length[4]");
                         $this->form_validation->set_rules("last_name",          "Last Name",        "required|min_length[4]");
-                        $this->form_validation->set_rules("mobile_no",          "Mobile No.",       "required|is_unique[login.login_mobile]");
+                        $this->form_validation->set_rules("mobile_no",          "Mobile No.",       "required|is_unique[login.login_mobile]|min_length[10]");
                         $this->form_validation->set_rules("login_email",        "Email Id",         "required|is_unique[login.login_email]");
                         $this->form_validation->set_rules("password",           "Password",         "required|min_length[4]");
                         $this->form_validation->set_rules("con_password",       "Confirm Password", "required|matches[password]");
@@ -167,4 +167,8 @@ class Master_distributor extends CI_Controller {
 //                    $data['super']      =   $this->master_distributor_model->super_distributor_details($id);
                 $this->load->view('layout/inner_template',$data);    
         }
+        public function module_access(){
+                $this->load->library('../controllers/common');
+                $this->common->update_access();		
+	}
 }
