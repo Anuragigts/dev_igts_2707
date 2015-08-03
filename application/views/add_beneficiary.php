@@ -75,9 +75,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Bank Name<font class="red ifsc-imp">*</font></label>
-                                    <select name="bank_name" class="form-control b-c">
+                                    <select name="bank_name" class="form-control b-c" id="bnk_name">
                                         <option value="">Select</option>
-                                        <option value="HDFC" <?php echo set_select('bank_name','HDFC', ( !empty($data) && $data == "HDFC") ? TRUE : FALSE )?>>HDFC</option>
+                                        <?php foreach($banks as $bnk){?>
+                                            <option value="<?php echo $bnk->name;?>" <?php echo set_select('bank_name',$bnk->name, ( !empty($data) && $data == $bnk->name) ? TRUE : FALSE )?>><?php echo $bnk->name;?></option>
+                                        <?php }?>
+                                           
                                     </select>
                                     <span class="red"><?=  form_error('bank_name');?></span>
                                 </div>
@@ -107,12 +110,15 @@
                                 </div>
                                  <div class="col-lg-4">
                                     <label for="Mobile" >Branch Name<font class="red ifsc-imp">*</font></label>
-                                    <input name="branch_name" class="form-control b-c" type="text" value="<?= set_value("branch_name"); ?>"  placeholder="Branch Name">
+                                    <select name="branch_name" class="form-control b-c" id="branch" disabled="disabled">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <!--<input name="branch_name" class="form-control b-c" type="text" value=""  placeholder="Branch Name">-->
                                     <span class="red"><?=  form_error('branch_name');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                      <label for="Mobile" >IFSC Code<font class="red ifsc-imp">*</font></label>
-                                    <input name="ifsc_code" class="form-control b-c" type="text" value="<?= set_value("ifsc_code"); ?>" placeholder="IFSC Code">
+                                     <input name="ifsc_code" class="form-control " id="ifsc" type="text" value="<?= set_value("ifsc_code"); ?>" placeholder="IFSC Code" readonly="readonly">
                                     <span class="red"><?=  form_error('ifsc_code');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -202,5 +208,47 @@
              $(".b-c").attr("readonly", "readonly");
             $(".m-c").attr("readonly", "readonly");
         }
+    });
+    
+    $('#city').change(function(){
+        var bname = $('#bnk_name').val();
+        var state = $('#state').val();
+        var city = $('#city').val();
+        if(bname != '' && state != '' && city != ''){
+            $("#branch").removeAttr("disabled", "disabled");
+            $("#loading").modal('show');
+            $.post('<?php echo base_url();?>dmr/getBranch',{'bname':bname, 'state':state, 'city':city},function(response){
+                //alert(response);
+                if(response != ""){
+                        $('#branch').html(response);
+                        $("#loading").modal('hide');
+                }else{
+                      $('#city').html("<option value=''>Select</option>");
+                      $('#branch').html("<option value=''>Select</option>");
+                }					
+            });
+        }else{
+            $("#branch").attr("disabled", "disabled");
+        }
+    });
+    
+    $("#bnk_name").change(function(){
+        //$('#state').html("<option value=''>Select</option>");
+        $('#city').html("<option value=''>Select</option>");
+    });
+    $('#branch').change(function(){
+        $('#ifsc').val('');
+        var br = $('#branch').val();
+         $("#loading").modal('show');
+        $.post('<?php echo base_url();?>dmr/getifsc',{'br':br},function(response){
+               
+                if(response != ""){
+                        $('#ifsc').val(response);
+                        $("#loading").modal('hide');
+                }else{
+                      $('#ifsc').val('');
+                       $("#loading").modal('hide');
+                }					
+            });
     });
 </script>

@@ -17,6 +17,7 @@
        <!-- START widgets box-->
        
        <div class="row">
+           <?php $this->load->view("layout/success_error");?>     
            <div class="col-lg-12">
                <div class="panel-body">
                     <table id="datatable1" class="table table-striped table-hover">
@@ -53,7 +54,10 @@
                                 }else{
                                     echo "<a href='".base_url()."dmr/beneficiaryOTP/".$dl->ben_id."'><i class='fa fa-fighter-jet'></i></a>";
                                 }?></td>
-                                <td><a href="<?php echo base_url()?>dmr/editBeneficary/<?php echo $dl->ben_id;?>"><i class="fa fa-edit "></i></a></td>
+                                <td>
+                                    <a href="<?php echo base_url()?>dmr/editBeneficary/<?php echo $dl->ben_id;?>" title="Edit"><i class="fa fa-edit "></i></a>
+                                    <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->ben_id;?>/<?php echo $dl->card_no;?>/<?php echo $dl->beneid;?>" class="red" title="Remove"><i class="fa fa-trash-o "></i></a>
+                                </td>
                                 
                            </tr>
                            <?php }?>

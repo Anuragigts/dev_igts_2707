@@ -658,7 +658,7 @@ class Dmr_model extends CI_Model
                         </soap:Envelope>';
             }
 
-echo $curlData;
+
                    $curl = curl_init();
 
                    curl_setopt ($curl, CURLOPT_URL, $url);
@@ -874,5 +874,151 @@ echo $curlData;
                  return 0;
              }
          }  
+    }
+    
+    public function removeBeneficary(){
+        
+        $card = $this->uri->segment(4);
+        $b_id = $this->uri->segment(5);
+        $url = DMRURL; 
+       //petram 10 for delete 11 for desiable
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <REMOVEBENEFICIARY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;REMOVEBENEFICIARYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
+                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;BENEID&gt;'.$b_id.'&lt;/BENEID&gt;
+                            &lt;PARAM1&gt;10&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/REMOVEBENEFICIARYREQUEST&gt;
+                       </RequestData>
+                     </REMOVEBENEFICIARY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'REMOVEBENEFICIARY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+           
+           
+         $first_tag = explode('<REMOVEBENEFICIARYResult>', $result);      
+         //print_r($first_tag);
+         //echo "<br><br>";die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</REMOVEBENEFICIARYResult></REMOVEBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+            // print_r($response);die();
+             if($response->STATUSCODE == 0){
+                // $this->db->delete('beneficiary_track', array('beneid' => $b_id));
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
+    }
+    
+    public function doRemoveVerifyBen($ben_id){
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <REMOVEBENEOTP  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;REMOVEBENEOTPREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$this->input->post('trans').'&lt;/CARDNO&gt;
+                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
+                            &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
+                            &lt;BENESTATUS&gt;10&lt;/BENESTATUS&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/REMOVEBENEOTPREQUEST&gt;
+                       </RequestData>
+                     </REMOVEBENEOTP>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'REMOVEBENEOTP',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<REMOVEBENEOTPResult>', $result);       
+         print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</REMOVEBENEOTPResult></REMOVEBENEOTPResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+                 $this->db->delete('beneficiary_track', array('beneid' => $b_id));
+                 if($this->db->affected_rows() == 1){
+                      return 1;//success
+                 }       
+             }else{
+                 return 2;//invalid OTP
+             }
+         }
     }
 }

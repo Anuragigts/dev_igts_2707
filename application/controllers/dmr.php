@@ -220,6 +220,7 @@ class Dmr extends CI_Controller {
         $data['states']=$this->common->getState($india);
         $data['citys']=$this->common->getcity();
         $data['sender_details'] = $this->dmr_model->sender_details();
+        $data['banks'] = $this->common->bank_name();
          $this->load->view('layout/inner_template',$data);
     }
     
@@ -349,6 +350,89 @@ class Dmr extends CI_Controller {
              $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
                redirect('dmr/beneficiaryOTP/'.$id);
         }
+    }
+    public function removeBeneficary(){
+        $id = $this->uri->segment(3);
+        
+         $data['login_details'] = array();        
+        
+        $login_result = $this->dmrLogin();
+        //print_r($login_result);die();
+        if(count($login_result) <5){
+            if($login_result == 3){ 
+               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+            }else if($login_result == 2){ 
+                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+            }else if($login_result == 0){
+                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+            }
+        }else{
+           $data['login_details'] = $login_result; 
+        }
+       
+        $result = $this->dmr_model->removeBeneficary();
+       if($result == 1){                    
+            $this->session->set_flashdata('msg','OTP has been sent on your mobile.');  
+           redirect('dmr/removeBenOtp/'.$id);
+        }else{
+             $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
+               redirect('dmr/viewBeneficiary');
+        }
+    }
+    public function removeBenOtp(){
+        $ben_id = $this->uri->segment(3);
+        
+         $data = array(
+              'title'         => 'DMR :: BENEFICIARY OTP',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'remove_beneficiary_otp'
+             );
+         $data['details'] = $this->dmr_model->getBENDetails($ben_id);
+        
+         if($this->input->post('send')){
+            $this->form_validation->set_rules('trans',  'Card Number',   'required');
+            $this->form_validation->set_rules('bene_id',  'Beneficiary ID',   'required');
+            $this->form_validation->set_rules('otp',    'OTP',              'required');
+            
+             if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->doRemoveVerifyBen($ben_id);
+                //echo $result;exit;
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Your beneficiary removed successfull .');  
+                    redirect('dmr/viewBeneficiary');
+                }
+               else if( $result == 2){                    
+                    $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
+                      redirect('dmr/removeBenOtp/'.$ben_id);
+                }else{
+                     $this->session->set_flashdata('err','Verification fail : Some internal error occurred.');  
+                       redirect('dmr/removeBenOtp/'.$ben_id);
+                }
+            }
+         } 
+         
+         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function getBranch(){
+        $bnk = $_POST['bname'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $val= "";
+        $branch =$this->common->getBranch($bnk, $state, $city);
+       // echo $branch;
+        $val .= "<option value=''>Select</value>";
+        foreach($branch as $b){
+            $val .= "<option value='".$b->name."'>".$b->name."</option>";
+        }
+        echo $val;
+    }
+    public function getifsc(){
+        $bn = $_POST['br'];
+        $branch =$this->common->getIfsc($bn);
+        echo $branch->IFSC_Code;
     }
 }
     
