@@ -52,10 +52,10 @@
                                 <td><?php  if($dl->otp == 1){
                                     echo "Verified";
                                 }else{
-                                    echo "<a href='".base_url()."dmr/beneficiaryOTP/".$dl->ben_id."'><i class='fa fa-fighter-jet'></i></a>";
+                                    echo "<a href='".base_url()."dmr/beneficiaryOTP/".$dl->ben_id."' title='verifi it'><i class='fa fa-fighter-jet'></i></a>";
                                 }?></td>
                                 <td>
-                                    <a href="<?php echo base_url()?>dmr/editBeneficary/<?php echo $dl->ben_id;?>" title="Edit"><i class="fa fa-edit "></i></a>
+                                    <!--<a href="<?php //echo base_url()?>dmr/editBeneficary/<?php //echo $dl->ben_id;?>" title="Edit"><i class="fa fa-edit "></i></a>-->
                                     <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->ben_id;?>/<?php echo $dl->card_no;?>/<?php echo $dl->beneid;?>" class="red" title="Remove"><i class="fa fa-trash-o "></i></a>
                                 </td>
                                 

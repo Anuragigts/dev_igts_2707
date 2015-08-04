@@ -458,7 +458,7 @@ class Dmr_model extends CI_Model
                                    &lt;BRANCHNAME&gt;&lt;/BRANCHNAME&gt;
                                    &lt;CITY&gt;&lt;/CITY&gt;
                                    &lt;STATE&gt;&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;&lt;/IFSCCODE&gt;
+                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
                                    &lt;ACCOUNTNO&gt;&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -999,7 +999,7 @@ class Dmr_model extends CI_Model
 
 
          $first_tag = explode('<REMOVEBENEOTPResult>', $result);       
-         print_r($first_tag);die();
+         //print_r($first_tag);die();
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -1018,6 +1018,302 @@ class Dmr_model extends CI_Model
                  }       
              }else{
                  return 2;//invalid OTP
+             }
+         }
+    }
+    public function getCardMore($id){
+        $query = $this->db->get_where('dmr_registration_track', array('login_id' => $id));
+        if($query && $query->num_rows()== 1){
+              return $query->row();
+           }else{
+               return array();
+           }
+    }
+    public function getBene($id){
+        $query = $this->db->get_where('beneficiary_track', array('login_id' => $id, 'otp' => '1'));
+        if($query && $query->num_rows()>0){
+              return $query->result();
+           }else{
+               return array();
+           }
+    }
+
+
+    public function checktopupLimit(){
+        $url = DMRURL; 
+       $data = $this->getCardMore($this->session->userdata('login_id'));
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <CHECKTOPUPLIMIT  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;CHECKTOPUPLIMITREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$data->card_number.'&lt;/CARDNO&gt;
+                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            
+                            &lt;/CHECKTOPUPLIMITREQUEST&gt;
+                       </RequestData>
+                     </CHECKTOPUPLIMIT>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'CHECKTOPUPLIMIT',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<CHECKTOPUPLIMITResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</CHECKTOPUPLIMITResult></CHECKTOPUPLIMITResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+                  return $response;  
+             }else{
+                 return array();//invalid OTP
+             }
+         }
+    }
+    
+    public function dotransferAmt($key){
+         $url = DMRURL; 
+       //$data = $this->getCardMore($this->session->userdata('login_id'));
+       
+         if($this->input->post('bene_type') == 'MMID'){
+             $val = '1';
+             echo $val;
+         }else{
+             $val = '2';
+         }
+        
+        $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMITR'.$a;
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TRANSACTION_V3  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TRANSACTION_V3REQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$this->input->post('card').'&lt;/CARDNO&gt;
+                            &lt;TRANSTYPE&gt;'.$val.'&lt;/TRANSTYPE&gt;
+                            &lt;TRANSTYPEDESC&gt;'.$this->input->post('tr_des').'&lt;/TRANSTYPEDESC&gt;
+                            &lt;BENEMOBILE&gt;'.$this->input->post('mobile_no').'&lt;/BENEMOBILE&gt;
+                            &lt;IFSCCODE&gt;'.$this->input->post('ifsc_cod').'&lt;/IFSCCODE&gt;
+                            &lt;OTP&gt;&lt;/OTP&gt;
+                            &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
+                            &lt;SERVICECHARGE&gt;'.$this->input->post('tr_charge').'&lt;/SERVICECHARGE&gt;
+                            &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
+                            &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
+                            &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
+                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;PARAM1&gt;'.$this->input->post('agent_charge').'&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;'.$key.'&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/TRANSACTION_V3REQUEST&gt;
+                       </RequestData>
+                     </TRANSACTION_V3>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TRANSACTION_V3',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TRANSACTION_V3Result>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+                 $up = array(
+                     'login_id' => $this->session->userdata('login_id'),
+                     'to_id'    => $this->input->post('bene'),
+                     'amount'    =>$this->input->post('tr_amt'),
+                     'track_id' => "$track_id",
+                     'status' => "$response->TRANSACTIONSTATUS",
+                     'responce_code' => "$response->RESPONSECODE",
+                     'rrn' => "$response->RRN",
+                     'ben_name' => "$response->BENENAME"
+            );         
+                $insert = $this->db->insert('transection_track',$up);
+                if($this->db->affected_rows() == 1){
+                    return 1;  
+                }else{
+                    return 5;
+                }
+                  
+             }else if($response->STATUSCODE == 1){
+                 return 2;
+             }else if($response->STATUSCODE == 2){
+                 return 3;
+             }else if($response->STATUSCODE == 3){
+                 return 4;
+             }else{
+                 return 5;//invalid OTP
+             }
+         }
+    }
+    
+    public function doTopup($key){
+        $url = DMRURL; 
+       $data = $this->getCardMore($this->session->userdata('login_id'));
+        
+         if($this->input->post('card') == 'MMID'){
+             $val = '1';
+         }else{
+             $val = '2';
+         }
+        $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMITR'.$a;
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TOPUP_V2  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TOPUP_V2REQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$data->card_number.'&lt;/CARDNO&gt;
+                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;   
+                            
+                            &lt;TOPUPAMOUNT&gt;'.$this->input->post('amount').'&lt;/TOPUPAMOUNT&gt;
+                            &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
+                            &lt;MOBILE&gt;'.$data->mobile.'&lt;/MOBILE&gt;                           
+                            &lt;REGIONID&gt;'.$this->input->post('region').'&lt;/REGIONID&gt;
+                            &lt;SERVICECHARGE&gt;'.$this->input->post('charge').'&lt;/SERVICECHARGE&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;'.$key.'&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/TOPUP_V2REQUEST&gt;
+                       </RequestData>
+                     </TOPUP_V2>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TOPUP_V2',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TOPUP_V2Result>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TOPUP_V2Result></TOPUP_V2Response></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+             $up = array(
+                     'login_id' => $this->session->userdata('login_id'),
+                     'serial_no' => "$response->SERIALNO",
+                     'topup_val' => "$response->TOPUPVALUE",
+                     'current' => "$response->CURRENTVALUE",
+                     'prev_val' => "$response->PREVIOUSVALUE",
+                     'trans_id' => "$response->TOPUPTRANSID",
+                     'expiry' => "$response->EXPIRYDATE",
+            );         
+                $insert = $this->db->insert('topup_track',$up);
+                if($this->db->affected_rows() == 1){
+                    return $this->db->insert_id();
+                }else{
+                    return 0;
+                }
+             }else{
+                 return 0;//invalid OTP
              }
          }
     }

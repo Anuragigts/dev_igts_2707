@@ -232,8 +232,13 @@
                               <span>View Beneficiary</span>
                            </a>
                         </li>
-                        <li class=" ">
-                           <a href="#" title="Money Transfer">
+                        <li class="topup ">
+                           <a href="<?php echo base_url();?>dmr/topup" title="Topup">
+                              <span>Topup</span>
+                           </a>
+                        </li>
+                        <li class="transaction ">
+                           <a href="<?php echo base_url();?>dmr/transaction" title="Money Transfer">
                               <span>Money Transfer</span>
                            </a>
                         </li>

@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >MMID Number<font class="red mmid-imp">*</font></label>
-                                    <input name="mmid" class="form-control m-c" type="text" value="<?= set_value("mmid"); ?>"  placeholder="MMID Number">
+                                    <input name="mmid" class="form-control m-c" type="text" value="<?= set_value("mmid"); ?>"  placeholder="MMID Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="7">
                                     <span class="red"><?=  form_error('mmid');?></span>
                                 </div>
                                  <div class="col-lg-4">

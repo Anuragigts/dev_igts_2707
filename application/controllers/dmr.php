@@ -434,5 +434,124 @@ class Dmr extends CI_Controller {
         $branch =$this->common->getIfsc($bn);
         echo $branch->IFSC_Code;
     }
+    
+    public function transaction(){
+         $data = array(
+              'title'         => 'DMR :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'transfer_amt'
+             );
+         $data['login_details'] = array();        
+        
+        $login_result = $this->dmrLogin();
+        $key = '';
+        //echo $login_result->SECURITYKEY; die();
+        //print_r($login_result);die();
+        if(count($login_result) <5){
+            if($login_result == 3){ 
+               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+            }else if($login_result == 2){ 
+                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+            }else if($login_result == 0){
+                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+            }
+        }else{
+            $key = $login_result->SECURITYKEY;
+           $data['login_details'] = $login_result; 
+        }
+         if($this->input->post('transfer')){
+            $this->form_validation->set_rules('card',  'Card Number',   'required');
+            $this->form_validation->set_rules('bene',  'Beneficiary',   'required');
+            $this->form_validation->set_rules('bene_id',  'Beneficiary Id',   'required');
+            $this->form_validation->set_rules('bene_type',  'Beneficiary Type',   'required');
+            if($this->input->post('bene_type') == 'IFSC'){
+                $this->form_validation->set_rules('ifsc_cod',    'IFSC Code',              'required');
+            }
+            $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
+            $this->form_validation->set_rules('tr_des',  'Transfer Description',   'required');
+            $this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+            $this->form_validation->set_rules('mobile_no',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
+            
+            
+             if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->dotransferAmt($key);
+               
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                    redirect('dmr/transaction');
+                }
+               else if( $result == 2){                    
+                    $this->session->set_flashdata('err','Verification fail : Security Key is not valid.');  
+                      redirect('dmr/transaction');
+                }else if( $result == 3){                    
+                    $this->session->set_flashdata('err','Unknown : please try after 90 seconds.');  
+                      redirect('dmr/transaction');
+                }else if( $result == 4){                    
+                    $this->session->set_flashdata('err','Transaction failed : check your transfer amount, it is not valid.');  
+                      redirect('dmr/transaction');
+                }else{
+                     $this->session->set_flashdata('err','Unknown : Internal error.');  
+                       redirect('dmr/transaction');
+                }
+            }
+         }
+         
+         
+         $data['card'] = $this->dmr_model->getCardMore($this->session->userdata('login_id'));
+         $data['limit'] = $this->dmr_model->checktopupLimit();
+         $data['benes'] = $this->dmr_model->getBene($this->session->userdata('login_id'));
+         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function topup(){
+        $data = array(
+              'title'         => 'DMR :: TOPUP',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'topup'
+             );
+        $data['login_details'] = array();        
+        
+        $login_result = $this->dmrLogin();
+        $key = '';
+        //echo $login_result->SECURITYKEY; die();
+        //print_r($login_result);die();
+        if(count($login_result) <5){
+            if($login_result == 3){ 
+               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+            }else if($login_result == 2){ 
+                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+            }else if($login_result == 0){
+                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+            }
+        }else{
+            $key = $login_result->SECURITYKEY;
+           $data['login_details'] = $login_result; 
+        }
+        
+        if($this->input->post('topup')){
+            $this->form_validation->set_rules('amount',  'Amount',   'required');
+            $this->form_validation->set_rules('region',  'Beneficiary',   'required');
+            //$this->form_validation->set_rules('mobile_no',  'Region',   'required|min_length[10]|max_length[10]|numeric');
+            $this->form_validation->set_rules('charge',  'Service Charge',   'required');
+            if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->doTopup($key);
+               
+                if($result !=0){                    
+                    $this->session->set_flashdata('msg','Topup successfull .');  
+                    redirect('dmr/topup');
+                }
+               else{
+                     $this->session->set_flashdata('err','Unknown : Please try after some time.');  
+                       redirect('dmr/topup');
+                }
+            }
+            
+        }
+        $this->load->view('layout/inner_template',$data);
+    }
 }
     
