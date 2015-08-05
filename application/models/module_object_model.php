@@ -76,7 +76,7 @@ class Module_object_model extends CI_Model
                     return $query->result();
                 }
                 else{
-                    return 0;
+                    return array();
                 }             
         }
         public function delete_module_project($del_id){

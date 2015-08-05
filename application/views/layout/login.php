@@ -55,6 +55,8 @@
                      </div>
                   </div>
                    <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
+                   <br>
+                   <div class="text-center"><a href="<?php echo base_url()?>login/register">Register New User</a></div>
                </form>
                
             </div>
