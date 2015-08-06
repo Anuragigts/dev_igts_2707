@@ -87,6 +87,18 @@ $.extend( $.fn.dataTableExt.oPagination, {
                     $('li:last', an[i]).removeClass('disabled');
                 }
             }
+			// Add / remove disabled classes from the static elements
+                        if ( oPaging.iPage === 0 ) {
+                            $('li:first', an[i]).addClass('disabled');
+                        } else {
+                            $('li:first', an[i]).removeClass('disabled');
+                        }
+
+                        if ( oPaging.iPage === oPaging.iTotalPages-1 || oPaging.iTotalPages === 0 ) {
+                            $('li:last', an[i]).addClass('disabled');
+                        } else {
+                            $('li:last', an[i]).removeClass('disabled');
+                        }
         }
     }
 } );

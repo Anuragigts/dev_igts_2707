@@ -15,7 +15,8 @@ class Recharge extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'recharge_mobile'
              );
-       if($this->input->post('recharge')){
+       if($this->input->post('amount')){
+           //echo "hiii"; die();
             $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
             $this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');
@@ -49,7 +50,7 @@ class Recharge extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'recharge_dth'
              );
-         if($this->input->post('recharge')){
+         if($this->input->post('amount')){
             $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
             $this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');

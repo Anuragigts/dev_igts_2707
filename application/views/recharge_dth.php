@@ -62,11 +62,11 @@
                                <div class="panel panel-default">
                                     <div class="panel-heading"></div>
                                     <div class="panel-body">
-                                        <form method="post"class="form-horizontal" autocomplete="off">                                          
+                                        <form method="post"class="form-horizontal" id="recharge-form" autocomplete="off">                                          
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Operator<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <select class="select-oprator form-control" name="oprator_name" >
+                                                 <select class="select-oprator form-control" name="oprator_name" id="op_name" >
                                                      <option value="">Select</option>
                                                      <?php foreach($all_operator as $op){?>
                                                      <option value="<?php echo $op->op_name;?>" op_code="<?php echo $op->code;?>" <?php echo set_select('oprator_name',$op->op_name);?>><?php echo $op->op_name;?></option>
@@ -80,7 +80,7 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Number<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <input type="mobile"  placeholder="Number" name="mobile" value="<?= set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                                 <input type="mobile" id="num" placeholder="Number" name="mobile" value="<?= set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                                  <span class="red"><?=  form_error('mobile');?></span>
                                              </div>
                                           </div>
@@ -94,7 +94,13 @@
                                           
                                           <div class="form-group">
                                              <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" name="recharge" value="Process To Recharge" class="btn btn-sm btn-info"  />
+                                                 <!--<input type="submit" name="recharge" value="Process To Recharge" class="btn btn-sm btn-info"  />-->
+                                                 <button class="btn btn-labeled btn-success" id="confirm_dth_recharge" type="button">
+                                                    <span class="btn-label">
+                                                    <i class="fa fa-check"></i>
+                                                    </span>
+                                                     Recharge
+                                                    </button>
                                              </div>
                                              <div class="col-lg-4">                            
 <!--                                                <button id="get-plans" class="btn btn-labeled btn-info" type="button">

@@ -22,20 +22,22 @@
                     <table id="datatable1" class="table table-striped table-hover">
                        <thead>
                           <tr>
-                             <th>Number</th>
-                             <th>Amount</th>
-                             <th>Operator</th>
+                             <th >S.No.</th>
+                             <th >Number</th>
+                             <th >Amount</th>
+                             <th >Operator</th>
                              <th>Type</th>
-                             <th>Reference No.</th>
-                             <th>Transection No.</th>
-                             <th>Time</th>
-                             <th>Done By</th>                             
-                             <th>Status</th>                             
+                             <th >Reference No.</th>
+                             <th >Transection No.</th>
+                             <th >Time</th>
+                             <th >Done By</th>                             
+                             <th >Status</th>                             
                           </tr>
                        </thead>
                        <tbody>
-                           <?php foreach($details as $dl){?>
+                           <?php $i=1;foreach($details as $dl){?>
                             <tr>
+                                <td><?php echo $i; $i++;?></td>
                                 <td><?php echo $dl->number;?></td>
                                 <td><?php echo $dl->amount;?></td>
                                 <td><?php echo $dl->op_name;?></td>

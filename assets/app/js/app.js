@@ -2453,6 +2453,67 @@
       });
 
     });
+	
+	 $('#confirm_recharge').on('click', function(e){
+		var mo = $('#mobile-ope-find').val();
+		var op = $('#oprator_name').val();
+		var at = $('#amount').val();
+		//alert(op);
+      e.preventDefault();
+	  if(mo == '' || op == '' || at ==''){
+		  swal("Empty Fields!", "Please fill all fields.", "error");
+	  }else{ 
+		  swal({
+			title : "Are you sure?",
+			text : "You are going to recharge the "+ op +" Mobile "+ mo+" with Rs. "+at,
+		   // type : "info",
+			showCancelButton : true,
+			confirmButtonColor : "#DD6B55",
+			confirmButtonText : "Yes, Process it!",
+			cancelButtonText : "No, cancel plz!",
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  }, function (isConfirm) {
+			if (isConfirm) {
+			  swal("Processing!", "Your recharge is under processing.", "success");
+			  $('#recharge-form').submit();
+			} else {
+			  swal("Cancelled", "Your recharge request is cancelled", "error");
+			}
+		  });
+	  }
+
+    }); 
+	$('#confirm_dth_recharge').on('click', function(e){
+		var mo = $('#num').val();
+		var op = $('#op_name').val();
+		var at = $('#amount').val();
+		//alert(op);
+      e.preventDefault();
+	  if(mo == '' || op == '' || at ==''){
+		  swal("Empty Fields!", "Please fill all fields.", "error");
+	  }else{ 
+		  swal({
+			title : "Are you sure?",
+			text : "You are going to recharge the "+ op +"  "+ mo+" with Rs. "+at,
+		   // type : "info",
+			showCancelButton : true,
+			confirmButtonColor : "#DD6B55",
+			confirmButtonText : "Yes, Process it!",
+			cancelButtonText : "No, cancel plz!",
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  }, function (isConfirm) {
+			if (isConfirm) {
+			  swal("Processing!", "Your "+op+" recharge is under processing.", "success");
+			  $('#recharge-form').submit();
+			} else {
+			  swal("Cancelled", "Your "+op+" recharge request is cancelled", "error");
+			}
+		  });
+	  }
+
+    });
 
   });
 

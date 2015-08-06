@@ -62,7 +62,7 @@
                                <div class="panel panel-default">
                                     <div class="panel-heading"></div>
                                     <div class="panel-body">
-                                        <form method="post"class="form-horizontal" autocomplete="off">
+                                        <form method="post"class="form-horizontal" id="recharge-form" autocomplete="off">
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
                                              <div class="col-lg-9">
@@ -73,7 +73,7 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Operator<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <select class="select-oprator form-control" name="oprator_name" >
+                                                 <select class="select-oprator form-control" id="oprator_name" name="oprator_name" >
                                                      <option value="">Select</option>
                                                      <?php foreach($all_operator as $op){?>
                                                      <option value="<?php echo $op->op_name;?>" op_code="<?php echo $op->code;?>" <?php echo set_select('oprator_name',$op->op_name);?>><?php echo $op->op_name;?></option>
@@ -100,7 +100,16 @@
                                           
                                           <div class="form-group">
                                              <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" name="recharge" value="Process To Recharge" class="btn btn-sm btn-info"  />
+                                                 <input type="hidden" value="" name="recharge"/>
+                                                 <!--<input type="submit" name="recharge" value="Process To Recharge" class="btn btn-sm btn-info"  />-->
+                                                 <!--<input type="buttion" id="confirm_details" name="recharge" data-toggle="modal" data-target="#confirm_details" value="Process To Recharge" class="btn btn-sm btn-info"  />-->
+                                                 <button class="btn btn-labeled btn-success" id="confirm_recharge" type="button">
+                                                    <span class="btn-label">
+                                                    <i class="fa fa-check"></i>
+                                                    </span>
+                                                     Recharge
+                                                    </button>
+                                                 
                                              </div>
                                              <div class="col-lg-4">                            
                                                 <button id="get-plans" class="btn btn-labeled btn-info" type="button">
@@ -111,6 +120,9 @@
                                                 </button>
                                              </div>
                                           </div>
+                                            
+                                            
+                                          
                                        </form>
                                     </div>
                                  </div>

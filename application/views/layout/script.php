@@ -7,6 +7,7 @@
       element = window.event.srcElement;
       element.value = element.value.replace(new RegExp(element.getAttribute('ruleset'), 'gi'), replacement);
    }
+   
 
     var main = "<?php echo $this->uri->segment(2);?>";
     var sub = "<?php echo $this->uri->segment(3);?>";

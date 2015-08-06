@@ -28,6 +28,8 @@
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/app.css" id="maincss">
    
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/my.css" id="maincss">
+     <!-- SWEET ALERT-->
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/sweetalert/dist/sweetalert.css">
    
       <!-- =============== VENDOR SCRIPTS ===============-->
    <!-- MODERNIZR-->
@@ -50,12 +52,13 @@
 </head>
 
 <body>
+     <!--<a id="swal-demo5" href="" class="btn btn-primary">Try me!</a>-->
 <!--       <button class="btn btn-primary btn-lg" data-toggle="modal" 
           data-target="#myModal">
           Launch demo modal
        </button>
 
-        Modal 
+      
        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
           aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -139,7 +142,7 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/Flot/jquery.flot.pie.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/Flot/jquery.flot.time.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/Flot/jquery.flot.categories.js"></script>
-   <script src="<?php echo $this->config->item('assets_url') ?>vendor/flot-spline/js/jquery.flot.spline.min.js"></script>
+   <!--<script src="<?php echo $this->config->item('assets_url') ?>vendor/flot-spline/js/jquery.flot.spline.min.js"></script>-->
    <!-- CLASSY LOADER-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/jquery-classyloader/js/jquery.classyloader.min.js"></script>
    <!-- MOMENT JS-->
@@ -161,7 +164,8 @@
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
-   
+<!--   <script src="<?php //echo $this->config->item('assets_url') ?>app/js/demo/demo-rtl.js"></script>-->
+   <script src="<?php echo $this->config->item('assets_url') ?>vendor/sweetalert/dist/sweetalert.min.js"></script>
 </body>
      <?php echo $this->load->view('layout/script');?>
 </html>

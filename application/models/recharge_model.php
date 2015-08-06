@@ -208,7 +208,8 @@ class Recharge_model extends CI_Model
         $this->db->select('r.*,p.first_name,p.last_name');
         $this->db->from('recharge_track r'); 
         $this->db->join('profile as p' , 'p.login_id = r.done_by', 'Inner');
-        $this->db->where('done_by',$this->session->userdata('login_id'));        
+        $this->db->where('done_by',$this->session->userdata('login_id')); 
+        $this->db->order_by('recharge_id', 'desc');
         $query = $this->db->get();
         if($this->db->affected_rows() > 0){
             return $query->result();
