@@ -164,6 +164,7 @@
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
+    <script src="<?php echo $this->config->item('assets_url') ?>appjs/demo/demo-panels.js"></script>
 <!--   <script src="<?php //echo $this->config->item('assets_url') ?>app/js/demo/demo-rtl.js"></script>-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/sweetalert/dist/sweetalert.min.js"></script>
 </body>

@@ -17,23 +17,28 @@ class Dmr extends CI_Controller {
              );
          if($this->input->post('register')){
             $this->form_validation->set_rules('first_name',     'First Name',       'required');
-            $this->form_validation->set_rules('middle_name',    'Middle Name',      'required');
+            
             $this->form_validation->set_rules('last_name',      'Last Name',        'required');
-            $this->form_validation->set_rules('m_name',         "Mother's Name",    'required');
-            $this->form_validation->set_rules('dob',            "Date Of Birth",    'required');
-            $this->form_validation->set_rules('email',          "Email",            'required|email');
             $this->form_validation->set_rules('mobile',         'Mobile Number',    'required|min_length[10]|max_length[10]|numeric');
             $this->form_validation->set_rules('state',          'State',            'required');
             $this->form_validation->set_rules('city',           'City',             'required');
             $this->form_validation->set_rules('add',            'Address',          'required');
             $this->form_validation->set_rules('zip',            'ZIP',              'required');
-            $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
-            $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
-            $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
-            $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
-            $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
-            $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
             $this->form_validation->set_rules('kyc',            'KYC',              'required');
+            
+            if($this->input->post('kyc') != '1'){
+                $this->form_validation->set_rules('middle_name',    'Middle Name',      'required');
+                $this->form_validation->set_rules('m_name',         "Mother's Name",    'required');
+                $this->form_validation->set_rules('dob',            "Date Of Birth",    'required');
+                $this->form_validation->set_rules('email',          "Email",            'required|email');
+                $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
+                $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
+                $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
+                $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
+                $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
+                $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
+            }
+            
             
             
             if($this->form_validation->run() == TRUE){
@@ -261,15 +266,15 @@ class Dmr extends CI_Controller {
     }
 
         public function viewBeneficiary(){
-         $data = array(
-              'title'         => 'DMR :: ADD BENEFICIARY',
-              'metakeyword'   => '',
-              'metadesc'      => '',
-              'content'       => 'view_beneficiary'
-             );
-         $data['ben_details']=$this->dmr_model->getBeneficiary();
-          $this->load->view('layout/inner_template',$data);
-    }
+            $data = array(
+                 'title'         => 'DMR :: ADD BENEFICIARY',
+                 'metakeyword'   => '',
+                 'metadesc'      => '',
+                 'content'       => 'view_beneficiary'
+                );
+            //$data['ben_details']=$this->dmr_model->getBeneficiary();
+             $this->load->view('layout/inner_template',$data);
+        }
     public function editBeneficary(){
         $data = array(
               'title'         => 'DMR :: ADD BENEFICIARY',
@@ -435,7 +440,97 @@ class Dmr extends CI_Controller {
         echo $branch->IFSC_Code;
     }
     
-    public function transaction(){
+    public function dmrUserSearch(){
+         $data = array(
+              'title'         => 'DMR :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'dmr_search'
+             );
+         if($this->input->post('send')){
+              $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
+              
+               if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->searchuser();
+               
+                if(count($result) == 1){                    
+                   // $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                    redirect('dmr/beneficiaryList/'.$result->card_number);
+                    //$this->beneficiaryList($result);
+                }
+              else{
+                     $this->session->set_flashdata('msg','This number is not registered please register first');  
+                       redirect('dmr/sender_registration');
+                }
+            }
+         }
+         
+         $this->load->view('layout/inner_template',$data);
+    }
+    public function beneficiaryList(){
+         $data = array(
+              'title'         => 'DMR :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'bene_list_user'
+             );
+          $card = $this->uri->segment(3);
+          $data['login_details'] = array();        
+        
+            $login_result = $this->dmrLogin();
+            $key = '';
+            //echo $login_result->SECURITYKEY; die();
+            //print_r($login_result);die();
+            if(count($login_result) <5){
+                if($login_result == 3){ 
+                   $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+                }else if($login_result == 2){ 
+                     $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                }else if($login_result == 0){
+                     $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+                }
+            }else{
+                $key = $login_result->SECURITYKEY;
+               $data['login_details'] = $login_result; 
+            }
+             if($this->input->post('trans')){
+                 $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
+                 $this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                 $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
+                 if($this->form_validation->run() == TRUE){
+                     
+                    $result = $this->dmr_model->dotransferAmt($key,$card);
+                  
+                    if($result == 1){                    
+                        $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                        redirect('dmr/beneficiaryList/'.$card);
+                    }
+                   else if( $result == 2){                    
+                        $this->session->set_flashdata('err','Verification fail : Security Key is not valid.');  
+                          redirect('dmr/beneficiaryList/'.$card);
+                    }else if( $result == 3){                    
+                        $this->session->set_flashdata('err','Unknown : please try after 90 seconds.');  
+                          redirect('dmr/beneficiaryList/'.$card);
+                    }else if( $result == 4){                    
+                        $this->session->set_flashdata('err','Transaction failed : check your transfer amount, it is not valid.');  
+                          redirect('dmr/beneficiaryList/'.$card);
+                    }else if( $result == 0){                    
+                        $this->session->set_flashdata('err','Transaction failed : Benefeciary ID is not correct.');  
+                          redirect('dmr/beneficiaryList/'.$card);
+                    }else{
+                         $this->session->set_flashdata('err','Unknown : Internal error.');  
+                           redirect('dmr/beneficiaryList/'.$card);
+                    }
+                }
+             }
+          
+         $data['ben_details']=$this->dmr_model->getBeneficiary($card);
+         $data['limit'] = $this->dmr_model->checktopupLimit($card);
+         $this->load->view('layout/inner_template',$data);
+    }
+
+        public function transaction(){
          $data = array(
               'title'         => 'DMR :: TRANSACTION',
               'metakeyword'   => '',

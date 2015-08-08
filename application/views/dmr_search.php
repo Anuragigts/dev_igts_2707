@@ -5,15 +5,12 @@
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
-             </li> 
-             <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
-             </li>  
-             <li><a href="<?php echo base_url();?>dmr/sender_registration">Sender Registration</a>
              </li>                  
-             <li class="active">DMR Verification</li>                 
-          </ol>OTP
+                              
+             <li class="active">DMR</li>                 
+          </ol>Transfer Money
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For verification of account details</span>
+          <span class="text-sm hidden-xs">Search the user, to whom you are going to transfer </span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
@@ -42,7 +39,8 @@
                  </div>
                  </br>
              <?php }?>           
-             <br>
+             <br>            
+            
            <div class="col-lg-offset-3 col-lg-6">
                   <!-- START panel tab-->
                  
@@ -53,31 +51,23 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                    <div class="panel-heading"> OTP will send On your mobile, If Unable to get the SMS Please resend the OTP.</div>
+                                    <div class="panel-heading"> Enter your with Mobile number</div>
                                     <div class="panel-body">                                       
-                                        <form method="post"class="form-horizontal" autocomplete="off">                                          
-                                          
+                                        <form method="post"class="form-horizontal" autocomplete="off">
                                           <div class="form-group">
-                                             <label class="col-lg-3 control-label">Transection Id<font class="red">*</font></label>
-                                             <div class="col-lg-9">
-                                                 <input name="trans" class="form-control" type="text" value="<?= $details->transection_id; ?>" readonly="readonly" >
-                                                 <span class="red"><?=  form_error('trans');?></span>
-                                             </div>
-                                          </div>
-                                          <div class="form-group">
-                                              <label class="col-lg-3 control-label">OTP<font class="red">*</font></label>
+                                              <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
                                                 <div class="col-lg-9">
-                                                    <input name="otp" id="code" class="form-control" type="password" value="<?= set_value("otp"); ?>" placeholder="******">
-                                                    <span class="red"><?=  form_error('otp');?></span>
+                                                    <input name="mobile"  class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                                    <span class="red"><?=  form_error('mobile');?></span>
                                                 </div>
                                           </div>
                                           
                                           <div class="form-group">
                                              <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" class="btn btn-sm btn-info" name="send" value="Verify" />                                                
+                                                 <input type="submit" class="btn btn-sm btn-info" name="send" value="Search" />                                                
                                              </div>
                                              <div class="col-lg-4">                            
-                                                 <a href="<?php echo base_url()?>dmr/resendOTP/<?php echo $details->transection_id;?>/<?php echo $this->uri->segment(3);?>"><buttion  class="btn btn-sm btn-warning" name="send"  />Resend Send OTP</buttion></a>
+                                                 <a href="<?php echo base_url()?>dmr/sender_registration"><buttion  class="btn btn-sm btn-warning" name="send"  />New Registration For DMR</buttion></a>
                                              </div>
                                           </div>
                                        </form>

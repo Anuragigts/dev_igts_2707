@@ -541,12 +541,12 @@ class Dmr_model extends CI_Model
         }   
     }
     
-    public function getBeneficiary(){
-        $login_id = $this->session->userdata('login_id');
+    public function getBeneficiary($card){
+        //$login_id = $this->session->userdata('login_id');
         $this->db->select('d.*');
         $this->db->from('beneficiary_track d'); 
        
-        $this->db->where('d.login_id',$login_id);        
+        $this->db->where('d.card_no',$card);        
         $this->db->where('d.status_code','0');        
         $query = $this->db->get();
         if($query->num_rows() > 0){
@@ -1039,9 +1039,9 @@ class Dmr_model extends CI_Model
     }
 
 
-    public function checktopupLimit(){
+    public function checktopupLimit($card){
         $url = DMRURL; 
-       $data = $this->getCardMore($this->session->userdata('login_id'));
+       //$data = $this->getCardMore($this->session->userdata('login_id'));
        
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
                 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1053,7 +1053,7 @@ class Dmr_model extends CI_Model
                             &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                            &lt;CARDNO&gt;'.$data->card_number.'&lt;/CARDNO&gt;
+                            &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
                             
                             &lt;/CHECKTOPUPLIMITREQUEST&gt;
@@ -1104,15 +1104,22 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function dotransferAmt($key){
+    public function dotransferAmt($key,$card){
          $url = DMRURL; 
+         
        //$data = $this->getCardMore($this->session->userdata('login_id'));
-       
-         if($this->input->post('bene_type') == 'MMID'){
+         $ben_id = $this->input->post('ben_id');
+         $ben_details = $this->get_ben($ben_id);
+        if(count($ben_details) == 0){
+            return 0;
+        }
+         if($ben_details->ben_type == 'MMID'){
              $val = '1';
-             echo $val;
+             $desc = $ben_details->ben_mmid;
+            
          }else{
              $val = '2';
+             $desc = $ben_details->acc;
          }
         
         $a = mt_rand(100000,999999); 
@@ -1131,19 +1138,19 @@ class Dmr_model extends CI_Model
                             &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                            &lt;CARDNO&gt;'.$this->input->post('card').'&lt;/CARDNO&gt;
+                            &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;TRANSTYPE&gt;'.$val.'&lt;/TRANSTYPE&gt;
-                            &lt;TRANSTYPEDESC&gt;'.$this->input->post('tr_des').'&lt;/TRANSTYPEDESC&gt;
-                            &lt;BENEMOBILE&gt;'.$this->input->post('mobile_no').'&lt;/BENEMOBILE&gt;
-                            &lt;IFSCCODE&gt;'.$this->input->post('ifsc_cod').'&lt;/IFSCCODE&gt;
+                            &lt;TRANSTYPEDESC&gt;'.$desc.'&lt;/TRANSTYPEDESC&gt;
+                            &lt;BENEMOBILE&gt;'.$ben_details->ben_mobile.'&lt;/BENEMOBILE&gt;
+                            &lt;IFSCCODE&gt;'.$ben_details->bank_ifsc.'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
                             &lt;SERVICECHARGE&gt;'.$this->input->post('tr_charge').'&lt;/SERVICECHARGE&gt;
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
-                            &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
+                            &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
-                            &lt;PARAM1&gt;'.$this->input->post('agent_charge').'&lt;/PARAM1&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
                             &lt;PARAM4&gt;'.$key.'&lt;/PARAM4&gt;
@@ -1187,7 +1194,7 @@ class Dmr_model extends CI_Model
 
              $response = simplexml_load_string($final[0]);
 
-
+            // print_r($response);die();
              if($response->STATUSCODE == 0){
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
@@ -1197,6 +1204,7 @@ class Dmr_model extends CI_Model
                      'status' => "$response->TRANSACTIONSTATUS",
                      'responce_code' => "$response->RESPONSECODE",
                      'rrn' => "$response->RRN",
+                     'responce_cd' => "$response->STATUSCODE",
                      'ben_name' => "$response->BENENAME"
             );         
                 $insert = $this->db->insert('transection_track',$up);
@@ -1209,6 +1217,17 @@ class Dmr_model extends CI_Model
              }else if($response->STATUSCODE == 1){
                  return 2;
              }else if($response->STATUSCODE == 2){
+                 $up = array(
+                     'login_id' => $this->session->userdata('login_id'),
+                     'to_id'    => $this->input->post('bene'),
+                     'amount'    =>$this->input->post('tr_amt'),
+                     'track_id' => "$track_id",
+                     'status' => "$response->TRANSACTIONSTATUS",                     
+                     'responce_cd' => "$response->STATUSCODE",                     
+                     'rrn' => "$response->RRN",
+                     
+            );       
+                 $insert = $this->db->insert('transection_track',$up);
                  return 3;
              }else if($response->STATUSCODE == 3){
                  return 4;
@@ -1316,5 +1335,23 @@ class Dmr_model extends CI_Model
                  return 0;//invalid OTP
              }
          }
+    }
+    
+    public function searchuser(){
+        $mobile = $this->input->post('mobile');
+        $query = $this->db->get_where('dmr_registration_track', array('mobile' => $mobile));
+        if($query && $query->num_rows()== 1){
+              return $query->row();
+           }else{
+               return array();
+           }
+    }
+    public function get_ben($ben_id){
+        $query = $this->db->get_where('beneficiary_track', array('beneid' => $ben_id));
+        if($query && $query->num_rows()== 1){
+              return $query->row();
+           }else{
+               return array();
+           }
     }
 }

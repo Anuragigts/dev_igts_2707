@@ -6,7 +6,8 @@
           <ol class="breadcrumb pull-right">
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
              </li>                  
-                              
+              <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
+             </li>                   
              <li class="active">Beneficiary OTP</li>                 
           </ol>Beneficiary Verification
           <!-- Small text for title-->

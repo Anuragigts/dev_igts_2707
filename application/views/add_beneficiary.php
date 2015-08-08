@@ -6,9 +6,9 @@
           <ol class="breadcrumb pull-right">
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
              </li>                  
-             <li><a href="<?php echo base_url();?>dmr/viewBeneficiary">View Beneficiary</a>
+             <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
              </li>                  
-             <li class="active">DMR</li>                 
+             <li class="active">DMR Beneficiary</li>                 
           </ol>Add Beneficiary
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">Add Users in Beneficiary for transfer money</span>
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                      <label for="Mobile" >IFSC Code<font class="red ifsc-imp">*</font></label>
-                                     <input name="ifsc_code" class="form-control " id="ifsc" type="text" value="<?= set_value("ifsc_code"); ?>" placeholder="IFSC Code" readonly="readonly">
+                                     <input name="ifsc_code" class="form-control  b-c" id="ifsc" type="text" value="<?= set_value("ifsc_code"); ?>" placeholder="IFSC Code" >
                                     <span class="red"><?=  form_error('ifsc_code');?></span>
                                 </div>
                                 <div class="col-lg-4">

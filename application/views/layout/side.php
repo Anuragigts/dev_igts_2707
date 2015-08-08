@@ -116,53 +116,7 @@
                         </li>
                      </ul>
                   </li>
-                  <li class="nav-heading ">
-                     <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
-                  </li>
-                   <li class="package create_package view_package">
-                     <a href="#pack" title="Layouts" data-toggle="collapse">
-                        <em class="fa fa-database"></em>
-                        <span>Package</span>
-                     </a>
-                     <ul id="pack" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Package</li>
-                        <li class="create_package">
-                           <a href="<?= base_url()?>package/create_package" title="Create Package">
-                              <span>Create</span>
-                           </a>
-                        </li>
-                        <li class="view_package">
-                           <a href="<?= base_url()?>package/view_package" title="View Package">
-                              <span>View</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                   <li class="module_object create_module_object view_module_object">
-                     <a href="#services" title="Layouts" data-toggle="collapse">
-                        <em class="fa fa-cogs"></em>
-                        <span>Services Type</span>
-                     </a>
-                     <ul id="services" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header module_object create_module_object">Services Type</li>
-                        <li class="create_module_object">
-                           <a href="<?= base_url()?>module_object/create_module_object" title="Create Module Object">
-                              <span>Create</span>
-                           </a>
-                        </li>
-                        <li class="view_module_object">
-                           <a href="<?= base_url()?>module_object/view_module_object" title="View Module Objects">
-                              <span>View</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class=" ">
-                     <a href="#" title="View Modules">
-                         <em class="fa fa-cubes"></em>                        
-                        <span data-localize="sidebar.nav.DASHBOARD">View Modules</span>
-                     </a>                    
-                  </li>  
+                   
                   
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
@@ -217,34 +171,85 @@
                      </a>
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
-                        <li class="sender_registration">
-                           <a href="<?php echo base_url();?>dmr/sender_registration" title="Register For DMR">
+<!--                        <li class="sender_registration">
+                           <a href="<?php // echo base_url();?>dmr/sender_registration" title="Register For DMR">
                               <span>Sender Registration</span>
                            </a>
                         </li>
                         <li class="addBeneficiary ">
-                           <a href="<?php echo base_url();?>dmr/addBeneficiary" title="Add Beneficiary">
+                           <a href="<?php // echo base_url();?>dmr/addBeneficiary" title="Add Beneficiary">
                               <span>Add Beneficiary</span>
                            </a>
-                        </li>
-                        <li class="viewBeneficiary ">
-                           <a href="<?php echo base_url();?>dmr/viewBeneficiary" title="Add Beneficiary">
+                        </li>-->
+<!--                        <li class="viewBeneficiary ">
+                           <a href="<?php // echo base_url();?>dmr/viewBeneficiary" title="Add Beneficiary">
                               <span>View Beneficiary</span>
                            </a>
-                        </li>
+                        </li>-->
                         <li class="topup ">
                            <a href="<?php echo base_url();?>dmr/topup" title="Topup">
                               <span>Topup</span>
                            </a>
                         </li>
-                        <li class="transaction ">
+                        <li class="dmrUserSearch ">
+                           <a href="<?php echo base_url();?>dmr/dmrUserSearch" title="Money Transfer">
+                              <span>Money Transfer</span>
+                           </a>
+                        </li>
+<!--                        <li class="transaction ">
                            <a href="<?php echo base_url();?>dmr/transaction" title="Money Transfer">
                               <span>Money Transfer</span>
+                           </a>
+                        </li>-->
+                     </ul>
+                  </li>
+                  <li class="nav-heading ">
+                     <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
+                  </li>
+                   <li class="package create_package view_package">
+                     <a href="#pack" title="Layouts" data-toggle="collapse">
+                        <em class="fa fa-database"></em>
+                        <span>Package</span>
+                     </a>
+                     <ul id="pack" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Package</li>
+                        <li class="create_package">
+                           <a href="<?= base_url()?>package/create_package" title="Create Package">
+                              <span>Create</span>
+                           </a>
+                        </li>
+                        <li class="view_package">
+                           <a href="<?= base_url()?>package/view_package" title="View Package">
+                              <span>View</span>
                            </a>
                         </li>
                      </ul>
                   </li>
-                  
+                   <li class="module_object create_module_object view_module_object">
+                     <a href="#services" title="Layouts" data-toggle="collapse">
+                        <em class="fa fa-cogs"></em>
+                        <span>Services Type</span>
+                     </a>
+                     <ul id="services" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header module_object create_module_object">Services Type</li>
+                        <li class="create_module_object">
+                           <a href="<?= base_url()?>module_object/create_module_object" title="Create Module Object">
+                              <span>Create</span>
+                           </a>
+                        </li>
+                        <li class="view_module_object">
+                           <a href="<?= base_url()?>module_object/view_module_object" title="View Module Objects">
+                              <span>View</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  <li class=" ">
+                     <a href="#" title="View Modules">
+                         <em class="fa fa-cubes"></em>                        
+                        <span data-localize="sidebar.nav.DASHBOARD">View Modules</span>
+                     </a>                    
+                  </li> 
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
