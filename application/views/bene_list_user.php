@@ -59,7 +59,7 @@
                             </a>
                          </div>
                          <!-- .panel-wrapper is the element to be collapsed-->
-                         <div class="panel-wrapper collapse">
+                         <div class="panel-wrapper collapsing">
                              <form method="post">
                                 <div class="panel-body">
                                     <div class="row">
@@ -93,6 +93,7 @@
                                             <?php }else{ ?>
                                                 <a href="<?php echo base_url()?>dmr/beneficiaryOTP/<?php echo $dl->ben_id;?>" class="btn btn-warning" > Verify</a>
                                             <?php }?>
+                                             
                                          </div> 
                                      </div>
                                  </div>

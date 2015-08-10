@@ -14,7 +14,8 @@ class Dmr_model extends CI_Model
                 'name'         => $this->input->post('first_name').' '.$this->input->post('middle_name').' '.$this->input->post('last_name'),
                 'mobile'            => $this->input->post('mobile'),
                 'transection_id'    => $track_id,
-                'email'             => $this->input->post('email')
+                'email'             => $this->input->post('email'),
+                'kyc'             => $this->input->post('kyc')
             );
          
         $insert = $this->db->insert('dmr_registration_track',$data_insert);
@@ -1353,5 +1354,122 @@ class Dmr_model extends CI_Model
            }else{
                return array();
            }
+    }
+    
+    public function getSender(){
+       $user = $this->session->userdata('login_id');
+       $where = '';
+       if($user != 1){
+           $where = " AND d.login_id = $user";
+       }
+       $query = $this->db->query(" SELECT d.*, p.first_name FROM dmr_registration_track d  "
+               . " INNER JOIN profile p ON p.login_id = d.login_id "
+               . "WHERE d.card_number <> '' $where ORDER BY d.d_id desc");
+       if($query && $query->num_rows()> 0){
+             return $query->result();
+         }else{
+             return array();
+         }
+    }
+    
+    public function getSenderdetail($id ){
+        $query = $this->db->query(" SELECT d.* FROM dmr_registration_track d  "              
+               . "WHERE d.card_number <> '' AND  d_id = $id ");
+       if($query && $query->num_rows()> 0){
+             return $query->row();
+         }else{
+             return array();
+         }
+    }
+    public function upgradeToKYC($id){
+        $url = DMRURL; 
+         $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <KYCUPLOAD xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;KYCUPLOADREQUEST&gt;
+                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$this->input->post('card').'&lt;/CARDNO&gt;
+                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                    &lt;KYCFLAG&gt;2&lt;/KYCFLAG&gt;
+                                  
+                                   &lt;USERNAME&gt;'.$this->input->post('first_name').'&lt;/USERNAME&gt;
+                                   &lt;USERMIDDLENAME&gt;'.$this->input->post('middle_name').'&lt;/USERMIDDLENAME&gt;
+                                   &lt;USERLASTNAME&gt;'.$this->input->post('last_name').'&lt;/USERLASTNAME&gt;
+                                   &lt;USERMOTHERSMAIDENNAME&gt;'.$this->input->post('m_name').'&lt;/USERMOTHERSMAIDENNAME&gt;
+                                   &lt;USERDATEOFBIRTH&gt;'.$this->input->post('dob').'&lt;/USERDATEOFBIRTH&gt;
+                                   &lt;USEREMAILID&gt;'.$this->input->post('email').'&lt;/USEREMAILID&gt;
+                                   
+                                    &lt;USERSTATE&gt;'.$this->input->post('state').'&lt;/USERSTATE&gt;
+                                    &lt;USERCITY&gt;'.$this->input->post('city').'&lt;/USERCITY&gt;
+                                    &lt;USERADDRESS&gt;'.$this->input->post('add').'&lt;/USERADDRESS&gt;
+                                    &lt;PINCODE&gt;'.$this->input->post('zip').'&lt;/PINCODE&gt;
+                                        
+
+                                    &lt;IDPROOFTYPE&gt;'.$this->input->post('id_proof_type').'&lt;/IDPROOFTYPE&gt;
+                                    &lt;IDPROOF&gt;'.$this->input->post('id_proof').'&lt;/IDPROOF&gt;
+                                    &lt;IDPROOFURL&gt;'.$this->input->post('id_proof_url').'&lt;/IDPROOFURL&gt;
+                                    &lt;ADDRESSPROOFTYPE&gt;'.$this->input->post('address_proof_type').'&lt;/ADDRESSPROOFTYPE&gt;
+                                    &lt;ADDRESSPROOF&gt;'.$this->input->post('address_proof').'&lt;/ADDRESSPROOF&gt;
+                                    &lt;ADDRESSPROOFURL&gt;'.$this->input->post('address_proof_url').'&lt;/ADDRESSPROOFURL&gt;                                   
+                                    &lt;/KYCUPLOADREQUEST&gt;
+                              </RequestData>
+                            </KYCUPLOAD>
+                          </soap:Body>
+                        </soap:Envelope>';
+
+
+                   $curl = curl_init();
+
+                   curl_setopt ($curl, CURLOPT_URL, $url);
+                   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                   curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                   curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                       'SOAPAction:'.DMRACTIUON.'KYCUPLOAD',
+                       'Content-Type: text/xml; charset=utf-8;',
+                   ));
+
+                    curl_setopt ($curl, CURLOPT_POST, 1);
+
+                   curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                   $result = curl_exec($curl);                 
+                   curl_close ($curl);
+                   //echo $result; die();
+                $first_tag = explode('<KYCUPLOADResult>', $result);       
+                //print_r($first_tag);die();
+                if(count($first_tag)!= 2 ){
+                    return 0;
+                }else{
+                    $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+
+                    $final = explode('</KYCUPLOADResult></KYCUPLOADResponse></soap:Body></soap:Envelope>', $get_full);
+
+                    $response = simplexml_load_string($final[0]);
+                    if($response->STATUSCODE == 20){
+                        return 20;
+                    }else if($response->STATUSCODE == 0){
+                        $data_status = array(
+                                 'kyc'       => "$response->STATUSCODE"
+                             );
+
+                            $this->db->where('d_id',$id);
+                           $update = $this->db->update('dmr_registration_track',$data_status);   
+                         if($this->db->affected_rows() == 1){
+                              return 1;
+                         }else{
+                             return 0;
+                         }
+
+                    }else{
+                        return 0;
+                    }
+                }
     }
 }

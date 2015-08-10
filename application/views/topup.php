@@ -46,7 +46,7 @@
                                         <option value="5" <?php echo set_select('region',5, ( !empty($data) && $data == "5") ? TRUE : FALSE )?>>Others</option>
                                         
                                     </select>
-                                    <span class="red"><?=  form_error('tr_charge');?></span>
+                                    <span class="red"><?=  form_error('region');?></span>
                                 </div>
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>

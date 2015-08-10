@@ -250,7 +250,7 @@ class Dmr extends CI_Controller {
                 //echo $result;exit;
                 if($result == 1){                    
                     $this->session->set_flashdata('msg','Your Verification is successfull .');  
-                    redirect('dmr/viewBeneficiary');
+                    redirect('dmr/beneficiaryList/'.$ben_id);
                 }
                else if( $result == 2){                    
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
@@ -628,7 +628,7 @@ class Dmr extends CI_Controller {
         
         if($this->input->post('topup')){
             $this->form_validation->set_rules('amount',  'Amount',   'required');
-            $this->form_validation->set_rules('region',  'Beneficiary',   'required');
+            $this->form_validation->set_rules('region',  'Region',   'required');
             //$this->form_validation->set_rules('mobile_no',  'Region',   'required|min_length[10]|max_length[10]|numeric');
             $this->form_validation->set_rules('charge',  'Service Charge',   'required');
             if($this->form_validation->run() == TRUE){
@@ -646,6 +646,87 @@ class Dmr extends CI_Controller {
             }
             
         }
+        $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function senderList(){
+         $data = array(
+              'title'         => 'DMR :: SENDER LIST',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'senderList'
+             );
+         $data['senders']= $this->dmr_model->getSender();
+         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function doKyc(){
+        $data = array(
+              'title'         => 'DMR :: DO KYC',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'non_to_kyc'
+             );
+        $id = $this->uri->segment(3);
+        $data['login_details'] = array();        
+        
+        $login_result = $this->dmrLogin();
+        $key = '';
+        //echo $login_result->SECURITYKEY; die();
+        //print_r($login_result);die();
+        if(count($login_result) <5){
+            if($login_result == 3){ 
+               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+            }else if($login_result == 2){ 
+                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+            }else if($login_result == 0){
+                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+            }
+        }else{
+            $key = $login_result->SECURITYKEY;
+           $data['login_details'] = $login_result; 
+        }
+        if($this->input->post('kyc')){
+            $this->form_validation->set_rules('first_name',     'First Name',       'required');            
+            $this->form_validation->set_rules('last_name',      'Last Name',        'required');
+             $this->form_validation->set_rules('state',          'State',            'required');
+            $this->form_validation->set_rules('city',           'City',             'required');
+            $this->form_validation->set_rules('add',            'Address',          'required');
+            $this->form_validation->set_rules('zip',            'ZIP',              'required');
+           
+        $this->form_validation->set_rules('middle_name',    'Middle Name',      'required');
+        $this->form_validation->set_rules('m_name',         "Mother's Name",    'required');
+        $this->form_validation->set_rules('dob',            "Date Of Birth",    'required');
+        $this->form_validation->set_rules('email',          "Email",            'required|email');
+        $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
+        $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
+        $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
+        $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
+        $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
+        $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
+            
+            if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->upgradeToKYC($id);
+                //echo $result;exit;
+                if($result == 0){                    
+                    $this->session->set_flashdata('err','Upgradation  fail : Some internal error occurred.');  
+                     redirect('dmr/doKyc/'.$id);
+                }
+              else{
+                    $this->session->set_flashdata('msg','Your Upgradation  is successfull.');  
+                    redirect('dmr/senderList');
+                     
+                }
+            }
+        }
+        
+        
+         $india = '101';
+        $data['states']=$this->common->getState($india);
+        $data['citys']=$this->common->getcity();
+        $data['sender_details'] = $this->dmr_model->sender_details();
+        $data['sender']= $this->dmr_model->getSenderdetail($id );
         $this->load->view('layout/inner_template',$data);
     }
 }

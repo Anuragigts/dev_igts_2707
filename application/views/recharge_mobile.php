@@ -84,9 +84,9 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <label class="col-lg-3 control-label">Circle<font class="red">*</font></label>
+                                             <label class="col-lg-3 control-label">Circle Area<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control" value="<?= set_value("circle"); ?>" >
+                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control" value="<?= set_value("circle"); ?>" value="<?= set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                                  <span class="red"><?=  form_error('circle');?></span>
                                              </div>
                                           </div>

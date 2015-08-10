@@ -28,7 +28,7 @@
                              <th >Operator</th>
                              <th>Type</th>
                              <th >Reference No.</th>
-                             <th >Transection No.</th>
+                             <th >Transaction No.</th>
                              <th >Time</th>
                              <th >Done By</th>                             
                              <th >Status</th>                             

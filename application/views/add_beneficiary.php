@@ -60,7 +60,7 @@
                             <div class="panel-body">
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Beneficiary Name<font class="red">*</font></label>
-                                    <input name="b_name" class="form-control" type="text" value="<?= set_value("b_name"); ?>" placeholder="Beneficiary Name">
+                                    <input name="b_name" class="form-control" type="text" value="<?= set_value("b_name"); ?>" placeholder="Beneficiary Name" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                     <span class="red"><?=  form_error('b_name');?></span>
                                 </div>
                                 <div class="col-lg-4">

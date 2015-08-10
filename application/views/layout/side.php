@@ -171,21 +171,7 @@
                      </a>
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
-<!--                        <li class="sender_registration">
-                           <a href="<?php // echo base_url();?>dmr/sender_registration" title="Register For DMR">
-                              <span>Sender Registration</span>
-                           </a>
-                        </li>
-                        <li class="addBeneficiary ">
-                           <a href="<?php // echo base_url();?>dmr/addBeneficiary" title="Add Beneficiary">
-                              <span>Add Beneficiary</span>
-                           </a>
-                        </li>-->
-<!--                        <li class="viewBeneficiary ">
-                           <a href="<?php // echo base_url();?>dmr/viewBeneficiary" title="Add Beneficiary">
-                              <span>View Beneficiary</span>
-                           </a>
-                        </li>-->
+
                         <li class="topup ">
                            <a href="<?php echo base_url();?>dmr/topup" title="Topup">
                               <span>Topup</span>
@@ -196,11 +182,11 @@
                               <span>Money Transfer</span>
                            </a>
                         </li>
-<!--                        <li class="transaction ">
-                           <a href="<?php echo base_url();?>dmr/transaction" title="Money Transfer">
-                              <span>Money Transfer</span>
+                        <li class="senderList ">
+                           <a href="<?php echo base_url();?>dmr/senderList" title="Sender List">
+                              <span>Sender List</span>
                            </a>
-                        </li>-->
+                        </li>
                      </ul>
                   </li>
                   <li class="nav-heading ">
