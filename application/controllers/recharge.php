@@ -5,6 +5,7 @@ class Recharge extends CI_Controller {
         parent::__construct();
         $this->load->library('form_validation');   
         $this->load->model('recharge_model');
+        if( $this->session->userdata('login_id') == ''){redirect('login');}
     }
     
      public function mobile_recharge(){

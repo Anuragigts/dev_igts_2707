@@ -83,10 +83,10 @@
                                    </select>
                                    <span class="red"><?=  form_error('t_type');?></span>
                                </div>
-                               <div class="col-lg-9 ">
+                               <div class="col-lg-10 ">
                                    <?php echo $filter_by;?>
                                </div>
-                               <div class="col-lg-3 text-right">
+                               <div class="col-lg-2 text-right">
                                    <input type="submit" name="search" value="Search" class="btn btn-info" />
                                </div>
                            </div>

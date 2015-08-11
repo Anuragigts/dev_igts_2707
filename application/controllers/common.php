@@ -10,6 +10,7 @@ class Common extends CI_Controller {
             parent::__construct();
             $this->load->model('common_model');
             date_default_timezone_set('Asia/Kolkata');  
+            if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 //	public function country(){
 //                $val    =   $this->common_model->getCountries();

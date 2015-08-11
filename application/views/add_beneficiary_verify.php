@@ -33,13 +33,7 @@
                                         <span class="red"><?=  form_error('card_no');?></span>
                                     </div>
                                 </div>
-<!--                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                       <label for="code" >Transection Number<font class="red">*</font></label>
-                                        <input name="trans_no" id="code" class="form-control" type="text" value="" readonly="readonly" >
-                                        <span class="red"></span>
-                                    </div>
-                                </div>-->
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                        <label for="code" >Beneficiary Type<font class="red">*</font></label>

@@ -49,6 +49,8 @@
                              <?php if($dl->ben_mobile != ''){?>
                              ,&nbsp;&nbsp;&nbsp;&nbsp;<b>Mobile : </b> <?php echo $dl->ben_mobile;?>
                              <?php }?>&nbsp;&nbsp
+                             <b>Account : </b><?php if($dl->verification == 1){echo "Verified";}else{echo "Not Verified";}?>
+                             &nbsp;&nbsp&nbsp;&nbsp
                              <?php if($dl->otp == 1){?>
                              <i class="fa fa-check-circle green" title="Verified"></i>
                              <?php }else{?>
@@ -91,7 +93,14 @@
                                               <?php  if($dl->otp == 1){?>
                                               <input type="submit" name="trans" class="btn btn-info" value="Transfer Amount">
                                             <?php }else{ ?>
-                                                <a href="<?php echo base_url()?>dmr/beneficiaryOTP/<?php echo $dl->ben_id;?>" class="btn btn-warning" > Verify</a>
+                                                <a href="<?php echo base_url()?>dmr/beneficiaryOTP/<?php echo $dl->ben_id;?>" class="btn btn-warning" >OTP Verify</a>
+                                            <?php }?>
+                                             
+                                         </div> 
+                                          <div class="col-lg-3">
+                                              <?php  if($dl->verification != 1){?>
+                                              <a href="<?php echo base_url()?>dmr/accountVerification/<?php echo $dl->ben_id;?>/<?php echo $this->uri->segment(3);?>" class="btn btn-warning" >Account Verification</a>
+                                            
                                             <?php }?>
                                              
                                          </div> 

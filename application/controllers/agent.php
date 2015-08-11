@@ -6,7 +6,8 @@ class Agent extends CI_Controller {
             $this->load->library('form_validation');
             $this->load->model('common_model');
             $this->load->model('agent_model');
-            date_default_timezone_set('Asia/Kolkata');  
+            date_default_timezone_set('Asia/Kolkata');
+            if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_agent(){
                 $data = array(

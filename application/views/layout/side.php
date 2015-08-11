@@ -187,6 +187,11 @@
                               <span>Sender List</span>
                            </a>
                         </li>
+<!--                        <li class="dmrAgents">
+                           <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
+                              <span>DMR Agents</span>
+                           </a>
+                        </li>-->
                      </ul>
                   </li>
                   <li class="nav-heading ">

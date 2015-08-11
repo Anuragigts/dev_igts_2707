@@ -294,6 +294,8 @@ class Dmr_model extends CI_Model
     
     public function dmrLogin(){
         $getmo = $this->sender_details();
+       
+        if(count($getmo)>0){
         $mobile = $getmo->mobile;
         $pin = $getmo->pin;
         if($pin != ''){
@@ -362,6 +364,9 @@ class Dmr_model extends CI_Model
          }
         }else{
             return 3;
+        }
+        }else{
+            return 4;
         }
         
     }
@@ -503,7 +508,7 @@ class Dmr_model extends CI_Model
                     $final = explode('</ADDBENEFICIARYResult></ADDBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                    print_r($response);
+                   // print_r($response);
                      if($response->STATUSCODE == 0){
                         $data_status = array(
                                  'status_code'       => "$response->STATUSCODE",
@@ -542,6 +547,385 @@ class Dmr_model extends CI_Model
         }   
     }
     
+    public function addVerifyBeneficiary(){
+        $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMIBEN'.$a;
+         $data_insert = array(                
+                'login_id'          => $this->session->userdata('login_id'),
+                'card_no'           => $this->input->post('card_no'),
+                'ben_type'          => $this->input->post('b_type'),
+                'track_id'          => $track_id,
+                'ben_name'          => $this->input->post('b_name'),
+                'ben_mmid'          => $this->input->post('mmid'),
+                'ben_mobile'        => $this->input->post('mobile'),
+                'bank_name'         => $this->input->post('bank_name'),
+                'bank_state'        => $this->input->post('state'),
+                'bank_city'         => $this->input->post('city'),
+                'bank_branch'       => $this->input->post('branch_name'),
+                'bank_ifsc'         => $this->input->post('ifsc_code'),
+                'acc'               => $this->input->post('ac_no'),
+                'verification'      => 0
+            );
+         
+        $insert = $this->db->insert('beneficiary_track',$data_insert);
+        if($this->db->affected_rows() == 1){           
+            
+            $my_DMR_id = $this->db->insert_id();
+            $url = DMRURL; 
+            
+            if($this->input->post('b_type') == 'IFSC'){
+                $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <ADDBENEFICIARY xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;ADDBENEFICIARYREQUEST&gt;
+                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
+                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
+                                   &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
+                                   &lt;MMID&gt;&lt;/MMID&gt;
+                                   &lt;BENEMOBILE&gt;&lt;/BENEMOBILE&gt;
+                                   &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
+                                   &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
+                                   &lt;CITY&gt;'.$this->input->post('city').'&lt;/CITY&gt;
+                                   &lt;STATE&gt;'.$this->input->post('state').'&lt;/STATE&gt;
+                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;ACCOUNTNO&gt;'.$this->input->post('ac_no').'&lt;/ACCOUNTNO&gt;
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                                    &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                                    &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                                    &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                                    &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                                    &lt;/ADDBENEFICIARYREQUEST&gt;
+                              </RequestData>
+                            </ADDBENEFICIARY>
+                          </soap:Body>
+                        </soap:Envelope>';
+            }else{
+                   $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <ADDBENEFICIARY xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;ADDBENEFICIARYREQUEST&gt;
+                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
+                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
+                                   &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
+                                   &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
+                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt;
+                                   &lt;BANKNAME&gt;&lt;/BANKNAME&gt;
+                                   &lt;BRANCHNAME&gt;&lt;/BRANCHNAME&gt;
+                                   &lt;CITY&gt;&lt;/CITY&gt;
+                                   &lt;STATE&gt;&lt;/STATE&gt;
+                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;ACCOUNTNO&gt;&lt;/ACCOUNTNO&gt;
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                                    &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                                    &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                                    &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                                    &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                                    &lt;/ADDBENEFICIARYREQUEST&gt;
+                              </RequestData>
+                            </ADDBENEFICIARY>
+                          </soap:Body>
+                        </soap:Envelope>';
+            }
+
+
+                   $curl = curl_init();
+
+                   curl_setopt ($curl, CURLOPT_URL, $url);
+                   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                   curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                   curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                       'SOAPAction:'.DMRACTIUON.'ADDBENEFICIARY',
+                       'Content-Type: text/xml; charset=utf-8;',
+                   ));
+
+                    curl_setopt ($curl, CURLOPT_POST, 1);
+
+                   curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                   $result = curl_exec($curl);                 
+                   curl_close ($curl);
+                  
+                $first_tag = explode('<ADDBENEFICIARYResult>', $result);       
+                
+                if(count($first_tag)!= 2 ){
+                    return 0;
+                }else{
+                    $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+
+                    $final = explode('</ADDBENEFICIARYResult></ADDBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
+
+                    $response = simplexml_load_string($final[0]);
+                   // print_r($response);
+                     if($response->STATUSCODE == 0){
+                        $data_status = array(
+                                 'status_code'       => "$response->STATUSCODE",
+                                 'status'           => "$response->STATUS",
+                                 'otp_status'      => "$response->OTPSTATUS",
+                                 'beneid'           => "$response->BENEID"
+                             );
+
+                            $this->db->where('ben_id',$my_DMR_id);
+                           $update = $this->db->update('beneficiary_track',$data_status);   
+                        
+                    } if($response->STATUSCODE == 1){
+                        $data_status = array(
+                                 'status_code'       => "$response->STATUSCODE",
+                                 'status'           => "$response->STATUS",
+                                 'otp_status'      => "$response->OTPSTATUS",
+                                 'beneid'           => "$response->BENEID"
+                             );
+
+                            $this->db->where('ben_id',$my_DMR_id);
+                           $update = $this->db->update('beneficiary_track',$data_status);   
+                       
+                    }
+                    
+                }
+                
+            if($this->input->post('b_type') == 'IFSC'){
+                $type = 2;
+                $id = $this->input->post('ac_no');
+            }else{
+                $type = 1;
+                $id = $this->input->post('mmid');
+            }
+                $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <TRANSACTION_V2 xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;TRANSACTION_V2REQUEST&gt;
+                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
+                                   &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
+                                   &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
+                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;OTP&gt;&lt;/OTP&gt; 
+                                   &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
+                                   &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
+                                   &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
+                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                  &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
+                                   
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                                    &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                                    &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                                    &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                                    &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                                    &lt;/TRANSACTION_V2REQUEST&gt;
+                              </RequestData>
+                            </TRANSACTION_V2>
+                          </soap:Body>
+                        </soap:Envelope>';
+            
+
+
+                   $curl = curl_init();
+
+                   curl_setopt ($curl, CURLOPT_URL, $url);
+                   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                   curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                   curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                       'SOAPAction:'.DMRACTIUON.'TRANSACTION_V2',
+                       'Content-Type: text/xml; charset=utf-8;',
+                   ));
+
+                    curl_setopt ($curl, CURLOPT_POST, 1);
+
+                   curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                   $result = curl_exec($curl);                 
+                   curl_close ($curl);
+                  
+                $first_tag = explode('<TRANSACTION_V2Result>', $result);       
+                
+                if(count($first_tag)!= 2 ){
+                    return 0;
+                }else{
+                    $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+                   // print_r($get_full);die();
+                    $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
+                    
+                    $response = simplexml_load_string($final[0]);
+                   // print_r($response);
+                     if($response->STATUSCODE == 0){
+                        $data_status = array(
+                                 'status_code'       => "$response->STATUSCODE",
+                                 'status'           => "$response->STATUS",
+                                 'otp_status'      => "0",
+                                 'verification'    => "1"
+                             );
+
+                            $this->db->where('ben_id',$my_DMR_id);
+                           $update = $this->db->update('beneficiary_track',$data_status);   
+                         if($this->db->affected_rows() == 1){
+                              return $my_DMR_id;
+                         }else{
+                             return 0;
+                         }
+
+                    }else if($response->STATUSCODE == 1){                        
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    } 
+                }
+              
+        }else{
+            return 0;
+        }   
+    }
+    public function beneDetails($ben_id){
+         $query = $this->db->get_where('beneficiary_track', array('ben_id' => $ben_id));
+        if($query && $query->num_rows()== 1){
+              return $query->row();
+           }else{
+               return array();
+           }
+    }
+
+    public function verifyBeneficiary($ben_id,$card){
+        $data = $this->beneDetails($ben_id);
+        if(count($data)>0){
+            $my_DMR_id = $ben_id;
+             $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMIBEN'.$a;
+            $url = DMRURL;
+            if($data->ben_type == 'IFSC'){
+                $type = 2;
+                $id = $data->acc;
+            }else{
+                $type = 1;
+                $id = $data->ben_mmid;
+            }
+                $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <TRANSACTION_V2 xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;TRANSACTION_V2REQUEST&gt;
+                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
+                                   &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
+                                   &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
+                                   &lt;BENEMOBILE&gt;'.$data->ben_mobile.'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$data->bank_ifsc.'&lt;/IFSCCODE&gt;
+                                   &lt;OTP&gt;&lt;/OTP&gt; 
+                                   &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
+                                   &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
+                                   &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
+                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                  &lt;BANKNAME&gt;'.$data->bank_name.'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$data->bank_branch.'&lt;/BRANCHNAME&gt;
+                                   
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                                    &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                                    &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                                    &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                                    &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                                    &lt;/TRANSACTION_V2REQUEST&gt;
+                              </RequestData>
+                            </TRANSACTION_V2>
+                          </soap:Body>
+                        </soap:Envelope>';
+            
+
+
+                   $curl = curl_init();
+
+                   curl_setopt ($curl, CURLOPT_URL, $url);
+                   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                   curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                   curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                       'SOAPAction:'.DMRACTIUON.'TRANSACTION_V2',
+                       'Content-Type: text/xml; charset=utf-8;',
+                   ));
+
+                    curl_setopt ($curl, CURLOPT_POST, 1);
+
+                   curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                   $result = curl_exec($curl);                 
+                   curl_close ($curl);
+                  
+                $first_tag = explode('<TRANSACTION_V2Result>', $result);       
+                
+                if(count($first_tag)!= 2 ){
+                    return 0;
+                }else{
+                    $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+                   // print_r($get_full);die();
+                    $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
+                    
+                    $response = simplexml_load_string($final[0]);
+                   // print_r($response);
+                     if($response->STATUSCODE == 0){
+                        $data_status = array(
+                                 'status_code'       => "$response->STATUSCODE",
+                                 'status'           => "$response->STATUS",
+                                 'otp_status'      => "1",
+                                 'track_id'      => "$track_id",
+                                 'verification'    => "1"
+                             );
+
+                            $this->db->where('ben_id',$my_DMR_id);
+                           $update = $this->db->update('beneficiary_track',$data_status);   
+                         if($this->db->affected_rows() == 1){
+                              return $my_DMR_id;
+                         }else{
+                             return 0;
+                         }
+
+                    }else if($response->STATUSCODE == 1){                        
+                        return 1;
+                    }
+                    else{
+                        return 0;
+                    } 
+                }
+            
+        }else{
+            return 0;
+        }
+    }
+
     public function getBeneficiary($card){
         //$login_id = $this->session->userdata('login_id');
         $this->db->select('d.*');
@@ -1619,7 +2003,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-
+//echo $curlData;
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -1662,4 +2046,5 @@ class Dmr_model extends CI_Model
              }
          }
     }
+    
 }

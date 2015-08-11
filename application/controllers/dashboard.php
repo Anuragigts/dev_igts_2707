@@ -5,6 +5,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->load->library('form_validation');   
         $this->load->model('dashboard_model');
+        if( $this->session->userdata('login_id') == ''){redirect('login');}
     }
     //index funs
      public function index(){

@@ -7,6 +7,7 @@ class Super_distributor extends CI_Controller {
             $this->load->model('common_model');
             $this->load->model('super_distributor_model');
             date_default_timezone_set('Asia/Kolkata');  
+            if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_super_distributor(){
                 $data = array(

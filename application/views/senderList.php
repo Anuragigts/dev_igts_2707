@@ -54,6 +54,9 @@
                                 </td>
                                 <td>
                                     <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                    <?php if($sr->mmid == ''){?>
+                                    <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                    <?php }?>
                                 </td>
                             </tr>
                            <?php }?>

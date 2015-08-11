@@ -6,6 +6,7 @@ class Module_object extends CI_Controller {
             $this->load->library('form_validation');
             $this->load->model('module_object_model');
             date_default_timezone_set('Asia/Kolkata');  
+            if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_module_object(){
                 $data = array(
