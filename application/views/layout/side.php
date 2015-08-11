@@ -17,8 +17,8 @@
                            </div>
                            <!-- Name and Job-->
                            <div class="user-block-info">
-                              <span class="user-block-name">Hello, Mike</span>
-                              <span class="user-block-role">Designer</span>
+                              <span class="user-block-name">Hello, <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?> </span>
+                              <span class="user-block-role"><?php echo $this->session->userdata('user_type');?></span>
                            </div>
                         </div>
                      </div>
@@ -36,9 +36,11 @@
                         <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                      </a>                    
                   </li>  
+                  <?php if($this->session->userdata('my_type') != 5){?>
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Users</span>
                   </li>
+                  <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="master_distributor create_master_distributor view_master_distributor edit_master_distributor master_distributor_details module_access">
                      <a href="#master" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-user"></em>
@@ -58,7 +60,9 @@
                         </li>
                      </ul>
                   </li>
-                 
+                  <?php }?>
+                  
+                  <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2){?>
                   <li class="super_distributor view_super_distributor super_distributor_details create_super_distributor edit_super_distributor module_access_super">
                      <a href="#super" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-user"></em>
@@ -78,6 +82,8 @@
                         </li>
                      </ul>
                   </li>
+                  <?php }?>
+                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3){?>
                   <li class="distributor create_distributor view_distributor edit_distributor distributor_details module_access_dis">
                      <a href="#dist" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-male"></em>
@@ -97,6 +103,8 @@
                         </li>
                      </ul>
                   </li>
+                   <?php }?>
+                  <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3 ||  $this->session->userdata('my_type') == 4){?>
                   <li class="agent create_agent view_agent  edit_agent module_access_agent">
                      <a href="#agent" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-child"></em>
@@ -116,8 +124,8 @@
                         </li>
                      </ul>
                   </li>
-                   
-                  
+                  <?php }?>
+                  <?php }?>
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
                   </li>
@@ -194,11 +202,12 @@
                         </li>-->
                      </ul>
                   </li>
+                  <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
                   </li>
                    <li class="package create_package view_package">
-                     <a href="#pack" title="Layouts" data-toggle="collapse">
+                     <a href="#pack" title="Package" data-toggle="collapse">
                         <em class="fa fa-database"></em>
                         <span>Package</span>
                      </a>
@@ -216,6 +225,7 @@
                         </li>
                      </ul>
                   </li>
+                   
                    <li class="module_object create_module_object view_module_object">
                      <a href="#services" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-cogs"></em>
@@ -241,6 +251,7 @@
                         <span data-localize="sidebar.nav.DASHBOARD">View Modules</span>
                      </a>                    
                   </li> 
+                   <?php }?>
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>

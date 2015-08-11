@@ -10,6 +10,7 @@ class Super_distributor extends CI_Controller {
             if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_super_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: CREATE SUPER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: CREATE SUPER DISTRIBUTOR',
@@ -91,6 +92,7 @@ class Super_distributor extends CI_Controller {
                 }
         }
         public function view_super_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW SUPER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW SUPER DISTRIBUTOR',
@@ -101,6 +103,7 @@ class Super_distributor extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function edit_super_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: EDIT SUPER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: EDIT SUPER DISTRIBUTOR',
@@ -165,6 +168,7 @@ class Super_distributor extends CI_Controller {
                 return $cou;
         }
         public function super_distributor_details(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW SUPER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW SUPER DISTRIBUTOR',

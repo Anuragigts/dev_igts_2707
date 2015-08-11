@@ -9,10 +9,10 @@
              <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
              </li>  
                               
-             <li class="active">Transection details</li>                 
-          </ol>Print Transection 
+             <li class="active">Transaction details</li>                 
+          </ol>Print Transaction 
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">print the transection details</span>
+          <span class="text-sm hidden-xs">print the transaction details</span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
@@ -52,7 +52,7 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                   <div class="panel-heading"><h4> Transection detail of  <?php echo $detail->ben_name;?> : <?php echo date('d/m/Y');?></h4></div>
+                                   <div class="panel-heading"><h4> Transaction detail of  <?php echo $detail->ben_name;?> : <?php echo date('d/m/Y');?></h4></div>
                                     <div class="panel-body">   
                                         <table class="table">
                                             <tr>

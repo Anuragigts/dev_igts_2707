@@ -7,6 +7,7 @@ class Package extends CI_Controller {
             $this->load->model('package_model');
             date_default_timezone_set('Asia/Kolkata');  
             if( $this->session->userdata('login_id') == ''){redirect('login');}
+            if( $this->session->userdata('my_type') != 5){redirect('dashboard');}
         }
 	public function create_package(){
                 $data = array(

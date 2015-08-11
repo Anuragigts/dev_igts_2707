@@ -1409,7 +1409,7 @@ class Dmr_model extends CI_Model
     public function getCardMore($id){
         $query = $this->db->get_where('dmr_registration_track', array('login_id' => $id));
         
-        if($query && $query->num_rows()> 1){
+        if($query && $query->num_rows()> 0){
               return $query->row();
            }else{
                return array();
@@ -1628,7 +1628,7 @@ class Dmr_model extends CI_Model
     public function doTopup($key){
         $url = DMRURL; 
        $data = $this->getCardMore($this->session->userdata('login_id'));
-        
+      // print_r($data);die();
          if($this->input->post('card') == 'MMID'){
              $val = '1';
          }else{
@@ -1669,7 +1669,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-//echo $curlData;
+    //echo $curlData;
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);

@@ -10,6 +10,7 @@ class Distributor extends CI_Controller {
             if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: CREATE DISTRIBUTOR',
                         'metakeyword'   => 'SC :: CREATE DISTRIBUTOR',
@@ -101,6 +102,7 @@ class Distributor extends CI_Controller {
                 }
         }
         public function view_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW DISTRIBUTOR',
@@ -111,6 +113,7 @@ class Distributor extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function edit_distributor(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: EDIT DISTRIBUTOR',
                         'metakeyword'   => 'SC :: EDIT DISTRIBUTOR',
@@ -181,6 +184,7 @@ class Distributor extends CI_Controller {
                 return $cou;
         }
         public function distributor_details(){
+            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW DISTRIBUTOR',

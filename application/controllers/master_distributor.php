@@ -10,6 +10,7 @@ class Master_distributor extends CI_Controller {
             if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_master_distributor(){
+            if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: CREATE MASTER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: CREATE MASTER DISTRIBUTOR',
@@ -81,6 +82,7 @@ class Master_distributor extends CI_Controller {
                 }
         }
         public function view_master_distributor(){
+            if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW MASTER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW MASTER DISTRIBUTOR',
@@ -91,6 +93,7 @@ class Master_distributor extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function edit_master_distributor(){
+            if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: EDIT MASTER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: EDIT MASTER DISTRIBUTOR',
@@ -149,6 +152,7 @@ class Master_distributor extends CI_Controller {
                 return $cou;
         }
         public function master_distributor_details(){
+            if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW MASTER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: VIEW MASTER DISTRIBUTOR',

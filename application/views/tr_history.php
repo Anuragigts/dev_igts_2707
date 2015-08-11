@@ -9,7 +9,7 @@
               <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
              </li>                   
              <li class="active">DMR</li>                 
-          </ol>Transection hIstory of <?php echo $cardholder->name;?>
+          </ol>Transection History of <?php echo $cardholder->name;?>
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">Get the transection Details </span>
           <!-- Breadcrumb below title-->
