@@ -1024,7 +1024,8 @@ class Dmr_model extends CI_Model
     }
     public function getCardMore($id){
         $query = $this->db->get_where('dmr_registration_track', array('login_id' => $id));
-        if($query && $query->num_rows()== 1){
+        
+        if($query && $query->num_rows()> 1){
               return $query->row();
            }else{
                return array();
@@ -1210,7 +1211,9 @@ class Dmr_model extends CI_Model
             );         
                 $insert = $this->db->insert('transection_track',$up);
                 if($this->db->affected_rows() == 1){
-                    return 1;  
+                    
+                    $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                    redirect('dmr/printDetail/'.$track_id);
                 }else{
                     return 5;
                 }
@@ -1229,7 +1232,7 @@ class Dmr_model extends CI_Model
                      
             );       
                  $insert = $this->db->insert('transection_track',$up);
-                 return 3;
+                 return $track_id;
              }else if($response->STATUSCODE == 3){
                  return 4;
              }else{
@@ -1304,7 +1307,7 @@ class Dmr_model extends CI_Model
 
 
          $first_tag = explode('<TOPUP_V2Result>', $result);       
-        // print_r($first_tag);die();
+       // print_r($first_tag);die();
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -1471,5 +1474,192 @@ class Dmr_model extends CI_Model
                         return 0;
                     }
                 }
+    }
+    
+    public function reTryTransfer(){
+        $url = DMRURL; 
+       $data = $this->getCardMore($this->session->userdata('login_id'));
+        
+         if($this->input->post('card') == 'MMID'){
+             $val = '1';
+         }else{
+             $val = '2';
+         }
+        $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMITR'.$a;
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TRANSACTIONREQUERY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TRANSACTIONREQUERYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TRANSACTIONID&gt;'.$this->input->post('id').'&lt;/TRANSACTIONID&gt;
+                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                           
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/TRANSACTIONREQUERYREQUEST&gt;
+                       </RequestData>
+                     </TRANSACTIONREQUERY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TRANSACTIONREQUERY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TRANSACTIONREQUERYResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TRANSACTIONREQUERYResult></TRANSACTIONREQUERYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+             $data_status = array(
+                        'status'       => "$response->STATUS",
+                        'responce_cd'       => "$response->STATUSCODE",
+                    );
+
+                   $this->db->where('track_id',$this->input->post('id'));
+                  $update = $this->db->update('transection_track',$data_status);   
+                if($this->db->affected_rows() == 1){
+                     return 1;
+                }
+               
+             }else if( $response->STATUSCODE == 1){
+                 return 2;
+             }else if( $response->STATUSCODE == 3){
+                 return 4;
+             }else if( $response->STATUSCODE == 4){
+                 return 5;
+             }else{
+                 return 0;//invalid OTP
+             }
+         }
+    }
+    public function transectionQUickDetails($t_id){
+        $query = $this->db->query(" SELECT t.*,b.*,t.status as tstatus FROM transection_track t "  
+            . "INNER JOIN   beneficiary_track b On b.ben_id = t.to_id "          
+               . "WHERE  t.track_id = '$t_id' ");
+       if($query && $query->num_rows()> 0){
+             return $query->row();
+         }else{
+             return array();
+         }
+    }
+    
+    public function card_details($card){
+         $query = $this->db->query(" SELECT t.* FROM dmr_registration_track t "  
+                  
+               . "WHERE  t.card_number = '$card' ");
+       if($query && $query->num_rows()> 0){
+             return $query->row();
+         }else{
+             return array();
+         }
+    }
+    
+    public function searchUserHistory($card){
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TRANSACTIONHISTORY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TRANSACTIONHISTORYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
+                            &lt;FROMDATE&gt;'.$this->input->post('from').'&lt;/FROMDATE&gt;
+                            &lt;TODATE&gt;'.$this->input->post('to').'&lt;/TODATE&gt;
+                            &lt;TRANSTYPE&gt;'.$this->input->post('t_type').'&lt;/TRANSTYPE&gt;
+                            &lt;TRANSMODE&gt;'.$this->input->post('m_type').'&lt;/TRANSMODE&gt;
+                            
+                            &lt;/TRANSACTIONHISTORYREQUEST&gt;
+                       </RequestData>
+                     </TRANSACTIONHISTORY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TRANSACTIONHISTORY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TRANSACTIONHISTORYResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TRANSACTIONHISTORYResult></TRANSACTIONHISTORYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+//             echo "<pre>";
+//             print_r($response);
+//             echo '</pre>';die();
+             if(count($response) >0){
+                 return $response;
+             }else{
+                 return array();
+             }
+         }
     }
 }

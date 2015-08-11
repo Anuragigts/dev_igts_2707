@@ -73,7 +73,7 @@
                                         <div class="col-lg-4">
                                             <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>
                                             <input name="tr_charge" id="mobile" class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("tr_charge"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
-                                           
+                                           <span class="red"><?=  form_error('tr_charge');?></span>
                                         </div>
                                         <div class="col-lg-4">
                                              <label for="Mobile" >Remarks</label>

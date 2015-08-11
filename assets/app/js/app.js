@@ -2515,7 +2515,6 @@
 
     });
 	
-	
 	 $('.amt-transfer').on('click', function(e){
       e.preventDefault();
       swal({
@@ -2537,6 +2536,36 @@
       });
 
     });
+	$('.dotopup').on('click', function(e){
+      e.preventDefault();
+		var amt = $('#amt').val();
+		var ben = $('#bene').val();
+		var ch = $('#charge').val();
+		if(amt == '' || ben == '' || ch ==''){
+		  swal("Empty Fields!", "Please fill all fields.", "error");
+	  }else{ 
+		  swal({
+			title : "Are you sure?",
+			text : "You are going to topup the "+ amt +" with service charge "+ ch,
+			type : "warning",
+			showCancelButton : true,
+			confirmButtonColor : "#DD6B55",
+			confirmButtonText : "Yes, Process it!",
+			cancelButtonText : "No, cancel plz!",
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  }, function (isConfirm) {
+			if (isConfirm) {
+			  swal("Processing!", "Your Rs. "+amt+" topup is under process.", "success");
+			  $('#topup-form').submit();
+			} else {
+			  swal("Cancelled", "Your Rs. "+amt+" topup request is cancelled", "error");
+			}
+		  });
+	  }
+
+    });
+	
 
   });
 

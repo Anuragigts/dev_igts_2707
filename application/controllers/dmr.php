@@ -174,7 +174,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -292,7 +292,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -367,7 +367,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -486,7 +486,7 @@ class Dmr extends CI_Controller {
                 if($login_result == 3){ 
                    $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
                 }else if($login_result == 2){ 
-                     $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                     $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
                 }else if($login_result == 0){
                      $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
                 }
@@ -509,9 +509,9 @@ class Dmr extends CI_Controller {
                    else if( $result == 2){                    
                         $this->session->set_flashdata('err','Verification fail : Security Key is not valid.');  
                           redirect('dmr/beneficiaryList/'.$card);
-                    }else if( $result == 3){                    
-                        $this->session->set_flashdata('err','Unknown : please try after 90 seconds.');  
-                          redirect('dmr/beneficiaryList/'.$card);
+                    }else if( $result == 5){ 
+                        $this->session->set_flashdata('err','Unknown : Internal error.');  
+                        redirect('dmr/beneficiaryList/'.$card);                        
                     }else if( $result == 4){                    
                         $this->session->set_flashdata('err','Transaction failed : check your transfer amount, it is not valid.');  
                           redirect('dmr/beneficiaryList/'.$card);
@@ -519,8 +519,8 @@ class Dmr extends CI_Controller {
                         $this->session->set_flashdata('err','Transaction failed : Benefeciary ID is not correct.');  
                           redirect('dmr/beneficiaryList/'.$card);
                     }else{
-                         $this->session->set_flashdata('err','Unknown : Internal error.');  
-                           redirect('dmr/beneficiaryList/'.$card);
+                        $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                        redirect('dmr/transRequery/'.$result);
                     }
                 }
              }
@@ -529,8 +529,72 @@ class Dmr extends CI_Controller {
          $data['limit'] = $this->dmr_model->checktopupLimit($card);
          $this->load->view('layout/inner_template',$data);
     }
+    
+    public function transRequery(){
+         $data = array(
+              'title'         => 'DMR :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'requery'
+             );
+          $t_id = $this->uri->segment(3);
+          $data['login_details'] = array();        
+        
+            $login_result = $this->dmrLogin();
+            $key = '';
+            //echo $login_result->SECURITYKEY; die();
+            //print_r($login_result);die();
+            if(count($login_result) <5){
+                if($login_result == 3){ 
+                   $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
+                }else if($login_result == 2){ 
+                     $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
+                }else if($login_result == 0){
+                     $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
+                }
+            }else{
+                $key = $login_result->SECURITYKEY;
+               $data['login_details'] = $login_result; 
+            }
+            
+            if($this->input->post('send')){
+                $this->form_validation->set_rules('id',  'Transection Id',   'required');
+                 if($this->form_validation->run() == TRUE){
+                     $retry = $this->dmr_model->reTryTransfer();
+                      if($retry == 1){ 
+                        $this->session->set_flashdata('msg','Amount Transferred successfully.');                          
+                            redirect('dmr/printDetail/'.$t_id);
+                     }else if($retry == 2){ 
+                          $this->session->set_flashdata('err','Confirmation failed.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else if($retry == 3){ 
+                          $this->session->set_flashdata('err','Internal validation failed.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else if($retry == 4){ 
+                          $this->session->set_flashdata('err','Invalid Transaction.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else{
+                          $this->session->set_flashdata('err','Retry Failed: due to Internal error.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }
+                 }
+            }
+          $this->load->view('layout/inner_template',$data);   
+    }
+    public function printDetail(){
+        $data = array(
+              'title'         => 'DMR :: PRINT DETAIL',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'Trans_details'
+             );
+         $t_id = $this->uri->segment(3);
+         $data['detail'] = $this->dmr_model->transectionQUickDetails($t_id);
+        $this->load->view('layout/inner_template',$data);   
+    }
 
-        public function transaction(){
+
+            public function transaction(){
          $data = array(
               'title'         => 'DMR :: TRANSACTION',
               'metakeyword'   => '',
@@ -547,7 +611,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -617,7 +681,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -626,7 +690,7 @@ class Dmr extends CI_Controller {
            $data['login_details'] = $login_result; 
         }
         
-        if($this->input->post('topup')){
+        if($this->input->post('amount')){
             $this->form_validation->set_rules('amount',  'Amount',   'required');
             $this->form_validation->set_rules('region',  'Region',   'required');
             //$this->form_validation->set_rules('mobile_no',  'Region',   'required|min_length[10]|max_length[10]|numeric');
@@ -678,7 +742,7 @@ class Dmr extends CI_Controller {
             if($login_result == 3){ 
                $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
             }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which yoyu have set on sender registration page.'); 
+                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
             }else if($login_result == 0){
                  $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
             }
@@ -729,5 +793,45 @@ class Dmr extends CI_Controller {
         $data['sender']= $this->dmr_model->getSenderdetail($id );
         $this->load->view('layout/inner_template',$data);
     }
-}
     
+    public function viewTransectionHistory(){
+        $data = array(
+              'title'         => 'DMR :: VIEW TRANSECTION HISTORY',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'tr_history'
+             );
+        $type = '';
+        $mode = '';
+         $card = $this->uri->segment(3);
+          $data["searched"] = array();
+          $data['filter_by'] = '';
+         if($this->input->post('search')){
+             if($this->input->post('t_type') == 0){
+                $type = 'All'; 
+             }else if($this->input->post('t_type') == 3){
+                 $type = 'Remited'; 
+             }else if($this->input->post('t_type') == 5){
+                 $type = 'Rejection'; 
+             }else{
+                 $type = 'Refuund'; 
+             }
+             
+             if($this->input->post('m_type') == 0){
+                $mode = 'All'; 
+             }else if($this->input->post('m_type') == 1){
+                 $mode = 'IMPS(MMID)'; 
+             }else if($this->input->post('m_type') == 2){
+                 $mode = 'IMPS(IFSC)'; 
+             }else{
+                 $mode = 'NEFT'; 
+             }
+             
+             $data["searched"] =$this->dmr_model->searchUserHistory($card);
+              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b>".$mode."</b>";
+         }
+         
+         $data['cardholder'] = $this->dmr_model->card_details($card);
+         $this->load->view('layout/inner_template',$data);
+    }
+}

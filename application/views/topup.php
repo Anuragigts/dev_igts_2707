@@ -10,7 +10,7 @@
              <li class="active">DMR</li>                 
           </ol>Topup
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">Top your card</span>
+          <span class="text-sm hidden-xs">Topup your card</span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->       
@@ -18,7 +18,7 @@
               <?php $this->load->view("layout/success_error");?> 
         
           
-       <form method="post">
+           <form method="post" id="topup-form">
            <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
@@ -27,7 +27,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Topup Amount<font class="red mmid-imp">*</font></label>
-                                    <input name="amount"  class="form-control m-c" placeholder="Topup Amount" type="text" value="<?= set_value("amount"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+                                     <input name="amount" id="amt"  class="form-control m-c" placeholder="Topup Amount" type="text" value="<?= set_value("amount"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                     <span class="red"><?=  form_error('amount');?></span>
                                 </div>
 <!--                                <div class="col-lg-12">
@@ -50,13 +50,13 @@
                                 </div>
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>
-                                    <input name="charge"  class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("charge"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+                                     <input name="charge" id="charge" class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("charge"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                     <span class="red"><?=  form_error('charge');?></span>
                                 </div>
                             </div>
                             <div class="col-lg-12 text-center">
                             <br>
-                             <input type="submit" class="btn btn-sm btn-info" name="topup" value="Topup" />
+                            <input type="button" class="btn btn-sm btn-info dotopup"  name="topup" value="Topup" />
                         </div>
                         </div>
 

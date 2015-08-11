@@ -31,6 +31,7 @@
      <!-- SWEET ALERT-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/sweetalert/dist/sweetalert.css">
    
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <!-- =============== VENDOR SCRIPTS ===============-->
    <!-- MODERNIZR-->
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/modernizr/modernizr.js"></script>
@@ -170,3 +171,8 @@
 </body>
      <?php echo $this->load->view('layout/script');?>
 </html>
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  </script>

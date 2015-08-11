@@ -29,3 +29,9 @@ and open the template in the editor.
 .green{
     color: green;
 }
+.b-5{
+    margin-bottom: 5px;
+}
+.bold1{
+    font-size: 18px !important;
+}

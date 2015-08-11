@@ -29,6 +29,7 @@
                              <th>MMID</th>
                              <th >Done By</th>                             
                              <th >Action</th>                             
+                             <th >View</th>                             
                           </tr>
                        </thead>
                        <tbody>
@@ -46,10 +47,13 @@
                                 <td><?php echo $sr->card_number;?></td>
                                 <td><?php echo $sr->mmid;?></td>                               
                                 <td><?php echo $sr->first_name;?></td>
-                                <td>
+                                <td class="text-center">
                                     <?php if($sr->kyc == 1){ ?>
-                                 <a class="btn btn-warning" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> Convert To KYC</a>
+                                 <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
                                <?php  }else{echo "Updated to KYC";}?>
+                                </td>
+                                <td>
+                                    <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
                                 </td>
                             </tr>
                            <?php }?>
