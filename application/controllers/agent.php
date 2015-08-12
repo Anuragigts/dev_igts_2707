@@ -10,7 +10,7 @@ class Agent extends CI_Controller {
             if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
 	public function create_agent(){
-            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3 ||  $this->session->userdata('my_type') != 4){redirect('dashboard');}
+            if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: CREATE AGENT',
                         'metakeyword'   => 'SC :: CREATE AGENT',
@@ -112,7 +112,7 @@ class Agent extends CI_Controller {
                 }
         }
         public function view_agent(){
-            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3 ||  $this->session->userdata('my_type') != 4){redirect('dashboard');}
+            if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: VIEW AGENT',
                         'metakeyword'   => 'SC :: VIEW AGENT',
@@ -123,7 +123,7 @@ class Agent extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function edit_agent(){
-            if($this->session->userdata('my_type') != 1 || $this->session->userdata('my_type') != 2 ||  $this->session->userdata('my_type') != 3 ||  $this->session->userdata('my_type') != 4){redirect('dashboard');}
+            if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
                         'title'         => 'SC :: EDIT AGENT',
                         'metakeyword'   => 'SC :: EDIT AGENT',

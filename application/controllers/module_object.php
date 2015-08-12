@@ -7,7 +7,7 @@ class Module_object extends CI_Controller {
             $this->load->model('module_object_model');
             date_default_timezone_set('Asia/Kolkata');  
             if( $this->session->userdata('login_id') == ''){redirect('login');}
-             if( $this->session->userdata('my_type') != 5){redirect('dashboard');}
+             if( $this->session->userdata('my_type') == 5){redirect('dashboard');}
         }
 	public function create_module_object(){
                 $data = array(
