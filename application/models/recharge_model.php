@@ -205,10 +205,12 @@ class Recharge_model extends CI_Model
     }
     
     public function getrechargeDetails(){
-        $this->db->select('r.*,p.first_name,p.last_name');
+        $this->db->select('r.*,p.*,u.user_type as u_type');
         $this->db->from('recharge_track r'); 
         $this->db->join('profile as p' , 'p.login_id = r.done_by', 'Inner');
-        $this->db->where('done_by',$this->session->userdata('login_id')); 
+        $this->db->join('login as l' , 'l.login_id = p.login_id', 'Inner');
+        $this->db->join('user_type as u' , 'l.user_type = u.user_type_id', 'Inner');
+       // $this->db->where('done_by',$this->session->userdata('login_id')); 
         $this->db->order_by('recharge_id', 'desc');
         $query = $this->db->get();
         if($this->db->affected_rows() > 0){

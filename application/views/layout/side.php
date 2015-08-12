@@ -129,6 +129,7 @@
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
                   </li>
+                   <?php if($this->session->userdata('recharge') == 1){?>
                    <li class="recharge ">
                      <a href="#recharge" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-mobile"></em>
@@ -153,6 +154,7 @@
                         </li>
                      </ul>
                   </li>
+                   <?php }if($this->session->userdata('utility') == 1){?>
                   <li class=" ">
                      <a href="#utility" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-plug"></em>
@@ -172,6 +174,7 @@
                         </li>
                      </ul>
                   </li>
+                 <?php }if($this->session->userdata('dmr') == 1){?>
                   <li class="dmr">
                      <a href="#dmr" title="Layouts" data-toggle="collapse">
                         <em class="fa fa-rupee"></em>
@@ -202,6 +205,7 @@
                         </li>-->
                      </ul>
                   </li>
+                    <?php }?>
                   <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>

@@ -26,6 +26,7 @@
             <div class="panel-body">
                 <form role="form" action="" method="post">
                     <div class="row">
+                        <?php if($this->session->userdata('dmr') == 1){?>
                          <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
@@ -35,12 +36,14 @@
                                     <label>DMR 
                                         <ul class="padding-left-15">
                                             <li>Add Beneficiary</li>
+                                            <li>Add sender</li>
                                             <li>Money Transfer</li>
                                         </ul>
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        <?php }if($this->session->userdata('recharge') == 1){?>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
@@ -58,6 +61,8 @@
                                 </div>
                             </div>
                         </div>
+                        <?php }?>
+                        <?php if($this->session->userdata('utility') == 1){?>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
@@ -73,6 +78,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php }?>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">

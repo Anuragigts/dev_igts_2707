@@ -34,31 +34,155 @@
                        </thead>
                        <tbody>
                            <?php $i=1;foreach($senders as $sr){?>
-                            <tr>
-                                <td><?php echo $i; $i++;?></td>
-                                <td><?php echo $sr->name;?></td>
-                                <td><?php echo $sr->mobile;?></td>
-                                <td><?php if($sr->kyc == 1){
-                                   echo  "Non KYC";
-                                }else{
-                                    echo  "KYC";
-                                }?></td>
-                                <td><?php echo $sr->email;?></td>
-                                <td><?php echo $sr->card_number;?></td>
-                                <td><?php echo $sr->mmid;?></td>                               
-                                <td><?php echo $sr->first_name;?></td>
-                                <td class="text-center">
-                                    <?php if($sr->kyc == 1){ ?>
-                                 <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
-                               <?php  }else{echo "Updated to KYC";}?>
-                                </td>
-                                <td>
-                                    <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                    <?php if($sr->mmid == ''){?>
-                                    <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                    <?php }?>
-                                </td>
-                            </tr>
+                             <?php if($this->session->userdata('my_type') == 1){?>
+                                <tr>
+                                    <td><?php echo $i; $i++;?></td>
+                                    <td><?php echo $sr->name;?></td>
+                                    <td><?php echo $sr->mobile;?></td>
+                                    <td><?php if($sr->kyc == 1){
+                                       echo  "Non KYC";
+                                    }else{
+                                        echo  "KYC";
+                                    }?></td>
+                                    <td><?php echo $sr->email;?></td>
+                                    <td><?php echo $sr->card_number;?></td>
+                                    <td><?php echo $sr->mmid;?></td>                               
+                                    <td><?php echo $sr->first_name;?></td>
+                                    <td class="text-center">
+                                        <?php if($sr->kyc == 1){ ?>
+                                     <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
+                                   <?php  }else{echo "Updated to KYC";}?>
+                                    </td>
+                                    <td>
+                                        <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                        <?php }else{?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                            <?php }else if($this->session->userdata('my_type') == 2){?>
+                                <?php if($sr->master_distributor_id == $this->session->userdata('login_id') || $sr->login_id == $this->session->userdata('login_id')){?>
+                                <tr>
+                                    <td><?php echo $i; $i++;?></td>
+                                    <td><?php echo $sr->name;?></td>
+                                    <td><?php echo $sr->mobile;?></td>
+                                    <td><?php if($sr->kyc == 1){
+                                       echo  "Non KYC";
+                                    }else{
+                                        echo  "KYC";
+                                    }?></td>
+                                    <td><?php echo $sr->email;?></td>
+                                    <td><?php echo $sr->card_number;?></td>
+                                    <td><?php echo $sr->mmid;?></td>                               
+                                    <td><?php echo $sr->first_name;?></td>
+                                    <td class="text-center">
+                                        <?php if($sr->kyc == 1){ ?>
+                                     <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
+                                   <?php  }else{echo "Updated to KYC";}?>
+                                    </td>
+                                    <td>
+                                        <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                        <?php }else{?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                                <?php }?>
+                           <?php }else if($this->session->userdata('my_type') == 3){?>
+                                <?php if($sr->super_distributor_id == $this->session->userdata('login_id') || $sr->login_id == $this->session->userdata('login_id')){?>
+                                <tr>
+                                    <td><?php echo $i; $i++;?></td>
+                                    <td><?php echo $sr->name;?></td>
+                                    <td><?php echo $sr->mobile;?></td>
+                                    <td><?php if($sr->kyc == 1){
+                                       echo  "Non KYC";
+                                    }else{
+                                        echo  "KYC";
+                                    }?></td>
+                                    <td><?php echo $sr->email;?></td>
+                                    <td><?php echo $sr->card_number;?></td>
+                                    <td><?php echo $sr->mmid;?></td>                               
+                                    <td><?php echo $sr->first_name;?></td>
+                                    <td class="text-center">
+                                        <?php if($sr->kyc == 1){ ?>
+                                     <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
+                                   <?php  }else{echo "Updated to KYC";}?>
+                                    </td>
+                                    <td>
+                                        <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                        <?php }else{?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                               <?php }?>
+                           <?php }else if($this->session->userdata('my_type') == 4){?>
+                                <?php if($sr->distributor_id == $this->session->userdata('login_id') || $sr->login_id == $this->session->userdata('login_id')){?>
+                                <tr>
+                                    <td><?php echo $i; $i++;?></td>
+                                    <td><?php echo $sr->name;?></td>
+                                    <td><?php echo $sr->mobile;?></td>
+                                    <td><?php if($sr->kyc == 1){
+                                       echo  "Non KYC";
+                                    }else{
+                                        echo  "KYC";
+                                    }?></td>
+                                    <td><?php echo $sr->email;?></td>
+                                    <td><?php echo $sr->card_number;?></td>
+                                    <td><?php echo $sr->mmid;?></td>                               
+                                    <td><?php echo $sr->first_name;?></td>
+                                    <td class="text-center">
+                                        <?php if($sr->kyc == 1){ ?>
+                                     <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
+                                   <?php  }else{echo "Updated to KYC";}?>
+                                    </td>
+                                    <td>
+                                        <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                        <?php }else{?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                                 <?php }?>
+                           <?php }else{?>
+                                    <?php if($sr->done_by == $this->session->userdata('login_id')){?>
+                                <tr>
+                                    <td><?php echo $i; $i++;?></td>
+                                    <td><?php echo $sr->name;?></td>
+                                    <td><?php echo $sr->mobile;?></td>
+                                    <td><?php if($sr->kyc == 1){
+                                       echo  "Non KYC";
+                                    }else{
+                                        echo  "KYC";
+                                    }?></td>
+                                    <td><?php echo $sr->email;?></td>
+                                    <td><?php echo $sr->card_number;?></td>
+                                    <td><?php echo $sr->mmid;?></td>                               
+                                    <td><?php echo $sr->first_name;?></td>
+                                    <td class="text-center">
+                                        <?php if($sr->kyc == 1){ ?>
+                                     <a class="text-center bg-success" href="<?php echo base_url();?>dmr/doKyc/<?php echo $sr->d_id;?>"> &nbsp;Convert To KYC &nbsp; </a>
+                                   <?php  }else{echo "Updated to KYC";}?>
+                                    </td>
+                                    <td>
+                                        <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
+                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
+                                        <?php }else{?>
+                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
+                                        <?php }?>
+                                    </td>
+                                </tr>
+                                <?php }?>
+                           <?php }?>
                            <?php }?>
                        </tbody>
                     </table>

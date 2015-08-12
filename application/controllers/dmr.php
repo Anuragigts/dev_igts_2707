@@ -7,6 +7,7 @@ class Dmr extends CI_Controller {
         $this->load->model('dmr_model');
         $this->load->model('common');
         if( $this->session->userdata('login_id') == ''){redirect('login');}
+        if( $this->session->userdata('dmr') != '1'){redirect('dashboard');}
     }
     
     public function sender_registration(){
@@ -43,20 +44,25 @@ class Dmr extends CI_Controller {
             
             
             if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->doRegister();
-                //echo $result;exit;
-                if($result == 0){                    
-                    $this->session->set_flashdata('err','Registration fail : Some internal error occurred.');  
-                     redirect('dmr/sender_registration');
-                }
-               else if( $result == 20){                    
-                    $this->session->set_flashdata('err','Registration fail : Already Reginster.');  
-                     redirect('dmr/sender_registration');
+                $mv = $this->dmr_model->mobileverify();
+                if($mv == 1){
+                    $result = $this->dmr_model->doRegister();
+                    //echo $result;exit;
+                    if($result == 0){                    
+                        $this->session->set_flashdata('err','Registration fail : Some internal error occurred.');  
+                         redirect('dmr/sender_registration');
+                    }
+                   else if( $result == 20){                    
+                        $this->session->set_flashdata('err','Registration fail : Already Reginster.');  
+                         redirect('dmr/sender_registration');
+                    }else{
+                        $this->session->set_flashdata('msg','Your Registration is successfull Please verify if by using OTP.');  
+                        redirect('dmr/otp/'.$result);
+
+                    }
                 }else{
-                    $this->session->set_flashdata('msg','Your Registration is successfull Please verify if by using OTP.');  
-                    redirect('dmr/otp/'.$result);
-                     
+                    $this->session->set_flashdata('err','Registration fail : mobile number is not present in system.');  
+                    redirect('dmr/sender_registration');
                 }
             }
         }
@@ -118,7 +124,7 @@ class Dmr extends CI_Controller {
                 //echo $result;exit;
                 if($result == 1){                    
                     $this->session->set_flashdata('msg','Your Verification is successfull .');  
-                    redirect('dmr/dmrUserSearch');
+                    redirect('dmr/otp/'.$transection_id);
                 }
                else if( $result == 2){                    
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
@@ -130,8 +136,41 @@ class Dmr extends CI_Controller {
             }
          } 
          
+         if($this->input->post('set')){
+            //$this->form_validation->set_rules('trans',  'Transection Id',   'required');
+            $this->form_validation->set_rules('pin',    'pin',              'required');
+            
+             if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->setPin($transection_id);
+                //echo $result;exit;
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Your pin is set successfull .');  
+                    redirect('dmr/dmrUserSearch');
+                }
+              else{
+                     $this->session->set_flashdata('err','Fail : Some internal error occurred.');  
+                       redirect('dmr/otp/'.$transection_id);
+                }
+            }
+         }
+         
          $this->load->view('layout/inner_template',$data);
     }
+    public function pinreset(){
+        $id = $this->uri->segment(4);
+        $mo = $this->uri->segment(3);
+        $result = $this->dmr_model->changePin($mo);
+        if($result == 1){
+            $this->session->set_flashdata('msg','Your pin has been sent successfully .');  
+            redirect('dmr/otp/'.$id);
+        }else{
+            $this->session->set_flashdata('err','Fail : Some internal error occurred.');  
+             redirect('dmr/otp/'.$id);
+        }
+        
+    }
+
     public function resendOTP(){
         $id = $this->uri->segment(4);
         $result = $this->dmr_model->resendOTP();
@@ -519,6 +558,9 @@ class Dmr extends CI_Controller {
                    // $this->session->set_flashdata('msg','Amount transferred successfull .');  
                     redirect('dmr/beneficiaryList/'.$result->card_number);
                     //$this->beneficiaryList($result);
+                }else if(count($result) == 2){
+                    $this->session->set_flashdata('err','You are not having access to view this account.'); 
+                    redirect('dmr/dmrUserSearch');
                 }
               else{
                      $this->session->set_flashdata('msg','This number is not registered please register first');  
@@ -541,8 +583,7 @@ class Dmr extends CI_Controller {
         
             $login_result = $this->dmrLogin();
             $key = '';
-            //echo $login_result->SECURITYKEY; die();
-            //print_r($login_result);die();
+           
             if(count($login_result) <5){
                 if($login_result == 3){ 
                    $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 

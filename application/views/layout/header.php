@@ -33,13 +33,14 @@
                   <!-- END User avatar toggle-->
                   <!-- START lock screen-->
                   <li>
-                     <a href="#lock.html" title="Lock screen">
-                        <em class="icon-lock"></em>
+                     <a href="javascript:void(0);" >
+                         <b><?php echo $this->session->userdata('user_type');?></b>
                      </a>
                   </li>
                   <!-- END lock screen-->
                </ul>
                <!-- END Left navbar-->
+              
                <!-- START Right Navbar-->
                <ul class="nav navbar-nav navbar-right">
                   

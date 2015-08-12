@@ -32,7 +32,7 @@ class Dmr_model extends CI_Model
                                    &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;KYCFLAG&gt;'.$this->input->post('kyc').'&lt;/KYCFLAG&gt;
                                    &lt;USERNAME&gt;'.$this->input->post('first_name').'&lt;/USERNAME&gt;
@@ -144,7 +144,7 @@ class Dmr_model extends CI_Model
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$this->input->post('trans').'&lt;/TRANSACTIONID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -224,7 +224,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$t_id.'&lt;/TRANSACTIONID&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -277,11 +277,11 @@ class Dmr_model extends CI_Model
     }
     
     public function sender_details(){
-        $login_id = $this->session->userdata('login_id');
+        $mob = $this->session->userdata('mobile');
         $this->db->select('d.*,p.first_name,p.last_name');
         $this->db->from('dmr_registration_track d'); 
         $this->db->join('profile as p' , 'p.login_id = d.login_id', 'Inner');
-        $this->db->where('d.login_id',$login_id);        
+        $this->db->where('d.mobile',$mob);        
         $this->db->where('d.status','Success');        
         $query = $this->db->get();
         if($query->num_rows() > 0){
@@ -312,7 +312,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;                            
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;'.$pin.'&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -345,7 +345,7 @@ class Dmr_model extends CI_Model
            
            
          $first_tag = explode('<LOGIN_V2Result>', $result);      
-         
+        // print_r($first_tag);die();
          if(count($first_tag) == 1 ){
              return 0;
          }else{
@@ -370,12 +370,13 @@ class Dmr_model extends CI_Model
         }
         
     }
-    public function setPin(){
+    public function setPin($transection_id){
         $up = array(
-            'pin' => $this->input->post('otp')            
+            'pin' => $this->input->post('pin')            
             );
-        $this->db->where('login_id',$this->session->userdata('login_id'));
+        $this->db->where('d_id',$transection_id);
         $this->db->update('dmr_registration_track',$up);
+      
          if($this->db->affected_rows() == 1){
                 return 1;
            }else{
@@ -422,7 +423,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;&lt;/MMID&gt;
@@ -455,7 +456,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
@@ -589,7 +590,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;&lt;/MMID&gt;
@@ -622,7 +623,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
@@ -728,7 +729,7 @@ class Dmr_model extends CI_Model
                                    &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
                                    &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
                                    &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                   &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
                                   &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
                                    
@@ -849,7 +850,7 @@ class Dmr_model extends CI_Model
                                    &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
                                    &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
                                    &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                   &lt;BANKNAME&gt;'.$data->bank_name.'&lt;/BANKNAME&gt;
                                   &lt;BRANCHNAME&gt;'.$data->bank_branch.'&lt;/BRANCHNAME&gt;
                                    
@@ -987,7 +988,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;FLAG&gt;2&lt;/FLAG&gt; 
                                    &lt;MMID&gt;&lt;/MMID&gt;
                                    &lt;BENEMOBILE&gt;&lt;/BENEMOBILE&gt;
@@ -1020,7 +1021,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;FLAG&gt;1&lt;/FLAG&gt;                                  
                                    &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
                                    &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt;
@@ -1128,7 +1129,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$this->input->post('trans').'&lt;/CARDNO&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
                             &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -1209,7 +1210,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$t_id.'&lt;/CARDNO&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -1278,7 +1279,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$b_id.'&lt;/BENEID&gt;
                             &lt;PARAM1&gt;10&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -1347,7 +1348,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$this->input->post('trans').'&lt;/CARDNO&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
                             &lt;BENESTATUS&gt;10&lt;/BENESTATUS&gt;
@@ -1440,7 +1441,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             
                             &lt;/CHECKTOPUPLIMITREQUEST&gt;
                        </RequestData>
@@ -1535,7 +1536,7 @@ class Dmr_model extends CI_Model
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
                             &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
-                            &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -1651,7 +1652,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$data->card_number.'&lt;/CARDNO&gt;
-                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;   
+                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;   
                             
                             &lt;TOPUPAMOUNT&gt;'.$this->input->post('amount').'&lt;/TOPUPAMOUNT&gt;
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
@@ -1727,12 +1728,19 @@ class Dmr_model extends CI_Model
     
     public function searchuser(){
         $mobile = $this->input->post('mobile');
-        $query = $this->db->get_where('dmr_registration_track', array('mobile' => $mobile));
-        if($query && $query->num_rows()== 1){
-              return $query->row();
-           }else{
-               return array();
-           }
+        $l_id =$this->session->userdata('login_id');
+        $query_validate = $this->db->query("SELECT p.* FROM profile p WHERE p.mobile = $mobile AND ( p.admin_id = $l_id OR p.master_distributor_id = $l_id OR p.super_distributor_id = $l_id OR p.distributor_id = $l_id OR p.login_id = $l_id )"); 
+       //echo $this->db->last_query();
+        if(count($query_validate->result())>0){
+            $query = $this->db->get_where('dmr_registration_track', array('mobile' => $mobile));
+            if($query && $query->num_rows()== 1){
+                  return $query->row();
+               }else{
+                   return array();
+               }
+        }else{
+            return array('a'=>'1', 'b'=>'2');
+        }
     }
     public function get_ben($ben_id){
         $query = $this->db->get_where('beneficiary_track', array('beneid' => $ben_id));
@@ -1746,11 +1754,9 @@ class Dmr_model extends CI_Model
     public function getSender(){
        $user = $this->session->userdata('login_id');
        $where = '';
-       if($user != 1){
-           $where = " AND d.login_id = $user";
-       }
-       $query = $this->db->query(" SELECT d.*, p.first_name FROM dmr_registration_track d  "
-               . " INNER JOIN profile p ON p.login_id = d.login_id "
+       
+       $query = $this->db->query(" SELECT d.*, p.* FROM dmr_registration_track d  "
+               . " INNER JOIN profile p ON p.mobile = d.mobile "
                . "WHERE d.card_number <> '' $where ORDER BY d.d_id desc");
        if($query && $query->num_rows()> 0){
              return $query->result();
@@ -1781,7 +1787,7 @@ class Dmr_model extends CI_Model
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card').'&lt;/CARDNO&gt;
-                                   &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                     &lt;KYCFLAG&gt;2&lt;/KYCFLAG&gt;
                                   
                                    &lt;USERNAME&gt;'.$this->input->post('first_name').'&lt;/USERNAME&gt;
@@ -1886,7 +1892,7 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$this->input->post('id').'&lt;/TRANSACTIONID&gt;
-                             &lt;AGENTID&gt;Anu0112&lt;/AGENTID&gt;
+                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                            
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -2047,4 +2053,75 @@ class Dmr_model extends CI_Model
          }
     }
     
+    public function changePin($mo){
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <FORGOTPIN  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;FORGOTPINREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;
+                            
+                            &lt;/FORGOTPINREQUEST&gt;
+                       </RequestData>
+                     </FORGOTPIN>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'FORGOTPIN',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<FORGOTPINResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</FORGOTPINYResult></FORGOTPINResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
+    }
+    public function mobileverify(){
+        $query = $this->db->get_where('profile', array('mobile' => $this->input->post('mobile')));
+        //echo $this->db->last_query();die();
+        if($query && $query->num_rows()> 0){
+              return 1;
+           }else{
+               return 0;
+           }
+    }
 }
