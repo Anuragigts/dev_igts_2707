@@ -186,6 +186,7 @@
      $(".b-c").attr("readonly", "readonly");
       $(".m-c").attr("readonly", "readonly");
     $('#b_type').change(function(){
+        $('#ifsc').val('');
         var val = $('#b_type').val();
         if(val == 'MMID'){
             $('.mmid-imp').show();
@@ -224,8 +225,10 @@
             $(".m-c").attr("readonly", "readonly");
         }
     });
+    $('#state').click(function(){$('#ifsc').val('');});
     
     $('#city').change(function(){
+        $('#ifsc').val('');
         var bname = $('#bnk_name').val();
         var state = $('#state').val();
         var city = $('#city').val();
@@ -249,6 +252,7 @@
     
     $("#bnk_name").change(function(){
         //$('#state').html("<option value=''>Select</option>");
+        $('#ifsc').val('');
         $('#city').html("<option value=''>Select</option>");
     });
     $('#branch').change(function(){
