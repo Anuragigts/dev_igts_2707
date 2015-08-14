@@ -35,13 +35,13 @@ class Super_distributor_model extends CI_Model{
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
                                 "mobile"                =>     $mobile_no,
-                                "country"               =>     $country,
+                                "country"               =>     101,
                                 "state"                 =>     $state,
                                 "city"                  =>     $city,
                                 "created_by"            =>     $ses_id,
                                 "mobile"                =>     $mobile_no,
                                 "address"               =>     $address,
-                                "admin_id"              =>     $ses_id,
+                                "admin_id"              =>     1,
                                 "master_distributor_id" =>     $master_id
                         );
                         $ins_comm   =   array(
@@ -85,6 +85,9 @@ class Super_distributor_model extends CI_Model{
                 $this->db->join('commission as c','c.login_id = l.login_id','inner');
                 $this->db->join('package as g','g.package_id = c.package_id','inner');
                 $this->db->where('l.user_type',3);
+                if($this->session->userdata("my_type") == 2){
+                        $this->db->where("p.master_distributor_id",$this->session->userdata("login_id"));
+                }
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
@@ -115,7 +118,6 @@ class Super_distributor_model extends CI_Model{
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
-                $country            =   $this->input->post("country");
                 $state              =   $this->input->post("state");
                 $city               =   $this->input->post("city");
                 $address            =   $this->input->post("address");
@@ -124,7 +126,6 @@ class Super_distributor_model extends CI_Model{
                         $ins   =   array(
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
-                                "country"               =>     $country,
                                 "state"                 =>     $state,
                                 "city"                  =>     $city,
                                 "master_distributor_id" =>     $master,

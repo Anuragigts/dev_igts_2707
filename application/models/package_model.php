@@ -8,7 +8,7 @@
 class Package_model extends CI_Model
 {   
         public function usertype(){
-                $val = $this->session->userdata('user_type');
+                $val = $this->session->userdata('my_type');
                 $this->db->select('*');
                 $this->db->from('user_type');
                 $this->db->where('user_type_id > '.$val);
@@ -40,12 +40,22 @@ class Package_model extends CI_Model
                 }             
         }
         public function view_package(){
-                $val                =     $this->session->userdata('user_type');
-                $this->db->select('u.user_type as user_name_type,l.first_name,p.*');
+                $val                =     $this->session->userdata('login_id');
+                $valm                =     $this->session->userdata('master_distributor_id');
+                $vals                =     $this->session->userdata('super_distributor_id');
+                $vald                =     $this->session->userdata('distributor_id');
+                $this->db->select('u.user_type as user_name_type,l.first_name,l.middle_name,l.last_name,p.*');
                 $this->db->from('package as p');
                 $this->db->join('user_type as u','u.user_type_id = p.user_type');
                 $this->db->join('profile as l','l.login_id = p.p_created_by');
-//                $this->db->where('p_created_by',$val);
+                if($this->session->userdata("my_type") != "1"){
+                        $this->db->where('( p.p_created_by = '.$val.' or '
+                                . 'p.p_created_by = 1'
+                                . ' or p.p_created_by =  '.$valm
+                                . ' or p.p_created_by =  '.$vals
+                                . ' or p.p_created_by = '.$vald.')');
+                        $this->db->where('p.user_type >=',$this->session->userdata("my_type")+1);
+                }
 //                $this->db->where('p_created_by',$val);
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;

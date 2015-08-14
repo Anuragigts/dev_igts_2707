@@ -22,6 +22,8 @@ class Login_model extends CI_Model
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
+                    $this->db->where("login_email",$email);
+                    $this->db->update("login",array('last_login' => date("Y-m-d H:i:s")));
                     return $query->row();
                 }
                 else{

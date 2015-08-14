@@ -42,8 +42,11 @@ class Super_distributor extends CI_Controller {
                                 }
                         }
                 }
-                $data['val']        =  $this->countries();
+                $data['state']        =  $this->states();
+                $data['city']        =  $this->cities();
                 $data['master']     =  $this->getMasterdistributors();
+                $id1    = 3;
+                $data['pkg']        =  $this->getPackages($id1);
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function select_country($val){
@@ -121,7 +124,6 @@ class Super_distributor extends CI_Controller {
                 if($this->input->post('update_super_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",                   "required|min_length[4]");
                         $this->form_validation->set_rules("last_name",          "Last Name",                    "required|min_length[4]");
-                        $this->form_validation->set_rules("country",            "Country",                      "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",                        "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                         "callback_select_city");
                         $this->form_validation->set_rules("master",             "Master Distributor",           "callback_select_master");
@@ -139,25 +141,21 @@ class Super_distributor extends CI_Controller {
                                 }
                         }
                 }
+                $id1    = 3;
                 $data['view']       =  $this->super_distributor_model->edit_super_distributor($valu);
-                $data['val']        =  $this->countries();
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
-                $data['pkg']        =  $this->getPackages();
+                $data['pkg']        =  $this->getPackages($id1);
                 $data['master']     =  $this->getMasterdistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
-        public function getPackages(){
-                $pak    =   $this->common_model->getallPackages();
+        public function getPackages($id){
+                $pak    =   $this->common_model->getallPackages($id);
                 return $pak;
         }
         public function getMasterdistributors(){
                 $pak    =   $this->common_model->getMasterdistributors();
                 return $pak;
-        }
-        public function countries(){
-                $cou    =  $this->common_model->getCountries();
-                return $cou;
         }
         public function states(){
                 $cou    =  $this->common_model->getallStates();

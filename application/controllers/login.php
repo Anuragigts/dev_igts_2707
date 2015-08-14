@@ -10,6 +10,7 @@ class Login extends CI_Controller {
     }
     public function index()
     {
+        if($this->session->userdata("my_type") != ""){redirect("dashboard"); }
             $data = array(
              'title'         => 'SC :: LOGIN',
              'metakeyword'   => 'SC :: LOGIN',
@@ -34,18 +35,5 @@ class Login extends CI_Controller {
                     }
                 }
            $this->load->view('layout/login',$data);		
-    }
-    public function register(){
-        $data = array(
-             'title'         => 'SC :: REGISTER',
-             'metakeyword'   => 'SC :: REGISTER',
-             'metadesc'      => 'SC :: REGISTER',
-             'content'       => 'register'
-            );
-        
-        $india = '101';
-        $data['states']=$this->common->getState($india);
-        $data['citys']=$this->common->getcity();
-        $this->load->view('layout/register',$data);
     }
 }

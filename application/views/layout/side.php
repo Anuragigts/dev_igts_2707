@@ -42,7 +42,7 @@
                   </li>
                   <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="master_distributor create_master_distributor view_master_distributor edit_master_distributor master_distributor_details module_access">
-                     <a href="#master" title="Layouts" data-toggle="collapse">
+                     <a href="#master" title="Master Distributor" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Master Distributor</span>
                      </a>
@@ -64,7 +64,7 @@
                   
                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2){?>
                   <li class="super_distributor view_super_distributor super_distributor_details create_super_distributor edit_super_distributor module_access_super">
-                     <a href="#super" title="Layouts" data-toggle="collapse">
+                     <a href="#super" title="Super Distributor" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Super Distributor</span>
                      </a>
@@ -85,7 +85,7 @@
                   <?php }?>
                    <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3){?>
                   <li class="distributor create_distributor view_distributor edit_distributor distributor_details module_access_dis">
-                     <a href="#dist" title="Layouts" data-toggle="collapse">
+                     <a href="#dist" title="Distributor" data-toggle="collapse">
                         <em class="fa fa-male"></em>
                         <span>Distributor</span>
                      </a>
@@ -106,7 +106,7 @@
                    <?php }?>
                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3 ||  $this->session->userdata('my_type') == 4){?>
                   <li class="agent create_agent view_agent  edit_agent module_access_agent">
-                     <a href="#agent" title="Layouts" data-toggle="collapse">
+                     <a href="#agent" title="Agent" data-toggle="collapse">
                         <em class="fa fa-child"></em>
                         <span>Agent</span>
                      </a>
@@ -131,7 +131,7 @@
                   </li>
                    <?php if($this->session->userdata('recharge') == 1){?>
                    <li class="recharge ">
-                     <a href="#recharge" title="Layouts" data-toggle="collapse">
+                     <a href="#recharge" title="Recharge" data-toggle="collapse">
                         <em class="fa fa-mobile"></em>
                         <span>Recharge</span>
                      </a>
@@ -156,7 +156,7 @@
                   </li>
                    <?php }if($this->session->userdata('utility') == 1){?>
                   <li class=" ">
-                     <a href="#utility" title="Layouts" data-toggle="collapse">
+                     <a href="#utility" title="Utility" data-toggle="collapse">
                         <em class="fa fa-plug"></em>
                         <span>Utility</span>
                      </a>
@@ -175,8 +175,8 @@
                      </ul>
                   </li>
                  <?php }if($this->session->userdata('dmr') == 1){?>
-                  <li class="dmr">
-                     <a href="#dmr" title="Layouts" data-toggle="collapse">
+                  <li class="dmr sender_registration">
+                     <a href="#dmr" title="DMR" data-toggle="collapse">
                         <em class="fa fa-rupee"></em>
                         <span>DMR</span>
                      </a>
@@ -188,7 +188,7 @@
                               <span>Topup</span>
                            </a>
                         </li>
-                        <li class="dmrUserSearch ">
+                        <li class="dmrUserSearch sender_registration">
                            <a href="<?php echo base_url();?>dmr/dmrUserSearch" title="Money Transfer">
                               <span>Money Transfer</span>
                            </a>
@@ -210,7 +210,7 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
                   </li>
-                   <li class="package create_package view_package">
+                   <li class="package create_package view_package view_package_details">
                      <a href="#pack" title="Package" data-toggle="collapse">
                         <em class="fa fa-database"></em>
                         <span>Package</span>
@@ -222,16 +222,16 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_package">
+                        <li class="view_package view_package_details">
                            <a href="<?= base_url()?>package/view_package" title="View Package">
                               <span>View</span>
                            </a>
                         </li>
                      </ul>
                   </li>
-                   
+                   <?php if($this->session->userdata("preferred_for") == 0){ ?>
                    <li class="module_object create_module_object view_module_object">
-                     <a href="#services" title="Layouts" data-toggle="collapse">
+                     <a href="#services" title="Services Type" data-toggle="collapse">
                         <em class="fa fa-cogs"></em>
                         <span>Services Type</span>
                      </a>
@@ -249,6 +249,7 @@
                         </li>
                      </ul>
                   </li>
+                   <?php } ?>
                   <li class=" ">
                      <a href="#" title="View Modules">
                          <em class="fa fa-cubes"></em>                        
@@ -259,20 +260,20 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
-                  <li class=" ">
-                     <a href="#" title="Profile">
+                  <li class="profile">
+                     <a href="<?= base_url()?>settings/profile" title="Profile">
                          <em class="fa fa-file-picture-o"></em>                        
                         <span data-localize="sidebar.nav.DASHBOARD">Profile</span>
                      </a>                    
                   </li>  
-                  <li class=" ">
-                     <a href="#" title="Change Password">
+                  <li class="change_password">
+                     <a href="<?= base_url()?>settings/change_password" title="Change Password">
                          <em class="fa fa-gavel"></em>                        
                         <span data-localize="sidebar.nav.DASHBOARD">Change Password</span>
                      </a>                    
                   </li>  
-                   <li class=" ">
-                     <a href="#" title="Log-Out">
+                   <li class="logout">
+                     <a href="<?= base_url()?>dashboard/logout" title="Log-Out">
                          <em class="fa fa-sign-out"></em>                        
                         <span data-localize="sidebar.nav.DASHBOARD">Log-Out</span>
                      </a>                    

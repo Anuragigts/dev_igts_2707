@@ -4,10 +4,7 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
              <li class="active">Create Module Object</li>
           </ol> Create Module Object
           <!-- Small text for title-->

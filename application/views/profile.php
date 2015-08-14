@@ -5,11 +5,10 @@
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
                <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
-                <li><a href="<?php echo base_url();?>master_distributor/view_master_distributor">View Master Distributors</a></li> 
-             <li class="active">Edit Master Distributor</li>
-          </ol>Edit Master Distributor
+             <li class="active">Profile</li>
+          </ol> Profile
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For editing Master Distributor</span>
+          <span class="text-sm hidden-xs">For the editing your profile</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -78,19 +77,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Package Name<span class="red">*</span></label>
-                               <select class="form-control" name="package">
-                                   <option value="Select Package"> Select Package </option>
-                                   <?php foreach($pkg as $pg){ 
-                                            if($view->package_id == $pg->package_id){ ?>
-                                            <option value="<?= $pg->package_id;?>" selected="selected"><?= $pg->package_name;?></option>
-                                            <?php } else { ?>
-                                            <option value="<?= $pg->package_id;?>"><?= $pg->package_name;?></option>
-                                            <?php } ?>
-                                    <?php }
-                                    ?>
-                               </select>
-                               <span class="red"><?= form_error('package');?></span>
+                                <label>User Type<span class="red">*</span></label>
+                                <input type="text" placeholder="User Type" class="form-control" name="user_type" value="<?= $view->type_user;?>" disabled="disabled" readonly="readonly">
+                                <span class="red"><?= form_error('user_type');?></span>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -100,7 +89,6 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
-                        
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -120,12 +108,12 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <input type="submit" class="btn btn-sm btn-info" value="Update Master Distributor" name="update_master_distributor">
+                            <input type="submit" class="btn btn-sm btn-info" value="Update Profile" name="update_profile">
                         </div>
                     </div>
                     </form>
             <!-- END panel-->
-                  </div>
+            </div>
             </div>
         </div>
     </div>

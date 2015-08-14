@@ -38,7 +38,7 @@ class Forgot_model extends CI_Model
 //                    echo $message;exit;
                     if($this->email->send()){
                             $data   =   array(
-//                                    'login_password'    =>      md5($pass), 
+                                    'login_password'    =>      md5($pass), 
                                     'is_confirm'        =>      md5($pass)
                             );
                             $this->db->where('login_email',$email);

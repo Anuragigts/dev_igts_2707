@@ -49,7 +49,13 @@
         $(function() {
                 $( "#accordion" ).accordion();
         });
+         $(document).ready(function () {
+            $('input[type=password]').bind('cut copy paste', function (e) {
+               e.preventDefault();
+            });
+        });
     </script> 
+    
 </head>
 
 <body>

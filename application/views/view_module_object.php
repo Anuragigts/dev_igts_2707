@@ -4,10 +4,7 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
              <li class="active">View Module Object</li>
           </ol> View Module Object
           <!-- Small text for title-->
@@ -20,15 +17,11 @@
                <div class="row">
                   <div class="col-lg-12">
                         <div class="panel-body">
-                            <?php if($this->session->flashdata('err') != ""){ ?>
-                            <div class="alert alert-danger" align="center"><?php echo ($this->session->flashdata('err'))?$this->session->flashdata('err'):''?></div>
-                            <?php } ?>
-                            <?php if($this->session->flashdata('msg') != ""){ ?>
-                            <div class="alert alert-success" align="center"><?php echo ($this->session->flashdata('msg'))?$this->session->flashdata('msg'):''?></div>
-                            <?php }?>
+                           <?php   $this->load->view("layout/success_error");?>
                            <table id="datatable1" class="table table-striped table-hover">
                               <thead>
                                  <tr>
+                                     <th>S.No.</th>
                                     <th>Module Name</th>
                                     <th>Sub Module Name</th>
                                     <th>Module Object Name</th>
@@ -40,8 +33,11 @@
                                  </tr>
                               </thead>
                               <tbody>
-                                  <?php foreach ($view_module as $view){?>
+                                  <?php 
+                                        $i  =   1;
+                                        foreach ($view_module as $view){?>
                                         <tr>
+                                            <th><?= $i++;?></th>
                                             <th><?= ucfirst($view->module_name);?></th>
                                             <th><?= ucfirst($view->sub_module_name);?></th>
                                             <th><?= ucfirst($view->modules_obj_name);?></th>

@@ -24,7 +24,6 @@ class Agent extends CI_Controller {
                         $this->form_validation->set_rules("login_email",        "Email Id",             "required|is_unique[login.login_email]");
                         $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]");
                         $this->form_validation->set_rules("con_password",       "Confirm Password",     "required|matches[password]");
-                        $this->form_validation->set_rules("country",            "Country",              "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",                "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                 "callback_select_city");
                         $this->form_validation->set_rules("master",             "Master Distributor",   "callback_select_master");
@@ -44,8 +43,13 @@ class Agent extends CI_Controller {
                                 }
                         }
                 }
-                $data['val']        =  $this->common_model->getCountries();
+                $id1    =   5;
+                $data['state']      =  $this->states();
+                $data['city']       =  $this->cities();
+                $data['pkg']        =  $this->getPackages($id1);
                 $data['master']     =  $this->common_model->getMasterdistributors();
+                $data['sup']        =  $this->getSuperdistributors();
+                $data['dis']        =  $this->getDistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function select_country($val){
@@ -162,17 +166,17 @@ class Agent extends CI_Controller {
                         }
                 }
                 $data['view']       =  $this->agent_model->edit_agent($valu);
-                $data['val']        =  $this->countries();
+                $id1    =   5;
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
-                $data['pkg']        =  $this->getPackages();
+                $data['pkg']        =  $this->getPackages($id1);
                 $data['master']     =  $this->getMasterdistributors();
                 $data['sup']        =  $this->getSuperdistributors();
                 $data['dis']        =  $this->getDistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
-        public function getPackages(){
-                $pak    =   $this->common_model->getallPackages();
+        public function getPackages($id1){
+                $pak    =   $this->common_model->getallPackages($id1);
                 return $pak;
         }
         public function getDistributors(){

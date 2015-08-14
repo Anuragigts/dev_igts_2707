@@ -4,10 +4,7 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
              <li class="active">Create Package</li>
           </ol> Create Package
           <!-- Small text for title-->

@@ -24,7 +24,6 @@ class Distributor extends CI_Controller {
                         $this->form_validation->set_rules("login_email",        "Email Id",             "required|is_unique[login.login_email]");
                         $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]");
                         $this->form_validation->set_rules("con_password",       "Confirm Password",     "required|matches[password]");
-                        $this->form_validation->set_rules("country",            "Country",              "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",                "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                 "callback_select_city");
                         $this->form_validation->set_rules("master",             "Master Distributor",   "callback_select_master");
@@ -43,7 +42,11 @@ class Distributor extends CI_Controller {
                                 }
                         }
                 }
-                $data['val']        =  $this->common_model->getCountries();
+                $data['states']     =  $this->states();
+                $data['city']        =  $this->cities();
+                $id1    = 4;
+                $data['pkg']        =  $this->getPackages($id1);
+                $data['sup']        =  $this->getSuperdistributors();
                 $data['master']     =  $this->common_model->getMasterdistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
@@ -151,16 +154,16 @@ class Distributor extends CI_Controller {
                         }
                 }
                 $data['view']       =  $this->distributor_model->edit_distributor($valu);
-                $data['val']        =  $this->countries();
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
-                $data['pkg']        =  $this->getPackages();
+                $id1    = 4;
+                $data['pkg']        =  $this->getPackages($id1);
                 $data['master']     =  $this->getMasterdistributors();
                 $data['sup']        =  $this->getSuperdistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
-        public function getPackages(){
-                $pak    =   $this->common_model->getallPackages();
+        public function getPackages($id){
+                $pak    =   $this->common_model->getallPackages($id);
                 return $pak;
         }
         public function getSuperdistributors(){
@@ -170,10 +173,6 @@ class Distributor extends CI_Controller {
         public function getMasterdistributors(){
                 $pak    =   $this->common_model->getMasterdistributors();
                 return $pak;
-        }
-        public function countries(){
-                $cou    =  $this->common_model->getCountries();
-                return $cou;
         }
         public function states(){
                 $cou    =  $this->common_model->getallStates();

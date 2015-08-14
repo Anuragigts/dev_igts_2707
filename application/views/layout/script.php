@@ -89,7 +89,7 @@
     $('#state').change(function(){
         var id =  $('option:selected', this).attr('state_id');//$('#state').val();
        
-        $.post('<?php echo base_url();?>dmr/getCity',{'state':id},function(response){
+        $.post('<?php echo base_url();?>common/city',{'state':id},function(response){
                 //alert(response);
                 if(response != ""){
                         $('#city').html(response);							
@@ -101,18 +101,16 @@
      
     
 $(function(){
-        $('#country-id').change(function(){
-		var country    =    $("#country-id").val();
-                if(country != "Select Country" ) {
-                        $.post('<?=base_url()?>common/state',
-                                    {'country':country},function(response){
-                                    $('#state-id').html(response);
+        $( ".state_id" ).change(function() {
+                var str = $(".state_id option:selected" ).val();
+                var str1 = $(".city-id-val option:selected" ).val();
+                if(str != "Select State" && str1 == "Select City" ) {
+                        $.post('<?=base_url()?>common/city',
+                                    {'state':str},function(response){
+                                    $('.city-id-val').html(response);
                         });
-                }else{
-                        $('#state-id').html('<option value="Select State"> Select State </option>');
-                        $('#city-id').html('<option value="Select City"> Select City </option>');
-                }                
-	});
+                } 
+        }).trigger( "change" );
         $('#state-id').change(function(){
 		var state    =    $("#state-id").val();
                 if(state != "Select State" ) {
@@ -124,17 +122,29 @@ $(function(){
                         $('#city-id').html('<option value="Select City"> Select City </option>');
                 }                
 	});
-        $('#master-id').change(function(){
-		var master    =    $("#master-id").val();
+        
+        $( ".master-id" ).change(function() {
+                var master    =    $(".master-id option:selected").val();
 		var valdist   =    $(this).attr("val-dis");
-                if(master != "Select Master Distributor" ) {
+                
+                var str1 = $("#package option:selected" ).val();
+                if(master != "Select Master Distributor" && str1 == "Select Package" ) {
+//                if(master != "Select Master Distributor" ) {
                         $.post('<?=base_url()?>common/packages',
                                     {'master':master,'valdist':valdist},function(response){
                                     $('#package').html(response);
                         });
-                }else{
-                        $('#package').html('<option value="Select Package"> Select Package </option>');
-                }                
+                }
+        }).trigger( "change" );
+        $('#master-id1').change(function(){
+		var master    =    $("#master-id1").val();
+		var valdist   =    $(this).attr("val-dis");
+                if(master != "Select Master Distributor") {
+                        $.post('<?=base_url()?>common/packages',
+                                    {'master':master,'valdist':valdist},function(response){
+                                    $('#package').html(response);
+                        });
+                }             
 	});
         $('#master-id-super').change(function(){
 		var master    =    $("#master-id-super").val();
@@ -148,11 +158,12 @@ $(function(){
                 }                
 	});
         $('#super-id').change(function(){
-		var master    =    $("#super-id").val();
+                var master    =    $("#master-id-super").val();
+		var super1     =    $("#super-id").val();
 		var valdist   =    $(this).attr("val-dis");
-                if(master != "Select Super Distributor" ) {
+                if(super1 != "Select Super Distributor" ) {
                         $.post('<?=base_url()?>common/packages',
-                                    {'master':master,'valdist':valdist},function(response){
+                                    {'master':master,'super1':super1,'valdist':valdist},function(response){
                                     $('#package').html(response);
                         });
                 }else{

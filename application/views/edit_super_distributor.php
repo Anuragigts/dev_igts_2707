@@ -4,10 +4,8 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li>
+              <li><a href="<?php echo base_url();?>super_distributor/view_super_distributor">View Super Distributors</a></li>
              <li class="active">Edit Super Distributor</li>
           </ol> Edit Super Distributor
           <!-- Small text for title-->
@@ -44,22 +42,6 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Country<span class="red">*</span></label>
-                               <select class="form-control" name="country" id="country-id">
-                                   <option value="Select Country"> Select Country </option>
-                                   <?php foreach($val as $op){ 
-                                            if($view->country == $op->Country_id){
-                                            ?>
-                                            <option value="<?= $op->Country_id;?>" selected="selected"><?= $op->Country_name;?></option>
-                                            <?php }
-                                        }
-                                    ?>
-                               </select>
-                               <span class="red"><?= form_error('country');?></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
                                <label>State<span class="red">*</span></label>
                                <select class="form-control" name="state" id="state-id">
                                    <option value="Select State"> Select State </option>
@@ -75,8 +57,6 @@
                                <span class="red"><?= form_error('state');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>City<span class="red">*</span></label>
@@ -94,6 +74,9 @@
                                <span class="red"><?= form_error('city');?></span>
                             </div> 
                         </div>
+                    </div>
+                    <?php if($this->session->userdata("my_type") == 1){ ?>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Master Distributor<span class="red">*</span></label>
@@ -111,7 +94,52 @@
                                 <span class="red"><?= form_error('master');?></span>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Package Name <span class="red">*</span></label>
+                               <select class="form-control" name="package" id="package">
+                                   <option value="Select Package"> Select Package </option>
+                                   <?php                                   
+                                        foreach ($pkg as $pg) {
+                                            if($pg->package_id  ==  $view->package_id){ ?>
+                                                <option value="<?= $pg->package_id;?>" selected="selected"><?= ucfirst($pg->package_name);?></option>
+                                            <?php  
+                                            } else { ?>
+                                                <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>
+                                        <?php  }
+                                    }
+                                   ?>
+                               </select>
+                               <span class="red"><?= form_error('package');?></span>
+                            </div> 
+                        </div>
                     </div>
+                    <div class="row">                                   
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Mobile No<span class="red">*</span></label>
+                               <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= $view->mobile;?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" disabled="disabled" readonly="readonly">
+                               <span class="red"><?= form_error('mobile_no');?></span>
+                           </div>
+                        </div>         
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email Id<span class="red">*</span></label>
+                                <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= $view->login_email;?>" maxlength="200" disabled="disabled" readonly="readonly">
+                                <span class="red"><?= form_error('login_email');?></span>
+                            </div>
+                        </div>                          
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Address<span class="red">*</span></label>
+                               <textarea placeholder="Address" class="form-control" name="address"><?= $view->address;?></textarea>
+                               <span class="red"><?= form_error('address');?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } else { ?>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -121,33 +149,34 @@
                                    <?php                                   
                                         foreach ($pkg as $pg) {
                                             if($pg->package_id  ==  $view->package_id){ ?>
-                                                <option value="<?= $pg->package_id;?>" selected="selected"><?= $pg->package_name;?></option>
+                                                <option value="<?= $pg->package_id;?>" selected="selected"><?= ucfirst($pg->package_name);?></option>
                                             <?php  
                                             } else { ?>
-                                                <option value="<?= $pg->package_id;?>"><?= $pg->package_name;?></option>
+                                                <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>
                                         <?php  }
                                     }
                                    ?>
                                </select>
                                <span class="red"><?= form_error('package');?></span>
                             </div> 
-                        </div>                                   
+                        </div>                                  
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Mobile No<span class="red">*</span></label>
                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= $view->mobile;?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" disabled="disabled" readonly="readonly">
                                <span class="red"><?= form_error('mobile_no');?></span>
                            </div>
-                        </div>                                   
+                        </div> 
                     </div>
-                    <div class="row">
+                    <div class="row">         
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
                                 <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= $view->login_email;?>" maxlength="200" disabled="disabled" readonly="readonly">
+                                <input type="hidden" class="form-control" name="master" value="<?= $this->session->userdata('login_id');?>">
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
-                        </div>
+                        </div>        
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>
@@ -156,6 +185,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="submit" class="btn btn-sm btn-info" value="Edit Super Distributor" name="update_super_distributor">

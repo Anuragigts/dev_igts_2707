@@ -34,13 +34,13 @@ class Master_distributor_model extends CI_Model{
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
                                 "mobile"                =>     $mobile_no,
-                                "country"               =>     $country,
+                                "country"               =>     101,
                                 "state"                 =>     $state,
                                 "city"                  =>     $city,
                                 "created_by"            =>     $ses_id,
                                 "mobile"                =>     $mobile_no,
                                 "address"               =>     $address,
-                                "admin_id"              =>     $ses_id
+                                "admin_id"              =>     1
                         );
                         $ins_comm        =   array(
                                 "login_id"              =>     $val_id,
@@ -112,6 +112,8 @@ class Master_distributor_model extends CI_Model{
                 $this->db->select('*');
                 $this->db->from('package');
                 $this->db->where('user_type',2);
+                $this->db->where('p_created_by',$this->session->userdata("login_id"));
+                $this->db->where('status',1);
                 $this->db->order_by('package_name');
                 $query = $this->db->get();
                 if($this->db->affected_rows() > 0){

@@ -21,3 +21,14 @@
     </div>
     </br>
 <?php }?> 
+<?php if($this->session->flashdata('war') != ''){?>
+    <div class="alert alert-block alert-warning fade in no-margin">
+      <button data-dismiss="alert" class="close" type="button">
+        ×
+      </button>
+      <p>
+        <?php echo ($this->session->flashdata('war'))?$this->session->flashdata('war'):''?>
+      </p>
+    </div>
+    </br>
+<?php }?> 

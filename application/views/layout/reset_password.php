@@ -74,6 +74,13 @@
    <script src="<?php echo $this->config->item('assets_url') ?>/vendor/parsleyjs/dist/parsley.min.js"></script>
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>js/app.js"></script>
+   <script>
+    $(document).ready(function () {
+        $('input[type=password]').bind('cut copy paste', function (e) {
+           e.preventDefault();
+        });
+    });
+   </script>
 </body>
 
 </html>

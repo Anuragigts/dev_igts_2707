@@ -4,14 +4,12 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
-             <li class="active">View Distributors</li>
-          </ol> View Distributors
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
+              <li><a href="<?php echo base_url();?>distributor/view_distributor">View Distributors</a></li> 
+             <li class="active">View Distributors Details</li>
+          </ol> View Distributors Details
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For viewing Distributors</span>
+          <span class="text-sm hidden-xs">For viewing Distributors Details</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -87,31 +85,6 @@
                                     <h3 class="text-center text-bold"> <a href="javascript:void(0);" class="view_dis" onclick="showAgents(<?= $view->login_id;?>,'<?= $name;?>')" login="<?= $view->login_id;?>" user_name="<?= $name;?>" val-dis="3">View All Agents under this <?= $name;?></a></h3>
                                 </div>
                             </div>
-<!--                           <table id="datatable1" class="table table-striped table-hover">
-                              <thead>
-                                 <tr>
-                                    <th>Package Name</th>
-                                    <th>Name</th>
-                                    <th width="20%">Mobile No.</th>
-                                    <th width="35%">Email</th>
-                                    <th></th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                  <?php 
-                                      $name = ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);
-                                      ?>
-                                        <tr>  
-                                            <th><?= ucfirst($view->package_name);?></th>
-                                            <th><?= $name;?></th>
-                                            <th><?= $view->mobile;?></th>
-                                            <th><?= ucfirst($view->login_email);?></th>
-                                            <th>
-                                                <a href="javascript:void(0);" class="view_dis" onclick="showAgents(<?= $view->login_id;?>,'<?= $name;?>')" login="<?= $view->login_id;?>" user_name="<?= $name;?>" val-dis="3">View All distributors</a>
-                                            </th>
-                                         </tr>
-                              </tbody>
-                           </table>-->
                         </div>
                      </div>
                </div>

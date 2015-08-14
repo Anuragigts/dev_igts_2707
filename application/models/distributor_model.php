@@ -18,7 +18,7 @@ class Distributor_model extends CI_Model{
                 $mobile_no          =   $this->input->post("mobile_no");
                 $password           =   $this->input->post("password");
                 $master_id          =   $this->input->post("master");
-                $super_id          =   $this->input->post("super");
+                $super_id           =   $this->input->post("super");
                 $pkg_id             =   $this->input->post("package");
                 $data   =   array(
                         "login_email"           =>     $login_email,
@@ -36,13 +36,13 @@ class Distributor_model extends CI_Model{
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
                                 "mobile"                =>     $mobile_no,
-                                "country"               =>     $country,
+                                "country"               =>     101,
                                 "state"                 =>     $state,
                                 "city"                  =>     $city,
                                 "created_by"            =>     $ses_id,
                                 "mobile"                =>     $mobile_no,
                                 "address"               =>     $address,
-                                "admin_id"              =>     $ses_id,
+                                "admin_id"              =>     1,
                                 "master_distributor_id" =>     $master_id,
                                 "super_distributor_id"  =>     $super_id
                         );
@@ -87,6 +87,12 @@ class Distributor_model extends CI_Model{
                 $this->db->join('commission as c','c.login_id = l.login_id','inner');
                 $this->db->join('package as g','g.package_id = c.package_id','inner');
                 $this->db->where('l.user_type',4);
+                if($this->session->userdata("my_type") == 2){
+                        $this->db->where("p.master_distributor_id",$this->session->userdata("login_id"));
+                }
+                if($this->session->userdata("my_type") == 3){
+                        $this->db->where("p.super_distributor_id",$this->session->userdata("login_id"));
+                }
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){

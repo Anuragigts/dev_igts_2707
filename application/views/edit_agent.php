@@ -4,10 +4,8 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
+              <li><a href="<?php echo base_url();?>agent/view_agent">View Agents</a></li> 
              <li class="active">Edit Agent</li>
           </ol> Edit Agent
           <!-- Small text for title-->
@@ -44,22 +42,6 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Country<span class="red">*</span></label>
-                               <select class="form-control" name="country" id="country-id">
-                                   <option value="Select Country"> Select Country </option>
-                                   <?php foreach($val as $op){ 
-                                            if($view->country == $op->Country_id){
-                                            ?>
-                                            <option value="<?= $op->Country_id;?>" selected="selected"><?= $op->Country_name;?></option>
-                                            <?php }
-                                        }
-                                    ?>
-                               </select>
-                               <span class="red"><?= form_error('country');?></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
                                <label>State<span class="red">*</span></label>
                                <select class="form-control" name="state" id="state-id">
                                    <option value="Select State"> Select State </option>
@@ -75,8 +57,6 @@
                                <span class="red"><?= form_error('state');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>City<span class="red">*</span></label>
@@ -94,9 +74,12 @@
                                <span class="red"><?= form_error('city');?></span>
                             </div> 
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Master Distributor<span class="red">*</span></label>
+                                <?php if($this->session->userdata("my_type") == 1){ ?>
                                 <select class="form-control" name="master" id="master-id-super">
                                     <option value="Select Master Distributor"> Select Master Distributor </option>
                                     <?php foreach($master as $mt){ 
@@ -108,14 +91,20 @@
                                         <?php }
                                     }?>
                                 </select>
+                                 <?php } else { 
+                                    foreach($master as $mt){?>
+                                <input type="hidden" value="<?= $mt->login_id;?>" name="master"/>
+                                <input type="text" value="<?= ucfirst($mt->first_name." ".$mt->last_name);?>" disabled="disabled" readonly="readonly" class="form-control"/>
+                                <?php 
+                                    }
+                                    } ?>
                                 <span class="red"><?= form_error('master');?></span>
                              </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Super Distributor<span class="red">*</span></label>
+                                <?php if($this->session->userdata("my_type") == 2 || $this->session->userdata("my_type") == 1){ ?>
                                 <select class="form-control" name="super" id="super-id"  val-dis="3">
                                     <option value="Select Super Distributor"> Select Super Distributor </option>
                                     <?php foreach($sup as $sp){ 
@@ -127,12 +116,19 @@
                                         <?php }
                                     }?>
                                 </select>
+                                <?php } else{ ?>
+                                <input type="hidden" value="<?= $this->session->userdata("login_id");?>" name="super"/>
+                                <input type="text" value="<?= ucfirst($this->session->userdata('first_name')." ".$this->session->userdata('last_name'));?>" disabled="disabled" readonly="readonly" class="form-control"/>
+                                <?php } ?>
                                 <span class="red"><?= form_error('super');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Distributor<span class="red">*</span></label>
+                                <?php if($this->session->userdata("my_type") == 3 || $this->session->userdata("my_type") == 2 || $this->session->userdata("my_type") == 1){ ?>
                                 <select class="form-control" name="distributor" id="distributor" val-dis="4">
                                     <option value="Select Distributor"> Select Distributor </option>
                                     <?php foreach($dis as $ds){ 
@@ -144,11 +140,18 @@
                                     <?php }
                                     ?>
                                 </select>
+                                <?php } else { 
+                                    foreach($dis as $ds){  
+                                        if($this->session->userdata("login_id") == $ds->login_id){
+                                        ?>
+                                            <input type="hidden" value="<?= $this->session->userdata("login_id");?>" name="distributor"/>
+                                            <input type="text" value="<?= ucfirst($this->session->userdata('first_name')." ".$this->session->userdata('last_name'));?>" disabled="disabled" readonly="readonly" class="form-control"/>
+                                    <?php }
+                                    }
+                                 } ?>
                                 <span class="red"><?= form_error('distributor');?></span>
                              </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Package Name <span class="red">*</span></label>
@@ -169,6 +172,8 @@
                              </div> 
                         </div>
                         
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
@@ -176,8 +181,6 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
@@ -185,6 +188,8 @@
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>

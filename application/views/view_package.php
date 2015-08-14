@@ -4,10 +4,7 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
              <li class="active">View Package</li>
           </ol> View Package
           <!-- Small text for title-->
@@ -25,20 +22,24 @@
                            <table id="datatable1" class="table table-striped table-hover">
                               <thead>
                                  <tr>
+                                    <th width="6%">S.No.</th>
                                     <th>User Type</th>
                                     <th width="20%">Package Name</th>
-                                    <th width="45%">Package Remarks</th>
-                                    <th width="10%">Created By</th>
+                                    <th width="35%">Package Remarks</th>
+                                    <th width="15%">Created By</th>
                                     <th>Status</th>
                                  </tr>
                               </thead>
                               <tbody>
-                                  <?php foreach ($view_package as $view){?>
+                                  <?php 
+                                    $i = 1;
+                                    foreach ($view_package as $view){?>
                                         <tr>
+                                            <th><?= $i++;?></th>
                                             <th><?= $view->user_name_type;?></th>
                                             <th><?= ucfirst($view->package_name);?></th>
                                             <th><?= ucfirst($view->package_remarks);?></th>
-                                            <th><?= ucfirst($view->first_name);?></th>
+                                            <th><?= ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);?></th>
                                             <th>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->

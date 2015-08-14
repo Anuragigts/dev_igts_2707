@@ -41,8 +41,9 @@ class Master_distributor extends CI_Controller {
                                 }
                         }
                 }
-                $data['val']   =  $this->countries();
                 $data['pkg']   =  $this->packages();
+                $data['state']      =  $this->states();
+                $data['city']       =  $this->cities();
                 $this->load->view('layout/inner_template',$data);		
 	}
         public function select_country($val){
@@ -129,7 +130,6 @@ class Master_distributor extends CI_Controller {
                         }
                 }
                 $data['view']       =  $this->master_distributor_model->edit_master_distributor($valu);
-                $data['val']        =  $this->countries();
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
                 $data['pkg']        =  $this->packages();
@@ -138,10 +138,6 @@ class Master_distributor extends CI_Controller {
         public function packages(){
                 $pkg1    =  $this->master_distributor_model->getMasterPackages();
                 return $pkg1;
-        }
-        public function countries(){
-                $cou    =  $this->common_model->getCountries();
-                return $cou;
         }
         public function states(){
                 $cou    =  $this->common_model->getallStates();

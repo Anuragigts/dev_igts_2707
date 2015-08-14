@@ -17,11 +17,14 @@
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/bootstrap.css" id="bscss">
    <!-- =============== APP STYLES ===============-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/app.css" id="maincss">
+   <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/my.css" id="maincss">
+   
 </head>
 
 <body>
    <div class="wrapper">
       <div class="block-center mt-xl wd-xl">
+          <?php   $this->load->view("layout/success_error");?>
          <!-- START panel-->
          <div class="panel panel-dark panel-flat">
             <div class="panel-heading text-center">
@@ -34,7 +37,7 @@
                <form method="post" role="form" data-parsley-validate="" novalidate="" class="mb-lg">
                   <div class="form-group has-feedback">
                       <label for="signupInputEmail1" class="text-muted">Email address<span class="red">*</span></label>
-                      <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control">
+                      <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email">
                      <span class="fa fa-envelope form-control-feedback text-muted"></span>
                       <span class="red"><?=  form_error('email');?></span>
                   </div>
@@ -60,17 +63,17 @@
                      <label for="signupInputRePassword1" class="text-muted">Referred For<span class="red">*</span></label>
                       <select class="form-control b-c"  name="refer" >
                             <option value="">Select</option>
-                            <option value="Agents" <?php echo set_select('refer',"Agents", ( !empty($data) && $data == "Agents") ? TRUE : FALSE )?>>Agents</option>
+                            <option value="Agent" <?php echo set_select('refer',"Agent", ( !empty($data) && $data == "Agent") ? TRUE : FALSE )?>>Agents</option>
                             <option value="Distributor" <?php echo set_select('refer',"Distributor", ( !empty($data) && $data == "Distributor") ? TRUE : FALSE )?>>Distributor</option>
-                            <option value="SuperDistributor" <?php echo set_select('refer',"SuperDistributor", ( !empty($data) && $data == "SuperDistributor") ? TRUE : FALSE )?>>Super Distributor</option>
-                            <option value="MasterDistributor" <?php echo set_select('refer',"MasterDistributor", ( !empty($data) && $data == "MasterDistributor") ? TRUE : FALSE )?>>Master Distributor</option>
+                            <option value="Super Distributor" <?php echo set_select('refer',"Super Distributor", ( !empty($data) && $data == "Super Distributor") ? TRUE : FALSE )?>>Super Distributor</option>
+                            <option value="Master Distributor" <?php echo set_select('refer',"Master Distributor", ( !empty($data) && $data == "Master Distributor") ? TRUE : FALSE )?>>Master Distributor</option>
                            
                         </select>  
                      <span class="red"><?=  form_error('refer');?></span>
                   </div>
                   <div class="form-group has-feedback">
                      <label for="signupInputRePassword1" class="text-muted">State<span class="red">*</span></label>
-                      <select class="form-control b-c" id="state" name="state">
+                      <select class="form-control b-c" id="state-reg" name="state">
                         <option value="">Select</option>
                         <?php foreach($states as $st){?>
                         <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
@@ -80,26 +83,31 @@
                   </div>                   
                    <div class="form-group has-feedback">
                      <label for="signupInputRePassword1" class="text-muted">City<span class="red">*</span></label>
-                     <select class="form-control b-c" id="city" name="city" >
+                     <select class="form-control b-c" id="city-reg" name="city" >
                         <option value="">Select</option>
-                        <?php foreach($citys as $ct){?>
+                        <?php  foreach($citys as $ct){?>
                         <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
-                        <?php }?>
+                        <?php  }?>
                     </select>   
                      <span class="red"><?=  form_error('city');?></span>
                   </div>
+                   <div class="form-group has-feedback">
+                     <label for="" class="text-muted">Zip Code<span class="red">*</span></label>
+                      <input id="signupInputRePassword1" name="zip" type="text" placeholder="Zip Code" autocomplete="off" required data-parsley-equalto="#zip" class="form-control" autocomplete="off" required class="form-control" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                     <span class="fa fa-map-marker form-control-feedback text-muted"></span>
+                     <span class="red"><?=  form_error('zip');?></span>
+                  </div>
                   
                   <div class="clearfix">
-                     <div class="checkbox c-checkbox pull-left mt0">
-                        <label>
-                           <input type="checkbox" value="1" required name="agreed">
-                           <span class="fa fa-check"></span>I agree with the <a href="#">terms</a>
-                           
-                        </label>
-                          <p class="red"><?php echo  form_error('agreed');?></p>
-                     </div>
+                    <div class="checkbox c-checkbox pull-left mt0">
+                       <label>
+                          <input type="checkbox" value="1" required name="agreed" />
+                          <span class="fa fa-check"></span>I agree with the <a href="#">terms</a>
+                       </label>
+                    </div>
                   </div>
-                  <button type="submit" class="btn btn-block btn-primary mt-lg">Create account</button>
+                    <span class="red"><?php echo  form_error('agreed');?></span>
+                   <input type="submit" class="btn btn-block btn-primary mt-lg" name="create_account" value="Create account"/>
                </form>
                <p class="pt-lg text-center"><a href="<?php echo base_url()?>login">Have an account?</a></p>
             </div>
@@ -128,9 +136,14 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/parsleyjs/dist/parsley.min.js"></script>
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
-</body>
-
-</html>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
+<script>
+         $(document).ready(function () {
+            $('input[type=password]').bind('cut copy paste', function (e) {
+               e.preventDefault();
+            });
+        });
+    </script> 
 <script>
    function validateR(element,replacement)
    {
@@ -140,16 +153,18 @@
       element.value = element.value.replace(new RegExp(element.getAttribute('ruleset'), 'gi'), replacement);
    }
      // Get city by ajax
-    $('#state').change(function(){
-        var id =  $('option:selected', this).attr('state_id');//$('#state').val();
-       
-        $.post('<?php echo base_url();?>dmr/getCity',{'state':id},function(response){
-               // alert(response);
-                if(response != ""){
-                        $('#city').html(response);							
+        $('#state-reg').change(function(){
+		var state    =    $('option:selected', this).attr('state_id');
+                if(state != "Select State" ) {
+                        $.post('<?=base_url()?>register/getCityChanged',
+                                    {'state':state},function(response){
+                                    $('#city-reg').html(response);
+                        });
                 }else{
-                      $('#city').html("<option value=''>Select</option>");
-                }					
-            });
-    });
+                        $('#city-reg').html('<option value="Select City"> Select City </option>');
+                }                
+	});
 </script>
+</body>
+
+</html>

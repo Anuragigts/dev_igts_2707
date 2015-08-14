@@ -66,14 +66,13 @@ class Common_model extends CI_Model
         public function getPackages(){
                 $id             =   $this->input->post("master");
                 $valdist        =   $this->input->post("valdist");
-                $this->db->select('l.*,p.*,g.package_name,g.package_id');
-                $this->db->from('login as l');
-                $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
-                $this->db->where('l.user_type',$valdist);
-                $this->db->where('c.login_id',$id);
-                $query = $this->db->get();
+                $super1        =   $this->input->post("super1");
+                $query = $this->db->query("SELECT `g`.`package_name`, `g`.`package_id` FROM "
+                        . "(`package` as g) WHERE ( `g`.`p_created_by` = '".$this->session->userdata("login_id").""
+                        . "' or `g`.`p_created_by` = 1 or `g`.`p_created_by` = '".$this->session->userdata("master_distributor_id")
+                        ."' or `g`.`p_created_by` = ".$super1." or `g`.`p_created_by` = '$id')"
+                        . " AND `g`.`status` = 1 and g.user_type = ".$valdist);
+//                $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
@@ -82,9 +81,25 @@ class Common_model extends CI_Model
                     return array();
                 } 
         }
-        public function getallPackages(){
-                $this->db->select('package_name,package_id');
-                $this->db->from('package');
+        public function getallPackages($id){
+                if($this->session->userdata("my_type") == 1){
+                        $this->db->select('package_name,package_id');
+                        $this->db->from('package');
+                        $this->db->where("user_type",$id);
+                        $this->db->where('status',1);
+                }
+                else{
+                        $this->db->select('g.package_name,g.package_id');
+                        $this->db->from('package as g');
+//                        $this->db->join('commission as c','c.login_id = g.p_created_by',"inner");
+                        $this->db->where("( g.p_created_by = ".$this->session->userdata("admin_id").
+                                " or g.p_created_by = ".$this->session->userdata("login_id").
+                                " or g.p_created_by = ".$this->session->userdata("master_distributor_id").
+                                " or g.p_created_by = ".$this->session->userdata("super_distributor_id").
+                                " or g.p_created_by = ".$this->session->userdata("distributor_id").")");
+                        $this->db->where("user_type",$id);
+                        $this->db->where('g.status',1);
+                }
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
@@ -165,6 +180,7 @@ class Common_model extends CI_Model
                 $this->db->from('cities');
                 $this->db->order_by('City_name');
                 $query = $this->db->get();
+//                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
                 }
@@ -230,6 +246,17 @@ class Common_model extends CI_Model
                 $this->db->join('commission as c','c.login_id = l.login_id','inner');
                 $this->db->join('package as g','g.package_id = c.package_id','inner');
                 $this->db->where('l.user_type',3);
+                if($this->session->userdata("my_type") == 2){
+                        $this->db->where("p.master_distributor_id",  $this->session->userdata("login_id"));
+                }
+                else if($this->session->userdata("my_type") == 3){
+                    $this->db->where("p.master_distributor_id",  $this->session->userdata("master_distributor_id"));    
+                    $this->db->or_where("p.super_distributor_id",  $this->session->userdata("login_id"));
+                }
+                else if($this->session->userdata("my_type") == 4){
+                        $this->db->where("p.master_distributor_id",  $this->session->userdata("master_distributor_id"));    
+                        $this->db->or_where("p.super_distributor_id",  $this->session->userdata("super_distributor_id"));
+                }
 //                $this->db->where('l.user_type',3);
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;

@@ -4,10 +4,7 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li>
              <li class="active">Create Super Distributor</li>
           </ol> Create Super Distributor
           <!-- Small text for title-->
@@ -44,76 +41,73 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                               <label>Country<span class="red">*</span></label>
-                               <select class="form-control" name="country" id="country-id">
-                                   <option value="Select Country"> Select Country </option>
-                                   <?php foreach($val as $op){ ?>
-                                            <option value="<?= $op->Country_id;?>"><?= $op->Country_name;?></option>
-                                    <?php }
-                                    ?>
-                               </select>
-                               <span class="red"><?= form_error('country');?></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
                                <label>State<span class="red">*</span></label>
-                               <select class="form-control" name="state" id="state-id">
+                               <select class="form-control state_id" name="state" id="state-id">
                                    <option value="Select State"> Select State </option>
+                                   <?php foreach ($state as $st){ ?> 
+                                   <option value="<?= $st->State_id;?>" <?php echo set_select('state',$st->State_id, ( !empty($data) && $data == "$st->State_id") ? TRUE : FALSE )?>><?= $st->State_name;?></option>
+                                   <?php } ?>
                                </select>
                                <span class="red"><?= form_error('state');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>City<span class="red">*</span></label>
-                               <select class="form-control" name="city" id="city-id">
+                               <select class="form-control city-id-val" name="city" id="city-id">
                                    <option value="Select City"> Select City </option>
+                                   <?php foreach ($city as $ct){ ?> 
+                                   <option value="<?= $ct->City_id;?>" <?php echo set_select('city',$ct->City_id, ( !empty($data) && $data == "$ct->City_id") ? TRUE : FALSE )?>><?= $ct->City_name;?></option>
+                                   <?php } ?>
                                </select>
                                <span class="red"><?= form_error('city');?></span>
-                            </div> 
+                            </div>
                         </div>
+                    </div>
+                    <?php if($this->session->userdata("my_type") == 1){ ?>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Master Distributor<span class="red">*</span></label>
-                                <select class="form-control" name="master" id="master-id" val-dis="2">
+                                <select class="form-control master-id" name="master" id="master-id1" val-dis="3">
                                     <option value="Select Master Distributor"> Select Master Distributor </option>
                                     <?php foreach($master as $mt){ ?>
-                                        <option value="<?= $mt->login_id;?>"><?= ucfirst($mt->first_name." ".$mt->middle_name." ".$mt->last_name);?></option>    
+                                        <option value="<?= $mt->login_id;?>" <?php echo set_select('master',$mt->login_id, ( !empty($data) && $data == "$mt->login_id") ? TRUE : FALSE )?>><?= ucfirst($mt->first_name." ".$mt->middle_name." ".$mt->last_name);?></option>    
                                         <?php } ?>
                                 </select>
                                 <span class="red"><?= form_error('master');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Package Name <span class="red">*</span></label>
                                <select class="form-control" name="package" id="package">
                                    <option value="Select Package"> Select Package </option>
+                                   <?php foreach ($pkg as $pg){ ?>
+                                   <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>
+                                   <?php } ?>
                                </select>
                                <span class="red"><?= form_error('package');?></span>
                             </div> 
-                        </div>                                   
+                        </div>    
+                    </div>
+                    <div class="row">                               
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Mobile No<span class="red">*</span></label>
                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                <span class="red"><?= form_error('mobile_no');?></span>
                            </div>
-                        </div>                                   
-                    </div>
-                    <div class="row">
+                        </div>     
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
                                 <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= set_value('login_email');?>" maxlength="200">
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
-                        </div>
+                        </div>                              
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password<span class="red">*</span></label>
@@ -121,6 +115,61 @@
                                 <span class="red"><?= form_error('password');?></span>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Confirm Password<span class="red">*</span></label>
+                                <input type="password" placeholder="Confirm Password" class="form-control email" name="con_password" value="<?= set_value('con_password');?>">
+                                <span class="red"><?= form_error('con_password');?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Address<span class="red">*</span></label>
+                               <textarea placeholder="Address" class="form-control" name="address" value="<?= set_value('address');?>"></textarea>
+                               <span class="red"><?= form_error('address');?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Package Name <span class="red">*</span></label>
+                               <select class="form-control" name="package" id="package">
+                                   <option value="Select Package"> Select Package </option>
+                                   <?php foreach ($pkg as $pg){ ?>
+                                   <option value="<?= $pg->package_id;?>"><?= ucfirst($pg->package_name);?></option>
+                                   <?php } ?>
+                               </select>
+                               <span class="red"><?= form_error('package');?></span>
+                            </div> 
+                        </div>                              
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                               <label>Mobile No<span class="red">*</span></label>
+                               <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                               <input type="hidden" class="form-control" name="master" value="<?= $this->session->userdata('login_id');?>">
+                               <span class="red"><?= form_error('mobile_no');?></span>
+                           </div>
+                        </div>                      
+                    </div>
+                    <div class="row">    
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email Id<span class="red">*</span></label>
+                                <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= set_value('login_email');?>" maxlength="200">
+                                <span class="red"><?= form_error('login_email');?></span>
+                            </div>
+                        </div>         
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Password<span class="red">*</span></label>
+                                <input type="password" placeholder="Password" class="form-control email" name="password" value="<?= set_value('password');?>">
+                                <span class="red"><?= form_error('password');?></span>
+                            </div>
+                        </div>            
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
@@ -138,6 +187,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php }?>
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="submit" class="btn btn-sm btn-info" value="Create Super Distributor" name="create_super_distributor">

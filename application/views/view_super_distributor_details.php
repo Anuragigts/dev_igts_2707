@@ -4,14 +4,12 @@
         <h3>
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-             </li>
-             <li><a href="#">Elements</a>
-             </li>-->
-             <li class="active">View Super Distributors</li>
-          </ol> View Super Distributors
+              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li>
+              <li><a href="<?php echo base_url();?>super_distributor/view_super_distributor">View Super Distributors</a></li>
+             <li class="active">View Super Distributors Details</li>
+          </ol> View Super Distributors Details
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For viewing Super Distributors</span>
+          <span class="text-sm hidden-xs">For viewing Super Distributors Details</span>
           <!-- Breadcrumb below title-->
 
         </h3>

@@ -56,7 +56,7 @@
                   </div>
                    <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
                    <br>
-                   <div class="text-center"><a href="<?php echo base_url()?>login/register">Register New User</a></div>
+                   <div class="text-center"><a href="<?php echo base_url()?>register">Register New User</a></div>
                </form>
                
             </div>
@@ -88,6 +88,13 @@
    <!-- Not to allow Special Characters Scripts --->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery.min.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
+   <script>
+         $(document).ready(function () {
+            $('input[type=password]').bind('cut copy paste', function (e) {
+               e.preventDefault();
+            });
+        });
+    </script> 
 </body>
 
 </html>
