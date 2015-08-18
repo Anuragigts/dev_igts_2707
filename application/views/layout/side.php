@@ -175,8 +175,10 @@
                      </ul>
                   </li>
                  <?php }if($this->session->userdata('dmr') == 1){?>
-                  <li class="dmr sender_registration">
+
+                  <li class="dmr">
                      <a href="#dmr" title="DMR" data-toggle="collapse">
+
                         <em class="fa fa-rupee"></em>
                         <span>DMR</span>
                      </a>
@@ -198,6 +200,34 @@
                               <span>Sender List</span>
                            </a>
                         </li>
+<!--                        <li class="dmrAgents">
+                           <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
+                              <span>DMR Agents</span>
+                           </a>
+                        </li>-->
+                     </ul>
+                  </li>
+                    <?php }?>
+                  <?php if($this->session->userdata('flight') == 1){?>
+                  <li class="flight">
+                     <a href="#flight" title="Fleight" data-toggle="collapse">
+                        <em class="fa fa-rocket"></em>
+                        <span>Flight</span>
+                     </a>
+                     <ul id="flight" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Flight</li>
+
+                        <li class="searchFlight ">
+                           <a href="<?php echo base_url();?>flight/searchFlight" title="Search Flight">
+                              <span>Search Flight</span>
+                           </a>
+                        </li>
+                        <li class="flightHistory ">
+                           <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
+                              <span>Flight History</span>
+                           </a>
+                        </li>
+                       
 <!--                        <li class="dmrAgents">
                            <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
                               <span>DMR Agents</span>

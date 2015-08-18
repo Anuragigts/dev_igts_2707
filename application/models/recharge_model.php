@@ -68,14 +68,19 @@ class Recharge_model extends CI_Model
                         }
                         
                         foreach($res as $d){
+                           
                             $str .= "<tr> <td>".$d['recharge_amount']."</td>";
                             if($val == 'full' || $val == 'top'){
+                                if(array_key_exists('recharge_talktime', $d)){
                                 $str .= "<td>".$d['recharge_talktime']."</td>";
+                                }
                             }
                             $str .= "<td>".$d['recharge_validity']."</td>";
                             $str .= "<td>".$d['recharge_longdesc']."</td>";
                             $str .= "<td><buttion class='btn btn-pill-right btn-success get-pl' get-pl-val ='".$d['recharge_amount']."' type='buttion'>Get</buttion></td> </tr>";
-                        }
+                            }
+                            
+                         
                     }else{
                        $str .="<div class='text-center'><h4>No Plans available.</h4></div>"; 
                     }

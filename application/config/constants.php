@@ -47,6 +47,10 @@ define('DMRURL', 'http://202.54.157.77/wsnpci/impsmethods.asmx');
 // DMR action
 define('DMRACTIUON', 'http://tempuri.org/');
 
+// Flight rechage
+define('FLIGHTURL', 'http://115.248.39.80/hermesapi/inthermesair.asmx');
+define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
+
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
