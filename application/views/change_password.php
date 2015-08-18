@@ -22,10 +22,9 @@
                            <form role="form" action="" method="post" id="theform">
                                <div class="form-group">
                                   <label>New Password<span class="red">*</span></label>
-                                  <input type="password" placeholder="Password" class="form-control <?php echo form_error('pass')?'parsley-error':"";?>" name="pass" data-toggle="tooltip" title="<?php echo form_error('pass')?form_error('pass'):"";?>">
+                                  <input type="password" placeholder="Password" class="form-control" name="pass">
                                   <span class="red "><?= form_error('pass');?></span>
                                </div>
-                               <a class="tooltip">By hijax link</a>
                                <div class="form-group">
                                   <label>Confirm Password<span class="red">*</span></label>
                                   <input type="password" placeholder="Confirm Password" class="form-control" name="con_pass">
