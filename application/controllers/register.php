@@ -30,7 +30,35 @@ class Register extends CI_Controller {
                     $this->form_validation->set_rules("zip",                "Zip Code",             "required|min_length[6]");
                     $this->form_validation->set_rules("agreed",             "Agree",                "required");
                     if($this->form_validation->run() == TRUE){
-                            $insert     =   $this->register_model->register();
+                        $idP = '';$addp='';
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                        
+                            $insert     =   $this->register_model->register($idP,$addp);
                             if($insert == 1){
                                     $this->session->set_flashdata("msg","Please check your Email for confirmation link");
                                     redirect("register");

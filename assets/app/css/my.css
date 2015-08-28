@@ -35,3 +35,31 @@ and open the template in the editor.
 .bold1{
     font-size: 18px !important;
 }
+.bg-orange{
+    background-color: #FB773E;
+    color: #fff;   
+}
+.bg-orange:hover{
+     -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
+box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75); 
+}
+.bg-orange-dark{
+    background-color: #E25C22;
+}
+.bg-l-1{
+    color: #fff;   
+    background-color: #F16021;
+}
+.bg-l-2{
+    color: #fff;   
+    background-color: #F37922;
+}
+.bg-l-3{
+    color: #fff;   
+    background-color: #F38E22;
+}
+.bg-l-4{
+    color: #fff;   
+    background-color: #F39F22;
+}

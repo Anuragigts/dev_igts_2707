@@ -46,7 +46,11 @@
                      <ul role="tablist" class="nav nav-tabs nav-justified">
                         <li role="presentation" >
                            <a href="<?php echo base_url();?>recharge/mobile_recharge"  class="bb0">
-                              <em class="fa fa-mobile-phone fa-fw"></em>Mobile</a>
+                              <em class="fa fa-mobile-phone fa-fw"></em>Pre Paid</a>
+                        </li>
+                        <li role="presentation ">
+                           <a href="<?php echo base_url();?>recharge/post_recharge" class="bb0 ">
+                              <em class="fa fa-mobile-phone fa-fw"></em>Post Paid</a>
                         </li>
                         <li role="presentation " class="active">
                            <a href="<?php echo base_url();?>recharge/dth_recharge#dth_tab" aria-controls="home" role="tab" data-toggle="tab" class="bb0 ">

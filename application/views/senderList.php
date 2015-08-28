@@ -55,10 +55,8 @@
                                     </td>
                                     <td>
                                         <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                        <?php if($sr->mmid == '' ){?>
                                             <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                        <?php }else{?>
-                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
                                         <?php }?>
                                     </td>
                                 </tr>
@@ -84,10 +82,8 @@
                                     </td>
                                     <td>
                                         <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                        <?php if($sr->mmid == ''){?>
                                             <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                        <?php }else{?>
-                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
                                         <?php }?>
                                     </td>
                                 </tr>
@@ -114,10 +110,8 @@
                                     </td>
                                     <td>
                                         <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                        <?php if($sr->mmid == '' ){?>
                                             <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                        <?php }else{?>
-                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
                                         <?php }?>
                                     </td>
                                 </tr>
@@ -144,16 +138,14 @@
                                     </td>
                                     <td>
                                         <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                        <?php if($sr->mmid == '' ){?>
                                             <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                        <?php }else{?>
-                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
                                         <?php }?>
                                     </td>
                                 </tr>
                                  <?php }?>
                            <?php }else{?>
-                                    <?php if($sr->done_by == $this->session->userdata('login_id')){?>
+                                    <?php if($sr->login_id == $this->session->userdata('login_id')){?>
                                 <tr>
                                     <td><?php echo $i; $i++;?></td>
                                     <td><?php echo $sr->name;?></td>
@@ -174,10 +166,8 @@
                                     </td>
                                     <td>
                                         <a  href="<?php echo base_url();?>dmr/viewTransectionHIstory/<?php echo $sr->card_number;?>" title="View History"> <i class="fa fa-money"></i></a>
-                                        <?php if($sr->mmid == '' || $sr->pin == ''){?>
+                                        <?php if($sr->mmid == '' ){?>
                                             <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Verify Account"> <i class="fa fa-check-square-o red"></i></a>
-                                        <?php }else{?>
-                                            <a  href="<?php echo base_url();?>dmr/otp/<?php echo $sr->d_id;?>" title="Set Pin "> <i class="fa fa-check-square-o green"></i></a>
                                         <?php }?>
                                     </td>
                                 </tr>

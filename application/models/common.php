@@ -30,8 +30,8 @@ class Common extends CI_Model
     }
     
     public function bank_name(){
-        $query = $this->db->query("SELECT distinct(Bank_Name)as name FROM bank_details ");
-        
+        $query = $this->db->query("SELECT distinct(bank)as name,`require` FROM bank_details order by bank asc ");
+       //echo $this->db->last_query();die();
         if($query && $query->num_rows()>0){            
             	return $query->result();
         }else{

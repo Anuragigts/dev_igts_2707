@@ -86,7 +86,7 @@
                                                  <input type="submit" class="btn btn-sm btn-info" name="send" value="Verify" />                                                
                                              </div>
                                              <div class="col-lg-4">                            
-                                                 <a href="<?php echo base_url()?>dmr/resendBenOTP/<?php echo $details->card_no; ?>/<?php echo $this->uri->segment(3);?>"><buttion  class="btn btn-sm btn-warning" name="send"  />Resend Send OTP</buttion></a>
+                                                 <a href="<?php echo base_url()?>dmr/resendBenOTP/<?php echo $details->card_no; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>"><buttion  class="btn btn-sm btn-warning" name="send"  />Resend Send OTP</buttion></a>
                                              </div>
                                           </div>
                                        </form>

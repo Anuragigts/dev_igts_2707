@@ -13,7 +13,7 @@ class Recharge extends CI_Controller {
      public function mobile_recharge(){
         //print_r( $this->session->all_userdata());
         $data = array(
-              'title'         => 'SC :: MOBILE RECHARGE',
+              'title'         => 'SC :: PRE PAID RECHARGE',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'recharge_mobile'
@@ -43,6 +43,47 @@ class Recharge extends CI_Controller {
        }
        $operator_type = 1;
         $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
+        $this->load->view('layout/inner_template',$data);
+    }
+     public function post_recharge(){
+        //print_r( $this->session->all_userdata());
+        $data = array(
+              'title'         => 'SC :: POST PAID RECHARGE',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'recharge_post_mobile'
+             );
+       if($this->input->post('amount')){
+           //echo "hiii"; die();
+           $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|numeric');
+            $this->form_validation->set_rules('code','Operator Code','required');
+            $this->form_validation->set_rules('oprator_name','Operator Name','required');
+            if($this->input->post('oprator_name') == 'BSNL POSTPAID OR LANDLINE'){
+                $this->form_validation->set_rules('circle','Circle Code','required');
+                $this->form_validation->set_rules('accc','Account No','required');
+                $this->form_validation->set_rules('std','STD Code','required');
+            }if($this->input->post('oprator_name') == 'RELIANCE POSTPAID'){
+                $this->form_validation->set_rules('std','STD Code','required');
+            }
+            $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
+             if($this->form_validation->run() == TRUE){
+                 $recharge_type = 4;
+                $result = $this->recharge_model->doPostRecharge( $recharge_type);
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                    redirect('recharge/post_recharge');
+                }
+                else if($result == 2){
+                    $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                   redirect('recharge/post_recharge');
+                }else{
+                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                    redirect('recharge/post_recharge');
+                }
+            }
+       }
+      
+        $data['all_operator'] = $this->recharge_model->getPaymentDetail();
         $this->load->view('layout/inner_template',$data);
     }
      public function dth_recharge(){

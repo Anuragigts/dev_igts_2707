@@ -957,9 +957,9 @@ _:-ms-lang(x),
 }
 .topnavbar .navbar-header {
   background-color: transparent;
-  background-image: -webkit-linear-gradient(left, #23b7e5 0%, #51c6ea 100%);
-  background-image: -o-linear-gradient(left, #23b7e5 0%, #51c6ea 100%);
-  background-image: linear-gradient(to right, #23b7e5 0%, #51c6ea 100%);
+  background-image: -webkit-linear-gradient(left, #E25C22 0%, #E66B06 100%);
+  background-image: -o-linear-gradient(left, #E25C22 0%, #E66B06 100%);
+  background-image: linear-gradient(to right, #E25C22 0%, #E66B06 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23b7e5', endColorstr='#ff51c6ea', GradientType=1);
 }
@@ -989,7 +989,7 @@ _:-ms-lang(x),
 }
 .topnavbar .navbar-nav > li > a,
 .topnavbar .navbar-nav > .open > a {
-  color: #23b7e5;
+  color: #E25C22;
 }
 .topnavbar .navbar-nav > li > a:hover,
 .topnavbar .navbar-nav > .open > a:hover,
@@ -1101,10 +1101,10 @@ _:-ms-lang(x),
 @media only screen and (min-width: 768px) {
   .topnavbar {
     border: 0;
-    background-color: #23b7e5;
-    background-image: -webkit-linear-gradient(left, #23b7e5 0%, #51c6ea 100%);
-    background-image: -o-linear-gradient(left, #23b7e5 0%, #51c6ea 100%);
-    background-image: linear-gradient(to right, #23b7e5 0%, #51c6ea 100%);
+    background-color: #E25C22;
+    background-image: -webkit-linear-gradient(left, #E25C22 0%, #E66B06 100%);
+    background-image: -o-linear-gradient(left, #E25C22 0%, #E66B06 100%);
+    background-image: linear-gradient(to right, #E25C22 0%, #E66B06 100%);
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23b7e5', endColorstr='#ff51c6ea', GradientType=1);
   }
@@ -1135,7 +1135,7 @@ _:-ms-lang(x),
   .topnavbar .navbar-nav > .open > a:hover,
   .topnavbar .navbar-nav > li > a:focus,
   .topnavbar .navbar-nav > .open > a:focus {
-    color: #117391;
+    color: #96C98C;
   }
   .topnavbar .navbar-nav > li > [data-toggle='navbar-search'] {
     position: static;
@@ -1233,7 +1233,7 @@ _:-ms-lang(x),
 .sidebar > .nav > li > .nav-item:hover {
   text-decoration: none;
   outline: none;
-  color: #23b7e5;
+  color: #E25C22;
 }
 .sidebar > .nav > li > a > em,
 .sidebar > .nav > li > .nav-item > em {
@@ -1252,14 +1252,14 @@ _:-ms-lang(x),
 .sidebar > .nav > li.active .nav,
 .sidebar > .nav > li.open .nav {
   background-color: #fcfcfc;
-  color: #23b7e5;
+  color: #E25C22;
 }
 .sidebar > .nav > li.active > a > em,
 .sidebar > .nav > li.open > a > em {
-  color: #23b7e5;
+  color: #E25C22;
 }
 .sidebar > .nav > li.active {
-  border-left-color: #23b7e5;
+  border-left-color: #E25C22;
 }
 .sidebar > .nav .label {
   display: block;
@@ -1296,7 +1296,7 @@ _:-ms-lang(x),
 .sidebar-subnav > li > .nav-item:focus,
 .sidebar-subnav > li > a:hover,
 .sidebar-subnav > li > .nav-item:hover {
-  color: #23b7e5;
+  color: #E25C22;
 }
 .sidebar-subnav > li > a > em,
 .sidebar-subnav > li > .nav-item > em {
@@ -1306,12 +1306,12 @@ _:-ms-lang(x),
 }
 .sidebar-subnav > li.active > a,
 .sidebar-subnav > li.active > .nav-item {
-  color: #23b7e5;
+  color: #E25C22;
 }
 .sidebar-subnav > li.active > a:after,
 .sidebar-subnav > li.active > .nav-item:after {
-  border-color: #23b7e5;
-  background-color: #23b7e5;
+  border-color: #E25C22;
+  background-color: #E25C22;
 }
 .sidebar-subnav > li .nav > li {
   padding-left: 5px;
@@ -2036,11 +2036,12 @@ fieldset[disabled] .btn-pink.active {
 }
 .panel-dark {
   border-color: #cfdbe2;
+  border:1px solid #D2B699;
 }
 .panel-dark > .panel-heading {
   color: #ffffff;
-  background-color: #3a3f51;
-  border-color: #3a3f51;
+  background-color: #E25C21;
+  border-color: #C4481A;
 }
 .panel-dark > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #cfdbe2;
@@ -2372,67 +2373,67 @@ fieldset[disabled] .btn-pink.active {
   background-image: linear-gradient(450deg, #27c24c 50%, transparent 50%, transparent), linear-gradient(270deg, #27c24c 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-0 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(90deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(90deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-5 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(108deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(108deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-10 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(126deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(126deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-15 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(144deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(144deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-20 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(162deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(162deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-25 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(180deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(180deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-30 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(198deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(198deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-35 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(216deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(216deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-40 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(234deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(234deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-45 {
-  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(252deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(252deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-50 {
-  background-image: linear-gradient(270deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(270deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-55 {
-  background-image: linear-gradient(288deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(288deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-60 {
-  background-image: linear-gradient(306deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(306deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-65 {
-  background-image: linear-gradient(324deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(324deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-70 {
-  background-image: linear-gradient(342deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(342deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-75 {
-  background-image: linear-gradient(360deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(360deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-80 {
-  background-image: linear-gradient(378deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(378deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-85 {
-  background-image: linear-gradient(396deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(396deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-90 {
-  background-image: linear-gradient(414deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(414deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-95 {
-  background-image: linear-gradient(432deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(432deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-info.radial-bar-100 {
-  background-image: linear-gradient(450deg, #23b7e5 50%, transparent 50%, transparent), linear-gradient(270deg, #23b7e5 50%, #fafafa 50%, #fafafa);
+  background-image: linear-gradient(450deg, #E25C22 50%, transparent 50%, transparent), linear-gradient(270deg, #E25C22 50%, #fafafa 50%, #fafafa);
 }
 .radial-bar-warning.radial-bar-0 {
   background-image: linear-gradient(90deg, #fafafa 50%, transparent 50%, transparent), linear-gradient(90deg, #ff902b 50%, #fafafa 50%, #fafafa);
@@ -2701,7 +2702,7 @@ x:-o-prefocus,
   background-color: #27c24c;
 }
 .circle-info {
-  background-color: #23b7e5;
+  background-color: #E25C22;
 }
 .circle-warning {
   background-color: #ff902b;
@@ -2743,7 +2744,7 @@ x:-o-prefocus,
   border: 1px solid #27c24c;
 }
 .circle-outline.circle-info {
-  border: 1px solid #23b7e5;
+  border: 1px solid #E25C22;
 }
 .circle-outline.circle-warning {
   border: 1px solid #ff902b;
@@ -2898,7 +2899,7 @@ x:-o-prefocus,
 }
 .timeline > li > .timeline-badge.info,
 .timeline-alt > li > .timeline-badge.info {
-  background-color: #23b7e5;
+  background-color: #E25C22;
 }
 .timeline > li > .timeline-badge.inverse,
 .timeline-alt > li > .timeline-badge.inverse {
@@ -6355,14 +6356,14 @@ body .whirl.helicopter:after {
   background-color: #5d9cec;
 }
 body .whirl.ringed:after {
-  border-right-color: #23b7e5;
+  border-right-color: #E25C22;
   border-top-color: #7266ba;
   border-left-color: #7266ba;
   border-bottom-color: #7266ba;
 }
 body .whirl.traditional:after {
-  border-right-color: #23b7e5;
-  border-top-color: #23b7e5;
+  border-right-color: #E25C22;
+  border-top-color: #E25C22;
   border-left-color: #7266ba;
   border-bottom-color: #fad732;
 }
@@ -6995,11 +6996,11 @@ body .jvectormap-zoomout {
   color: inherit;
 }
 .bg-info {
-  background-color: #23b7e5;
+  background-color: #E25C22;
   color: #ffffff !important;
 }
 .bg-info-light {
-  background-color: #51c6ea;
+  background-color: #E66B06;
   color: #ffffff !important;
 }
 .bg-info-dark {
@@ -7655,8 +7656,8 @@ body .jvectormap-zoomout {
   border-radius: 3px;
   text-decoration: none;
   color: #ffffff;
-  background-color: #23b7e5;
-  border-color: #23b7e5;
+  background-color: #E25C22;
+  border-color: #E25C22;
 }
 .flatdoc-wrapper .button:focus,
 .flatdoc-wrapper .button.focus {
@@ -7712,10 +7713,10 @@ fieldset[disabled] .flatdoc-wrapper .button:active,
 .flatdoc-wrapper .button.disabled.active,
 .flatdoc-wrapper .button[disabled].active,
 fieldset[disabled] .flatdoc-wrapper .button.active {
-  background-color: #23b7e5;
-  border-color: #23b7e5;
+  background-color: #E25C22;
+  border-color: #E25C22;
 }
 .flatdoc-wrapper .button .badge {
-  color: #23b7e5;
+  color: #E25C22;
   background-color: #ffffff;
 }

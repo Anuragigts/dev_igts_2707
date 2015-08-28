@@ -34,7 +34,7 @@
             </div>
             <div class="panel-body">
                <p class="text-center pv">SIGNUP TO GET INSTANT ACCESS.</p>
-               <form method="post" role="form" data-parsley-validate="" novalidate="" class="mb-lg">
+               <form method="post" role="form" enctype="multipart/form-data" class="mb-lg">
                   <div class="form-group has-feedback">
                       <label for="signupInputEmail1" class="text-muted">Email address<span class="red">*</span></label>
                       <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email">
@@ -97,6 +97,15 @@
                      <span class="fa fa-map-marker form-control-feedback text-muted"></span>
                      <span class="red"><?=  form_error('zip');?></span>
                   </div>
+                   <div class="form-group has-feedback">
+                     <label for="" class="text-muted">ID Proof</label>
+                      <input id="" name="idproof" type="file" autocomplete="off" required >
+                  </div>
+                    <div class="form-group has-feedback">
+                     <label for="" class="text-muted">Address Proof</label>
+                      <input id="" name="addproof" type="file" autocomplete="off" required >
+                  </div>
+                  
                   
                   <div class="clearfix">
                     <div class="checkbox c-checkbox pull-left mt0">
@@ -109,7 +118,8 @@
                     <span class="red"><?php echo  form_error('agreed');?></span>
                    <input type="submit" class="btn btn-block btn-primary mt-lg" name="create_account" value="Create account"/>
                </form>
-               <p class="pt-lg text-center"><a href="<?php echo base_url()?>login">Have an account?</a></p>
+               <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
+               <p class="pt-lg text-center"><a href="<?php echo base_url()?>login/access">Have an account?</a></p>
             </div>
          </div>
          <!-- END panel-->

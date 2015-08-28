@@ -44,8 +44,10 @@
                                     <td><?php echo $dl->op_name;?></td>
                                     <td><?php if($dl->recharge_type == 1){
                                        echo  "Mobile";
-                                    }else{
+                                    }else if($dl->recharge_type == 2){
                                         echo  "DTH";
+                                    }else{
+                                        echo "Post paid / Landline";
                                     }?></td>
                                     <td><?php echo $dl->ref_num;?></td>
                                     <td><?php echo $dl->trans_no;?></td>

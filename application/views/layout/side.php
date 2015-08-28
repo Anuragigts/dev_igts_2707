@@ -32,7 +32,7 @@
                   <li class="dashboard">
 					<a href="<?php echo base_url()?>dashboard" title="Dashboard">
                         <em class="fa fa-dashboard "></em>
-                        <div class="pull-right label label-info">4</div>
+<!--                        <div class="pull-right label label-info">4</div>-->
                         <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                      </a>                    
                   </li>  
@@ -139,7 +139,12 @@
                         <li class="sidebar-subnav-header">Recharge</li>
                         <li class="mobile_recharge ">
                            <a href="<?php echo base_url();?>recharge/mobile_recharge" title="Mobile Recharge">
-                              <span>Mobile</span>
+                              <span>Pre paid</span>
+                           </a>
+                        </li>
+                        <li class="post_recharge ">
+                           <a href="<?php echo base_url();?>recharge/post_recharge" title="Mobile Recharge">
+                              <span>Post paid</span>
                            </a>
                         </li>
                         <li class="dth_recharge ">
@@ -195,11 +200,11 @@
                               <span>Money Transfer</span>
                            </a>
                         </li>
-                        <li class="senderList ">
-                           <a href="<?php echo base_url();?>dmr/senderList" title="Sender List">
+<!--                        <li class="senderList ">
+                           <a href="<?php //echo base_url();?>dmr/senderList" title="Sender List">
                               <span>Sender List</span>
                            </a>
-                        </li>
+                        </li>-->
 <!--                        <li class="dmrAgents">
                            <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
                               <span>DMR Agents</span>
@@ -218,12 +223,14 @@
                         <li class="sidebar-subnav-header">Flight</li>
 
                         <li class="searchFlight ">
-                           <a href="<?php echo base_url();?>flight/searchFlight" title="Search Flight">
+                           <!--<a href="<?php //echo base_url();?>flight/searchFlight" title="Search Flight">-->
+                           <a href="#" title="Search Flight">
                               <span>Search Flight</span>
                            </a>
                         </li>
                         <li class="flightHistory ">
-                           <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
+                           <!--<a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">-->
+                           <a href="#" title="Flight History">
                               <span>Flight History</span>
                            </a>
                         </li>

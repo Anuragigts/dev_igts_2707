@@ -7,7 +7,7 @@
  */
 class Register_model extends CI_Model
 { 
-        public function register(){
+        public function register($idP,$addp){
                 $email      =   $this->input->post("email");
                 $pass       =   $this->input->post("pass");
                 $stat1      =   $this->input->post("state");
@@ -15,6 +15,7 @@ class Register_model extends CI_Model
                 $city1      =   $this->input->post("city");
                 $refer1     =   $this->input->post("refer");
                 $zip        =   $this->input->post("zip");
+                
                 
                 $this->db->select("State_id");
                 $this->db->from("states");
@@ -70,7 +71,10 @@ class Register_model extends CI_Model
                                             "city"                  =>     $city1,
                                             "zip_code"              =>     $zip,
                                             "preferred_for"         =>     $ref,
-                                            "admin_id"              =>     1
+                                            "admin_id"              =>     1,
+                                        'id_proof' => "$idP",
+                                        'add_proof' =>"$addp"
+                                            
                                     );
                                     $ins_access      =   array(
                                             "login_id"              =>      $val_id,
@@ -87,6 +91,7 @@ class Register_model extends CI_Model
                                             "money_transfer"        =>      0
                                     );
                                     $this->db->insert("profile",$ins);
+                                    
                                     $this->db->insert("module_access",$ins_access);
                                     if($this->db->affected_rows()   >   0){
                                             return 1;

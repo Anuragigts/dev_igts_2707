@@ -10,13 +10,32 @@
              <li class="active">DMR</li>                 
           </ol>Topup
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">Topup your card</span>
+          <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
+              <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
+              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
+              <b>Transection Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>, &nbsp;
+              <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a>
+          </span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->       
        <div class="row">              
               <?php $this->load->view("layout/success_error");?> 
-        
+         <div class="row text-center"> 
+                <?php if(count($limit) != 0){?>
+                   <div class="col-lg-4">
+                       <h4>Face Value: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->FACEVALUE;?></fotn></h4> 
+                   </div>
+                   <div class="col-lg-4">
+                       <h4>Current Value: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4> 
+                   </div>
+                   <div class="col-lg-4">
+                       <h4>Topup Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
+                   </div>
+                <?php }?>
+               
+               </div>
+           <br>
           
            <form method="post" id="topup-form">
            <div class="row">
@@ -25,16 +44,17 @@
                     <div class="panel panel-default">                            
                         <div class="panel-body">
                             <div class="row">
+<!--                                <div class="col-lg-12">
+                                     <label for="Mobile" >Mobile<font class="red mmid-imp">*</font></label>
+                                     <input name="mob" id="mob"  class="form-control m-c" placeholder="Mobile" type="text" value="<? //set_value("mob"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="10">
+                                    <span class="red"><?  //form_error('mob');?></span>
+                                </div>-->
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Topup Amount<font class="red mmid-imp">*</font></label>
                                      <input name="amount" id="amt"  class="form-control m-c" placeholder="Topup Amount" type="text" value="<?= set_value("amount"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                     <span class="red"><?=  form_error('amount');?></span>
                                 </div>
-<!--                                <div class="col-lg-12">
-                                        <label for="Mobile" >Mobile<font class="red mmid-imp">*</font></label>
-                                        <input name="mobile_no"  class="form-control m-c" placeholder="Mobile" type="text" value="" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
-                                        <span class="red"></span>
-                                </div>-->
+
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Region<font class="red mmid-imp">*</font></label>
                                     <select class="form-control" name="region" id="bene">
@@ -50,13 +70,15 @@
                                 </div>
                                 <div class="col-lg-12">
                                      <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>
-                                     <input name="charge" id="charge" class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("charge"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+                                     <input name="charge" id="charge" class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("charge"); ?>" readonly="readonly" >
                                     <span class="red"><?=  form_error('charge');?></span>
                                 </div>
+                                
                             </div>
                             <div class="col-lg-12 text-center">
                             <br>
-                            <input type="button" class="btn btn-sm btn-info dotopup"  name="topup" value="Topup" />
+                            <input type='button' class='btn btn-sm btn-info dotopup myotp'   name='topup' value='Topup' />
+                            
                         </div>
                         </div>
 
@@ -70,4 +92,14 @@
        </div>
     </div>
  </section>
+<script>
+    
+   
+    $('#amt').change(function(){
+        var amt = parseInt($('#amt').val());
+        var ch = (amt * 0.20)/100;
+        $('#charge').val(ch);
+        
+    });
+</script>
 

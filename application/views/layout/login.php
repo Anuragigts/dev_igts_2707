@@ -56,6 +56,7 @@
                   </div>
                    <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
                    <br>
+                   <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
                    <div class="text-center"><a href="<?php echo base_url()?>register">Register New User</a></div>
                </form>
                

@@ -83,36 +83,6 @@
                                           </div>
                                        </form>
                                     </div>
-                                   <?php }else{?>
-                                        <div class="panel-heading">Please set your DMR Login pin, which has been sent on your mobile.</div>
-                                    <div class="panel-body">                                       
-                                        <form method="post"class="form-horizontal" autocomplete="off">                                          
-                                          
-<!--                                          <div class="form-group">
-                                             <label class="col-lg-3 control-label">Transection Id<font class="red">*</font></label>
-                                             <div class="col-lg-9">
-                                                 <input name="trans" class="form-control" type="text" value="" readonly="readonly" >
-                                                 <span class="red"></span>
-                                             </div>
-                                          </div>-->
-                                          <div class="form-group">
-                                              <label class="col-lg-3 control-label">Login PIN<font class="red">*</font></label>
-                                                <div class="col-lg-9">
-                                                    <input name="pin" id="code" class="form-control" type="text" value="<?= $details->pin ?>" placeholder="****">
-                                                    <span class="red"><?=  form_error('pin');?></span>
-                                                </div>
-                                          </div>
-                                          
-                                          <div class="form-group">
-                                             <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" class="btn btn-sm btn-info" name="set" value="Set" />                                                
-                                             </div>
-                                             <div class="col-lg-4">                            
-                                                 <a href="<?php echo base_url()?>dmr/pinreset/<?php echo $details->mobile;?>/<?php echo $this->uri->segment(3);?>"><buttion  class="btn btn-sm btn-warning" name="send"  />Resend Pin</buttion></a>
-                                             </div>
-                                          </div>
-                                       </form>
-                                    </div>
                                    <?php }?>
                                  </div>
                                  <!-- END panel-->

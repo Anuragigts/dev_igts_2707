@@ -7,9 +7,9 @@
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
              </li>                  
              <li class="active">Recharge</li>                 
-          </ol>Mobile
+          </ol>Pre paid Mobile Recharge
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For mobile recharge</span>
+          <span class="text-sm hidden-xs">For Pre paid mobile recharge</span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
@@ -46,7 +46,11 @@
                      <ul role="tablist" class="nav nav-tabs nav-justified">
                         <li role="presentation" class="active">
                            <a href="<?php echo base_url();?>recharge/mobile_recharge#mob-tab" aria-controls="home" role="tab" data-toggle="tab" class="bb0">
-                              <em class="fa fa-mobile-phone fa-fw"></em>Mobile</a>
+                              <em class="fa fa-mobile-phone fa-fw"></em>Pre paid</a>
+                        </li>
+                        <li role="presentation ">
+                           <a href="<?php echo base_url();?>recharge/post_recharge" class="bb0 ">
+                             <em class="fa fa-mobile-phone fa-fw"></em>Post Paid</a>
                         </li>
                         <li role="presentation ">
                            <a href="<?php echo base_url();?>recharge/dth_recharge" class="bb0 ">

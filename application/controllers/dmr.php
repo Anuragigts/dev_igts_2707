@@ -11,6 +11,7 @@ class Dmr extends CI_Controller {
     }
     
     public function sender_registration(){
+        
          $data = array(
               'title'         => 'SC :: DMR SENDER REGISTRATION',
               'metakeyword'   => '',
@@ -45,7 +46,7 @@ class Dmr extends CI_Controller {
             
             if($this->form_validation->run() == TRUE){
                 $mv = $this->dmr_model->mobileverify();
-                if($mv == 1){
+               // if($mv == 1){
                     $result = $this->dmr_model->doRegister();
                     //echo $result;exit;
                     if($result == 0){                    
@@ -60,10 +61,10 @@ class Dmr extends CI_Controller {
                         redirect('dmr/otp/'.$result);
 
                     }
-                }else{
+                /*}else{
                     $this->session->set_flashdata('err','Registration fail : mobile number is not present in system.');  
                     redirect('dmr/sender_registration');
-                }
+                }*/
             }
         }
         
@@ -105,6 +106,7 @@ class Dmr extends CI_Controller {
         
     }
      public function otp(){
+         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrDoLogin');}
         $transection_id = $this->uri->segment(3);
          $data = array(
               'title'         => 'DMR :: OTP',
@@ -124,7 +126,7 @@ class Dmr extends CI_Controller {
                 //echo $result;exit;
                 if($result == 1){                    
                     $this->session->set_flashdata('msg','Your Verification is successfull .');  
-                    redirect('dmr/otp/'.$transection_id);
+                   redirect('dmr/dmrUserSearch');
                 }
                else if( $result == 2){                    
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
@@ -136,28 +138,12 @@ class Dmr extends CI_Controller {
             }
          } 
          
-         if($this->input->post('set')){
-            //$this->form_validation->set_rules('trans',  'Transection Id',   'required');
-            $this->form_validation->set_rules('pin',    'pin',              'required');
-            
-             if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->setPin($transection_id);
-                //echo $result;exit;
-                if($result == 1){                    
-                    $this->session->set_flashdata('msg','Your pin is set successfull .');  
-                    redirect('dmr/dmrUserSearch');
-                }
-              else{
-                     $this->session->set_flashdata('err','Fail : Some internal error occurred.');  
-                       redirect('dmr/otp/'.$transection_id);
-                }
-            }
-         }
+         
          
          $this->load->view('layout/inner_template',$data);
     }
     public function pinreset(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $id = $this->uri->segment(4);
         $mo = $this->uri->segment(3);
         $result = $this->dmr_model->changePin($mo);
@@ -172,6 +158,7 @@ class Dmr extends CI_Controller {
     }
 
     public function resendOTP(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $id = $this->uri->segment(4);
         $result = $this->dmr_model->resendOTP();
        if($result == 1){                    
@@ -182,47 +169,19 @@ class Dmr extends CI_Controller {
                redirect('dmr/otp/'.$id);
         }
     }
-    public function dmrLogin(){
-        $result = $this->dmr_model->dmrLogin();
-        
-        if(count($result) <5){
-            if($result == 3){  
-                return 3;
-            }else if($result == 2){ 
-                return 2;
-            }else if($result == 0){
-                return 0;
-            }
-        }else{
-            return $result;
-        }
-        
-    }
+ 
     
     public function addBeneficiary(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
               'title'         => 'DMR :: ADD BENEFICIARY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'add_beneficiary'
              );
-        $data['login_details'] = array();
         
-        $login_result = $this->dmrLogin();
-       
-        if(count($login_result) <5){
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }
-        }else{
-           $data['login_details'] = $login_result; 
-        }
        // print_r($login_result);die();
-        
+        $card = $this->uri->segment(3);
         if($this->input->post('add')){
             $this->form_validation->set_rules('card_no',     'Card Number',             'required');
            // $this->form_validation->set_rules('trans_no',    'Transection Number',      'required');
@@ -234,22 +193,25 @@ class Dmr extends CI_Controller {
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
-                $this->form_validation->set_rules('state',     "State",                 'required');
-                $this->form_validation->set_rules('city',      "City",                  'required');
-                $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
-                $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
-                $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                 $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                 if($this->input->post('reqval') == '1'){ 
+                    $this->form_validation->set_rules('state',     "State",                 'required');
+                    $this->form_validation->set_rules('city',      "City",                  'required');
+                    $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                    $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+                 }
+               
             }
             if($this->form_validation->run() == TRUE){
-                
+                //echo "jiiii";die();
                 $result = $this->dmr_model->addBeneficiary();
                 //echo $result;exit;
                 if($result == 0){                    
                     $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
-                     redirect('dmr/addBeneficiary');
+                     redirect('dmr/addBeneficiary/'.$card);
                 }else if($result == 0){
                     $this->session->set_flashdata('err','Beneficiary registration fail : User already exist.');  
-                     redirect('dmr/addBeneficiary');
+                     redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
                     $this->session->set_flashdata('msg','Your Beneficiary registration And verification is successfull Please verify if by using OTP.');  
@@ -270,11 +232,14 @@ class Dmr extends CI_Controller {
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
-                $this->form_validation->set_rules('state',     "State",                 'required');
-                $this->form_validation->set_rules('city',      "City",                  'required');
-                $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
-                $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
-                $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                 $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                 if($this->input->post('reqval') == '1'){ 
+                    $this->form_validation->set_rules('state',     "State",                 'required');
+                    $this->form_validation->set_rules('city',      "City",                  'required');
+                    $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                    $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+                 }
+               
             }
             if($this->form_validation->run() == TRUE){
                 
@@ -282,16 +247,20 @@ class Dmr extends CI_Controller {
                 //echo $result;exit;
                 if($result == 0){                    
                     $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
-                     redirect('dmr/addBeneficiary');
-                }else if($result == 0){
-                    $this->session->set_flashdata('err','Beneficiary registration fail : User already exist.');  
-                     redirect('dmr/addBeneficiary');
+                     redirect('dmr/addBeneficiary/'.$card);
+                }else if($result == 1){
+                    $this->session->set_flashdata('err','Confirm Failure');  
+                     redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
+                }else if($result == 8){
+                    $this->session->set_flashdata('err','User Already added.');  
+                     redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
+                }else if($result == 3){                     
+                      $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
+                     redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
-                    $this->session->set_flashdata('msg','Your Beneficiary registration is successfull Please verify if by using OTP.');  
-                   //redirect('dmr/addBeneficiary');
-                     redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
-                     
+                  $this->session->set_flashdata('msg','Beneficary Account Addedd  but not verified Please try again, Please confirm with OTP.');  
+                   redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                 }
             }
         }
@@ -300,36 +269,31 @@ class Dmr extends CI_Controller {
         $india = '101';
         $data['states']=$this->common->getState($india);
         $data['citys']=$this->common->getcity();
-        $data['sender_details'] = $this->dmr_model->sender_details();
+       
         $data['banks'] = $this->common->bank_name();
          $this->load->view('layout/inner_template',$data);
     }
     public function accountVerification(){
-       
-        $ben_id = $this->uri->segment(3);
-        $card = $this->uri->segment(4);
         
-        $result = $this->dmr_model->verifyBeneficiary($ben_id,$card);
+        $result = $this->dmr_model->verifyBeneficiary();
                 //echo $result;exit;
-        if($result == 0){                    
-            $this->session->set_flashdata('err','Beneficiary Account Verification fail : Some internal error occurred.');  
-             redirect('dmr/beneficiaryList/'.$card);
-        }else if($result == 1){
+        if($result == 1){                    
+            $this->session->set_flashdata('msg','Account verified.');  
+             redirect('dmr/beneficiaryList/');
+        }else if($result == 2){
             $this->session->set_flashdata('err','Beneficiary Account Verification fail  : User already Verified.');  
-             redirect('dmr/beneficiaryList/'.$card);
+             redirect('dmr/beneficiaryList/');
+        }else {
+            $this->session->set_flashdata('err',"Beneficiary Account Verification fail  : validation Error - $result.");  
+             redirect('dmr/beneficiaryList/');
         }
-      else{
-            $this->session->set_flashdata('msg','Beneficiary Account Verification successfull.');  
-           //redirect('dmr/addBeneficiary');
-             redirect('dmr/beneficiaryList/'.$card);
-
-        }
-        
+      
         
     }
 
 
     public function beneficiaryOTP(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $ben_id = $this->uri->segment(3);
          $data = array(
               'title'         => 'DMR :: BENEFICIARY OTP',
@@ -350,14 +314,14 @@ class Dmr extends CI_Controller {
                 //echo $result;exit;
                 if($result == 1){                    
                     $this->session->set_flashdata('msg','Your Verification is successfull .');  
-                    redirect('dmr/beneficiaryList/'.$this->uri->segment(4));
+                    redirect('dmr/beneficiaryList/'.$this->uri->segment(4).'/'.$this->uri->segment(5));
                 }
                else if( $result == 2){                    
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
-                      redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4));
+                      redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4).'/'.$this->uri->segment(5));
                 }else{
                      $this->session->set_flashdata('err','Verification fail : Some internal error occurred.');  
-                       redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4));
+                       redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4).'/'.$this->uri->segment(5));
                 }
             }
          } 
@@ -366,6 +330,7 @@ class Dmr extends CI_Controller {
     }
 
         public function viewBeneficiary(){
+            if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
             $data = array(
                  'title'         => 'DMR :: ADD BENEFICIARY',
                  'metakeyword'   => '',
@@ -383,23 +348,7 @@ class Dmr extends CI_Controller {
               'content'       => 'edit_beneficiary'
              );
         $data['login_details'] = array();
-         $id = $this->uri->segment(3);
-         $data['ben_details']=$this->dmr_model->getBeneficiary_edit($id);
-        
-        $login_result = $this->dmrLogin();
        
-        if(count($login_result) <5){
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }
-        }else{
-           $data['login_details'] = $login_result; 
-        }
-        
         if($this->input->post('edit')){
               $this->form_validation->set_rules('card_no',     'Card Number',             'required');
            // $this->form_validation->set_rules('trans_no',    'Transection Number',      'required');
@@ -450,41 +399,31 @@ class Dmr extends CI_Controller {
         $result = $this->dmr_model->resendBenOTP();
        if($result == 1){                    
             $this->session->set_flashdata('msg','Resent OTP Enter New OTP.');  
-           redirect('dmr/beneficiaryOTP/'.$id);
+           redirect('dmr/beneficiaryOTP/'.$id.'/'.$this->uri->segment(5).'/'.$this->uri->segment(6));
         }else{
              $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
-               redirect('dmr/beneficiaryOTP/'.$id);
+               redirect('dmr/beneficiaryOTP/'.$id.'/'.$this->uri->segment(5).'/'.$this->uri->segment(6));
         }
     }
     public function removeBeneficary(){
         $id = $this->uri->segment(3);
         
-         $data['login_details'] = array();        
-        
-        $login_result = $this->dmrLogin();
-        //print_r($login_result);die();
-        if(count($login_result) <5){
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }
-        }else{
-           $data['login_details'] = $login_result; 
-        }
+         $data['login_details'] = array();
        
-        $result = $this->dmr_model->removeBeneficary();
-       if($result == 1){                    
+        $result = $this->dmr_model->removeBeneficary($id);
+       //echo $result; die();
+       if($result == "1"){                    
             $this->session->set_flashdata('msg','OTP has been sent on your mobile.');  
            redirect('dmr/removeBenOtp/'.$id);
         }else{
              $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
-               redirect('dmr/viewBeneficiary');
+               redirect('dmr/beneficiaryList/'.$id);
         }
     }
+    
+
     public function removeBenOtp(){
+        
         $ben_id = $this->uri->segment(3);
         
          $data = array(
@@ -496,17 +435,17 @@ class Dmr extends CI_Controller {
          $data['details'] = $this->dmr_model->getBENDetails($ben_id);
         
          if($this->input->post('send')){
-            $this->form_validation->set_rules('trans',  'Card Number',   'required');
+            
             $this->form_validation->set_rules('bene_id',  'Beneficiary ID',   'required');
             $this->form_validation->set_rules('otp',    'OTP',              'required');
             
              if($this->form_validation->run() == TRUE){
                 
-                $result = $this->dmr_model->doRemoveVerifyBen($ben_id);
+                $result = $this->dmr_model->doRemoveVerifyBen();
                 //echo $result;exit;
                 if($result == 1){                    
                     $this->session->set_flashdata('msg','Your beneficiary removed successfull .');  
-                    redirect('dmr/viewBeneficiary');
+                    redirect('dmr/beneficiaryList/'.$ben_id);
                 }
                else if( $result == 2){                    
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
@@ -539,8 +478,30 @@ class Dmr extends CI_Controller {
         $branch =$this->common->getIfsc($bn);
         echo $branch->IFSC_Code;
     }
-    
+       public function dmrLogin(){
+        $result = $this->dmr_model->dmrLogin();
+        
+        if(count($result) <5){
+            if($result == 3){  
+                return 3;
+            }else if($result == 2){ 
+                return 2;
+            }else if($result == 0){
+                return 0;
+            }
+        }else{
+            return $result;
+        }
+        
+    }
+    public function dmrLoginAjax(){
+        $card = $_POST['card'];
+        $mo = $_POST['mo'];
+       echo  $result = $this->dmr_model->dmrLogin1($card,$mo);
+        
+    }
     public function dmrUserSearch(){
+         if( $this->session->userdata('iddmr') == '1'){redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));}
          $data = array(
               'title'         => 'DMR :: TRANSACTION',
               'metakeyword'   => '',
@@ -549,18 +510,14 @@ class Dmr extends CI_Controller {
              );
          if($this->input->post('send')){
               $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
+              $this->form_validation->set_rules('otp',  'OTP',   'required');
               
                if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->searchuser();
-               
-                if(count($result) == 1){                    
-                   // $this->session->set_flashdata('msg','Amount transferred successfull .');  
-                    redirect('dmr/beneficiaryList/'.$result->card_number);
-                    //$this->beneficiaryList($result);
-                }else if(count($result) == 2){
-                    $this->session->set_flashdata('err','You are not having access to view this account.'); 
-                    redirect('dmr/dmrUserSearch');
+                $mo = $this->input->post('mobile');
+                $result = $this->dmr_model->verifyUser($mo);
+               //print_r($this->session->all_userdata());die();
+                if(count($result) == 1){
+                    redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
                 }
               else{
                      $this->session->set_flashdata('msg','This number is not registered please register first');  
@@ -571,55 +528,70 @@ class Dmr extends CI_Controller {
          
          $this->load->view('layout/inner_template',$data);
     }
+    public function verifyUser(){
+        $data = array(
+              'title'         => 'DMR :: VERIFY',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'dmr_verify'
+             );
+         if($this->input->post('send')){
+              $this->form_validation->set_rules('otp',  'OTP',   'required');
+              
+               if($this->form_validation->run() == TRUE){
+                
+                $result = $this->dmr_model->verifyUser($this->uri->segment(4));
+               
+                if($result == 1){                    
+                   // $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                    redirect('dmr/beneficiaryList/'.$this->uri->segment(3));
+                    //$this->beneficiaryList($result);
+                }
+              else{
+                     $this->session->set_flashdata('err','This number is not registered please register first');  
+                       redirect('dmr/verifyUser.'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                }
+            }
+         }
+        $this->load->view('layout/inner_template',$data);        
+    }
+
     public function beneficiaryList(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
          $data = array(
               'title'         => 'DMR :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'bene_list_user'
              );
-          $card = $this->uri->segment(3);
-          $data['login_details'] = array();        
-        
-            $login_result = $this->dmrLogin();
-            $key = '';
-           
-            if(count($login_result) <5){
-                if($login_result == 3){ 
-                   $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-                }else if($login_result == 2){ 
-                     $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-                }else if($login_result == 0){
-                     $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-                }
-            }else{
-                $key = $login_result->SECURITYKEY;
-               $data['login_details'] = $login_result; 
-            }
-             if($this->input->post('trans')){
+          $card = $this->session->userdata('dmrcard');
+         $mo =$this->session->userdata('dmrmo');
+         $key = $this->session->userdata('dmrkey');
+         
+             if($this->input->post('trans')){ 
+                
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
                  $this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
+                // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
+                    
+                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo);
                      
-                    $result = $this->dmr_model->dotransferAmt($key,$card);
-                  
+                 // echo $result;die();
                     if($result == 1){                    
                         $this->session->set_flashdata('msg','Amount transferred successfull .');  
-                        redirect('dmr/beneficiaryList/'.$card);
+                        redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                     }
                    else if( $result == 2){                    
-                        $this->session->set_flashdata('err','Verification fail : Security Key is not valid.');  
-                          redirect('dmr/beneficiaryList/'.$card);
+                        $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
+                         redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                     }else if( $result == 5){ 
                         $this->session->set_flashdata('err','Unknown : Internal error.');  
-                        redirect('dmr/beneficiaryList/'.$card);                        
+                       redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
                     }else if( $result == 4){                    
-                        $this->session->set_flashdata('err','Transaction failed : check your transfer amount, it is not valid.');  
-                          redirect('dmr/beneficiaryList/'.$card);
-                    }else if( $result == 0){                    
-                        $this->session->set_flashdata('err','Transaction failed : Benefeciary ID is not correct.');  
-                          redirect('dmr/beneficiaryList/'.$card);
+                        $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
+                         redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                     }else{
                         $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
                         redirect('dmr/transRequery/'.$result);
@@ -628,7 +600,7 @@ class Dmr extends CI_Controller {
              }
           
          $data['ben_details']=$this->dmr_model->getBeneficiary($card);
-         $data['limit'] = $this->dmr_model->checktopupLimit($card);
+         $data['limit'] = $this->dmr_model->checktopupLimit($this->session->userdata('dmrcard'));
          $this->load->view('layout/inner_template',$data);
     }
     
@@ -640,24 +612,7 @@ class Dmr extends CI_Controller {
               'content'       => 'requery'
              );
           $t_id = $this->uri->segment(3);
-          $data['login_details'] = array();        
-        
-            $login_result = $this->dmrLogin();
-            $key = '';
-            //echo $login_result->SECURITYKEY; die();
-            //print_r($login_result);die();
-            if(count($login_result) <5){
-                if($login_result == 3){ 
-                   $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-                }else if($login_result == 2){ 
-                     $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-                }else if($login_result == 0){
-                     $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-                }
-            }else{
-                $key = $login_result->SECURITYKEY;
-               $data['login_details'] = $login_result; 
-            }
+          $data['login_details'] = array(); 
             
             if($this->input->post('send')){
                 $this->form_validation->set_rules('id',  'Transection Id',   'required');
@@ -666,6 +621,40 @@ class Dmr extends CI_Controller {
                       if($retry == 1){ 
                         $this->session->set_flashdata('msg','Amount Transferred successfully.');                          
                             redirect('dmr/printDetail/'.$t_id);
+                     }else if($retry == 2){ 
+                          $this->session->set_flashdata('err','Confirmation failed.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else if($retry == 3){ 
+                          $this->session->set_flashdata('err','Internal validation failed.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else if($retry == 4){ 
+                          $this->session->set_flashdata('err','Invalid Transaction.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }else{
+                          $this->session->set_flashdata('err','Retry Failed: due to Internal error.'); 
+                          redirect('dmr/transRequery/'.$t_id);
+                     }
+                 }
+            }
+          $this->load->view('layout/inner_template',$data);   
+    }
+     public function transRequery1(){
+         $data = array(
+              'title'         => 'DMR :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'requery'
+             );
+          $t_id = $this->uri->segment(3);
+          $data['login_details'] = array(); 
+            
+            if($this->input->post('send')){
+                $this->form_validation->set_rules('id',  'Transection Id',   'required');
+                 if($this->form_validation->run() == TRUE){
+                     $retry = $this->dmr_model->reTryTransfer1();
+                      if($retry == 1){ 
+                        $this->session->set_flashdata('msg','Account Verified');                          
+                            redirect('dmr/dmrUserSearch/');
                      }else if($retry == 2){ 
                           $this->session->set_flashdata('err','Confirmation failed.'); 
                           redirect('dmr/transRequery/'.$t_id);
@@ -696,7 +685,8 @@ class Dmr extends CI_Controller {
     }
 
 
-            public function transaction(){
+   public function transaction(){
+       if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
          $data = array(
               'title'         => 'DMR :: TRANSACTION',
               'metakeyword'   => '',
@@ -704,23 +694,8 @@ class Dmr extends CI_Controller {
               'content'       => 'transfer_amt'
              );
          $data['login_details'] = array();        
-        
-        $login_result = $this->dmrLogin();
         $key = '';
-        //echo $login_result->SECURITYKEY; die();
-        //print_r($login_result);die();
-        if(count($login_result) <5){
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }
-        }else{
-            $key = $login_result->SECURITYKEY;
-           $data['login_details'] = $login_result; 
-        }
+       
          if($this->input->post('transfer')){
             $this->form_validation->set_rules('card',  'Card Number',   'required');
             $this->form_validation->set_rules('bene',  'Beneficiary',   'required');
@@ -765,47 +740,33 @@ class Dmr extends CI_Controller {
          $data['benes'] = $this->dmr_model->getBene($this->session->userdata('login_id'));
          $this->load->view('layout/inner_template',$data);
     }
-    
+    public function dmrLoginTopupAjax(){
+        $mo = $_POST['mo'];
+        //$card = $this->dmr_model->cardByMo($mo);
+        $card = '';
+        echo  $result = $this->dmr_model->dmrLogin1($card,$mo);
+        
+    }
     public function topup(){
+        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
               'title'         => 'DMR :: TOPUP',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'topup'
              );
-        $data['login_details'] = array();        
-        
-        $login_result = $this->dmrLogin();
-        $key = '';
-        //echo $login_result->SECURITYKEY; die();
-        //print_r($login_result);die();
-        if(count($login_result) <5){
-            
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }else if($login_result == 4){
-                 $this->session->set_flashdata('err','Sorry You are not having account for DMR.'); 
-            }else{
-                 $this->session->set_flashdata('err','Sorry You are not having account for DMR.'); 
-            }
-        }else{
-            $key = $login_result->SECURITYKEY;
-           $data['login_details'] = $login_result; 
-        }
+        $data['login_details'] = array(); 
+       $key = '';
         
         if($this->input->post('amount')){
             $this->form_validation->set_rules('amount',  'Amount',   'required');
             $this->form_validation->set_rules('region',  'Region',   'required');
-            //$this->form_validation->set_rules('mobile_no',  'Region',   'required|min_length[10]|max_length[10]|numeric');
+            //$this->form_validation->set_rules('mob',  'Region',   'required|min_length[10]|max_length[10]|numeric');
             $this->form_validation->set_rules('charge',  'Service Charge',   'required');
+           // $this->form_validation->set_rules('otp',  'OTP',   'required');
             if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->doTopup($key);
-               
+              //  echo "lll";die();
+                $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'));
                 if($result !=0){                    
                     $this->session->set_flashdata('msg','Topup successfull .');  
                     redirect('dmr/topup');
@@ -817,6 +778,7 @@ class Dmr extends CI_Controller {
             }
             
         }
+        $data['limit'] = $this->dmr_model->checktopupLimit($this->session->userdata('dmrcard'));
         $this->load->view('layout/inner_template',$data);
     }
     
@@ -839,24 +801,9 @@ class Dmr extends CI_Controller {
               'content'       => 'non_to_kyc'
              );
         $id = $this->uri->segment(3);
-        $data['login_details'] = array();        
-        
-        $login_result = $this->dmrLogin();
+        $data['login_details'] = array(); 
         $key = '';
-        //echo $login_result->SECURITYKEY; die();
-        //print_r($login_result);die();
-        if(count($login_result) <5){
-            if($login_result == 3){ 
-               $this->session->set_flashdata('msg','Please Set your Pin Number on sender registration page.'); 
-            }else if($login_result == 2){ 
-                 $this->session->set_flashdata('err','Invalid Pin Which you have set on sender registration page.'); 
-            }else if($login_result == 0){
-                 $this->session->set_flashdata('err','DMR Login Fail: Please try after some time.'); 
-            }
-        }else{
-            $key = $login_result->SECURITYKEY;
-           $data['login_details'] = $login_result; 
-        }
+        
         if($this->input->post('kyc')){
             $this->form_validation->set_rules('first_name',     'First Name',       'required');            
             $this->form_validation->set_rules('last_name',      'Last Name',        'required');
@@ -941,4 +888,27 @@ class Dmr extends CI_Controller {
          $data['cardholder'] = $this->dmr_model->card_details($card);
          $this->load->view('layout/inner_template',$data);
     }
+    public function getAjaxBank(){
+        $ifsc = $_POST['ifsc'];
+        $bank = $_POST['bank'];
+        echo $this->dmr_model->getAjaxBank($ifsc,$bank);
+    }
+    public function getIFSCBank(){
+        $name = $_POST['name'];
+        
+        echo $this->dmr_model->getIFSCBank($name);
+    }
+    public function dmrLogout(){
+         $this->session->unset_userdata('iddmr');
+        $this->session->unset_userdata('dmrname');
+        $this->session->unset_userdata('dmrmidname');
+        $this->session->unset_userdata('dmrlastname');
+        $this->session->unset_userdata('dmrmo');
+        $this->session->unset_userdata('dmrcard');
+        $this->session->unset_userdata('dmrtranslimit');
+        $this->session->unset_userdata('dmrbalance');
+        $this->session->unset_userdata('dmrkey');
+        redirect('dmr/dmrUserSearch');
+    }
+ 
 }

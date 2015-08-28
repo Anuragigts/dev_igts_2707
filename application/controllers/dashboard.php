@@ -17,8 +17,11 @@ class Dashboard extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'dashboard'
              );
-       
-        $this->load->view('layout/inner_template',$data);
+       $data['master'] = $this->dashboard_model->masterCnt();
+       $data['super'] = $this->dashboard_model->superCnt();
+       $data['dis'] = $this->dashboard_model->disCnt();
+       $data['ag'] = $this->dashboard_model->agCnt();
+        $this->load->view('layout/inner_template',$data);        
     }
     public function logout(){
         $this->session->sess_destroy();

@@ -40,10 +40,7 @@
                  </br>
              <?php }?>           
              <br>
-             
-             <?php if(count($details)==0){                
-                redirect('dmr/viewBeneficiary');
-             }?>
+           
            <div class="col-lg-offset-3 col-lg-6">
                   <!-- START panel tab-->
                  
@@ -56,19 +53,11 @@
                                <div class="panel panel-default">
                                     <div class="panel-heading"> OTP will send On your mobile, If Unable to get Please Remove again beneficiary account.</div>
                                     <div class="panel-body">                                       
-                                        <form method="post"class="form-horizontal" autocomplete="off">                                          
-                                          
-                                          <div class="form-group">
-                                             <label class="col-lg-3 control-label">Card Number<font class="red">*</font></label>
-                                             <div class="col-lg-9">
-                                                 <input name="trans" class="form-control" type="text" value="<?= $details->card_no; ?>" readonly="readonly" >
-                                                 <span class="red"><?=  form_error('trans');?></span>
-                                             </div>
-                                          </div>
+                                        <form method="post"class="form-horizontal" autocomplete="off">
                                             <div class="form-group">
                                              <label class="col-lg-3 control-label">Beneficiary ID<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <input name="bene_id" class="form-control" type="text" value="<?= $details->beneid; ?>" readonly="readonly" >
+                                                 <input name="bene_id" class="form-control" type="text" value="<?= $this->uri->segment(3); ?>" readonly="readonly" >
                                                  <span class="red"><?=  form_error('bene_id');?></span>
                                              </div>
                                           </div>

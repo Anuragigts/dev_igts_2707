@@ -42,10 +42,6 @@
              <br>            
             
            <div class="col-lg-offset-3 col-lg-6">
-                  <!-- START panel tab-->
-                 
-                     
-                     <!-- Tab panes-->
                      <div class=" p0 bg-white">                        
                         <div id="dth_tab" role="tabpanel" class="tab-pane active">
                            <!-- START table responsive-->
@@ -57,14 +53,22 @@
                                           <div class="form-group">
                                               <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
                                                 <div class="col-lg-9">
-                                                    <input name="mobile"  class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                                    <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                                     <span class="red"><?=  form_error('mobile');?></span>
                                                 </div>
                                           </div>
-                                          
+                                          <div class="form-group myotp"> 
+                                              <label class="col-lg-3 control-label">OTP<font class="red">*</font></label>
+                                             <div class="col-lg-9">
+                                            <input name="otp" id="charge" class="form-control m-c" placeholder="******" type="password" value=""  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
+                                           <span class="red"><?=  form_error('otp');?></span>
+                                             </div>
+                                       </div>
                                           <div class="form-group">
                                              <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" class="btn btn-sm btn-info" name="send" value="Search" />                                                
+                                                 <input type='submit' class='btn btn-sm btn-info myotp'   name='send' value='Login' />
+                                                 <input type="button" class="btn btn-sm btn-info" id="getpin" name="pin" value="Search" />
+                                                                                               
                                              </div>
                                              <div class="col-lg-4">                            
                                                  <a href="<?php echo base_url()?>dmr/sender_registration"><buttion  class="btn btn-sm btn-warning" name="send"  />New Registration For DMR</buttion></a>
@@ -85,3 +89,26 @@
        </div>            
     </div>
  </section>
+<script>
+      $(function(){$('.myotp').hide();});
+        $('#getpin').click(function(){
+
+              $('#getpin').hide();
+              $('.myotp').show();
+
+
+              var mo = $('#mob').val();
+
+               $("#loading").modal('show');
+                  $.post('<?php echo base_url();?>dmr/dmrLoginTopupAjax',{'mo':mo},function(response){
+                  
+                  if(response =='1'){
+                          $("#loading").modal('hide');
+                      }else{                         
+                          var url = "<?php echo base_url();?>";
+                          $(location).attr('href',url+"dmr/sender_registration");
+                         //window.location= ;
+                      }					
+                  });
+          }); 
+</script>

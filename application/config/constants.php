@@ -40,8 +40,10 @@ define('OPERATOR',  'https://sphirelabs-mobile-number-portability-india-operator
 define('TARIF',     'https://tariff-plan-api-datayuge.p.mashape.com/index.php');
 // Mobile rechage
 define('RECHARGEURL', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
-// mobile action
 define('RECHARGEACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
+// Post landline rechage
+define('POSTPAID', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
+define('POSTPAIDACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
 //DMR url
 define('DMRURL', 'http://202.54.157.77/wsnpci/impsmethods.asmx');
 // DMR action
@@ -50,6 +52,8 @@ define('DMRACTIUON', 'http://tempuri.org/');
 // Flight rechage
 define('FLIGHTURL', 'http://115.248.39.80/hermesapi/inthermesair.asmx');
 define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
+
+
 
 
 /* End of file constants.php */

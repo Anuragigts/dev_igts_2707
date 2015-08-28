@@ -93,8 +93,16 @@ class Dmr_model extends CI_Model
                     $final = explode('</REGISTRATIONResult></REGISTRATIONResponse></soap:Body></soap:Envelope>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                    if($response->STATUSCODE == 20){
-                        return 20;
+                    if($response->STATUSCODE == 20){//transection_id
+                       // redirect('dmr/otp/'.$my_DMR_id);
+                        $data_status = array(
+                                 'transection_id'  => "$response->STATUS"
+                             );
+                            $this->db->where('d_id',$my_DMR_id);
+                           $update = $this->db->update('dmr_registration_track',$data_status);   
+                           
+                        return $my_DMR_id;
+                        
                     }else if($response->STATUSCODE == 0){
                         $data_status = array(
                                  'status_code'       => "$response->STATUSCODE",
@@ -257,7 +265,7 @@ class Dmr_model extends CI_Model
            
            
          $first_tag = explode('<SENDERRESENDOTPResult>', $result);      
-
+       //  print_r($first_tag);die();
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -291,14 +299,32 @@ class Dmr_model extends CI_Model
             return array();
         } 
     }
+    public function sender_details1($card){
+        
+        $this->db->select('d.*');
+        $this->db->from('dmr_registration_track d');
+        $this->db->where('d.card_number',$card);        
+        $this->db->where('d.status','Success');        
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        else{
+            return array();
+        } 
+    }
     
     public function dmrLogin(){
-        $getmo = $this->sender_details();
+        if($this->uri->segment(3) != ''){
+        $getmo = $this->sender_details1($this->uri->segment(3));
+        }else{
+            $getmo = $this->sender_details();
+        }
        
         if(count($getmo)>0){
         $mobile = $getmo->mobile;
-        $pin = $getmo->pin;
-        if($pin != ''){
+        //$pin = $getmo->pin;
+        
         $url = DMRURL; 
        
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
@@ -313,7 +339,7 @@ class Dmr_model extends CI_Model
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
                             &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;                            
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                            &lt;PARAM1&gt;'.$pin.'&lt;/PARAM1&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
                             &lt;PARAM4&gt;&lt;/PARAM4&gt;
@@ -362,12 +388,79 @@ class Dmr_model extends CI_Model
                  return 2;
              }
          }
-        }else{
-            return 3;
-        }
+        
         }else{
             return 4;
         }
+        
+    }
+    public function dmrLogin1($card,$mo){
+       
+        //$pin = $getmo->pin;
+        
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <LOGIN_V2  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;LOGIN_V1REQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;                            
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/LOGIN_V1REQUEST&gt;
+                       </RequestData>
+                     </LOGIN_V2>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'LOGIN_V2',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+           
+           
+         $first_tag = explode('<LOGIN_V2Result>', $result);      
+        // print_r($first_tag);die();
+         if(count($first_tag) == 1 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+            
+             $final = explode('</LOGIN_V2Result></LOGIN_V2Response></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+             
+             if($response->STATUS == 'Success'){
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
         
     }
     public function setPin($transection_id){
@@ -391,6 +484,15 @@ class Dmr_model extends CI_Model
              $a .= mt_rand(0,9);
          }
          $track_id   = 'SWAMIBEN'.$a;
+        $mmid = ($this->input->post('mmid')!='')?$this->input->post('mmid'):'';
+        $mobile = ($this->input->post('mobile')!='')?$this->input->post('mobile'):'';
+        $bank_name = ($this->input->post('bank_name')!='')?$this->input->post('bank_name'):'';
+        $state = ($this->input->post('state')!='')?$this->input->post('state'):'';
+        $city = ($this->input->post('city')!='')?$this->input->post('city'):'';
+        $branch_name = ($this->input->post('branch_name')!='')?$this->input->post('branch_name'):'';
+        $ifsc_code = ($this->input->post('ifsc_code')!='')?$this->input->post('ifsc_code'):'';
+        $ac_no = ($this->input->post('ac_no')!='')?$this->input->post('ac_no'):'';
+        
          $data_insert = array(                
                 'login_id'          => $this->session->userdata('login_id'),
                 'card_no'           => $this->input->post('card_no'),
@@ -428,12 +530,12 @@ class Dmr_model extends CI_Model
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;&lt;/MMID&gt;
                                    &lt;BENEMOBILE&gt;&lt;/BENEMOBILE&gt;
-                                   &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
-                                   &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
-                                   &lt;CITY&gt;'.$this->input->post('city').'&lt;/CITY&gt;
-                                   &lt;STATE&gt;'.$this->input->post('state').'&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
-                                   &lt;ACCOUNTNO&gt;'.$this->input->post('ac_no').'&lt;/ACCOUNTNO&gt;
+                                   &lt;BANKNAME&gt;'.$bank_name.'&lt;/BANKNAME&gt;
+                                   &lt;BRANCHNAME&gt;'.$branch_name.'&lt;/BRANCHNAME&gt;
+                                   &lt;CITY&gt;'.$city.'&lt;/CITY&gt;
+                                   &lt;STATE&gt;'.$state.'&lt;/STATE&gt;
+                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
+                                   &lt;ACCOUNTNO&gt;'.$ac_no.'&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -459,13 +561,13 @@ class Dmr_model extends CI_Model
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
-                                   &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
-                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt;
+                                   &lt;MMID&gt;'.$mmid.'&lt;/MMID&gt;
+                                   &lt;BENEMOBILE&gt;'.$mobile.'&lt;/BENEMOBILE&gt;
                                    &lt;BANKNAME&gt;&lt;/BANKNAME&gt;
                                    &lt;BRANCHNAME&gt;&lt;/BRANCHNAME&gt;
                                    &lt;CITY&gt;&lt;/CITY&gt;
                                    &lt;STATE&gt;&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
                                    &lt;ACCOUNTNO&gt;&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -499,7 +601,7 @@ class Dmr_model extends CI_Model
                    curl_close ($curl);
                   
                 $first_tag = explode('<ADDBENEFICIARYResult>', $result);       
-                
+               // print_r($first_tag);die();
                 if(count($first_tag)!= 2 ){
                     return 0;
                 }else{
@@ -555,6 +657,14 @@ class Dmr_model extends CI_Model
              $a .= mt_rand(0,9);
          }
          $track_id   = 'SWAMIBEN'.$a;
+         $mmid = ($this->input->post('mmid')!='')?$this->input->post('mmid'):'';
+        $mobile = ($this->input->post('mobile')!='')?$this->input->post('mobile'):'';
+        $bank_name = ($this->input->post('bank_name')!='')?$this->input->post('bank_name'):'';
+        $state = ($this->input->post('state')!='')?$this->input->post('state'):'';
+        $city = ($this->input->post('city')!='')?$this->input->post('city'):'';
+        $branch_name = ($this->input->post('branch_name')!='')?$this->input->post('branch_name'):'';
+        $ifsc_code = ($this->input->post('ifsc_code')!='')?$this->input->post('ifsc_code'):'';
+        $ac_no = ($this->input->post('ac_no')!='')?$this->input->post('ac_no'):'';
          $data_insert = array(                
                 'login_id'          => $this->session->userdata('login_id'),
                 'card_no'           => $this->input->post('card_no'),
@@ -578,7 +688,7 @@ class Dmr_model extends CI_Model
             $my_DMR_id = $this->db->insert_id();
             $url = DMRURL; 
             
-            if($this->input->post('b_type') == 'IFSC'){
+           if($this->input->post('b_type') == 'IFSC'){
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
@@ -595,12 +705,12 @@ class Dmr_model extends CI_Model
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;&lt;/MMID&gt;
                                    &lt;BENEMOBILE&gt;&lt;/BENEMOBILE&gt;
-                                   &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
-                                   &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
-                                   &lt;CITY&gt;'.$this->input->post('city').'&lt;/CITY&gt;
-                                   &lt;STATE&gt;'.$this->input->post('state').'&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
-                                   &lt;ACCOUNTNO&gt;'.$this->input->post('ac_no').'&lt;/ACCOUNTNO&gt;
+                                   &lt;BANKNAME&gt;'.$bank_name.'&lt;/BANKNAME&gt;
+                                   &lt;BRANCHNAME&gt;'.$branch_name.'&lt;/BRANCHNAME&gt;
+                                   &lt;CITY&gt;'.$city.'&lt;/CITY&gt;
+                                   &lt;STATE&gt;'.$state.'&lt;/STATE&gt;
+                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
+                                   &lt;ACCOUNTNO&gt;'.$ac_no.'&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -626,13 +736,13 @@ class Dmr_model extends CI_Model
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
-                                   &lt;MMID&gt;'.$this->input->post('mmid').'&lt;/MMID&gt;
-                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt;
+                                   &lt;MMID&gt;'.$mmid.'&lt;/MMID&gt;
+                                   &lt;BENEMOBILE&gt;'.$mobile.'&lt;/BENEMOBILE&gt;
                                    &lt;BANKNAME&gt;&lt;/BANKNAME&gt;
                                    &lt;BRANCHNAME&gt;&lt;/BRANCHNAME&gt;
                                    &lt;CITY&gt;&lt;/CITY&gt;
                                    &lt;STATE&gt;&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
                                    &lt;ACCOUNTNO&gt;&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -686,7 +796,8 @@ class Dmr_model extends CI_Model
                              );
 
                             $this->db->where('ben_id',$my_DMR_id);
-                           $update = $this->db->update('beneficiary_track',$data_status);   
+                           $update = $this->db->update('beneficiary_track',$data_status); 
+                           return $my_DMR_id;
                         
                     } if($response->STATUSCODE == 1){
                         $data_status = array(
@@ -698,18 +809,26 @@ class Dmr_model extends CI_Model
 
                             $this->db->where('ben_id',$my_DMR_id);
                            $update = $this->db->update('beneficiary_track',$data_status);   
-                       
+                       if($response->STATUS == 'Account Already Added'){
+                           return '8';
+                       }
                     }
                     
                 }
                 
-            if($this->input->post('b_type') == 'IFSC'){
+/*            if($this->input->post('b_type') == 'IFSC'){
                 $type = 2;
                 $id = $this->input->post('ac_no');
             }else{
                 $type = 1;
                 $id = $this->input->post('mmid');
             }
+             $a = mt_rand(100000,999999); 
+                for ($i = 0; $i<22; $i++) 
+                 {
+                     $a .= mt_rand(0,9);
+                 }
+                 $track_id   = 'SWAMIBEN'.$a;
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
@@ -723,15 +842,15 @@ class Dmr_model extends CI_Model
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
                                    &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
-                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt; 
-                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
+                                   &lt;BENEMOBILE&gt;'.$mobile.'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
                                    &lt;OTP&gt;&lt;/OTP&gt; 
                                    &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
                                    &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
                                    &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                                  &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
-                                  &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
+                                  &lt;BANKNAME&gt;'.$bank_name.'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$branch_name.'&lt;/BRANCHNAME&gt;
                                    
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -771,7 +890,7 @@ class Dmr_model extends CI_Model
                 }else{
                     $get_less =  str_replace("&lt;","<",$first_tag[1]);
                     $get_full =  str_replace("&gt;",">",$get_less);
-                   // print_r($get_full);die();
+                  //  print_r($get_full);die();
                     $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
                     
                     $response = simplexml_load_string($final[0]);
@@ -792,8 +911,15 @@ class Dmr_model extends CI_Model
                              return 0;
                          }
 
-                    }else if($response->STATUSCODE == 1){                        
-                        return 1;
+                    }else if($response->STATUSCODE == 1){ 
+                        $this->session->set_flashdata('msg','Your Beneficiary registration And verification is successfull Please verify if by using OTP.');  
+                         redirect('dmr/beneficiaryOTP/'.$my_DMR_id.'/'.$this->input->post('card_no'));
+                        
+                    }else if($response->STATUSCODE == 2){                        
+                         $this->session->set_flashdata('err','Account Confirm Failure');
+                         redirect('dmr/beneficiaryOTP/'.$my_DMR_id.'/'.$this->input->post('card_no'));
+                    }else if($response->STATUSCODE == 3){                        
+                        return 3;
                     }
                     else{
                         return 0;
@@ -810,13 +936,13 @@ class Dmr_model extends CI_Model
               return $query->row();
            }else{
                return array();
-           }
+           }*/
+        }
     }
 
-    public function verifyBeneficiary($ben_id,$card){
-        $data = $this->beneDetails($ben_id);
-        if(count($data)>0){
-            $my_DMR_id = $ben_id;
+    public function verifyBeneficiary(){
+        //$data = $this->beneDetails($ben_id);
+        
              $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
          {
@@ -824,12 +950,12 @@ class Dmr_model extends CI_Model
          }
          $track_id   = 'SWAMIBEN'.$a;
             $url = DMRURL;
-            if($data->ben_type == 'IFSC'){
+            if($this->uri->segment(3) == '2'){
                 $type = 2;
-                $id = $data->acc;
+                $id = $this->uri->segment(6);
             }else{
                 $type = 1;
-                $id = $data->ben_mmid;
+                $id = $this->uri->segment(6);
             }
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -841,18 +967,18 @@ class Dmr_model extends CI_Model
                                    &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                                    &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                                    &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                                   &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
+                                   &lt;CARDNO&gt;'.$this->uri->segment(5).'&lt;/CARDNO&gt;
                                    &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
                                    &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
-                                   &lt;BENEMOBILE&gt;'.$data->ben_mobile.'&lt;/BENEMOBILE&gt; 
-                                   &lt;IFSCCODE&gt;'.$data->bank_ifsc.'&lt;/IFSCCODE&gt;
+                                   &lt;BENEMOBILE&gt;'.$this->uri->segment(7).'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$this->uri->segment(8).'&lt;/IFSCCODE&gt;
                                    &lt;OTP&gt;&lt;/OTP&gt; 
                                    &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
                                    &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
                                    &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                                  &lt;BANKNAME&gt;'.$data->bank_name.'&lt;/BANKNAME&gt;
-                                  &lt;BRANCHNAME&gt;'.$data->bank_branch.'&lt;/BRANCHNAME&gt;
+                                  &lt;BANKNAME&gt;'.$this->uri->segment(9).'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$this->uri->segment(10).'&lt;/BRANCHNAME&gt;
                                    
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -865,7 +991,7 @@ class Dmr_model extends CI_Model
                           </soap:Body>
                         </soap:Envelope>';
             
-
+//echo $curlData; 
 
                    $curl = curl_init();
 
@@ -884,7 +1010,7 @@ class Dmr_model extends CI_Model
 
                    $result = curl_exec($curl);                 
                    curl_close ($curl);
-                  
+                 //  print_r($result);die();  
                 $first_tag = explode('<TRANSACTION_V2Result>', $result);       
                 
                 if(count($first_tag)!= 2 ){
@@ -892,55 +1018,105 @@ class Dmr_model extends CI_Model
                 }else{
                     $get_less =  str_replace("&lt;","<",$first_tag[1]);
                     $get_full =  str_replace("&gt;",">",$get_less);
-                   // print_r($get_full);die();
+                    //print_r($get_full);die();
                     $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
                     
                     $response = simplexml_load_string($final[0]);
-                   // print_r($response);
+                   // print_r($response);die();
                      if($response->STATUSCODE == 0){
-                        $data_status = array(
-                                 'status_code'       => "$response->STATUSCODE",
-                                 'status'           => "$response->STATUS",
-                                 'otp_status'      => "1",
-                                 'track_id'      => "$track_id",
-                                 'verification'    => "1"
-                             );
-
-                            $this->db->where('ben_id',$my_DMR_id);
-                           $update = $this->db->update('beneficiary_track',$data_status);   
-                         if($this->db->affected_rows() == 1){
-                              return $my_DMR_id;
-                         }else{
-                             return 0;
-                         }
-
+                             return 1;
                     }else if($response->STATUSCODE == 1){                        
-                        return 1;
+                        return 2;
+                    }else if($response->STATUSCODE == 2){ 
+                         $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                    redirect('dmr/transRequery1/'.$track_id);
+                    }else if($response->STATUSCODE == 3){                        
+                       return $response->STATUS;
                     }
                     else{
                         return 0;
                     } 
                 }
             
-        }else{
-            return 0;
-        }
+        
     }
 
     public function getBeneficiary($card){
         //$login_id = $this->session->userdata('login_id');
-        $this->db->select('d.*');
-        $this->db->from('beneficiary_track d'); 
+//        $this->db->select('d.*');
+//        $this->db->from('beneficiary_track d'); 
+//       
+//        $this->db->where('d.card_no',$card);        
+//        $this->db->where('d.status_code','0');        
+//        $query = $this->db->get();
+//        if($query->num_rows() > 0){
+//            return $query->result();
+//        }
+//        else{
+//            return array();
+//        } 
+         $url = DMRURL; 
        
-        $this->db->where('d.card_no',$card);        
-        $this->db->where('d.status_code','0');        
-        $query = $this->db->get();
-        if($query->num_rows() > 0){
-            return $query->result();
-        }
-        else{
-            return array();
-        } 
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <VIEWBENEFICIARY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;VIEWBENEFICIARYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                           
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;  
+                            &lt;/VIEWBENEFICIARYREQUEST&gt;
+                       </RequestData>
+                     </VIEWBENEFICIARY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'VIEWBENEFICIARY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<VIEWBENEFICIARYResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</VIEWBENEFICIARYResult></VIEWBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+//             echo "<pre>";
+//             print_r($response);die();
+             return $response;
+         }
     }
     public function getBeneficiary_edit($id){
         
@@ -1262,10 +1438,10 @@ class Dmr_model extends CI_Model
          }  
     }
     
-    public function removeBeneficary(){
+    public function removeBeneficary($id){
         
-        $card = $this->uri->segment(4);
-        $b_id = $this->uri->segment(5);
+        $card = $this->session->userdata('dmrcard');
+        $b_id = $id;
         $url = DMRURL; 
        //petram 10 for delete 11 for desiable
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
@@ -1281,7 +1457,7 @@ class Dmr_model extends CI_Model
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$b_id.'&lt;/BENEID&gt;
-                            &lt;PARAM1&gt;10&lt;/PARAM1&gt;
+                            &lt;PARAM1&gt;11&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
                             &lt;PARAM4&gt;&lt;/PARAM4&gt;
@@ -1324,17 +1500,17 @@ class Dmr_model extends CI_Model
              $final = explode('</REMOVEBENEFICIARYResult></REMOVEBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-            // print_r($response);die();
-             if($response->STATUSCODE == 0){
+            //echo $response->STATUSCODE;print_r($response);die();
+             if($response->STATUSCODE == "0"){
                 // $this->db->delete('beneficiary_track', array('beneid' => $b_id));
-                 return 1;
+                 return "1";
              }else{
-                 return 0;
+                 return "0";
              }
          }
     }
     
-    public function doRemoveVerifyBen($ben_id){
+    public function doRemoveVerifyBen(){
         $url = DMRURL; 
        
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
@@ -1347,7 +1523,7 @@ class Dmr_model extends CI_Model
                             &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                            &lt;CARDNO&gt;'.$this->input->post('trans').'&lt;/CARDNO&gt;
+                            &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
@@ -1385,7 +1561,7 @@ class Dmr_model extends CI_Model
 
 
          $first_tag = explode('<REMOVEBENEOTPResult>', $result);       
-         //print_r($first_tag);die();
+        // print_r($first_tag);die();
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -1399,9 +1575,9 @@ class Dmr_model extends CI_Model
 
              if($response->STATUSCODE == 0){
                  $this->db->delete('beneficiary_track', array('beneid' => $b_id));
-                 if($this->db->affected_rows() == 1){
+                 
                       return 1;//success
-                 }       
+                    
              }else{
                  return 2;//invalid OTP
              }
@@ -1491,22 +1667,20 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function dotransferAmt($key,$card){
+    public function dotransferAmt($key,$card,$mo){
          $url = DMRURL; 
          
        //$data = $this->getCardMore($this->session->userdata('login_id'));
-         $ben_id = $this->input->post('ben_id');
-         $ben_details = $this->get_ben($ben_id);
-        if(count($ben_details) == 0){
-            return 0;
-        }
-         if($ben_details->ben_type == 'MMID'){
+         //$ben_details = $this->get_ben($ben_id);
+          $ben_id = $this->input->post('ben_id');
+       
+         if($ben_id == 'MMID'){
              $val = '1';
-             $desc = $ben_details->ben_mmid;
+             $desc = $this->input->post('ac');
             
          }else{
              $val = '2';
-             $desc = $ben_details->acc;
+             $desc = $this->input->post('ac');
          }
         
         $a = mt_rand(100000,999999); 
@@ -1528,8 +1702,8 @@ class Dmr_model extends CI_Model
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;TRANSTYPE&gt;'.$val.'&lt;/TRANSTYPE&gt;
                             &lt;TRANSTYPEDESC&gt;'.$desc.'&lt;/TRANSTYPEDESC&gt;
-                            &lt;BENEMOBILE&gt;'.$ben_details->ben_mobile.'&lt;/BENEMOBILE&gt;
-                            &lt;IFSCCODE&gt;'.$ben_details->bank_ifsc.'&lt;/IFSCCODE&gt;
+                            &lt;BENEMOBILE&gt;'.$this->input->post('mo').'&lt;/BENEMOBILE&gt;
+                            &lt;IFSCCODE&gt;'.$this->input->post('ifsc').'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
                             &lt;SERVICECHARGE&gt;'.$this->input->post('tr_charge').'&lt;/SERVICECHARGE&gt;
@@ -1570,7 +1744,7 @@ class Dmr_model extends CI_Model
 
 
          $first_tag = explode('<TRANSACTION_V3Result>', $result);       
-        // print_r($first_tag);die();
+        
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -1598,7 +1772,7 @@ class Dmr_model extends CI_Model
                 if($this->db->affected_rows() == 1){
                     
                     $this->session->set_flashdata('msg','Amount transferred successfull .');  
-                    redirect('dmr/printDetail/'.$track_id);
+                    redirect('dmr/printDetail/'.$track_id.'/'.$mo);
                 }else{
                     return 5;
                 }
@@ -1628,7 +1802,7 @@ class Dmr_model extends CI_Model
     
     public function doTopup($key){
         $url = DMRURL; 
-       $data = $this->getCardMore($this->session->userdata('login_id'));
+       //$data = $this->getCardMore($this->session->userdata('login_id'));
       // print_r($data);die();
          if($this->input->post('card') == 'MMID'){
              $val = '1';
@@ -1651,12 +1825,12 @@ class Dmr_model extends CI_Model
                             &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
-                            &lt;CARDNO&gt;'.$data->card_number.'&lt;/CARDNO&gt;
+                            &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
                              &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;   
                             
                             &lt;TOPUPAMOUNT&gt;'.$this->input->post('amount').'&lt;/TOPUPAMOUNT&gt;
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
-                            &lt;MOBILE&gt;'.$data->mobile.'&lt;/MOBILE&gt;                           
+                            &lt;MOBILE&gt;'.$this->session->userdata('dmrmo').'&lt;/MOBILE&gt;                           
                             &lt;REGIONID&gt;'.$this->input->post('region').'&lt;/REGIONID&gt;
                             &lt;SERVICECHARGE&gt;'.$this->input->post('charge').'&lt;/SERVICECHARGE&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -1729,18 +1903,18 @@ class Dmr_model extends CI_Model
     public function searchuser(){
         $mobile = $this->input->post('mobile');
         $l_id =$this->session->userdata('login_id');
-        $query_validate = $this->db->query("SELECT p.* FROM profile p WHERE p.mobile = $mobile AND ( p.admin_id = $l_id OR p.master_distributor_id = $l_id OR p.super_distributor_id = $l_id OR p.distributor_id = $l_id OR p.login_id = $l_id )"); 
+        //$query_validate = $this->db->query("SELECT p.* FROM profile p WHERE p.mobile = $mobile AND ( p.admin_id = $l_id OR p.master_distributor_id = $l_id OR p.super_distributor_id = $l_id OR p.distributor_id = $l_id OR p.login_id = $l_id )"); 
        //echo $this->db->last_query();
-        if(count($query_validate->result())>0){
+        //if(count($query_validate->result())>0){
             $query = $this->db->get_where('dmr_registration_track', array('mobile' => $mobile));
             if($query && $query->num_rows()== 1){
                   return $query->row();
                }else{
                    return array();
                }
-        }else{
+       /* }else{
             return array('a'=>'1', 'b'=>'2');
-        }
+        }*/
     }
     public function get_ben($ben_id){
         $query = $this->db->get_where('beneficiary_track', array('beneid' => $ben_id));
@@ -1753,11 +1927,18 @@ class Dmr_model extends CI_Model
     
     public function getSender(){
        $user = $this->session->userdata('login_id');
-       $where = '';
-       
-       $query = $this->db->query(" SELECT d.*, p.* FROM dmr_registration_track d  "
-               . " INNER JOIN profile p ON p.mobile = d.mobile "
+      
+       $where = "";
+       if($this->session->userdata('user_type') != 'Admin'){
+       $where = "AND d.login_id = $user";
+       }
+       $query = $this->db->query(" SELECT d.*, p.first_name, p.last_name, p.admin_id,p.master_distributor_id,p.super_distributor_id,p.distributor_id FROM dmr_registration_track d  "
+               . " INNER JOIN profile p ON p.login_id = d.login_id "
                . "WHERE d.card_number <> '' $where ORDER BY d.d_id desc");
+       
+      /* $query = $this->db->query(" SELECT d.*, p.first_name, p.last_name, p.admin_id,p.master_distributor_id,p.super_distributor_id,p.distributor_id FROM dmr_registration_track d  "
+               . " INNER JOIN profile p ON p.mobile = d.mobile "
+               . "WHERE d.card_number <> '' $where ORDER BY d.d_id desc");*/
        if($query && $query->num_rows()> 0){
              return $query->result();
          }else{
@@ -1927,7 +2108,7 @@ class Dmr_model extends CI_Model
 
 
          $first_tag = explode('<TRANSACTIONREQUERYResult>', $result);       
-        // print_r($first_tag);die();
+         
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
@@ -1947,6 +2128,106 @@ class Dmr_model extends CI_Model
 
                    $this->db->where('track_id',$this->input->post('id'));
                   $update = $this->db->update('transection_track',$data_status);   
+                if($this->db->affected_rows() == 1){
+                     return 1;
+                }
+               
+             }else if( $response->STATUSCODE == 1){
+                 return 2;
+             }else if( $response->STATUSCODE == 3){
+                 return 4;
+             }else if( $response->STATUSCODE == 4){
+                 return 5;
+             }else{
+                 return 0;//invalid OTP
+             }
+         }
+    }
+    public function reTryTransfer1(){
+        $url = DMRURL; 
+       $data = $this->getCardMore($this->session->userdata('login_id'));
+        
+         if($this->input->post('card') == 'MMID'){
+             $val = '1';
+         }else{
+             $val = '2';
+         }
+        $a = mt_rand(100000,999999); 
+        for ($i = 0; $i<22; $i++) 
+         {
+             $a .= mt_rand(0,9);
+         }
+         $track_id   = 'SWAMITR'.$a;
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TRANSACTIONREQUERY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TRANSACTIONREQUERYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TRANSACTIONID&gt;'.$this->input->post('id').'&lt;/TRANSACTIONID&gt;
+                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                           
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/TRANSACTIONREQUERYREQUEST&gt;
+                       </RequestData>
+                     </TRANSACTIONREQUERY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TRANSACTIONREQUERY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TRANSACTIONREQUERYResult>', $result);       
+         
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TRANSACTIONREQUERYResult></TRANSACTIONREQUERYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+
+             if($response->STATUSCODE == 0){
+             
+                  
+                  $data_status = array(                                 
+                                 'status'           => "$response->STATUS",
+                                 'otp_status'      => "1",
+                                 'verification'    => "1"
+                             );
+
+                            $this->db->where('track_id',$this->input->post('id'));
+                           $update = $this->db->update('beneficiary_track',$data_status);   
+                           
                 if($this->db->affected_rows() == 1){
                      return 1;
                 }
@@ -2122,6 +2403,109 @@ class Dmr_model extends CI_Model
               return 1;
            }else{
                return 0;
+           }
+    }
+    public function getAjaxBank($ifsc,$bank){
+        $query = $this->db->get_where('bank_details', array('ifsc' => $ifsc, 'bank'=>"$bank"));
+        //echo $this->db->last_query();die();
+        if($query && $query->num_rows()> 0){
+              return $query->row()->state.'@@'.$query->row()->city.'@@'.$query->row()->branch.'@@'.$query->row()->address;
+           }else{
+               return '';
+           }
+    }
+    public function verifyUser($mobile){
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <VALIDATELOGIN_V1  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;VALIDATELOGIN_V1REQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                            &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;  
+                            &lt;/VALIDATELOGIN_V1REQUEST&gt;
+                       </RequestData>
+                     </VALIDATELOGIN_V1>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'VALIDATELOGIN_V1',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<VALIDATELOGIN_V1Result>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</VALIDATELOGIN_V1Result></VALIDATELOGIN_V1Response></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+            
+             if($response->STATUSCODE == 0){
+                 $this->session->set_userdata('iddmr', 1);
+                 $this->session->set_userdata('dmrname', "$response->NAME");
+                 $this->session->set_userdata('dmrmidname', "$response->MIDDLENAME");
+                 $this->session->set_userdata('dmrlastname', "$response->LASTNAME");
+                 $this->session->set_userdata('dmrmo', "$response->MOBILE");
+                 $this->session->set_userdata('dmrcard', "$response->CARDNO");
+                 $this->session->set_userdata('dmrtranslimit', "$response->TRANSACTIONLIMIT");
+                 $this->session->set_userdata('dmrbalance', "$response->BALANCE");
+                 $this->session->set_userdata('dmrkey', "$response->SECURITYKEY");
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
+    }
+    public function getIFSCBank($name){
+        $query = $this->db->get_where('bank_details', array('bank'=>"$name"));
+        //echo $this->db->last_query();die();
+        if($query && $query->num_rows()> 0){
+              return $result = substr($query->row()->ifsc, 0, 4);
+           }else{
+               return '';
+           }
+    }
+    public function cardByMo($mo){
+        $query = $this->db->get_where('dmr_registration_track', array('mobile'=>"$mo"));
+        //echo $this->db->last_query();die();
+        if($query && $query->num_rows()> 0){
+              return $query->row()->card_number ;
+           }else{
+               return '';
            }
     }
 }
