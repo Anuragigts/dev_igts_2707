@@ -21,14 +21,17 @@ class Recharge extends CI_Controller {
        if($this->input->post('amount')){
            //echo "hiii"; die();
             $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
-            $this->form_validation->set_rules('code','Operator Code','required');
+            //$this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
-            $this->form_validation->set_rules('circle','Circle','required');
+           // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 1;
+				 
                 $result = $this->recharge_model->doRecharge( $recharge_type);
-                if($result == 1){                    
+                //$result = $this->recharge_model->doRecharge1( );
+                //if($result == 1){                    
+                if($result == 0){                    
                     $this->session->set_flashdata('msg','Your Recharge is success full.');  
                     redirect('recharge/mobile_recharge');
                 }
@@ -42,6 +45,8 @@ class Recharge extends CI_Controller {
             }
        }
        $operator_type = 1;
+	   $data['amt'] = $this->recharge_model->getamt();
+	   //$data['amt'] = $this->recharge_model->getamt1();
         $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
         $this->load->view('layout/inner_template',$data);
     }
@@ -82,7 +87,7 @@ class Recharge extends CI_Controller {
                 }
             }
        }
-      
+      $data['amt'] = $this->recharge_model->getamt();
         $data['all_operator'] = $this->recharge_model->getPaymentDetail();
         $this->load->view('layout/inner_template',$data);
     }
@@ -116,7 +121,7 @@ class Recharge extends CI_Controller {
                 }
             }
        }
-        
+        $data['amt'] = $this->recharge_model->getamt();
         $operator_type = 2;
         $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
         $this->load->view('layout/inner_template',$data);

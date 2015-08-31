@@ -10,6 +10,7 @@
           </ol>Post Paid Bill payment
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">For Post Paid Bill paymen</span>
+		   Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->

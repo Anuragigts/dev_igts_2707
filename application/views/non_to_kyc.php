@@ -8,18 +8,22 @@
              </li>  
              <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
              </li>  
-             <li><a href="<?php echo base_url();?>dmr/senderList">Sender List</a>
-             </li>  
-             <li class="active">Non-KYC to KYC</li>                 
-          </ol>Non-KYC to KYC
+                            
+          </ol>Convert to KYC
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For upgrading user from Non-KYC to KYC</span>
+          <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
+              <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
+              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
+              <b>Transaction Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>,&nbsp;
+				<?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
+				<?php }; ?>
+			  &nbsp;
+              <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> </span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
-       <?php if($sender->kyc == 0){
-            redirect('dmr/senderList');
-       }?>
+       
        <div class="row">
                 <?php if($this->session->flashdata('err') != ''){?>
                  <div class="alert alert-block alert-danger fade in">
@@ -47,28 +51,28 @@
              <br>
              <?php //if(count($sender_details) == 0){?>
             <div class="col-lg-12">
-                <form method="post" role="form">
-                   <?php $name =  explode(" ", $sender->name);?>
+                <form method="post" role="form" enctype="multipart/form-data">
+                   
                     <div class="row">
                         <div class="panel panel-default">                            
                             <div class="panel-body">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                        <label for="Mobile" >First Name<font class="red">*</font></label>
-                                       <input name="first_name" class="form-control " placeholder="First Name" type="text" value="<?php echo $name[0]?>" >
+                                       <input name="first_name" class="form-control " placeholder="First Name" type="text" value="<?php echo $this->session->userdata('dmrname');?>" >
                                         <span class="red"><?=  form_error('first_name');?></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                        <label for="code" >Middle Name<font class="red n">*</font></label>
-                                        <input name="middle_name" id="code" placeholder="Middle Name" class="form-control " type="text" value="<?php echo ($name[1] != '')?$name[1]:''?>" >
+                                        <input name="middle_name" id="code" placeholder="Middle Name" class="form-control " type="text" value="<?php echo $this->session->userdata('dmrmidname');?>" >
                                         <span class="red"><?=  form_error('middle_name');?></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile">Last Name<font class="red">*</font> </label>
-                                    <input name="last_name" id="name" placeholder="Last Name" class="form-control" type="text" value="<?php echo ($name[2] != '')?$name[2]:''?>">
+                                    <input name="last_name" id="name" placeholder="Last Name" class="form-control" type="text" value="<?php echo $this->session->userdata('dmrlastname');?>">
                                     <span class="red"><?=  form_error('last_name');?></span>
                                 </div>
                             </div>
@@ -90,7 +94,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Card Number<font class="red n">*</font></label>
-                                    <input name="card" placeholder="Card Number" class="form-control" type="text" value="<?php echo $sender->card_number?>" readonly="readmonly" >
+                                    <input name="card" placeholder="Card Number" class="form-control" type="text" value="<?php echo $this->session->userdata('dmrcard');?>" readonly="readmonly" >
                                     <span class="red"><?=  form_error('card');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -123,12 +127,12 @@
                                 </div>
                                 <div class="col-lg-4">
                                      <label for="Mobile" >Address<font class="red">*</font></label>
-                                    <input name="add" placeholder="Address" class="form-control" type="text" value="<?= set_value("add"); ?>">
+                                    <input name="add" placeholder="Address" class="form-control" type="text" value="<?php echo $this->session->userdata('dmrad'); ?>">
                                     <span class="red"><?=  form_error('add');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >ZIP Code<font class="red">*</font></label>
-                                    <input name="zip" placeholder="ZIP Code" class="form-control" type="text" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                                    <input name="zip" placeholder="ZIP Code" class="form-control" type="text" value="<?php 	echo $this->session->userdata('dmrpin'); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
                                     <span class="red"><?=  form_error('zip');?></span>
                                 </div>
                                 
@@ -152,8 +156,8 @@
                                     <span class="red"><?=  form_error('id_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
-                                      <label for="Mobile" >ID Proof URL<font class="red n">*</font></label>
-                                    <input name="id_proof_url" placeholder="ID Proof URL" class="form-control" type="url" value="<?= set_value("id_proof_url"); ?>">
+                                      <label for="Mobile" >ID Proof Image<font class="red n">*</font></label>
+                                    <input name="id_proof_url" placeholder="ID Proof image" class="form-control" type="file" value="<?= set_value("id_proof_url"); ?>">
                                     <span class="red"><?=  form_error('id_proof_url');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -177,8 +181,8 @@
                                     <span class="red"><?=  form_error('address_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
-                                      <label for="Mobile" >Address Proof URL<font class="red n">*</font></label>
-                                    <input name="address_proof_url" placeholder="Address Proof URL" class="form-control" type="url" value="<?= set_value("address_proof_url"); ?>">
+                                      <label for="Mobile" >Address Proof Image<font class="red n">*</font></label>
+                                    <input name="address_proof_url" placeholder="Address Proof image" class="form-control" type="file" value="<?= set_value("address_proof_url"); ?>">
                                     <span class="red"><?=  form_error('address_proof_url');?></span>
                                 </div>
                                

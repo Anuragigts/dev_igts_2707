@@ -1,7 +1,8 @@
 <?php
 class Dmr_model extends CI_Model
 {
-   public function doRegister(){
+   public function doRegister($iloc, $aloc){
+  
          $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
          {
@@ -48,10 +49,10 @@ class Dmr_model extends CI_Model
                                     &lt;PINCODE&gt;'.$this->input->post('zip').'&lt;/PINCODE&gt;
                                     &lt;USERIDPROOFTYPE&gt;'.$this->input->post('id_proof_type').'&lt;/USERIDPROOFTYPE&gt;
                                     &lt;USERIDPROOF&gt;'.$this->input->post('id_proof').'&lt;/USERIDPROOF&gt;
-                                    &lt;IDPROOFURL&gt;'.$this->input->post('id_proof_url').'&lt;/IDPROOFURL&gt;
+                                    &lt;IDPROOFURL&gt;'.$iloc.'&lt;/IDPROOFURL&gt;
                                     &lt;USERADDRESSPROOFTYPE&gt;'.$this->input->post('address_proof_type').'&lt;/USERADDRESSPROOFTYPE&gt;
                                     &lt;USERADDRESSPROOF&gt;'.$this->input->post('address_proof').'&lt;/USERADDRESSPROOF&gt;
-                                    &lt;ADDRESSPROOFURL&gt;'.$this->input->post('address_proof_url').'&lt;/ADDRESSPROOFURL&gt;
+                                    &lt;ADDRESSPROOFURL&gt;'.$aloc.'&lt;/ADDRESSPROOFURL&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -1955,7 +1956,7 @@ class Dmr_model extends CI_Model
              return array();
          }
     }
-    public function upgradeToKYC($id){
+    public function upgradeToKYC($iloc,$aloc){
         $url = DMRURL; 
          $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1986,10 +1987,10 @@ class Dmr_model extends CI_Model
 
                                     &lt;IDPROOFTYPE&gt;'.$this->input->post('id_proof_type').'&lt;/IDPROOFTYPE&gt;
                                     &lt;IDPROOF&gt;'.$this->input->post('id_proof').'&lt;/IDPROOF&gt;
-                                    &lt;IDPROOFURL&gt;'.$this->input->post('id_proof_url').'&lt;/IDPROOFURL&gt;
+                                    &lt;IDPROOFURL&gt;'.$iloc.'&lt;/IDPROOFURL&gt;
                                     &lt;ADDRESSPROOFTYPE&gt;'.$this->input->post('address_proof_type').'&lt;/ADDRESSPROOFTYPE&gt;
                                     &lt;ADDRESSPROOF&gt;'.$this->input->post('address_proof').'&lt;/ADDRESSPROOF&gt;
-                                    &lt;ADDRESSPROOFURL&gt;'.$this->input->post('address_proof_url').'&lt;/ADDRESSPROOFURL&gt;                                   
+                                    &lt;ADDRESSPROOFURL&gt;'.$aloc.'&lt;/ADDRESSPROOFURL&gt;                                   
                                     &lt;/KYCUPLOADREQUEST&gt;
                               </RequestData>
                             </KYCUPLOAD>
@@ -2029,17 +2030,9 @@ class Dmr_model extends CI_Model
                     if($response->STATUSCODE == 20){
                         return 20;
                     }else if($response->STATUSCODE == 0){
-                        $data_status = array(
-                                 'kyc'       => "$response->STATUSCODE"
-                             );
-
-                            $this->db->where('d_id',$id);
-                           $update = $this->db->update('dmr_registration_track',$data_status);   
-                         if($this->db->affected_rows() == 1){
+                        
                               return 1;
-                         }else{
-                             return 0;
-                         }
+                         
 
                     }else{
                         return 0;
@@ -2333,6 +2326,76 @@ class Dmr_model extends CI_Model
              }
          }
     }
+	public function searchagentHistory($card){
+		$url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <TRANSACTIONHISTORY  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;TRANSACTIONHISTORYREQUEST&gt;
+                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            
+                            &lt;FROMDATE&gt;'.$this->input->post('from').'&lt;/FROMDATE&gt;
+                            &lt;TODATE&gt;'.$this->input->post('to').'&lt;/TODATE&gt;
+                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                            &lt;TRANSTYPE&gt;'.$this->input->post('t_type').'&lt;/TRANSTYPE&gt;
+                            &lt;TRANSMODE&gt;'.$this->input->post('m_type').'&lt;/TRANSMODE&gt;
+                            
+                            &lt;/TRANSACTIONHISTORYREQUEST&gt;
+                       </RequestData>
+                     </TRANSACTIONHISTORY>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'TRANSACTIONHISTORY',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<TRANSACTIONHISTORYResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</TRANSACTIONHISTORYResult></TRANSACTIONHISTORYResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+//             echo "<pre>";
+//             print_r($response);
+//             echo '</pre>';die();
+             if(count($response) >0){
+                 return $response;
+             }else{
+                 return array();
+             }
+         }
+	
+	}
     
     public function changePin($mo){
         $url = DMRURL; 
@@ -2396,6 +2459,8 @@ class Dmr_model extends CI_Model
              }
          }
     }
+	
+	
     public function mobileverify(){
         $query = $this->db->get_where('profile', array('mobile' => $this->input->post('mobile')));
         //echo $this->db->last_query();die();
@@ -2473,7 +2538,8 @@ class Dmr_model extends CI_Model
              $final = explode('</VALIDATELOGIN_V1Result></VALIDATELOGIN_V1Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-            
+            //echo "<pre>";
+			//print_r($response);die();
              if($response->STATUSCODE == 0){
                  $this->session->set_userdata('iddmr', 1);
                  $this->session->set_userdata('dmrname', "$response->NAME");
@@ -2483,7 +2549,12 @@ class Dmr_model extends CI_Model
                  $this->session->set_userdata('dmrcard', "$response->CARDNO");
                  $this->session->set_userdata('dmrtranslimit', "$response->TRANSACTIONLIMIT");
                  $this->session->set_userdata('dmrbalance', "$response->BALANCE");
+                 $this->session->set_userdata('dmrkyc', "$response->KYCSTATUS");
                  $this->session->set_userdata('dmrkey', "$response->SECURITYKEY");
+                 $this->session->set_userdata('dmrpin', "$response->PINCODE");
+                 $this->session->set_userdata('dmrad', "$response->ADDRESS");
+                 $this->session->set_userdata('dmrcity', "$response->CITY");
+                 $this->session->set_userdata('dmrstate', "$response->STATE");
                  return 1;
              }else{
                  return 0;

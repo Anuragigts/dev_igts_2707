@@ -10,6 +10,7 @@
           </ol>DTH
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">For DTH recharge</span>
+		   Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->

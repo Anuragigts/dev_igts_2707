@@ -11,8 +11,15 @@
                               
           </ol>View Beneficiary 
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, <b>Transection Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>, &nbsp;
-              <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a>
+          <span class="text-sm hidden-xs">">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
+              <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
+              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
+              <b>Transaction Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>,&nbsp;
+				<?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
+				<?php }; ?>
+			  &nbsp;
+              <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> 
           </span>
           <!-- Breadcrumb below title-->
        </h3>

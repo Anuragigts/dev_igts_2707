@@ -36,18 +36,51 @@ class Dmr extends CI_Controller {
                 $this->form_validation->set_rules('email',          "Email",            'required|email');
                 $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
                 $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
+				if($_FILES['id_proof_url']['name'] == ''){
                 $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
+				}
                 $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
                 $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
+				if($_FILES['address_proof_url']['name'] == ''){
                 $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
+				}
             }
             
             
             
             if($this->form_validation->run() == TRUE){
                 $mv = $this->dmr_model->mobileverify();
+				$idP = '';$addp='';
+                        if($_FILES['id_proof_url']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['id_proof_url'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('id_proof_url');
+                        }
+                        if($_FILES['address_proof_url']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['address_proof_url'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('address_proof_url');
+                        }
+						$iloc = base_url().'doc/'.$idP;
+						$aloc = base_url().'doc/'.$addp;
                // if($mv == 1){
-                    $result = $this->dmr_model->doRegister();
+                    $result = $this->dmr_model->doRegister($iloc, $aloc);
                     //echo $result;exit;
                     if($result == 0){                    
                         $this->session->set_flashdata('err','Registration fail : Some internal error occurred.');  
@@ -106,7 +139,7 @@ class Dmr extends CI_Controller {
         
     }
      public function otp(){
-         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrDoLogin');}
+        
         $transection_id = $this->uri->segment(3);
          $data = array(
               'title'         => 'DMR :: OTP',
@@ -620,7 +653,7 @@ class Dmr extends CI_Controller {
                      $retry = $this->dmr_model->reTryTransfer();
                       if($retry == 1){ 
                         $this->session->set_flashdata('msg','Amount Transferred successfully.');                          
-                            redirect('dmr/printDetail/'.$t_id);
+                            redirect('dmr/beneficiaryList/');
                      }else if($retry == 2){ 
                           $this->session->set_flashdata('err','Confirmation failed.'); 
                           redirect('dmr/transRequery/'.$t_id);
@@ -782,7 +815,35 @@ class Dmr extends CI_Controller {
         $this->load->view('layout/inner_template',$data);
     }
     
-    public function senderList(){
+    public function getAjaxBank(){
+        $ifsc = $_POST['ifsc'];
+        $bank = $_POST['bank'];
+        echo $this->dmr_model->getAjaxBank($ifsc,$bank);
+    }
+    public function getIFSCBank(){
+        $name = $_POST['name'];
+        
+        echo $this->dmr_model->getIFSCBank($name);
+    }
+    public function dmrLogout(){
+         $this->session->unset_userdata('iddmr');
+        $this->session->unset_userdata('dmrname');
+        $this->session->unset_userdata('dmrmidname');
+        $this->session->unset_userdata('dmrlastname');
+        $this->session->unset_userdata('dmrmo');
+        $this->session->unset_userdata('dmrcard');
+        $this->session->unset_userdata('dmrtranslimit');
+        $this->session->unset_userdata('dmrbalance');
+        $this->session->unset_userdata('dmrkey');
+        $this->session->unset_userdata('dmrkyc');
+        $this->session->unset_userdata('dmrpin');
+        $this->session->unset_userdata('dmrad');
+        $this->session->unset_userdata('dmrcity');
+        $this->session->unset_userdata('dmrstate');
+        $this->session->unset_userdata('dmrmo');
+        redirect('dmr/dmrUserSearch');
+    }
+	 public function senderList(){
          $data = array(
               'title'         => 'DMR :: SENDER LIST',
               'metakeyword'   => '',
@@ -792,72 +853,17 @@ class Dmr extends CI_Controller {
          $data['senders']= $this->dmr_model->getSender();
          $this->load->view('layout/inner_template',$data);
     }
-    
-    public function doKyc(){
-        $data = array(
-              'title'         => 'DMR :: DO KYC',
-              'metakeyword'   => '',
-              'metadesc'      => '',
-              'content'       => 'non_to_kyc'
-             );
-        $id = $this->uri->segment(3);
-        $data['login_details'] = array(); 
-        $key = '';
-        
-        if($this->input->post('kyc')){
-            $this->form_validation->set_rules('first_name',     'First Name',       'required');            
-            $this->form_validation->set_rules('last_name',      'Last Name',        'required');
-             $this->form_validation->set_rules('state',          'State',            'required');
-            $this->form_validation->set_rules('city',           'City',             'required');
-            $this->form_validation->set_rules('add',            'Address',          'required');
-            $this->form_validation->set_rules('zip',            'ZIP',              'required');
-           
-        $this->form_validation->set_rules('middle_name',    'Middle Name',      'required');
-        $this->form_validation->set_rules('m_name',         "Mother's Name",    'required');
-        $this->form_validation->set_rules('dob',            "Date Of Birth",    'required');
-        $this->form_validation->set_rules('email',          "Email",            'required|email');
-        $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
-        $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
-        $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
-        $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
-        $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
-        $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
-            
-            if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->upgradeToKYC($id);
-                //echo $result;exit;
-                if($result == 0){                    
-                    $this->session->set_flashdata('err','Upgradation  fail : Some internal error occurred.');  
-                     redirect('dmr/doKyc/'.$id);
-                }
-              else{
-                    $this->session->set_flashdata('msg','Your Upgradation  is successfull.');  
-                    redirect('dmr/senderList');
-                     
-                }
-            }
-        }
-        
-        
-         $india = '101';
-        $data['states']=$this->common->getState($india);
-        $data['citys']=$this->common->getcity();
-        $data['sender_details'] = $this->dmr_model->sender_details();
-        $data['sender']= $this->dmr_model->getSenderdetail($id );
-        $this->load->view('layout/inner_template',$data);
-    }
-    
-    public function viewTransectionHistory(){
+	public function viewAgentHistory(){
+	if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
               'title'         => 'DMR :: VIEW TRANSECTION HISTORY',
               'metakeyword'   => '',
               'metadesc'      => '',
-              'content'       => 'tr_history'
+              'content'       => 'agent_history'
              );
         $type = '';
         $mode = '';
-         $card = $this->uri->segment(3);
+         $card = $this->session->userdata('dmrcard');
           $data["searched"] = array();
           $data['filter_by'] = '';
          if($this->input->post('search')){
@@ -888,27 +894,135 @@ class Dmr extends CI_Controller {
          $data['cardholder'] = $this->dmr_model->card_details($card);
          $this->load->view('layout/inner_template',$data);
     }
-    public function getAjaxBank(){
-        $ifsc = $_POST['ifsc'];
-        $bank = $_POST['bank'];
-        echo $this->dmr_model->getAjaxBank($ifsc,$bank);
+	
+	public function viewTransectionHistory(){
+	if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
+        $data = array(
+              'title'         => 'DMR :: VIEW TRANSECTION HISTORY',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'tr_history'
+             );
+        $type = '';
+        $mode = '';
+         $card = $this->session->userdata('dmrcard');
+          $data["searched"] = array();
+          $data['filter_by'] = '';
+         if($this->input->post('search')){
+             if($this->input->post('t_type') == 0){
+                $type = 'All'; 
+             }else if($this->input->post('t_type') == 3){
+                 $type = 'Remited'; 
+             }else if($this->input->post('t_type') == 5){
+                 $type = 'Rejection'; 
+             }else{
+                 $type = 'Refuund'; 
+             }
+             
+             if($this->input->post('m_type') == 0){
+                $mode = 'All'; 
+             }else if($this->input->post('m_type') == 1){
+                 $mode = 'IMPS(MMID)'; 
+             }else if($this->input->post('m_type') == 2){
+                 $mode = 'IMPS(IFSC)'; 
+             }else{
+                 $mode = 'NEFT'; 
+             }
+             
+             $data["searched"] =$this->dmr_model->searchagentHistory($card);
+              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b class='bold1'>".$mode."</b>";
+         }
+         
+         $data['cardholder'] = $this->dmr_model->card_details($card);
+         $this->load->view('layout/inner_template',$data);
     }
-    public function getIFSCBank(){
-        $name = $_POST['name'];
+	public function doKyc(){
+        $data = array(
+              'title'         => 'DMR :: DO KYC',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'non_to_kyc'
+             );
         
-        echo $this->dmr_model->getIFSCBank($name);
-    }
-    public function dmrLogout(){
-         $this->session->unset_userdata('iddmr');
-        $this->session->unset_userdata('dmrname');
-        $this->session->unset_userdata('dmrmidname');
-        $this->session->unset_userdata('dmrlastname');
-        $this->session->unset_userdata('dmrmo');
-        $this->session->unset_userdata('dmrcard');
-        $this->session->unset_userdata('dmrtranslimit');
-        $this->session->unset_userdata('dmrbalance');
-        $this->session->unset_userdata('dmrkey');
-        redirect('dmr/dmrUserSearch');
+        $data['login_details'] = array(); 
+        $key = '';
+        
+        if($this->input->post('kyc')){
+            $this->form_validation->set_rules('first_name',     'First Name',       'required');            
+            $this->form_validation->set_rules('last_name',      'Last Name',        'required');
+             $this->form_validation->set_rules('state',          'State',            'required');
+            $this->form_validation->set_rules('city',           'City',             'required');
+            $this->form_validation->set_rules('add',            'Address',          'required');
+            $this->form_validation->set_rules('zip',            'ZIP',              'required');
+           
+        $this->form_validation->set_rules('middle_name',    'Middle Name',      'required');
+        $this->form_validation->set_rules('m_name',         "Mother's Name",    'required');
+        $this->form_validation->set_rules('dob',            "Date Of Birth",    'required');
+        $this->form_validation->set_rules('email',          "Email",            'required|email');
+        $this->form_validation->set_rules('id_proof_type',  'ID Proof Type',    'required');
+        $this->form_validation->set_rules('id_proof',       'ID Proof',         'required');
+        if($_FILES['id_proof_url']['name'] == ''){
+                $this->form_validation->set_rules('id_proof_url',   'ID Proof URL',     'required');
+				}
+                $this->form_validation->set_rules('address_proof_type','Address Proof Type','required');
+                $this->form_validation->set_rules('address_proof',  'Address Proof',    'required');
+				if($_FILES['address_proof_url']['name'] == ''){
+                $this->form_validation->set_rules('address_proof_url','Address Proof URL','required');
+				}
+            
+            if($this->form_validation->run() == TRUE){
+				$idP = '';$addp='';
+                        if($_FILES['id_proof_url']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['id_proof_url'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('id_proof_url');
+                        }
+                        if($_FILES['address_proof_url']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['address_proof_url'];
+                            $uid = date('Y-m-d_i-s');
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('address_proof_url');
+                        }
+						$iloc = base_url().'doc/'.$idP;
+						$aloc = base_url().'doc/'.$addp;
+                
+                $result = $this->dmr_model->upgradeToKYC($iloc,$aloc);
+                //echo $result;exit;
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','User Updated to KYC: Please Logout from DMR and Login Again');  
+                    redirect('dmr/beneficiaryList');
+                }
+              else{
+					$this->session->set_flashdata('err','Upgradation  fail : Some internal error occurred.');  
+                     redirect('dmr/doKyc/'.$id);
+                    
+                     
+                }
+            }
+        }
+        
+        
+         $india = '101';
+        $data['states']=$this->common->getState($india);
+        $data['citys']=$this->common->getcity();
+        $data['sender_details'] = $this->dmr_model->sender_details();
+        
+        $this->load->view('layout/inner_template',$data);
     }
  
 }

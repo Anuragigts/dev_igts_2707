@@ -1,6 +1,52 @@
 <?php
 class Recharge_model extends CI_Model
 { 
+	public function getamt1( ){
+	/*
+		// init curl object        
+		$ch = curl_init();
+
+		// define options
+		$optArray = array(
+			CURLOPT_URL => 'http://Members.billworld.in/app/index.php?AccessKey=b4295724b195a2b48581cd2da5545e44&username=BW10433&action=mod_CreditsManagement_getAccountBalance',
+			CURLOPT_RETURNTRANSFER => true
+		);
+
+		// apply those options
+		curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$xml = @simplexml_load_string($result);
+		return (string)$xml->TotalAccountBalance;
+		*/
+		
+	}
+	public function doRecharge1(){
+	/*
+		$mt = $this->input->post('amount');
+		$no = $this->input->post('mobile');
+		$op = $this->input->post('oprator_name');
+		$ch = curl_init();
+
+		// define options
+		$optArray = array(
+			CURLOPT_URL => "http://Members.billworld.in/app/index.php?AccessKey=b4295724b195a2b48581cd2da5545e44&username=BW10433&action=mod_MobileRecharge_postEnterRechargeDetails&options_amount=$mt&options_mobilenumber=$no&options_operators=$op",
+			CURLOPT_RETURNTRANSFER => true
+		);
+
+		// apply those options
+		curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$xml = @simplexml_load_string($result);
+		//print_r($xml);die();
+		return (string)$xml->errorcode;
+		*/
+	}
     public function getOperator($number){       
         $val = "";
         $code="";
@@ -125,16 +171,16 @@ class Recharge_model extends CI_Model
                     <soap:Header>
                         <ns1:clsSecurity soap:mustUnderstand="false"
                     xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
-                          <ns1:WebProviderLoginId>Swamicom</ns1:WebProviderLoginId>
-                          <ns1:WebProviderPassword>Swamicom123</ns1:WebProviderPassword>
+                          <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
                           <ns1:IsAgent>false</ns1:IsAgent>
                         </ns1:clsSecurity>
                       </soap:Header>
             <soap:Body>
                 <MOBILEBOOKINGDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
                     <pobjSecurity>
-                        <WebProviderLoginId>Swamicom</WebProviderLoginId>
-                        <WebProviderPassword>Swamicom123</WebProviderPassword>
+                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
                         <IsAgent>false</IsAgent>   
                     </pobjSecurity>
                     <PstrInput>
@@ -209,6 +255,71 @@ class Recharge_model extends CI_Model
             return 3;
         }
     }
+	
+	public function getamt(){
+	
+		 $url = RECHARGEURL;        
+                $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                    <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
+                          <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                <CheckQuota xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
+                        <IsAgent>false</IsAgent>   
+                    </pobjSecurity>
+                    
+                    <PstrFinalOutPut /><pstrError/>
+                </CheckQuota>
+            </soap:Body></soap:Envelope>';
+
+                $curl = curl_init();
+
+                curl_setopt ($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                    'SOAPAction:"'.RECHARGEACTION.'CheckQuota"',
+                    'Content-Type: text/xml; charset=utf-8;',
+                ));
+
+                 curl_setopt ($curl, CURLOPT_POST, 1);
+
+                curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                 $result = curl_exec($curl); 
+
+                curl_close ($curl);
+                
+                $keep_array = explode('true', $result);
+                if(count($keep_array)!= 2 ){
+                    return 0;
+                }else{
+               // echo $keep_array[1]; die();
+                $first_tag = explode('</CheckQuotaResult><PstrFinalOutPut>', $keep_array[1]);       
+
+                $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                $get_full =  str_replace("&gt;",">",$get_less);
+
+                $final = explode('</PstrFinalOutPut><pstrError /></CheckQuotaResponse>', $get_full);
+
+               $response = simplexml_load_string($final[0]);
+			   return $response;
+			   //print_r($response);die();
+			   }
+			   
+	}
     
     public function getrechargeDetails(){
         $this->db->select('r.*,p.*,u.user_type as u_type');
@@ -237,16 +348,16 @@ class Recharge_model extends CI_Model
                       <soap:Header>
                         <ns1:clsSecurity soap:mustUnderstand="false"
                     xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
-                          <ns1:WebProviderLoginId>Swamicom</ns1:WebProviderLoginId>
-                          <ns1:WebProviderPassword>Swamicom123</ns1:WebProviderPassword>
+                          <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
                           <ns1:IsAgent>false</ns1:IsAgent>
                         </ns1:clsSecurity>
                       </soap:Header>
                       <soap:Body>
                         <GETBILLPAYMENTDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
                           <pobjSecurity>
-                            <WebProviderLoginId>Swamicom</WebProviderLoginId>
-                            <WebProviderPassword>Swamicom123</WebProviderPassword>
+                            <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                            <WebProviderPassword>'.PASSW.'</WebProviderPassword>
                             <IsAgent>false</IsAgent>
                           </pobjSecurity>
                           <PstrFinalOutPut />
@@ -332,16 +443,16 @@ class Recharge_model extends CI_Model
                     <soap:Header>
                         <ns1:clsSecurity soap:mustUnderstand="false"
                     xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
-                          <ns1:WebProviderLoginId>Swamicom</ns1:WebProviderLoginId>
-                          <ns1:WebProviderPassword>Swamicom123</ns1:WebProviderPassword>
+                          <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
                           <ns1:IsAgent>false</ns1:IsAgent>
                         </ns1:clsSecurity>
                       </soap:Header>
             <soap:Body>
                 <BILLPAYMENTBOOKINGDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
                     <pobjSecurity>
-                        <WebProviderLoginId>Swamicom</WebProviderLoginId>
-                        <WebProviderPassword>Swamicom123</WebProviderPassword>
+                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
                         <IsAgent>false</IsAgent>   
                     </pobjSecurity>
                     <PstrInput>

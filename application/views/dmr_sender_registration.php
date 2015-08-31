@@ -43,7 +43,7 @@
              <br>
              <?php //if(count($sender_details) == 0){?>
             <div class="col-lg-12">
-                <form method="post" role="form">
+                <form method="post" enctype="multipart/form-data" role="form">
                     <div class="row">
                         <div class="panel panel-default">                            
                             <div class="panel-body">
@@ -165,8 +165,8 @@
                                     <span class="red"><?=  form_error('id_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
-                                      <label for="Mobile" >ID Proof URL<font class="red n">*</font></label>
-                                    <input name="id_proof_url" placeholder="ID Proof URL" class="form-control" type="url" value="<?= set_value("id_proof_url"); ?>">
+                                      <label for="Mobile" >ID Proof Image<font class="red n">*</font></label>
+                                    <input name="id_proof_url" placeholder="ID Proof image" class="form-control" type="file" value="<?= set_value("id_proof_url"); ?>">
                                     <span class="red"><?=  form_error('id_proof_url');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -190,8 +190,8 @@
                                     <span class="red"><?=  form_error('address_proof');?></span>
                                 </div>
                                 <div class="col-lg-4">
-                                      <label for="Mobile" >Address Proof URL<font class="red n">*</font></label>
-                                    <input name="address_proof_url" placeholder="Address Proof URL" class="form-control" type="url" value="<?= set_value("address_proof_url"); ?>">
+                                      <label for="Mobile" >Address Proof Image<font class="red n">*</font></label>
+                                    <input name="address_proof_url" placeholder="Address Proof image" class="form-control" type="file" value="<?= set_value("address_proof_url"); ?>">
                                     <span class="red"><?=  form_error('address_proof_url');?></span>
                                 </div>
                                

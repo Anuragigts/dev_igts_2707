@@ -10,6 +10,7 @@
           </ol>Pre paid Mobile Recharge
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">For Pre paid mobile recharge</span>
+		  Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
@@ -39,6 +40,7 @@
                  </br>
              <?php }?>           
              <br>
+			 
            <div class="col-lg-5">
                   <!-- START panel tab-->
                   <div role="tabpanel" class="panel panel-transparent">
@@ -82,6 +84,17 @@
                                                      <?php foreach($all_operator as $op){?>
                                                      <option value="<?php echo $op->op_name;?>" op_code="<?php echo $op->code;?>" <?php echo set_select('oprator_name',$op->op_name);?>><?php echo $op->op_name;?></option>
                                                      <?php }?>
+													 <!--option value="ID">IDEA</option>
+													 <option value="AR">Airtel</option>
+													 <option value="MT">MTS</option>
+													 <option value="AC">Aircel</option>
+													 <option value="RC">Reliance CDMA</option>
+													 <option value="RG">Reliance GSM</option>
+													 <option value="TD">Tata Docomo</option>
+													 <option value="TI">Tata Indicom</option>
+													 <option value="UN">Uninor</option>
+													 <option value="VO">Vodafone</option>
+													 <option value="BT">BSNL TOP UP</option-->
                                                  </select>
                                                  <span class="red"><?=  form_error('oprator_name');?></span>
                                                  <input type="hidden" name="code" id="code" />
@@ -90,8 +103,8 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Circle Area<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control" value="<?= set_value("circle"); ?>" value="<?= set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
-                                                 <span class="red"><?=  form_error('circle');?></span>
+                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control" value="<?= set_value("circle"); ?>" value="<?php echo  set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
+                                                 <span class="red"><?= form_error('circle');?></span>
                                              </div>
                                           </div>
                                           <div class="form-group">

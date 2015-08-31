@@ -88,7 +88,7 @@
     // Get city by ajax
     $('#state').change(function(){
         var id =  $('option:selected', this).attr('state_id');//$('#state').val();
-       
+      // alert(id);
         $.post('<?php echo base_url();?>common/city',{'state':id},function(response){
                 //alert(response);
                 if(response != ""){

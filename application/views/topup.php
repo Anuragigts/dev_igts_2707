@@ -14,6 +14,9 @@
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
               <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
               <b>Transection Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>, &nbsp;
+			  <?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
+				<?php }; ?>
               <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a>
           </span>
           <!-- Breadcrumb below title-->
@@ -98,8 +101,7 @@
     $('#amt').change(function(){
         var amt = parseInt($('#amt').val());
         var ch = (amt * 0.20)/100;
-        $('#charge').val(ch);
+        $('#charge').val(ch.toFixed(2));
         
     });
 </script>
-

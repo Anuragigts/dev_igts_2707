@@ -94,7 +94,8 @@ class Register_model extends CI_Model
                                     
                                     $this->db->insert("module_access",$ins_access);
                                     if($this->db->affected_rows()   >   0){
-                                            return 1;
+										
+                                        return 1;
                                     }
                                     else{
                                             return 0;

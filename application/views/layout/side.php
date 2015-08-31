@@ -195,16 +195,16 @@
                               <span>Topup</span>
                            </a>
                         </li>
-                        <li class="dmrUserSearch sender_registration">
+                        <li class="dmrUserSearch sender_registration beneficiaryList">
                            <a href="<?php echo base_url();?>dmr/dmrUserSearch" title="Money Transfer">
                               <span>Money Transfer</span>
                            </a>
                         </li>
-<!--                        <li class="senderList ">
-                           <a href="<?php //echo base_url();?>dmr/senderList" title="Sender List">
-                              <span>Sender List</span>
+                        <li class="viewTransectionHistory ">
+                           <a href="<?php echo base_url();?>dmr/viewTransectionHistory" title="Transection History">
+                              <span>Transection History</span>
                            </a>
-                        </li>-->
+                        </li>
 <!--                        <li class="dmrAgents">
                            <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
                               <span>DMR Agents</span>
