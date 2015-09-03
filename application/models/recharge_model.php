@@ -300,7 +300,7 @@ class Recharge_model extends CI_Model
                 $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                $response = simplexml_load_string($final[0]);
-               print_r($response);die();
+              // print_r($response);die();
                if($response->Status == 1){
                 $data = array(                        
                         'hrm_track'              => "$response->TrackId",
