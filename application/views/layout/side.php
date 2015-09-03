@@ -159,27 +159,7 @@
                         </li>
                      </ul>
                   </li>
-                   <?php }if($this->session->userdata('utility') == 1){?>
-                  <li class=" ">
-                     <a href="#utility" title="Utility" data-toggle="collapse">
-                        <em class="fa fa-plug"></em>
-                        <span>Utility</span>
-                     </a>
-                     <ul id="utility" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header">Utility</li>
-                        <li class=" ">
-                           <a href="#" title="Electricity Payment">
-                              <span>Electricity</span>
-                           </a>
-                        </li>
-                        <li class=" ">
-                           <a href="#" title="Gas Payment">
-                              <span>Gas</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                 <?php }if($this->session->userdata('dmr') == 1){?>
+                   <?php }if($this->session->userdata('dmr') == 1){?>
 
                   <li class="dmr">
                      <a href="#dmr" title="DMR" data-toggle="collapse">
@@ -202,7 +182,7 @@
                         </li>
                         <li class="viewTransectionHistory ">
                            <a href="<?php echo base_url();?>dmr/viewTransectionHistory" title="Transection History">
-                              <span>Transection History</span>
+                              <span>Transaction History</span>
                            </a>
                         </li>
 <!--                        <li class="dmrAgents">
@@ -212,7 +192,27 @@
                         </li>-->
                      </ul>
                   </li>
-                    <?php }?>
+                    <?php }if($this->session->userdata('utility') == 1){?>
+                  <li class=" ">
+                     <a href="#utility" title="Utility" data-toggle="collapse">
+                        <em class="fa fa-plug"></em>
+                        <span>Utility</span>
+                     </a>
+                     <ul id="utility" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Utility</li>
+                        <li class=" ">
+                           <a href="#" title="Electricity Payment">
+                              <span>Electricity</span>
+                           </a>
+                        </li>
+                        <li class=" ">
+                           <a href="#" title="Gas Payment">
+                              <span>Gas</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                 <?php } ?>
                   <?php if($this->session->userdata('flight') == 1){?>
                   <li class="flight">
                      <a href="#flight" title="Fleight" data-toggle="collapse">

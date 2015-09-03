@@ -17,9 +17,377 @@
             </h3>
             <!-- START widgets box-->
             <div class="row">
+                          <div class="col-md-12 text-center">
+                              <h2> Our Products </h2>
+                          </div>
+           </div>
+           <!-- START carousel-->
+            <div id="carousel-example-captions" data-ride="carousel" class="carousel slide">
+               
+               <div role="listbox" class="carousel-inner">
+                  <div class="item active">
+                      <div class="row">
+                          
+                          <div class="col-md-1"></div>
+                          <div class="col-md-10">
+                              <div class="row">
+                                <?php //if($this->session->userdata('recharge') == 1){?>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>recharge/mobile_recharge" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Pre paid</div>
+                                             <div class="text-uppercase">Mobile Recharge</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>recharge/post_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Post paid</div>
+                                             <div class="text-uppercase">Mobile Recharge</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">DTH</div>
+                                             <div class="text-uppercase">Mobile Recharge</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-md-12">&nbsp;</div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Money Transfer</div>
+                                             <div class="text-uppercase">DMR</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Money Top-up</div>
+                                             <div class="text-uppercase">DMR</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Transection Details</div>
+                                             <div class="text-uppercase">DMR</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+
+                                 <?php //} ?>
+                              </div>
+                          </div>
+                          <div class="col-md-1"></div>
+                          
+                      </div>
+                  </div>
+                  <div class="item">
+                      <div class="row">
+                          
+                          <div class="col-md-1"></div>
+                          <div class="col-md-10">
+                              <div class="row">
+                                <?php //if($this->session->userdata('recharge') == 1){?>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Search Flight</div>
+                                             <div class="text-uppercase">Flight</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Book Flight</div>
+                                             <div class="text-uppercase">Flight</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View History</div>
+                                             <div class="text-uppercase">Flight</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                   <div class="col-md-12">&nbsp;</div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Cancel Flight</div>
+                                             <div class="text-uppercase">Flight</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View Status</div>
+                                             <div class="text-uppercase">Flight</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  
+                               </div>
+
+                                 <?php //} ?>
+                              </div>
+                          </div>
+                          <div class="col-md-1"></div>
+                          
+                      </div>
+                  </div>
+                   <div class="item">
+                      <div class="row">
+                          
+                          <div class="col-md-1"></div>
+                          <div class="col-md-10">
+                              <div class="row">
+                                <?php //if($this->session->userdata('recharge') == 1){?>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Search Bus</div>
+                                             <div class="text-uppercase">Bus</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Book Bus</div>
+                                             <div class="text-uppercase">Bus</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View Bus</div>
+                                             <div class="text-uppercase">Bus</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                   <div class="col-md-12">&nbsp;</div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Cancel Bus</div>
+                                             <div class="text-uppercase">Bus</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View Status</div>
+                                             <div class="text-uppercase">Bus</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  
+                               </div>
+
+                                 <?php //} ?>
+                              </div>
+                          </div>
+                          <div class="col-md-1"></div>
+                          
+                      </div>
+                  </div>
+                   <div class="item">
+                      <div class="row">
+                          
+                          <div class="col-md-1"></div>
+                          <div class="col-md-10">
+                              <div class="row">
+                                <?php //if($this->session->userdata('recharge') == 1){?>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Search Hotels</div>
+                                             <div class="text-uppercase">Hotels</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Book Hotels</div>
+                                             <div class="text-uppercase">Hotels</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="#<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View Hotels</div>
+                                             <div class="text-uppercase">Hotels</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                   <div class="col-md-12">&nbsp;</div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
+                                      <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">Cancel Hotels</div>
+                                             <div class="text-uppercase">Hotels</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                  <div class="col-lg-4 col-sm-6 text-center">
+                                  <!-- START widget-->
+                                  <a href="<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
+                                    <div class=" bg-orange" style="">
+                                        <div class="row row-table" >                                          
+                                          <div class="col-xs-8 pv-lg">
+                                             <div class="h2 mt0">View Hotels</div>
+                                             <div class="text-uppercase">Hotels</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                  </a>
+                               </div>
+                                <div class="col-lg-4 col-sm-6 text-center">
+                                  
+                               </div>
+
+                                 <?php //} ?>
+                              </div>
+                          </div>
+                          <div class="col-md-1"></div>
+                          
+                      </div>
+                  </div>
+                 
+               </div>
+               <a href="#carousel-example-captions" role="button" data-slide="prev" class="left carousel-control">
+                  <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                  <span class="sr-only">Previous</span>
+               </a>
+               <a href="#carousel-example-captions" role="button" data-slide="next" class="right carousel-control">
+                  <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                  <span class="sr-only">Next</span>
+               </a>
+            </div>
+            <!-- END widgets box-->
+            
+<!--            <div class="row">
                 <?php if($this->session->userdata('recharge') == 1){?>
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="<?php echo base_url();?>recharge/mobile_recharge" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -35,7 +403,7 @@
                   </a>
                </div>
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="<?php echo base_url();?>recharge/dth_recharge" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -53,7 +421,7 @@
                 
                  <?php }if($this->session->userdata('dmr') == 1){?>
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -69,7 +437,7 @@
                   </a>
                </div>               
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="<?php echo base_url();?>dmr/topup" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -87,10 +455,10 @@
                 <?php }?>
               
             </div>
-            <!--------------------->
+            -----------------
             <div class="row">               
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="#" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -106,7 +474,7 @@
                   </a>
                </div>
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="#" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -122,7 +490,7 @@
                   </a>
                </div>
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="#" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -138,7 +506,7 @@
                   </a>
                </div>               
                 <div class="col-lg-3 col-sm-6">
-                  <!-- START widget-->
+                   START widget
                   <a href="#" style="text-decoration: none;">
                     <div class="panel widget bg-orange">
                        <div class="row row-table">
@@ -154,8 +522,11 @@
                   </a>
                </div>
               
-            </div>
-           <hr> 
+            </div>-->
+           <hr> <div class="row">
+                          
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
             <div class="row">
                <div class="col-lg-3 col-sm-6">
                   <!-- START widget-->
@@ -214,7 +585,10 @@
                   </div>
                </div>
             </div>
-            <!-- END widgets box-->
+            </div>
+            <div class="col-md-1"></div>
+           </div>
+           
            
             
             <!-- START Widgets-->

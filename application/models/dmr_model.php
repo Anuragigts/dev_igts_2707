@@ -1,6 +1,36 @@
 <?php
 class Dmr_model extends CI_Model
 {
+    public function knowIp(){
+        $url = "http://115.248.39.80/knowyourip/yourip.asmx";
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <KnowYourIp xmlns="http://tempuri.org/ping.asmx" />
+  </soap:Body>
+</soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:http://tempuri.org/ping.asmx/KnowYourIp',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+            print_r($result);die();
+
+    }
    public function doRegister($iloc, $aloc){
   
          $a = mt_rand(100000,999999); 
@@ -479,6 +509,7 @@ class Dmr_model extends CI_Model
     }
     
     public function addBeneficiary(){
+       
          $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
          {
@@ -568,7 +599,7 @@ class Dmr_model extends CI_Model
                                    &lt;BRANCHNAME&gt;&lt;/BRANCHNAME&gt;
                                    &lt;CITY&gt;&lt;/CITY&gt;
                                    &lt;STATE&gt;&lt;/STATE&gt;
-                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
+                                   &lt;IFSCCODE&gt;&lt;/IFSCCODE&gt;
                                    &lt;ACCOUNTNO&gt;&lt;/ACCOUNTNO&gt;
                                     &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
@@ -1668,20 +1699,24 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function dotransferAmt($key,$card,$mo){
+    public function dotransferAmt($key,$card,$mo,$type=0){
          $url = DMRURL; 
          
        //$data = $this->getCardMore($this->session->userdata('login_id'));
          //$ben_details = $this->get_ben($ben_id);
           $ben_id = $this->input->post('ben_id');
+          $ben_anme = $this->input->post('bene');
        
-         if($ben_id == 'MMID'){
+         if($ben_anme == 'MMID'){
              $val = '1';
              $desc = $this->input->post('ac');
             
          }else{
              $val = '2';
              $desc = $this->input->post('ac');
+         }
+         if($type != 0){
+             $val = $type;
          }
         
         $a = mt_rand(100000,999999); 
@@ -1707,7 +1742,7 @@ class Dmr_model extends CI_Model
                             &lt;IFSCCODE&gt;'.$this->input->post('ifsc').'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
-                            &lt;SERVICECHARGE&gt;'.$this->input->post('tr_charge').'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.20) /100).'&lt;/SERVICECHARGE&gt;
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
                             &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
@@ -1723,7 +1758,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-//echo $curlData;
+  
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -2258,7 +2293,7 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function searchUserHistory($card){
+    public function searchUserHistory($card,$type,$mode){
         $url = DMRURL; 
        
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
@@ -2326,16 +2361,16 @@ class Dmr_model extends CI_Model
              }
          }
     }
-	public function searchagentHistory($card){
+	public function searchagentHistory($card,$type,$mode){
 		$url = DMRURL; 
        
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
                 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
                 <soap:Body>
-                    <TRANSACTIONHISTORY  xmlns="http://tempuri.org/">
+                    <AGENTTRANSACTIONHISTORY  xmlns="http://tempuri.org/">
                       <RequestData>
-                            &lt;TRANSACTIONHISTORYREQUEST&gt;
+                            &lt;AGENTTRANSACTIONHISTORYREQUEST&gt;
                             &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
@@ -2343,16 +2378,17 @@ class Dmr_model extends CI_Model
                             &lt;FROMDATE&gt;'.$this->input->post('from').'&lt;/FROMDATE&gt;
                             &lt;TODATE&gt;'.$this->input->post('to').'&lt;/TODATE&gt;
                              &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                            &lt;TRANSTYPE&gt;'.$this->input->post('t_type').'&lt;/TRANSTYPE&gt;
+                             &lt;TRANSTYPE&gt;'.$this->input->post('t_type').'&lt;/TRANSTYPE&gt;
                             &lt;TRANSMODE&gt;'.$this->input->post('m_type').'&lt;/TRANSMODE&gt;
+                            &lt;TRANSACTIONID&gt;&lt;/TRANSACTIONID&gt;
                             
-                            &lt;/TRANSACTIONHISTORYREQUEST&gt;
+                            &lt;/AGENTTRANSACTIONHISTORYREQUEST&gt;
                        </RequestData>
-                     </TRANSACTIONHISTORY>
+                     </AGENTTRANSACTIONHISTORY>
                    </soap:Body>
                  </soap:Envelope>';
 
-//echo $curlData;
+
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -2360,7 +2396,7 @@ class Dmr_model extends CI_Model
             curl_setopt($curl,CURLOPT_TIMEOUT,120);
 
             curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
-                'SOAPAction:'.DMRACTIUON.'TRANSACTIONHISTORY',
+                'SOAPAction:'.DMRACTIUON.'AGENTTRANSACTIONHISTORY',
                 'Content-Type: text/xml; charset=utf-8;',
             ));
 
@@ -2373,21 +2409,21 @@ class Dmr_model extends CI_Model
 
 
 
-         $first_tag = explode('<TRANSACTIONHISTORYResult>', $result);       
-        // print_r($first_tag);die();
+         $first_tag = explode('<AGENTTRANSACTIONHISTORYResult>', $result);       
+       // print_r($first_tag);die();
          if(count($first_tag)!= 2 ){
              return 0;
          }else{
              $get_less =  str_replace("&lt;","<",$first_tag[1]);
              $get_full =  str_replace("&gt;",">",$get_less);
 
-             $final = explode('</TRANSACTIONHISTORYResult></TRANSACTIONHISTORYResponse></soap:Body></soap:Envelope>', $get_full);
+             $final = explode('</AGENTTRANSACTIONHISTORYResult></AGENTTRANSACTIONHISTORYResponse></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
 
-//             echo "<pre>";
-//             print_r($response);
-//             echo '</pre>';die();
+             echo "<pre>";
+             print_r($response);
+             echo '</pre>';die();
              if(count($response) >0){
                  return $response;
              }else{

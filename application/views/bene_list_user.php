@@ -11,7 +11,7 @@
                               
           </ol>View Beneficiary 
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
+          <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
               <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
               <b>Transaction Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>,&nbsp;
@@ -81,21 +81,24 @@
                                         </div>
                                         <div class="col-lg-3">
                                              <label for="Mobile" >Amount</label>
-                                             <input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php echo $i;?>" placeholder="Amount" type="text" value="<?= set_value("remark"); ?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
+                                             <!--<input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php echo $i;?>" placeholder="Amount" type="text" value="<?= set_value("remark"); ?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]">-->
+                                             <input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount"  type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                         </div>
-                                        <div class="col-lg-3">
-                                            <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>
-                                            <input name="tr_charge" id="charge_<?php echo $i;?>" class="form-control m-c" placeholder="Service Charge" type="text" value="<?= set_value("tr_charge"); ?>" readonly="readonly" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+<!--                                        <div class="col-lg-3">
+                                            <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>-->
+                                            <input name="tr_charge" id="charge_<?php echo $i;?>" class="form-control m-c" placeholder="Service Charge" type="hidden" value="<?= set_value("tr_charge"); ?>" readonly="readonly" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                            <span class="red"><?=  form_error('tr_charge');?></span>
-                                        </div>
+                                        <!--</div>-->
                                         <div class="col-lg-3">
                                             <input type="hidden" name="ben_id" value="<?php echo $dl->BENEID;?>" readonly="readonly"/>
                                             <input type="hidden" name="bene" value="<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?>" readonly="readonly"/>
                                             <input type="hidden" name="ac" value="<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>" readonly="readonly"/>
                                             <input type="hidden" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" readonly="readonly"/>
-                                            <input type="hidden" name="mo" value="<?php if($dl->MOBILE != '0'){echo $dl->MOBILE;}?>?>" readonly="readonly"/>
-                                             <label for="Mobile" >Total Amount<font class="red mmid-imp">*</font></label>
-                                            <input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount" readonly="readonly" type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+                                            <input type="hidden" name="mo" value="<?php if($dl->MOBILE != '0'){echo $dl->MOBILE;}?>" readonly="readonly"/>
+                                             <!--<label for="Mobile" >Total Amount<font class="red mmid-imp">*</font></label>-->
+                                             <label for="Mobile" >Description<font class="red mmid-imp">*</font></label>
+                                            <!--<input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount" readonly="readonly" type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >-->
+                                            <input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php // echo $i;?>" placeholder="Description" type="text" value="<?= set_value("remark"); ?>" >
                                             <span class="red"><?=  form_error('tr_amt');?></span>
                                         </div>
                                         
@@ -105,8 +108,13 @@
                                  <div class="panel-footer">
                                      <div class="row">
                                           <div class="col-lg-3" >                                              
-                                              <input type='submit' name='trans' class='btn btn-info' value='Transfer Amount'>
+                                              <input type='submit' name='trans' class='btn btn-info' value='<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?> Paymwnt'>
                                           </div>
+                                         <?php if($dl->IFSCCODE != '') {?>
+                                          <div class="col-lg-3" >                                              
+                                              <input type='submit' name='transneft' class='btn btn-info' value='NEFT Payment'>
+                                          </div>
+                                        <?php }?>
                                          <div class="col-lg-3">
                                              <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->BENEID;?>" class="btn btn-danger" title="Remove"><i class="fa fa-trash-o "></i> Remove</a>
                                          </div> 

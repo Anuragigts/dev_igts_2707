@@ -9,7 +9,9 @@ class Dmr extends CI_Controller {
         if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('dmr') != '1'){redirect('dashboard');}
     }
-    
+    public function knowIp(){
+        $result = $this->dmr_model->knowIp();
+    }
     public function sender_registration(){
         
          $data = array(
@@ -238,11 +240,11 @@ class Dmr extends CI_Controller {
             if($this->form_validation->run() == TRUE){
                 //echo "jiiii";die();
                 $result = $this->dmr_model->addBeneficiary();
-                //echo $result;exit;
+                
                 if($result == 0){                    
                     $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
                      redirect('dmr/addBeneficiary/'.$card);
-                }else if($result == 0){
+                }else if($result == 1){
                     $this->session->set_flashdata('err','Beneficiary registration fail : User already exist.');  
                      redirect('dmr/addBeneficiary/'.$card);
                 }
@@ -604,14 +606,44 @@ class Dmr extends CI_Controller {
              if($this->input->post('trans')){ 
                 
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
-                 $this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                 //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
                     
-                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo);
+                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0);
                      
-                 // echo $result;die();
+                  //echo $result;die();
+                    if($result == 1){                    
+                        $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                        redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                    }
+                   else if( $result == 2){                    
+                        $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
+                         redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                    }else if( $result == 5){ 
+                        $this->session->set_flashdata('err','Unknown : Internal error.');  
+                       redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
+                    }else if( $result == 4){                    
+                        $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
+                         redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                    }else{
+                        $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                        redirect('dmr/transRequery/'.$result);
+                    }
+                }
+             }
+             if($this->input->post('transneft')){ 
+                
+                 $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
+                 //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                 $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
+                // $this->form_validation->set_rules('otp',  'OTP',   'required');
+                 if($this->form_validation->run() == TRUE){
+                    
+                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8);
+                     
+                  //echo $result;die();
                     if($result == 1){                    
                         $this->session->set_flashdata('msg','Amount transferred successfull .');  
                         redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
@@ -887,7 +919,7 @@ class Dmr extends CI_Controller {
                  $mode = 'NEFT'; 
              }
              
-             $data["searched"] =$this->dmr_model->searchUserHistory($card);
+              $data["searched"] =$this->dmr_model->searchagentHistory($card,$type,$mode);
               $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b class='bold1'>".$mode."</b>";
          }
          
@@ -909,6 +941,7 @@ class Dmr extends CI_Controller {
           $data["searched"] = array();
           $data['filter_by'] = '';
          if($this->input->post('search')){
+             
              if($this->input->post('t_type') == 0){
                 $type = 'All'; 
              }else if($this->input->post('t_type') == 3){
@@ -929,11 +962,12 @@ class Dmr extends CI_Controller {
                  $mode = 'NEFT'; 
              }
              
-             $data["searched"] =$this->dmr_model->searchagentHistory($card);
+            
+            $data["searched"] =$this->dmr_model->searchUserHistory($card,$type,$mode);
               $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b class='bold1'>".$mode."</b>";
          }
          
-         $data['cardholder'] = $this->dmr_model->card_details($card);
+        // $data['cardholder'] = $this->dmr_model->card_details($card);
          $this->load->view('layout/inner_template',$data);
     }
 	public function doKyc(){

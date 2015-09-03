@@ -1,6 +1,78 @@
 <?php
 class Recharge_model extends CI_Model
 { 
+     public function getRechargeDetails1(){
+         $url = RECHARGEURL;  
+        
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                      <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
+                           <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                <GETRECHARGEDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
+                            <IsAgent>false</IsAgent>
+                          </pobjSecurity>
+                          <PstrFinalOutPut />
+                          <pstrError />
+                        </GETRECHARGEDETAILS>
+                      </soap:Body>
+                    </soap:Envelope>';
+        
+        $curl = curl_init();
+
+        curl_setopt ($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl,CURLOPT_TIMEOUT,120);
+        
+        curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+            'SOAPAction:"'.RECHARGEACTION.'GETRECHARGEDETAILS"',
+            'Content-Type: text/xml; charset=utf-8;',
+        ));
+
+         curl_setopt ($curl, CURLOPT_POST, 1);
+        
+        curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+       
+        $result = curl_exec($curl); 
+        curl_close ($curl);
+        
+        $keep_array = explode('true', $result);
+        if(count($keep_array)!= 2 ){
+            return array();
+            }else{
+            $first_tag = explode('</GETRECHARGEDETAILSResult><PstrFinalOutPut>', $keep_array[1]);       
+
+            $get_less =  str_replace("&lt;","<",$first_tag[1]);
+            $get_full =  str_replace("&gt;",">",$get_less);
+
+            $final = explode('</PstrFinalOutPut><pstrError /></GETRECHARGEDETAILSResponse>', $get_full);
+
+           $response = simplexml_load_string($final[0]);
+          // print_r($response);
+            foreach($response->Item as $val){
+                $data_insert = array(
+                'code'          => "$val->Code",
+                'op_name'           => "$val->Desc",
+                'type'     => "$val->ItemType"
+               
+            );
+         
+        $insert = $this->db->insert('hrm_oprator',$data_insert);
+            }
+        }
+        
+    } 
 	public function getamt1( ){
 	/*
 		// init curl object        

@@ -38,8 +38,11 @@ and open the template in the editor.
 .bg-orange{
     background-color: #FB773E;
     color: #fff;   
+    min-height: 150px;
+    padding-top:20px;
 }
 .bg-orange:hover{
+    background-color: #BF5B2F;
      -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75);
 box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.75); 

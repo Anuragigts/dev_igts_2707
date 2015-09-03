@@ -9,7 +9,10 @@ class Recharge extends CI_Controller {
         if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
         
     }
-    
+    public function getRechargeDetails(){
+        $data['recharges'] = $this->recharge_model->getRechargeDetails1(); 
+        
+    } 
      public function mobile_recharge(){
         //print_r( $this->session->all_userdata());
         $data = array(

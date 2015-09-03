@@ -23,12 +23,7 @@ class Register_model extends CI_Model
                 $qu             =   $this->db->get()->row();
                 $state          =   $qu->State_id;
                 
-                $this->db->select("City_id");
-                $this->db->from("cities");
-                $this->db->where("City_name",$city1);
-                $qu1            =   $this->db->get()->row();
-                $city           =   $qu1->City_id;
-                
+               $city = $this->input->post("city");
                 
                 
                 $this->db->select("user_type_id");
@@ -42,16 +37,33 @@ class Register_model extends CI_Model
                     // Set to, from, message, etc.
                     $this->email->from('info@igravitas.in', 'Admin');
                     $this->email->to($email);
-                    $this->email->subject('CONFIRMATION LINK');
-                    $message = 'Dear '.$email.", <br/><br/>";
-                    $message .= 'Click on this ';
+                    $this->email->subject('Esy Top-up Conformation');
+                    $message = 'Dear '."Urer, <br/><br/>";
+                    $message .= 'Thank you for being with Esy Top-up, We will send your username and password on your mobile<br> For verification Click on this ';
                     $message .='<a href="'.base_url().'register/confirm/'.md5($email).'">Confirmation Link</a> ';
                     $message .= '<br/><br/><br/>';
-                    $message .='<div>Regards ,<br/> Admin </div>'; 
+                    $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 9985 997675<br>http://esytopup.com</div>'; 
                     $this->email->message($message);
 //                    print_r($data);exit;
 //                    echo $message;exit;
+                    	// init curl object        
+		
+
+		
                     if($this->email->send()){
+                        $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile&from=ESYTOP&message=Welcome+to+http://esytopup.com++User+Name:+$email+Pass:+$pass",
+			CURLOPT_RETURNTRANSFER => true
+		);
+
+		// apply those options
+		curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$xml = @simplexml_load_string($result);
                             $data   =   array(
                                     "login_email"           =>     $email,
                                     "login_mobile"          =>     $mobile,

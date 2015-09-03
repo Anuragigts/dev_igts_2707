@@ -8,7 +8,7 @@
              </li>                  
               <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
              </li>                   
-             <li class="active">DMR</li>                 
+                       
           </ol>Transaction History of 
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 

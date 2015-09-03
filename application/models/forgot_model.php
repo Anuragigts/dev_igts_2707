@@ -23,20 +23,41 @@ class Forgot_model extends CI_Model
         }
         public function updateDetails(){
                 $email  =   $this->input->post("reset_email");
+                 $this->db->select("login_mobile");
+                $this->db->from("login");
+                $this->db->where("login_email","$email");
+                $qu             =   $this->db->get()->row();
+                //echo $this->db->last_query()."++++++++";
+                $mobile          =   $qu->login_mobile;
+                //echo $mobile;
                 $pass   =   rand(10000,99999);
                     $this->email->set_newline("\r\n");
                     // Set to, from, message, etc.
                     $this->email->from('info@igravitas.in', 'Admin');
                     $this->email->to($email);
-                    $this->email->subject('PASSWORD RESET');
-                    $message = 'Dear '.$email.", <br/><br/>";
-                    $message .= 'Click on this ';
+                    $this->email->subject('Esy Top-up Reset Password');
+                    $message = 'Dear '."Urer, <br/><br/>";
+                    $message .= 'Please reset your password By clicking on ';
                     $message .='<a href="'.base_url().'forgot_password/reset/'.md5($pass).'">Link</a> ';
-                    $message .= ' to reset your password  <br/><br/><br/>';
-                    $message .='<div>Regards ,<br/> Admin </div>'; 
+                    $message .= ' to reset your password.  <br/><br/><br/>';
+                   $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 9985 997675<br>http://esytopup.com</div>'; 
                     $this->email->message($message);
 //                    echo $message;exit;
                     if($this->email->send()){
+                        $ch = curl_init();
+                         $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile&from=ESYTOP&message=Welcome+to+http://esytopup.com++You+Can+Reset+password+On+Clicking+On+".base_url()."forgot_password/reset/".md5($pass),
+			CURLOPT_RETURNTRANSFER => true
+		);
+
+		// apply those options
+		curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$xml = @simplexml_load_string($result);
+                //print_r($xml);die();
                             $data   =   array(
                                     'login_password'    =>      md5($pass), 
                                     'is_confirm'        =>      md5($pass)

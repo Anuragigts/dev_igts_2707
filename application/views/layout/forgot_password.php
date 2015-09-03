@@ -43,6 +43,9 @@
                      <span class="red"><?= form_error('reset_email');?></span>
                   </div>
                   <input type="submit" class="btn btn-danger btn-block" value="Reset" name="forgot_password">
+                  <div class="text-center">
+                  <a href="<?php echo base_url();?>">Login</a>
+                  </div>
                </form>
             </div>
          </div>
