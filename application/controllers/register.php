@@ -36,6 +36,7 @@ class Register extends CI_Controller {
                             $config['allowed_types'] = 'gif|jpg|png';
                             $file = $_FILES['idproof'];
                             $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
                             $filename = basename($file['name']); 
                             $fv=explode(".",$filename);
                             $idP = $uid.".".$fv['1'];
@@ -49,6 +50,7 @@ class Register extends CI_Controller {
                             $config['allowed_types'] = 'gif|jpg|png';
                             $file = $_FILES['addproof'];
                             $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
                             $filename = basename($file['name']); 
                             $fv=explode(".",$filename);
                             $addp = $uid.".".$fv['1'];

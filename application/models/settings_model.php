@@ -64,4 +64,90 @@ class Settings_model extends CI_Model
                                 return 0;
                         }
         }
+        
+        public function getVirtual1(){
+            $id = $this->session->userdata('login_id');
+            $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
+            
+            if($query && $query->num_rows()== 1){
+                  return  number_format($query->row()->amount,2);
+               }else{
+                   return "0.00";
+               }
+        }
+        public function getVirtual(){
+            $id = $this->session->userdata('login_id');
+            $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
+            
+            if($query && $query->num_rows()== 1){
+                  return $query->row()->amount;
+               }else{
+                   return "0.00";
+               }
+        }
+        public function checkVirtual(){
+            $id = $this->session->userdata('login_id');
+            $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
+           
+            if($query && $query->num_rows()== 1){
+                  return $query->row()->amount;
+               }else{
+                   return 0;
+               }
+        }
+        
+        public function addAmount(){
+            $val = $this->checkVirtual();
+            if($val == 0){
+                $ins   =   array(
+                        "user_id"    =>     $this->session->userdata('login_id'),
+                        "amount"     =>     $this->input->post('amount')
+                );
+              $query =   $this->db->insert("current_virtual_amount", $ins);
+            }else{
+                $ins   =   array(                      
+                        "amount"     =>     ($val + $this->input->post('amount'))
+                );
+                $this->db->where("user_id",$this->session->userdata('login_id'));
+                $query = $this->db->update("current_virtual_amount",$ins);
+            }
+            if($query){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        public function editAmount(){
+            $ins   =   array(                      
+                        "amount"     =>     ($val + $this->input->post('amount'))
+                );
+                $this->db->where("user_id",$this->session->userdata('login_id'));
+                $query = $this->db->update("current_virtual_amount",$ins);
+                 if($query){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        
+        public function getVirtualgetter($id){
+            
+            $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
+            
+            if($query && $query->num_rows()== 1){
+                  return  number_format($query->row()->amount,2);
+               }else{
+                   return "0.00";
+               }
+        }
+        public function getprofile($id){
+            
+            $query = $this->db->get_where('profile', array('login_id' => $id));
+            //echo $this->db->last_query();
+            if($query && $query->num_rows()>0){
+                  return $query->row();
+               }else{
+                   return array();
+               }
+        }
 }

@@ -101,6 +101,15 @@
      
     
 $(function(){
+     $.ajax({url:'<?php echo base_url();?>recharge/getamt',success:function(result){
+                $('#phy').html(result);
+            }
+        });
+        $.ajax({url:'<?php echo base_url();?>settings/getVirtual',success:function(result){
+                $('.vamt').html(result);
+            }
+        });
+    
         $( ".state_id" ).change(function() {
                 var str = $(".state_id option:selected" ).val();
                 var str1 = $(".city-id-val option:selected" ).val();

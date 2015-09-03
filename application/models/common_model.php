@@ -271,8 +271,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',4);
 //                $this->db->where('l.user_type',3);
                 $query = $this->db->get();
@@ -288,15 +288,15 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name,g.package_id,o.Country_name,s.State_name,y.City_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
-                $this->db->join('Countries as o','o.Country_id = p.country','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
+                $this->db->join('Countries as o','o.Country_id = p.country','left');
                 $this->db->join('States as s','s.State_id = p.state','inner');
                 $this->db->join('Cities as y','y.City_id = p.city','inner');
                 $this->db->where('l.user_type',$type);
                 $this->db->where('l.login_id',$id);
                 $query = $this->db->get();
-//                echo $this->db->last_query();exit;
+           //   echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->row();
                 }

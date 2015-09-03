@@ -523,6 +523,7 @@
                </div>
               
             </div>-->
+<?php if($this->session->userdata('my_type') == 1 ){?>
            <hr> <div class="row">
                           
             <div class="col-md-1"></div>
@@ -588,7 +589,7 @@
             </div>
             <div class="col-md-1"></div>
            </div>
-           
+<?php }?> 
            
             
             <!-- START Widgets-->

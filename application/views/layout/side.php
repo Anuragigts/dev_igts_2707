@@ -297,6 +297,14 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
+                   <?php if($this->session->userdata('my_type') == 1 ){?>
+                  <li class="profile">
+                     <a href="<?= base_url()?>settings/virtualAmt" title="Virtual Amount">
+                         <em class="fa fa-credit-card"></em>                        
+                        <span data-localize="sidebar.nav.DASHBOARD">Virtual Amount</span>
+                     </a>                    
+                  </li>  
+                   <?php }?>
                   <li class="profile">
                      <a href="<?= base_url()?>settings/profile" title="Profile">
                          <em class="fa fa-file-picture-o"></em>                        

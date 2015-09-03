@@ -91,4 +91,76 @@ class Settings extends CI_Controller {
                 $cou    =  $this->common_model->getallCities();
                 return $cou;
         }
+        
+        public function virtualAmt(){
+             $data = array(
+                    'title'         => 'SC :: VIRTUAL AMOUNT',
+                    'metakeyword'   => 'SC :: VIRTUAL AMOUNT',
+                    'metadesc'      => 'SC :: VIRTUAL AMOUNT',
+                    'content'       => 'virtualAmt'
+            );
+             if($this->input->post('add')){
+                     
+            $this->form_validation->set_rules('amount','Virtual Amount','required');
+            
+             if($this->form_validation->run() == TRUE){
+                				 
+                $result = $this->settings_model->addAmount();
+                                
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Virtual Amount Added Successfully.');  
+                    redirect('settings/virtualAmt');
+                }else{
+                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                     redirect('settings/virtualAmt');
+                }
+            }
+       }
+             $data['get']       =  $this->settings_model->getVirtual();
+            $this->load->view('layout/inner_template',$data);
+        }
+        public function editVirtualAmt(){
+             $data = array(
+                    'title'         => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'metakeyword'   => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'metadesc'      => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'content'       => 'edit_virtualAmt'
+            );
+             if($this->input->post('add')){
+                     
+            $this->form_validation->set_rules('amount','Virtual Amount','required');
+            
+             if($this->form_validation->run() == TRUE){
+                				 
+                $result = $this->settings_model->editAmount();
+                                
+                if($result == 1){                    
+                    $this->session->set_flashdata('msg','Virtual Amount Added Successfully.');  
+                    redirect('settings/virtualAmt');
+                }else{
+                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                     redirect('settings/editVirtualAmt');
+                }
+            }
+       }
+             $data['get']       =  $this->settings_model->getVirtual();
+            $this->load->view('layout/inner_template',$data);
+        }
+        
+        public function getVirtual(){
+            echo $this->settings_model->getVirtual1();
+         }
+         
+         public function moneyTransfer(){
+              $data = array(
+                    'title'         => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'metakeyword'   => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'metadesc'      => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'content'       => 'recharge_transfer'
+            );
+              
+              $data['get']       =  $this->settings_model->getVirtualgetter($this->uri->segment(3)); 
+              $data['profile']       =  $this->settings_model->getprofile($this->uri->segment(3)); 
+             $this->load->view('layout/inner_template',$data);
+         }
 }

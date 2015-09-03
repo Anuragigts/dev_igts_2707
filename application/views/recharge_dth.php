@@ -9,8 +9,11 @@
              <li class="active">Recharge</li>                 
           </ol>DTH
           <!-- Small text for title-->
+           
           <span class="text-sm hidden-xs">For DTH recharge</span>
+          <?php if($this->session->userdata('my_type') == 1 ){?>
 		   Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
+           <?php }?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->

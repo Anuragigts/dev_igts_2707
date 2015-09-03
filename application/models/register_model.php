@@ -68,7 +68,7 @@ class Register_model extends CI_Model
                                     "login_email"           =>     $email,
                                     "login_mobile"          =>     $mobile,
                                     "login_password"        =>     md5($pass),
-                                    "is_confirm"            =>     md5($email),
+                                    "is_confirm"            =>     'confirm',
                                     "user_type"             =>     2,
                                     "status"                =>     1
                             );

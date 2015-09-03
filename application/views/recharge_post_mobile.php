@@ -9,8 +9,11 @@
              <li class="active">Post paid </li>                 
           </ol>Post Paid Bill payment
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For Post Paid Bill paymen</span>
+          
+          <span class="text-sm hidden-xs">For Post Paid Bill payment</span>
+           <?php if($this->session->userdata('my_type') == 1 ){?>
 		   Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
+           <?php }?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->

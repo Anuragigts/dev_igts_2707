@@ -13,7 +13,12 @@ class Recharge extends CI_Controller {
         $data['recharges'] = $this->recharge_model->getRechargeDetails1(); 
         
     } 
-     public function mobile_recharge(){
+    public function getamt(){
+         $data['amt'] = $this->recharge_model->getamt();
+         echo $data['amt']->REMAININGAMOUNT;
+    }
+
+    public function mobile_recharge(){
         //print_r( $this->session->all_userdata());
         $data = array(
               'title'         => 'SC :: PRE PAID RECHARGE',
@@ -22,7 +27,7 @@ class Recharge extends CI_Controller {
               'content'       => 'recharge_mobile'
              );
        if($this->input->post('amount')){
-           //echo "hiii"; die();
+           //echo "hiii"; die();            
             $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
             //$this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');
@@ -111,7 +116,7 @@ class Recharge extends CI_Controller {
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 2;
                 $result = $this->recharge_model->doRecharge( $recharge_type);
-                if($result == 1){                    
+                if($result == 0){                    
                     $this->session->set_flashdata('msg','Your Recharge is success full.');  
                     redirect('recharge/dth_recharge');
                 }

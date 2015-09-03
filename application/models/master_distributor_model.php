@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 class Master_distributor_model extends CI_Model{ 
-        public function insert_master_distributor(){
+        public function insert_master_distributor($idP,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -40,7 +40,9 @@ class Master_distributor_model extends CI_Model{
                                 "created_by"            =>     $ses_id,
                                 "mobile"                =>     $mobile_no,
                                 "address"               =>     $address,
-                                "admin_id"              =>     1
+                                "admin_id"              =>     1,
+                                "id_proof"              =>     "$idP",
+                                "add_proof"              =>     "$addp"
                         );
                         $ins_comm        =   array(
                                 "login_id"              =>     $val_id,
@@ -79,9 +81,10 @@ class Master_distributor_model extends CI_Model{
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',2);
+                $this->db->order_by("l.login_id","desc");
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
@@ -95,8 +98,8 @@ class Master_distributor_model extends CI_Model{
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',2);
                 $this->db->where('l.login_id',$val);
                 $query = $this->db->get();
@@ -123,7 +126,7 @@ class Master_distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_master_distributor($valu){
+        public function update_master_distributor($valu,$idp,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -140,7 +143,9 @@ class Master_distributor_model extends CI_Model{
                                 "city"                  =>     $city,
                                 "updated_by"            =>     $ses_id,
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
-                                "address"               =>     $address
+                                "address"               =>     $address,
+                                "id_proof"              =>  $idp,
+                                "add_proof"             =>  $addp
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);

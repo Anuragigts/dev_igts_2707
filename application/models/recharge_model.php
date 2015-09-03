@@ -289,7 +289,7 @@ class Recharge_model extends CI_Model
 
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){
-                    return 0;
+                    return 1;
                 }else{
                // echo $keep_array[1]; die();
                 $first_tag = explode('</MOBILEBOOKINGDETAILSResult><PstrFinalOutPut>', $keep_array[1]);       
@@ -414,15 +414,12 @@ class Recharge_model extends CI_Model
     }
     
     public function getPaymentDetail(){
-        $url = POSTPAID;
+        $url = RECHARGEURL;
         
         $curlData = '<?xml version="1.0" encoding="utf-8"?>
-                    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                      <soap:Header>
-                        <ns1:clsSecurity soap:mustUnderstand="false"
-                    xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
+		      <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<soap:Header>
+			<ns1:clsSecurity soap:mustUnderstand="false" xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile"> 
                           <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
                           <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
                           <ns1:IsAgent>false</ns1:IsAgent>
@@ -510,7 +507,7 @@ class Recharge_model extends CI_Model
         if($this->db->affected_rows() == 1){
             $my_mo_id = $this->db->insert_id();
        
-                $url = POSTPAID;        
+                $url = RECHARGEURL;        
                 $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

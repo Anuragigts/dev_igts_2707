@@ -23,10 +23,14 @@ class Login extends CI_Controller {
                     if($this->form_validation->run() == TRUE){
                             $getdetails      = $this->login_model->getLogindetails();
                             if($getdetails != 0 && count($getdetails) > 0){
-                                //print_r($getdetails);
-                                $this->session->set_userdata($getdetails);
-                                $this->session->set_flashdata("msg","Welcome to  Swami Communications");
-                                redirect("dashboard");
+                               if($getdetails->my_type != 1){
+                                    $this->session->set_userdata($getdetails);
+                                    $this->session->set_flashdata("msg","Welcome to  Swami Communications");
+                                    redirect("dashboard");
+                               }else{
+                                   $this->session->set_flashdata("err","Access Denied");
+                                redirect("/");
+                               }
                             }
                             else{
                                 $this->session->set_flashdata("err","Access Denied");

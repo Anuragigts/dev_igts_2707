@@ -30,7 +30,36 @@ class Master_distributor extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",          "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",          "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->master_distributor_model->insert_master_distributor();
+                            $idP = '';$addp='';
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->master_distributor_model->insert_master_distributor($idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Master Distributor has been created successfully");
                                         redirect("master_distributor/create_master_distributor");
@@ -109,6 +138,7 @@ class Master_distributor extends CI_Controller {
                 else{
                         $valu   =   $this->session->userdata("value");
                 }
+                $data['view']       =  $this->master_distributor_model->edit_master_distributor($valu);
                 if($this->input->post('update_master_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",       "required|min_length[4]");
                         $this->form_validation->set_rules("last_name",          "Last Name",        "required|min_length[4]");
@@ -118,7 +148,36 @@ class Master_distributor extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",          "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",          "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->master_distributor_model->update_master_distributor($valu);
+                             $idP = $data['view']->id_prof;$addp=$data['view']->add_proof;
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->master_distributor_model->update_master_distributor($valu,$idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Master Distributor has been updated successfully");
                                         redirect("master_distributor/edit_master_distributor/".$valu);
@@ -129,7 +188,7 @@ class Master_distributor extends CI_Controller {
                                 }
                         }
                 }
-                $data['view']       =  $this->master_distributor_model->edit_master_distributor($valu);
+                
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
                 $data['pkg']        =  $this->packages();
