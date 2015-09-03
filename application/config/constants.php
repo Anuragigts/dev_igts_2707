@@ -41,6 +41,10 @@ define('TARIF',     'https://tariff-plan-api-datayuge.p.mashape.com/index.php');
 // Mobile rechage
 define('RECHARGEURL', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
 define('RECHARGEACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
+define('USER', 'Swamicom');
+define('PASSW', 'Swamicom123');
+
+
 // Post landline rechage
 define('POSTPAID', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
 define('POSTPAIDACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
@@ -52,8 +56,7 @@ define('DMRACTIUON', 'http://tempuri.org/');
 // Flight rechage
 define('FLIGHTURL', 'http://115.248.39.80/hermesapi/inthermesair.asmx');
 define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
-define('USER', 'Swamicom');
-define('PASSW', 'Swamicom123');
+
 
 
 

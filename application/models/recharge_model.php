@@ -300,8 +300,8 @@ class Recharge_model extends CI_Model
                 $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                $response = simplexml_load_string($final[0]);
-               //print_r($response);
-               
+               print_r($response);die();
+               if($response->Status == 1){
                 $data = array(                        
                         'hrm_track'              => "$response->TrackId",
                         'ref_num'                => "$response->RefNo",
@@ -317,10 +317,13 @@ class Recharge_model extends CI_Model
                 $update = $this->db->update('recharge_track',$data);              
                
                  if($this->db->affected_rows() == 1){
-                     return 1;
+                     return 0;
                  }  else {
                      return 2;
                  }
+               }else{
+                   return 1;
+               }
             }
                 
         }else{
