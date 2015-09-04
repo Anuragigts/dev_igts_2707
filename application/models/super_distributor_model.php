@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 class Super_distributor_model extends CI_Model{ 
-        public function insert_super_distributor(){
+        public function insert_super_distributor($idp,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -42,7 +42,9 @@ class Super_distributor_model extends CI_Model{
                                 "mobile"                =>     $mobile_no,
                                 "address"               =>     $address,
                                 "admin_id"              =>     1,
-                                "master_distributor_id" =>     $master_id
+                                "master_distributor_id" =>     $master_id,
+                                'id_proof'              => "$idp",
+                            "add_proof"                 => "$addp"
                         );
                         $ins_comm   =   array(
                                 "login_id"              =>     $val_id,
@@ -82,12 +84,13 @@ class Super_distributor_model extends CI_Model{
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
 //                $this->db->join('profile as pl','l.login_id = pl.login_id and pl.master_distributor_id = pl.login_id');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',3);
                 if($this->session->userdata("my_type") == 2){
                         $this->db->where("p.master_distributor_id",$this->session->userdata("login_id"));
                 }
+                 $this->db->order_by("l.login_id","desc");
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
@@ -114,7 +117,7 @@ class Super_distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_super_distributor($valu){
+        public function update_super_distributor($valu,$idp,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -131,7 +134,9 @@ class Super_distributor_model extends CI_Model{
                                 "master_distributor_id" =>     $master,
                                 "updated_by"            =>     $ses_id,
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
-                                "address"               =>     $address
+                                "address"               =>     $address,
+                                "id_proof"              => "$idp",
+                                "add_proof"             => "$addp"
                         );
 //                        print_r($ins);exit;
                         $this->db->where("login_id",$valu);

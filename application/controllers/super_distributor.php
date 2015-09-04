@@ -31,7 +31,36 @@ class Super_distributor extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",              "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->super_distributor_model->insert_super_distributor();
+                             $idP = '';$addp='';
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->super_distributor_model->insert_super_distributor($idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Super Distributor has been created successfully");
                                         redirect("super_distributor/create_super_distributor");
@@ -121,6 +150,7 @@ class Super_distributor extends CI_Controller {
                 else{
                         $valu   =   $this->session->userdata("value");
                 }
+                $data['view']       =  $this->super_distributor_model->edit_super_distributor($valu);
                 if($this->input->post('update_super_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",                   "required|min_length[4]");
                         $this->form_validation->set_rules("last_name",          "Last Name",                    "required|min_length[4]");
@@ -130,7 +160,36 @@ class Super_distributor extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",                      "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",                      "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->super_distributor_model->update_super_distributor($valu);
+                                 $idp = $data['view']->id_proof;$addp=$data['view']->add_proof;
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->super_distributor_model->update_super_distributor($valu,$idp,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Super Distributor has been updated successfully");
                                         redirect("super_distributor/edit_super_distributor/".$valu);

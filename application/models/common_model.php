@@ -50,8 +50,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.is_confirm','confirm');
                 $this->db->where('l.user_type',2);
                 $query = $this->db->get();
@@ -115,8 +115,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',3);
                 $this->db->where('p.master_distributor_id',$master);
 //                $this->db->where('l.user_type',3);
@@ -134,8 +134,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',4);
                 $this->db->where('p.super_distributor_id',$master);
 //                $this->db->where('l.user_type',3);
@@ -192,8 +192,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',3);
                 $this->db->where('p.master_distributor_id',$id);
                 $query = $this->db->get();
@@ -209,8 +209,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',4);
                 $this->db->where('p.super_distributor_id',$id);
                 $query = $this->db->get();
@@ -226,8 +226,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',5);
                 $this->db->where('p.distributor_id',$id);
                 $query = $this->db->get();
@@ -243,8 +243,8 @@ class Common_model extends CI_Model
                 $this->db->select('l.*,p.*,g.package_name');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',3);
                 if($this->session->userdata("my_type") == 2){
                         $this->db->where("p.master_distributor_id",  $this->session->userdata("login_id"));

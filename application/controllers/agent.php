@@ -32,7 +32,36 @@ class Agent extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",              "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->agent_model->insert_agent();
+                             $idP = '';$addp='';
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->agent_model->insert_agent($idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Agent has been created successfully");
                                         redirect("agent/create_agent");
@@ -126,6 +155,27 @@ class Agent extends CI_Controller {
                 $data['view_dis']   =  $this->agent_model->view_agent();
                 $this->load->view('layout/inner_template',$data);		
 	}
+        public function agent_details(){
+             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
+                $data = array(
+                        'title'         => 'SC :: VIEW AGENT',
+                        'metakeyword'   => 'SC :: VIEW AGENT',
+                        'metadesc'      => 'SC :: VIEW AGENT',
+                        'content'       => 'view_agent_detail'
+                );               
+                 $val    = $this->uri->segment(3);
+                if($val !=  ''){
+                        $this->session->set_userdata('det',$val);
+                        $id     =   $this->session->userdata('det');
+                }
+                else{
+                        $id     =   $this->session->userdata('det');
+                }
+                $type   =   5;
+                $data['view']      =   $this->common_model->details($id,$type);
+                $this->load->view('layout/inner_template',$data);    		
+        }
+
         public function edit_agent(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
@@ -142,6 +192,7 @@ class Agent extends CI_Controller {
                 else{
                         $valu   =   $this->session->userdata("value");
                 }
+                $data['view']       =  $this->agent_model->edit_agent($valu);
                 if($this->input->post('update_agent')){
                         $this->form_validation->set_rules("first_name",         "First Name",           "required|min_length[4]");
                         $this->form_validation->set_rules("last_name",          "Last Name",            "required|min_length[4]");
@@ -154,7 +205,36 @@ class Agent extends CI_Controller {
                         $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",              "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->agent_model->update_agent($valu);
+                            $idP = $data['view']->id_proof;$addp=$data['view']->add_proof;
+                        if($_FILES['idproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['idproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'i'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $idP = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $idP; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('idproof');
+                        }
+                        if($_FILES['addproof']['name'] != ''){
+                            $config['upload_path'] = './doc';
+                            $config['allowed_types'] = 'gif|jpg|png';
+                            $file = $_FILES['addproof'];
+                            $uid = date('Y-m-d_i-s');
+                            $uid = 'p'.$uid;
+                            $filename = basename($file['name']); 
+                            $fv=explode(".",$filename);
+                            $addp = $uid.".".$fv['1'];
+                            $name = $config['file_name'] = $addp; //set file name
+                            $this->load->library('upload', $config);
+                            $this->upload->initialize($config);
+                            $this->upload->do_upload('addproof');
+                        }
+                                $get    =   $this->agent_model->update_agent($valu,$idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Agent has been updated successfully");
                                         redirect("agent/edit_agent/".$valu);
@@ -165,7 +245,7 @@ class Agent extends CI_Controller {
                                 }
                         }
                 }
-                $data['view']       =  $this->agent_model->edit_agent($valu);
+                
                 $id1    =   5;
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();

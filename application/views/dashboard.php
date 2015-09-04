@@ -15,6 +15,7 @@
                <!-- Breadcrumb below title-->
               
             </h3>
+             <?php if($this->session->userdata('my_type') != 1 ){?>
             <!-- START widgets box-->
             <div class="row">
                           <div class="col-md-12 text-center">
@@ -382,6 +383,7 @@
                   <span class="sr-only">Next</span>
                </a>
             </div>
+             <?php  }?>
             <!-- END widgets box-->
             
 <!--            <div class="row">

@@ -5,11 +5,11 @@
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
               <li><a href="<?php echo base_url();?>dashboard">Dashboard</a></li> 
-              <li><a href="<?php echo base_url();?>distributor/view_distributor">View Distributors</a></li> 
-             <li class="active">View Distributors Details</li>
-          </ol> View Distributors Details
+              <li><a href="<?php echo base_url();?>distributor/view_agent">View agent</a></li> 
+             <li class="active">View Agent Details</li>
+          </ol> View Agent Details
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For viewing Distributors Details</span>
+          <span class="text-sm hidden-xs">For viewing Agent Details</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -81,11 +81,7 @@
                                     <img src="<?php echo base_url()?>doc/<?php echo $view->add_proof;?>" class="img img-responsive img-thumbnail" Alt="N/A" style="height: 100px; width: 250px;"> 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h3 class="text-center text-bold"> <a href="javascript:void(0);" class="view_dis" onclick="showAgents(<?= $view->login_id;?>,'<?= $name;?>')" login="<?= $view->login_id;?>" user_name="<?= $name;?>" val-dis="3">View All Agents under this <?= $name;?></a></h3>
-                                </div>
-                            </div>
+                           
                         </div>
                      </div>
                </div>

@@ -25,8 +25,9 @@
                                      <th>S.No.</th>
                                     <th>Name</th>
                                     <th width="20%">Mobile No.</th>
-                                    <th width="35%">Email</th>
+                                    <th width="20%">Email</th>
                                     <th>Package Name</th>
+                                    <th>Recharge Money</th>
                                     <th>Status</th>
                                  </tr>
                               </thead>
@@ -42,6 +43,7 @@
                                             <th><?= $view->mobile;?></th>
                                             <th><?= ucfirst($view->login_email);?></th>
                                             <th><?= ucfirst($view->package_name);?></th>
+                                            <th class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></th>
                                             <th>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->
@@ -50,9 +52,9 @@
                                                         <span></span>
                                                     </label>
                                                 </a>
-<!--                                                <a href="<?= base_url();?>agent/agent_details/<?= $view->login_id;?>" title="View Complete Details">
+                                                <a href="<?= base_url();?>agent/agent_details/<?= $view->login_id;?>" title="View Complete Details">
                                                     <i class="fa fa-search-plus"></i>
-                                                </a>-->
+                                                </a>
                                                 <a href="<?= base_url();?>agent/edit_agent/<?= $view->login_id;?>" title="Edit Details">
                                                     <i class="fa fa-edit"></i>
                                                 </a>

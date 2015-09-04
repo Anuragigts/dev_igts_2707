@@ -126,6 +126,7 @@
                   </li>
                   <?php }?>
                   <?php }?>
+                  <?php if($this->session->userdata('my_type') != 1 ){?>
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
                   </li>
@@ -142,16 +143,17 @@
                               <span>Pre paid</span>
                            </a>
                         </li>
+                         <li class="dth_recharge ">
+                           <a href="<?php echo base_url();?>recharge/dth_recharge" title="DTH Recharge">
+                              <span>DTH</span>
+                           </a>
+                        </li>
                         <li class="post_recharge ">
                            <a href="<?php echo base_url();?>recharge/post_recharge" title="Mobile Recharge">
                               <span>Post paid</span>
                            </a>
                         </li>
-                        <li class="dth_recharge ">
-                           <a href="<?php echo base_url();?>recharge/dth_recharge" title="DTH Recharge">
-                              <span>DTH</span>
-                           </a>
-                        </li>
+                       
                         <li class="recharge_details ">
                            <a href="<?php echo base_url();?>recharge/recharge_details" title="Recharge Details">
                               <span>Details</span>
@@ -242,6 +244,7 @@
                         </li>-->
                      </ul>
                   </li>
+                    <?php }?>
                     <?php }?>
                   <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">

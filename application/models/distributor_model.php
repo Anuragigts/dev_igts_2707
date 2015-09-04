@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 class Distributor_model extends CI_Model{ 
-        public function insert_distributor(){
+        public function insert_distributor($idP,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -44,7 +44,9 @@ class Distributor_model extends CI_Model{
                                 "address"               =>     $address,
                                 "admin_id"              =>     1,
                                 "master_distributor_id" =>     $master_id,
-                                "super_distributor_id"  =>     $super_id
+                                "super_distributor_id"  =>     $super_id,
+                                "id_proof"                =>"$idP",
+                                "add_proof"                  => "$addp"
                         );
                         $ins_comm   =   array(
                                 "login_id"              =>     $val_id,
@@ -84,8 +86,8 @@ class Distributor_model extends CI_Model{
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
 //                $this->db->join('profile as pl','l.login_id = pl.login_id and pl.master_distributor_id = pl.login_id');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',4);
                 if($this->session->userdata("my_type") == 2){
                         $this->db->where("p.master_distributor_id",$this->session->userdata("login_id"));
@@ -93,6 +95,7 @@ class Distributor_model extends CI_Model{
                 if($this->session->userdata("my_type") == 3){
                         $this->db->where("p.super_distributor_id",$this->session->userdata("login_id"));
                 }
+                 $this->db->order_by("l.login_id","desc");
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
@@ -106,8 +109,8 @@ class Distributor_model extends CI_Model{
                 $this->db->select('l.*,p.*,g.package_name,g.package_id');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
-                $this->db->join('commission as c','c.login_id = l.login_id','inner');
-                $this->db->join('package as g','g.package_id = c.package_id','inner');
+                $this->db->join('commission as c','c.login_id = l.login_id','left');
+                $this->db->join('package as g','g.package_id = c.package_id','left');
                 $this->db->where('l.user_type',4);
                 $this->db->where('l.login_id',$val);
                 $query = $this->db->get();
@@ -119,7 +122,7 @@ class Distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_distributor($valu){
+        public function update_distributor($valu,$idP,$addp){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -140,7 +143,9 @@ class Distributor_model extends CI_Model{
                                 "super_distributor_id"  =>     $super,
                                 "updated_by"            =>     $ses_id,
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
-                                "address"               =>     $address
+                                "address"               =>     $address,
+                                "id_proof"              =>  "$idP",
+                                "add_proof"             =>  "$addp"
                         );
 //                        print_r($ins);exit;
                         $this->db->where("login_id",$valu);

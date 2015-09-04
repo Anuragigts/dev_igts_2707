@@ -4,9 +4,7 @@ class Recharge extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->library('form_validation');   
-        $this->load->model('recharge_model');
-        if( $this->session->userdata('login_id') == ''){redirect('login');}
-        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
+        $this->load->model('recharge_model');        
         
     }
     public function getRechargeDetails(){
@@ -14,11 +12,118 @@ class Recharge extends CI_Controller {
         
     } 
     public function getamt(){
-         $data['amt'] = $this->recharge_model->getamt();
+         $data['amt'] = $this->recharge_model->getamt();         
          echo $data['amt']->REMAININGAMOUNT;
     }
-
+    
+    public function offLinePrepaidRecharge(){
+        $rc = $this->uri->segment(3);
+        $recharge_type = 1;
+        if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
+           $code = $this->uri->segment(4);
+           if($code == "AC"){
+               $codeval = "AIRCEL";
+               $V ="HACL";
+           }else if($code == "AT"){
+               $codeval = "AIRTEL";
+                $V ="HART";
+           }else if($code == "BN"){
+               $codeval = "BSNL";
+               $V ="HBST";
+           }else if($code == "BV"){
+               $codeval = "BSNL VALIDITY";
+               $V ="HBSV";
+           }else if($code == "ID"){
+               $codeval = "IDEA";
+                $V ="HIDE";
+           }else if($code == "LO"){
+               $codeval = "LOOP";
+               $V ="HBPL";           
+           }else if($code == "MT"){
+               $codeval = "MTNL";
+               $V ="HMDT";
+           }else if($code == "MS"){
+               $codeval = "MTS";
+               $V ="HMTS";
+           }else if($code == "RC"){
+               $codeval = "RELIANCE CDMA";
+               $V ="HREC";
+           }else if($code == "RG"){
+               $codeval = "RELIANCE GSM";
+               $V ="HREG";
+           }else if($code == "TI"){
+               $codeval = "TATA INDICOM";
+               $V ="HTAI";
+           }else if($code == "TD"){
+               $codeval = "TATA DOCOMO";
+               $V ="HTAD";
+           }else if($code == "TS"){
+               $codeval = "TATA DOCOMO SPECIAL";
+               $V ="HTDS";
+           }else if($code == "UT"){
+               $codeval = "UNINOR";
+               $V ="HUNI";
+           }else if($code == "US"){
+               $codeval = "UNINOR SPECIAL";
+               $V ="HUNS";           
+           }else if($code == "VT"){
+               $codeval = "VIDEOCON";
+               $V ="HVID";
+           }else if($code == "VS"){
+               $codeval = "VIDEOCON SPECIAL";
+               $V ="HVIS";
+           }else if($code == "VG"){
+               $codeval = "VIRGIN GSM";
+               $V ="HVIG";
+           }else if($code == "VC"){
+               $codeval = "VIRGIN CDMA";
+               $V ="HVIC";
+           }else if($code == "VF"){
+               $codeval = "VODAFONE";
+               $V ="HVOD";
+           }else{
+               $codeval = "";
+               $V ="";
+           }
+           
+        }
+        
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V);
+    }
+    public function offLineDTHRecharge(){
+        $rc = $this->uri->segment(3);
+        $recharge_type = 1;
+        if($rc == 'dth' || $rc == 'DTH' || $rc == 'Sth'){
+           $code = $this->uri->segment(4);
+           if($code == "AD"){
+                $codeval = "AIRTEL DTH";
+               $V ="HADH";
+           }else if($code == "BT"){
+                $codeval = "BIGTV";
+               $V ="HBTV";
+           }else if($code == "DT"){
+                $codeval = "DISH TV";
+               $V ="HDIS";
+           }else if($code == "TS"){
+                $codeval = "TATASKY";
+               $V ="HTSY";
+           }else if($code == "SD"){
+                $codeval = "SUN DIRECT";
+               $V ="HSUN";
+           }else if($code == "VD"){
+                $codeval = "VIDEOCON D2H";
+               $V ="HVIH";
+           }else{
+               $codeval = "";
+               $V ="";
+           }
+        }
+        $recharge_type = 2;
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V);
+    }
     public function mobile_recharge(){
+        if( $this->session->userdata('login_id') == ''){redirect('login');}
+        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
               'title'         => 'SC :: PRE PAID RECHARGE',
@@ -52,6 +157,7 @@ class Recharge extends CI_Controller {
                 }
             }
        }
+       $data['details'] = $this->recharge_model->getrechargeDetails();
        $operator_type = 1;
 	   $data['amt'] = $this->recharge_model->getamt();
 	   //$data['amt'] = $this->recharge_model->getamt1();
@@ -59,6 +165,8 @@ class Recharge extends CI_Controller {
         $this->load->view('layout/inner_template',$data);
     }
      public function post_recharge(){
+         if( $this->session->userdata('login_id') == ''){redirect('login');}
+        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
               'title'         => 'SC :: POST PAID RECHARGE',
@@ -95,11 +203,14 @@ class Recharge extends CI_Controller {
                 }
             }
        }
+       $data['details'] = $this->recharge_model->getrechargeDetails();
       $data['amt'] = $this->recharge_model->getamt();
         $data['all_operator'] = $this->recharge_model->getPaymentDetail();
         $this->load->view('layout/inner_template',$data);
     }
      public function dth_recharge(){
+         if( $this->session->userdata('login_id') == ''){redirect('login');}
+        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
               'title'         => 'SC :: DTH RECHARGE',
@@ -108,7 +219,7 @@ class Recharge extends CI_Controller {
               'content'       => 'recharge_dth'
              );
          if($this->input->post('amount')){
-            $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|max_length[10]|numeric');
+            $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|numeric');
             $this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
@@ -129,6 +240,7 @@ class Recharge extends CI_Controller {
                 }
             }
        }
+       $data['details'] = $this->recharge_model->getrechargeDetails();
         $data['amt'] = $this->recharge_model->getamt();
         $operator_type = 2;
         $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
