@@ -16,111 +16,131 @@ class Recharge extends CI_Controller {
          echo $data['amt']->REMAININGAMOUNT;
     }
     
-    public function offLinePrepaidRecharge(){
-        $rc = $this->uri->segment(3);
-        $recharge_type = 1;
+    public function offLineRecharge(){
+        $recharge_type = 0;
+        $codeval = "";
+        $V ="";
+       $val = $this->input->get('message', TRUE);
+       $url = explode(" ",$val);
+      
+        $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
-           $code = $this->uri->segment(4);
+           $code = $url['1'];
            if($code == "AC"){
+               $recharge_type = 1;
                $codeval = "AIRCEL";
                $V ="HACL";
            }else if($code == "AT"){
+               $recharge_type = 1;
                $codeval = "AIRTEL";
                 $V ="HART";
            }else if($code == "BN"){
+               $recharge_type = 1;
                $codeval = "BSNL";
                $V ="HBST";
            }else if($code == "BV"){
+               $recharge_type = 1;
                $codeval = "BSNL VALIDITY";
                $V ="HBSV";
            }else if($code == "ID"){
+               $recharge_type = 1;
                $codeval = "IDEA";
                 $V ="HIDE";
            }else if($code == "LO"){
+               $recharge_type = 1;
                $codeval = "LOOP";
                $V ="HBPL";           
            }else if($code == "MT"){
+               $recharge_type = 1;
                $codeval = "MTNL";
                $V ="HMDT";
            }else if($code == "MS"){
+               $recharge_type = 1;
                $codeval = "MTS";
                $V ="HMTS";
            }else if($code == "RC"){
+               $recharge_type = 1;
                $codeval = "RELIANCE CDMA";
                $V ="HREC";
            }else if($code == "RG"){
+               $recharge_type = 1;
                $codeval = "RELIANCE GSM";
                $V ="HREG";
            }else if($code == "TI"){
+               $recharge_type = 1;
                $codeval = "TATA INDICOM";
                $V ="HTAI";
            }else if($code == "TD"){
+               $recharge_type = 1;
                $codeval = "TATA DOCOMO";
                $V ="HTAD";
            }else if($code == "TS"){
+               $recharge_type = 1;
                $codeval = "TATA DOCOMO SPECIAL";
                $V ="HTDS";
            }else if($code == "UT"){
+               $recharge_type = 1;
                $codeval = "UNINOR";
                $V ="HUNI";
            }else if($code == "US"){
+               $recharge_type = 1;
                $codeval = "UNINOR SPECIAL";
                $V ="HUNS";           
            }else if($code == "VT"){
+               $recharge_type = 1;
                $codeval = "VIDEOCON";
                $V ="HVID";
            }else if($code == "VS"){
+               $recharge_type = 1;
                $codeval = "VIDEOCON SPECIAL";
                $V ="HVIS";
            }else if($code == "VG"){
+               $recharge_type = 1;
                $codeval = "VIRGIN GSM";
                $V ="HVIG";
            }else if($code == "VC"){
+               $recharge_type = 1;
                $codeval = "VIRGIN CDMA";
                $V ="HVIC";
            }else if($code == "VF"){
+               $recharge_type = 1;
                $codeval = "VODAFONE";
                $V ="HVOD";
+           }else if($code == "AD"){
+                $recharge_type = 2;
+                $codeval = "AIRTEL DTH";
+               $V ="HADH";
+           }else if($code == "BT"){
+               $recharge_type = 2;
+                $codeval = "BIGTV";
+               $V ="HBTV";
+           }else if($code == "DT"){
+               $recharge_type = 2;
+                $codeval = "DISH TV";
+               $V ="HDIS";
+           }else if($code == "TS"){
+               $recharge_type = 2;
+                $codeval = "TATASKY";
+               $V ="HTSY";
+           }else if($code == "SD"){
+               $recharge_type = 2;
+                $codeval = "SUN DIRECT";
+               $V ="HSUN";
+           }else if($code == "VD"){
+               $recharge_type = 2;
+                $codeval = "VIDEOCON D2H";
+               $V ="HVIH";
            }else{
+               $recharge_type = 0;
                $codeval = "";
                $V ="";
            }
            
         }
         
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V);
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2']);
     }
-    public function offLineDTHRecharge(){
-        $rc = $this->uri->segment(3);
-        $recharge_type = 1;
-        if($rc == 'dth' || $rc == 'DTH' || $rc == 'Sth'){
-           $code = $this->uri->segment(4);
-           if($code == "AD"){
-                $codeval = "AIRTEL DTH";
-               $V ="HADH";
-           }else if($code == "BT"){
-                $codeval = "BIGTV";
-               $V ="HBTV";
-           }else if($code == "DT"){
-                $codeval = "DISH TV";
-               $V ="HDIS";
-           }else if($code == "TS"){
-                $codeval = "TATASKY";
-               $V ="HTSY";
-           }else if($code == "SD"){
-                $codeval = "SUN DIRECT";
-               $V ="HSUN";
-           }else if($code == "VD"){
-                $codeval = "VIDEOCON D2H";
-               $V ="HVIH";
-           }else{
-               $codeval = "";
-               $V ="";
-           }
-        }
-        $recharge_type = 2;
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V);
-    }
+   
     public function mobile_recharge(){
         if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}

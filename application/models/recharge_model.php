@@ -208,7 +208,17 @@ class Recharge_model extends CI_Model
         }        
         return $str;
     }
-    public function doRechargeoff(  $recharge_type,$codeval,$V){
+    public function doRechargeoff(  $recharge_type,$codeval,$V,$amt){
+        $str = "";
+        foreach($_RESQUEST as $key => $val)
+        {
+            $str.="=>$key.".$val."\n";
+        }
+        $ioff = array(                
+                'descp'            => $str
+            );
+         $insert = $this->db->insert('offtime',$ioff);
+         
         $a = mt_rand(100000,999999); 
        for ($i = 0; $i<27; $i++) 
         {
@@ -217,8 +227,8 @@ class Recharge_model extends CI_Model
         $track_id   = 'SWAMI'.$a;
         $item       = $V;
         $desc       = $codeval;
-        $mobile     = $this->uri->segment(5);
-        $amt        = $this->uri->segment(6);
+        $mobile     = $this->input->get('number', TRUE);
+        $amt        = $amt;
         $circle     = 'ANDHRA PRADESH';
         
          $data_insert = array(
