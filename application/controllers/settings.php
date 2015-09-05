@@ -179,4 +179,16 @@ class Settings extends CI_Controller {
               $data['profile']       =  $this->settings_model->getprofile($this->uri->segment(3)); 
              $this->load->view('layout/inner_template',$data);
          }
+         
+         public function viewTrandDetail(){
+             $data = array(
+                    'title'         => 'SC :: VIEW TRANSFER DETAIL',
+                    'metakeyword'   => 'SC :: VIEW TRANSFER DETAIL',
+                    'metadesc'      => 'SC :: VIEW TRANSFER DETAIL',
+                    'content'       => 'view_trans_details'
+            );
+              $data['debit']       =  $this->settings_model->getDebit($this->uri->segment(3)); 
+              $data['credit']       =  $this->settings_model->getCredit($this->uri->segment(3)); 
+            $this->load->view('layout/inner_template',$data);
+         }
 }
