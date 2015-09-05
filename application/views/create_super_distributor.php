@@ -204,7 +204,7 @@
                      <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>IF Proof</label>
+                                <label>ID Proof</label>
                                  <input id="" name="idproof" type="file"  autocomplete="off"  >                                
                             </div>
                         </div>
