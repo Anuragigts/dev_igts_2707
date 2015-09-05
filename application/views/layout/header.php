@@ -51,14 +51,14 @@
                   </li>
                   <li class="visible-lg">
                       <a href="#">
-                          <b>Virtual recharge</b> : <span class="vamt">0.00</span>
+                          <b>Virtual Amount</b> : <span class="vamt">0.00</span>
                       </a>
                   </li>
                    <?php }else{?>
                   
                   <li class="visible-lg">
                       <a href="#">
-                          <b>Recharge Amount</b> : <span class="vamt">0.00</span>
+                          <b>total Amount</b> : <span class="vamt">0.00</span>
                       </a>
                   </li>
                    <?php }?>

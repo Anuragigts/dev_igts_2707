@@ -187,6 +187,24 @@ class Settings_model extends CI_Model
                         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                         $result = curl_exec($ch);
                         curl_close($ch);
+                    }else{
+                        $insfrom   =   array(
+                                "user_id"    =>     $from,
+                                "amount"     => (0 - $this->input->post('amount'))
+                            );
+                        
+                        $query =   $this->db->insert("current_virtual_amount", $insfrom);
+                        
+                        $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
                     } 
                     
                      $myupdate = array(
@@ -236,7 +254,25 @@ class Settings_model extends CI_Model
                         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                         $result = curl_exec($ch);
                         curl_close($ch);
-                    }
+                    }else{
+                        $insfrom   =   array(
+                                "user_id"    =>     $from,
+                                "amount"     => (0 - $this->input->post('amount'))
+                            );
+                        
+                        $query =   $this->db->insert("current_virtual_amount", $insfrom);
+                        
+                        $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                    } 
                     
                      $myupdate = array(
                         "trans_from"    =>     $from,
