@@ -23,7 +23,7 @@
 
 <body>
    <div class="wrapper">
-      <div class="block-center mt-xl wd-xl">
+      <div class="block-center mt-xl wd-xl rg-xl">
           <?php   $this->load->view("layout/success_error");?>
          <!-- START panel-->
          <div class="panel panel-dark panel-flat">
@@ -35,78 +35,106 @@
             <div class="panel-body">
                <p class="text-center pv">SIGNUP TO GET INSTANT ACCESS.</p>
                <form method="post" role="form" enctype="multipart/form-data" class="mb-lg">
-                  <div class="form-group has-feedback">
-                      <label for="signupInputEmail1" class="text-muted">Email address<span class="red">*</span></label>
-                      <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email">
-                     <span class="fa fa-envelope form-control-feedback text-muted"></span>
-                      <span class="red"><?=  form_error('email');?></span>
-                  </div>
-                  <div class="form-group has-feedback">
-                      <label for="mobile" class="text-muted">Mobile Number<span class="red">*</span></label>
-                     <input id="signupInputEmail1" name="mobile" value="<?= set_value("mobile"); ?>"  type="mobile" placeholder="Mobile Number" autocomplete="off" required class="form-control" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
-                     <span class="fa fa-mobile form-control-feedback text-muted"></span>
-                     <span class="red"><?=  form_error('mobile');?></span>
-                  </div>
-                  <div class="form-group has-feedback">
-                     <label for="signupInputPassword1" class="text-muted">Password<span class="red">*</span></label>
-                     <input id="signupInputPassword1" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password" autocomplete="off" required class="form-control">
-                     <span class="fa fa-lock form-control-feedback text-muted"></span>
-                      <span class="red"><?=  form_error('pass');?></span>
-                  </div>
-                  <div class="form-group has-feedback">
-                     <label for="signupInputRePassword1" class="text-muted">Retype Password<span class="red">*</span></label>
-                     <input id="signupInputRePassword1" name="con_pass" type="password" placeholder="Retype Password" autocomplete="off" required data-parsley-equalto="#signupInputPassword1" class="form-control">
-                     <span class="fa fa-lock form-control-feedback text-muted"></span>
-                     <span class="red"><?=  form_error('con_pass');?></span>
-                  </div>
-                    <div class="form-group has-feedback">
-                     <label for="signupInputRePassword1" class="text-muted">Referred For<span class="red">*</span></label>
-                      <select class="form-control b-c"  name="refer" >
-                            <option value="">Select</option>
-                            <option value="Agent" <?php echo set_select('refer',"Agent", ( !empty($data) && $data == "Agent") ? TRUE : FALSE )?>>Agents</option>
-                            <option value="Distributor" <?php echo set_select('refer',"Distributor", ( !empty($data) && $data == "Distributor") ? TRUE : FALSE )?>>Distributor</option>
-                            <option value="Super Distributor" <?php echo set_select('refer',"Super Distributor", ( !empty($data) && $data == "Super Distributor") ? TRUE : FALSE )?>>Super Distributor</option>
-                            <option value="Master Distributor" <?php echo set_select('refer',"Master Distributor", ( !empty($data) && $data == "Master Distributor") ? TRUE : FALSE )?>>Master Distributor</option>
-                           
-                        </select>  
-                     <span class="red"><?=  form_error('refer');?></span>
-                  </div>
-                  <div class="form-group has-feedback">
-                     <label for="signupInputRePassword1" class="text-muted">State<span class="red">*</span></label>
-                      <select class="form-control b-c" id="state-reg" name="state">
-                        <option value="">Select</option>
-                        <?php foreach($states as $st){?>
-                        <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
-                        <?php }?>
-                    </select>
-                     <span class="red"><?=  form_error('state');?></span>
-                  </div>                   
-                   <div class="form-group has-feedback">
-                     <label for="signupInputRePassword1" class="text-muted">City<span class="red">*</span></label>
-                     <select class="form-control b-c" id="city-reg" name="city" >
-                        <option value="">Select</option>
-                        <?php  foreach($citys as $ct){?>
-                        <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
-                        <?php  }?>
-                    </select>   
-                     <span class="red"><?=  form_error('city');?></span>
-                  </div>
-                   <div class="form-group has-feedback">
-                     <label for="" class="text-muted">Zip Code<span class="red">*</span></label>
-                      <input id="signupInputRePassword1" name="zip" type="text" placeholder="Zip Code" autocomplete="off" required data-parsley-equalto="#zip" class="form-control" autocomplete="off" required class="form-control" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
-                     <span class="fa fa-map-marker form-control-feedback text-muted"></span>
-                     <span class="red"><?=  form_error('zip');?></span>
-                  </div>
-                   <div class="form-group has-feedback">
-                     <label for="" class="text-muted">ID Proof</label>
-                      <input id="" name="idproof" type="file" autocomplete="off" required >
-                  </div>
-                    <div class="form-group has-feedback">
-                     <label for="" class="text-muted">Address Proof</label>
-                      <input id="" name="addproof" type="file" autocomplete="off" required >
-                  </div>
-                  
-                  
+                   <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group has-feedback">
+                                <label for="signupInputEmail1" class="text-muted">Email address<span class="red">*</span></label>
+                                <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email">
+                               <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                                <span class="red"><?=  form_error('email');?></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group has-feedback">
+                                <label for="mobile" class="text-muted">Mobile Number<span class="red">*</span></label>
+                               <input id="signupInputEmail1" name="mobile" value="<?= set_value("mobile"); ?>"  type="mobile" placeholder="Mobile Number" autocomplete="off" required class="form-control" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                               <span class="fa fa-mobile form-control-feedback text-muted"></span>
+                               <span class="red"><?=  form_error('mobile');?></span>
+                            </div>
+                        </div>
+                   </div>
+                    <div class="row">
+                         <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                               <label for="signupInputPassword1" class="text-muted">Password<span class="red">*</span></label>
+                               <input id="signupInputPassword1" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password" autocomplete="off" required class="form-control">
+                               <span class="fa fa-lock form-control-feedback text-muted"></span>
+                                <span class="red"><?=  form_error('pass');?></span>
+                            </div>
+                        </div>                    
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label for="signupInputRePassword1" class="text-muted">Retype Password<span class="red">*</span></label>
+                                <input id="signupInputRePassword1" name="con_pass" type="password" placeholder="Retype Password" autocomplete="off" required data-parsley-equalto="#signupInputPassword1" class="form-control">
+                                <span class="fa fa-lock form-control-feedback text-muted"></span>
+                                <span class="red"><?=  form_error('con_pass');?></span>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                         <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                             <label for="signupInputRePassword1" class="text-muted">Referred For<span class="red">*</span></label>
+                              <select class="form-control b-c"  name="refer" >
+                                    <option value="">Select</option>
+                                    <option value="Agent" <?php echo set_select('refer',"Agent", ( !empty($data) && $data == "Agent") ? TRUE : FALSE )?>>Agents</option>
+                                    <option value="Distributor" <?php echo set_select('refer',"Distributor", ( !empty($data) && $data == "Distributor") ? TRUE : FALSE )?>>Distributor</option>
+                                    <option value="Super Distributor" <?php echo set_select('refer',"Super Distributor", ( !empty($data) && $data == "Super Distributor") ? TRUE : FALSE )?>>Super Distributor</option>
+                                    <option value="Master Distributor" <?php echo set_select('refer',"Master Distributor", ( !empty($data) && $data == "Master Distributor") ? TRUE : FALSE )?>>Master Distributor</option>
+
+                                </select>  
+                             <span class="red"><?=  form_error('refer');?></span>
+                          </div>
+                        </div>                    
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label for="signupInputRePassword1" class="text-muted">State<span class="red">*</span></label>
+                                 <select class="form-control b-c" id="state-reg" name="state">
+                                   <option value="">Select</option>
+                                   <?php foreach($states as $st){?>
+                                   <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
+                                   <?php }?>
+                               </select>
+                                <span class="red"><?=  form_error('state');?></span>
+                             </div>     
+                        </div>
+                    </div>
+                   <div class="row">
+                         <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                              <label for="signupInputRePassword1" class="text-muted">City<span class="red">*</span></label>
+                              <select class="form-control b-c" id="city-reg" name="city" >
+                                 <option value="">Select</option>
+                                 <?php  foreach($citys as $ct){?>
+                                 <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
+                                 <?php  }?>
+                             </select>   
+                              <span class="red"><?=  form_error('city');?></span>
+                           </div>
+                        </div>
+                       <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                              <label for="" class="text-muted">Zip Code<span class="red">*</span></label>
+                               <input id="signupInputRePassword1" name="zip" type="text" placeholder="Zip Code" autocomplete="off" required data-parsley-equalto="#zip" class="form-control" autocomplete="off" required class="form-control" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                              <span class="fa fa-map-marker form-control-feedback text-muted"></span>
+                              <span class="red"><?=  form_error('zip');?></span>
+                           </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                         <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                              <label for="" class="text-muted">ID Proof</label>
+                               <input id="" name="idproof" type="file" autocomplete="off" required >
+                           </div>
+                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                             <label for="" class="text-muted">Address Proof</label>
+                              <input id="" name="addproof" type="file" autocomplete="off" required >
+                          </div>
+                        </div>
+                    </div>
                   <div class="clearfix">
                     <div class="checkbox c-checkbox pull-left mt0">
                        <label>
@@ -115,8 +143,12 @@
                        </label>
                     </div>
                   </div>
-                    <span class="red"><?php echo  form_error('agreed');?></span>
-                   <input type="submit" class="btn btn-block btn-primary mt-lg" name="create_account" value="Create account"/>
+                 <div class="row">
+                         <div class="col-md-12 text-center ">
+                            <span class="red"><?php echo  form_error('agreed');?></span>
+                           <input type="submit" class="btn btn-lg btn-primary mt-lg" name="create_account" value="Create account"/>
+                        </div>
+                  </div>
                </form>
                <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
                <p class="pt-lg text-center"><a href="<?php echo base_url()?>login/access">Have an account?</a></p>
