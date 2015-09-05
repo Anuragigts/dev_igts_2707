@@ -158,7 +158,23 @@ class Settings extends CI_Controller {
                     'metadesc'      => 'SC :: EDIT VIRTUAL AMOUNT',
                     'content'       => 'recharge_transfer'
             );
-              
+              if($this->input->post('transfer')){
+                  $this->form_validation->set_rules('amount',' Amount','required');
+                  $this->form_validation->set_rules('remarks','Remarks','required');
+            
+                    if($this->form_validation->run() == TRUE){
+
+                       $result = $this->settings_model->transferVamt();
+
+                       if($result == 1){                    
+                           $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
+                           redirect('settings/moneyTransfer/'.$this->uri->segment(3));
+                       }else{
+                            $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                            redirect('settings/moneyTransfer/'.$this->uri->segment(3));
+                       }
+                   }
+              }
               $data['get']       =  $this->settings_model->getVirtualgetter($this->uri->segment(3)); 
               $data['profile']       =  $this->settings_model->getprofile($this->uri->segment(3)); 
              $this->load->view('layout/inner_template',$data);

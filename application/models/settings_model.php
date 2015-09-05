@@ -150,4 +150,115 @@ class Settings_model extends CI_Model
                    return array();
                }
         }
+        public function transferVamt(){
+            $from = $this->session->userdata('login_id');
+            $to = $this->uri->segment(3);
+            $from_m =$this->getprofile($from);
+            $from_t =$this->getprofile($to);
+            $from_mo = $from_m->mobile;
+            $from_to = $from_t->mobile;
+            $myamt = $this->input->post('amount');
+            
+            $query = $this->db->get_where('current_virtual_amount', array('user_id' => $to));           
+            if($query && $query->num_rows()== 1){
+                  $val = $query->row()->amount;
+                   $insto   =   array(                      
+                        "amount"     => ($val + $this->input->post('amount'))
+                    );
+                $this->db->where("user_id",$to);
+                $query1 = $this->db->update("current_virtual_amount",$insto);
+                
+                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $from));           
+                    if($query2 && $query2->num_rows()== 1){                        
+                        $val2 = $query2->row()->amount;
+                        $insfrom   =   array(                      
+                                "amount"     => ($val2 - $this->input->post('amount'))
+                            );
+                        $this->db->where("user_id",$from);
+                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                        
+                        $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                    } 
+                    
+                     $myupdate = array(
+                        "trans_from"    =>     $from,
+                        "trans_to"    =>     $to,
+                        "trans_amt"     =>     $this->input->post('amount'),
+                        "trans_remark"     =>     $this->input->post('remarks')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                    
+                     $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+credited+from+in+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                    
+                    return 1;
+                    
+               }else{
+                  $ins   =   array(
+                        "user_id"    =>     $to,
+                        "amount"     =>     $this->input->post('amount')
+                );
+              $query =   $this->db->insert("current_virtual_amount", $ins);
+
+                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $from));           
+                    if($query2 && $query2->num_rows()== 1){                        
+                        $val2 = $query2->row()->amount;
+                        $insfrom   =   array(                      
+                                "amount"     => ($val2 - $this->input->post('amount'))
+                            );
+                        $this->db->where("user_id",$from);
+                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                        
+                        $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo-&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                    }
+                    
+                     $myupdate = array(
+                        "trans_from"    =>     $from,
+                        "trans_to"    =>     $to,
+                        "trans_amt"     =>     $this->input->post('amount'),
+                        "trans_remark"     =>     $this->input->post('remarks')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                    
+                    
+                     $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=Welcome+to+http://esytopup.com+Rs.+$myamt+credited+from+in+Esy+Topup+account.",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                    
+                    return 1;
+               }
+        }
 }

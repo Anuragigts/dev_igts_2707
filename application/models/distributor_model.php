@@ -71,6 +71,17 @@ class Distributor_model extends CI_Model{
                         $this->db->insert("commission",$ins_comm);
                         $this->db->insert("module_access",$ins_access);
                         if($this->db->affected_rows()   >   0){
+                             $ch = curl_init();
+                            $optArray = array(
+                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile_no&from=ESYTOP&message=Welcome+to+http://esytopup.com++User+Name:+$login_email+Pass:+$password",
+                            CURLOPT_RETURNTRANSFER => true
+                            );
+                            curl_setopt_array($ch, $optArray);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                            $result = curl_exec($ch);
+                            curl_close($ch);
+                            $xml = @simplexml_load_string($result);
                                 return 1;
                         }
                         else{

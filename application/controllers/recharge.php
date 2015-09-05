@@ -4,7 +4,8 @@ class Recharge extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->library('form_validation');   
-        $this->load->model('recharge_model');        
+        $this->load->model('recharge_model'); 
+        $this->load->model('settings_model');
         
     }
     public function getRechargeDetails(){
@@ -25,8 +26,8 @@ class Recharge extends CI_Controller {
       
         $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
-           $code = $url['1'];
-           if($code == "AC"){
+           $code = strtoupper ($url['1']);
+           if($code == "AC" ){
                $recharge_type = 1;
                $codeval = "AIRCEL";
                $V ="HACL";
@@ -134,6 +135,17 @@ class Recharge extends CI_Controller {
                $recharge_type = 0;
                $codeval = "";
                $V ="";
+               $number = $this->input->get('number', TRUE);
+                $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=Incorrect+pattern,+Please+Send+Correct",
+			CURLOPT_RETURNTRANSFER => true
+		);
+                        curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
            }
            
         }
@@ -160,19 +172,25 @@ class Recharge extends CI_Controller {
            // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 1;
-				 
-                $result = $this->recharge_model->doRecharge( $recharge_type);
-                //$result = $this->recharge_model->doRecharge1( );
-                //if($result == 1){                    
-                if($result == 0){                    
-                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
-                    redirect('recharge/mobile_recharge');
-                }
-                else if($result == 2){
-                    $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
-                   redirect('recharge/mobile_recharge');
+		$amt = $this->settings_model->checkVirtual();	
+                
+                if($amt > $this->input->post('amount')){ 
+                    $result = $this->recharge_model->doRecharge( $recharge_type);
+                    //$result = $this->recharge_model->doRecharge1( );
+                    //if($result == 1){                    
+                    if($result == 0){                    
+                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                        redirect('recharge/mobile_recharge');
+                    }
+                    else if($result == 2){
+                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                       redirect('recharge/mobile_recharge');
+                    }else{
+                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                        redirect('recharge/mobile_recharge');
+                    }
                 }else{
-                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
                     redirect('recharge/mobile_recharge');
                 }
             }
@@ -209,17 +227,23 @@ class Recharge extends CI_Controller {
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 4;
-                $result = $this->recharge_model->doPostRecharge( $recharge_type);
-                if($result == 1){                    
-                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
-                    redirect('recharge/post_recharge');
-                }
-                else if($result == 2){
-                    $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
-                   redirect('recharge/post_recharge');
+                 $amt = $this->settings_model->checkVirtual();	
+                if($amt > $this->input->post('amount')){
+                    $result = $this->recharge_model->doPostRecharge( $recharge_type);
+                    if($result == 0){                    
+                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                        redirect('recharge/post_recharge');
+                    }
+                    else if($result == 2){
+                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                       redirect('recharge/post_recharge');
+                    }else{
+                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                        redirect('recharge/post_recharge');
+                    }
                 }else{
-                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
-                    redirect('recharge/post_recharge');
+                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
+                   redirect('recharge/post_recharge');
                 }
             }
        }
@@ -246,16 +270,22 @@ class Recharge extends CI_Controller {
            // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 2;
-                $result = $this->recharge_model->doRecharge( $recharge_type);
-                if($result == 0){                    
-                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
-                    redirect('recharge/dth_recharge');
-                }
-                else if($result == 2){
-                    $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
-                   redirect('recharge/dth_recharge');
+                 $amt = $this->settings_model->checkVirtual();	
+                if($amt > $this->input->post('amount')){
+                    $result = $this->recharge_model->doRecharge( $recharge_type);
+                    if($result == 0){                    
+                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                        redirect('recharge/dth_recharge');
+                    }
+                    else if($result == 2){
+                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                       redirect('recharge/dth_recharge');
+                    }else{
+                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                        redirect('recharge/dth_recharge');
+                    }
                 }else{
-                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
                     redirect('recharge/dth_recharge');
                 }
             }

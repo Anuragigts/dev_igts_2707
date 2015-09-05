@@ -33,7 +33,7 @@
                </a>
             </div>
             <div class="panel-body">
-               <p class="text-center pv">SIGNUP TO GET INSTANT ACCESS.</p>
+               <p class="text-center pv">SIGNUP TO GET ACCESS.</p>
                <form method="post" role="form" enctype="multipart/form-data" class="mb-lg">
                    <div class="row">
                         <div class="col-md-6">
