@@ -97,7 +97,7 @@ class Register extends CI_Controller {
             }
             else{
                     $this->session->set_flashdata("err","Your confirmation link has been expired");
-                    redirect("register");
+                    redirect("/");
             }
     }
     public function getCityChanged(){
