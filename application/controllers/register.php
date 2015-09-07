@@ -28,7 +28,12 @@ class Register extends CI_Controller {
                     $this->form_validation->set_rules("state",              "State ",               "required");
                     $this->form_validation->set_rules("city",               "City",                 "required");
                     $this->form_validation->set_rules("zip",                "Zip Code",             "required|min_length[6]");
+                    $this->form_validation->set_rules("door",               "Door No.",             "required");
+                    $this->form_validation->set_rules("street",             "Street",               "required");
+                    $this->form_validation->set_rules("area",               "Area",                 "required");
                     $this->form_validation->set_rules("agreed",             "Agree",                "required");
+                    
+                    
                     if($this->form_validation->run() == TRUE){
                         $idP = '';$addp='';
                         if($_FILES['idproof']['name'] != ''){

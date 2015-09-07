@@ -15,6 +15,9 @@ class Register_model extends CI_Model
                 $city1      =   $this->input->post("city");
                 $refer1     =   $this->input->post("refer");
                 $zip        =   $this->input->post("zip");
+                $door       =   $this->input->post("door");
+                $street     =   $this->input->post("street");
+                $area       =   $this->input->post("area");               
                 
                 
                 $this->db->select("State_id");
@@ -37,7 +40,7 @@ class Register_model extends CI_Model
                     // Set to, from, message, etc.
                     $this->email->from('info@igravitas.in', 'Admin');
                     $this->email->to($email);
-                    $this->email->subject('Esy Top-up Conformation');
+                    $this->email->subject('Esy Top-up Confirmation');
                     $message = 'Dear '."Urer, <br/><br/>";
                     $message .= 'Thank you for being with Esy Top-up, We will send your username and password on your mobile<br> For verification Click on this ';
                     $message .='<a href="'.base_url().'register/confirm/'.md5($email).'">Confirmation Link</a> ';
@@ -68,7 +71,7 @@ class Register_model extends CI_Model
                                     "login_email"           =>     $email,
                                     "login_mobile"          =>     $mobile,
                                     "login_password"        =>     md5($pass),
-                                    "is_confirm"            =>     'confirm',
+                                    "is_confirm"            =>     md5($email),
                                     "user_type"             =>     $ref,
                                     "status"                =>     1
                             );
@@ -84,8 +87,11 @@ class Register_model extends CI_Model
                                             "zip_code"              =>     $zip,
                                             "preferred_for"         =>     $ref,
                                             "admin_id"              =>     1,
-                                        'id_proof' => "$idP",
-                                        'add_proof' =>"$addp"
+                                            'id_proof'              =>     "$idP",
+                                            'add_proof'             =>     "$addp",
+                                            'door'                  =>     $door,
+                                            'street'                =>     $street,
+                                            'area'                  =>     $area
                                             
                                     );
                                     $ins_access      =   array(

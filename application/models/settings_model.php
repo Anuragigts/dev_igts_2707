@@ -45,6 +45,9 @@ class Settings_model extends CI_Model
                 $state              =   $this->input->post("state");
                 $city               =   $this->input->post("city");
                 $address            =   $this->input->post("address");
+                $door               =   $this->input->post("door");
+                $street             =   $this->input->post("street");
+                $area               =   $this->input->post("area"); 
                         $ins   =   array(
                                 "first_name"            =>     $first_name,
                                 "last_name"             =>     $last_name,
@@ -54,7 +57,10 @@ class Settings_model extends CI_Model
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
                                 "address"               =>     $address,
                                 "id_proof"              =>     "$idP",
-                                "add_proof"              =>     "$addp"
+                                "add_proof"              =>     "$addp",
+                                'door'                  =>     $door,
+                                'street'                =>     $street,
+                                'area'                  =>     $area
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);

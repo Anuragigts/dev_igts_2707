@@ -89,6 +89,34 @@
                         </div>                    
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
+                                <label for="signupInputEmail1" class="text-muted">Door No. <span class="red">*</span></label>
+                                <input id="signupInputEmail1" name="door" value="<?= set_value("door"); ?>" type="text" placeholder="Door No." autocomplete="off" required class="form-control">
+                               <span class="fa fa-window form-control-feedback text-muted"></span>
+                               <span class="red"><?=  form_error('door');?></span>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label for="signupInputEmail1" class="text-muted">Street <span class="red">*</span></label>
+                                <input id="signupInputEmail1" name="street" value="<?= set_value("street"); ?>" type="text" placeholder="Street" autocomplete="off" required class="form-control">
+                               <span class="fa fa-window form-control-feedback text-muted"></span>
+                               <span class="red"><?=  form_error('street');?></span>
+                            </div> 
+                        </div>                    
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label for="signupInputEmail1" class="text-muted">Area <span class="red">*</span></label>
+                                <input id="signupInputEmail1" name="area" value="<?= set_value("area"); ?>" type="text" placeholder="Area" autocomplete="off" required class="form-control">
+                               <span class="fa fa-window form-control-feedback text-muted"></span>
+                               <span class="red"><?=  form_error('area');?></span>
+                            </div> 
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group has-feedback">
                                 <label for="signupInputRePassword1" class="text-muted">State<span class="red">*</span></label>
                                  <select class="form-control b-c" id="state-reg" name="state">
                                    <option value="">Select</option>
@@ -97,10 +125,8 @@
                                    <?php }?>
                                </select>
                                 <span class="red"><?=  form_error('state');?></span>
-                             </div>     
+                             </div> 
                         </div>
-                    </div>
-                   <div class="row">
                          <div class="col-md-6">
                             <div class="form-group has-feedback">
                               <label for="signupInputRePassword1" class="text-muted">City<span class="red">*</span></label>
@@ -113,6 +139,8 @@
                               <span class="red"><?=  form_error('city');?></span>
                            </div>
                         </div>
+                   </div>
+                   <div class="row">
                        <div class="col-md-6">
                             <div class="form-group has-feedback">
                               <label for="" class="text-muted">Zip Code<span class="red">*</span></label>
