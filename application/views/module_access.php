@@ -30,14 +30,14 @@
                          <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
-                                <input type="checkbox" <?php echo ($access->dmr == 1)?"checked=checked":"";?> name="dmr" value="1"/>
+                                <input type="checkbox" <?php echo ($access->dmr == 1)?"checked=checked":"";?> name="dmr" value="1" id="checkAll" class="dmr-v"/>
                                 </div>
                                 <div class="col-sm-9">
                                     <label>DMR 
                                         <ul class="padding-left-15">
-                                            <li><input type="checkbox" <?php echo ($access->add_beneficiary == 1)?"checked=checked":"";?> name="add_beneficiary" value="1"/> Add Beneficiary</li>
+                                            <li><input type="checkbox" class="dmr add_ta" <?php echo ($access->add_beneficiary == 1)?"checked=checked":"";?> name="add_beneficiary" value="1"/> Add Beneficiary</li>
                                             <!--<li><input type="checkbox" <?php echo ($access->dmr == 1)?"checked=checked":"";?> name="dmr" value="1"/> Add sender</li>-->
-                                            <li><input type="checkbox" <?php echo ($access->money_transfer == 1)?"checked=checked":"";?> name="money_transfer" value="1"/> Money Transfer</li>
+                                            <li><input type="checkbox" class="dmr mtrans" <?php echo ($access->money_transfer == 1)?"checked=checked":"";?> name="money_transfer" value="1"/> Money Transfer</li>
                                         </ul>
                                     </label>
                                 </div>
@@ -47,15 +47,15 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
-                                <input type="checkbox" <?php echo ($access->recharge == 1)?"checked=checked":"";?> name="recharge" value="1"/>
+                                <input type="checkbox" <?php echo ($access->recharge == 1)?"checked=checked":"";?> name="recharge" value="1" id="checkAll_re"/>
                                 </div>
                                 <div class="col-sm-9">
                                     <label>Recharge
                                         <ul class="padding-left-15">
-                                            <li><input type="checkbox" <?php echo ($access->data_card == 1)?"checked=checked":"";?> name="data_card" value="1"/> DATA Card</li>
-                                            <li><input type="checkbox" <?php echo ($access->dth == 1)?"checked=checked":"";?> name="dth" value="1"/> DTH</li>
-                                            <li><input type="checkbox" <?php echo ($access->postpaid_mobile == 1)?"checked=checked":"";?> name="postpaid_mobile" value="1"/> Postpaid Mobile</li>
-                                            <li><input type="checkbox" <?php echo ($access->prepaid_mobile == 1)?"checked=checked":"";?> name="prepaid_mobile" value="1"/> Prepaid Mobile</li>
+                                            <!--<li><input type="checkbox" <?php echo ($access->data_card == 1)?"checked=checked":"";?> name="data_card" value="1"/> DATA Card</li>-->
+                                            <li><input type="checkbox" <?php echo ($access->dth == 1)?"checked=checked":"";?> name="dth" value="1" class="rech dth"/> DTH</li>
+                                            <li><input type="checkbox" <?php echo ($access->postpaid_mobile == 1)?"checked=checked":"";?> name="postpaid_mobile" value="1" class="rech pr_m"/> Postpaid Mobile</li>
+                                            <li><input type="checkbox" <?php echo ($access->prepaid_mobile == 1)?"checked=checked":"";?> name="prepaid_mobile" value="1" class="rech po_m"/> Prepaid Mobile</li>
                                         </ul>
                                     </label>
                                 </div>
@@ -63,7 +63,7 @@
                         </div>
                         <?php }?>
                         <?php if($this->session->userdata('utility') == 1){?>
-                        <div class="col-sm-4">
+<!--                        <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="col-sm-1">
                                 <input type="checkbox" <?php echo ($access->utility == 1)?"checked=checked":"";?> name="utility" value="1"/>
@@ -77,7 +77,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <?php }?>
                     </div>
                     <div class="row">

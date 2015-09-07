@@ -183,4 +183,47 @@
   $(function() {
     $( ".datepicker" ).datepicker();
   });
+  
   </script>
+<script>
+$("#checkAll").change(function () {
+    $(".dmr").prop('checked', $(this).prop("checked"));
+});
+$(".add_ta").change(function () {
+    var vsh = $(".mtrans").is(":checked");
+    if(vsh == false){
+            $("#checkAll").prop('checked', $(this).prop("checked"));
+    }
+});
+$(".mtrans").change(function () {
+    var vsh = $(".add_ta").is(":checked");
+    if(vsh == false){
+            $("#checkAll").prop('checked', $(this).prop("checked"));
+    }
+});
+$("#checkAll_re").change(function () {
+    $(".rech").prop('checked', $(this).prop("checked"));
+});
+$(".dth").change(function () {
+    var po_m = $(".po_m").is(":checked");
+    var pr_m = $(".pr_m").is(":checked");
+    if(po_m == false && pr_m == false){
+            $("#checkAll_re").prop('checked', $(this).prop("checked"));
+    }
+});
+$(".po_m").change(function () {
+    var pr_m = $(".pr_m").is(":checked");
+    var dth = $(".dth").is(":checked");
+    
+    if(pr_m == false && dth == false){
+            $("#checkAll_re").prop('checked', $(this).prop("checked"));
+    }
+});
+$(".pr_m").change(function () {
+    var po_m = $(".po_m").is(":checked");
+     var dth = $(".dth").is(":checked");
+    if(po_m == false && dth == false){
+            $("#checkAll_re").prop('checked', $(this).prop("checked"));
+    }
+});
+</script>

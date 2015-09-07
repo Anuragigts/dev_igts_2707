@@ -35,14 +35,14 @@
                                     <span class="red"><?= form_error('module_name');?></span>
                                </div>
                                <div class="form-group">
-                                  <label>Sub Module Name <span class="red">*</span></label>
+                                  <label>Service Type <span class="red">*</span></label>
                                   <select class="form-control" name="sub_module_name" id="sub_module_name">
                                       <option value="Select Sub Module"> Select Sub Module </option>
                                   </select>
                                   <span class="red"><?= form_error('sub_module_name');?></span>
                                </div>
                                <div class="form-group">
-                                  <label>Module Object Name <span class="red">*</span></label>
+                                  <label>Service Name <span class="red">*</span></label>
                                   <input type="text" placeholder="Module Object Name" class="form-control" name="module_object_name" value="<?= set_value('module_object_name');?>">
                                   <span class="red"><?= form_error('module_object_name');?></span>
                                </div>

@@ -21,7 +21,7 @@
                         | <small>Zero Configuration</small>
                     </div>-->
             <div class="panel-body">
-                <form role="form" action="" method="post">
+                <form role="form" action="" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -103,6 +103,20 @@
                                <label>Address<span class="red">*</span></label>
                                <textarea placeholder="Address" class="form-control" name="address"><?= $view->address;?></textarea>
                                <span class="red"><?= form_error('address');?></span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>ID Proof</label>
+                                 <input id="" name="idproof" type="file"  autocomplete="off"  >                                
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Address Proof</label>
+                                <input id="" name="addproof" type="file" autocomplete="off"  >
                             </div>
                         </div>
                     </div>

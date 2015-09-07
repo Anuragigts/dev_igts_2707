@@ -3,14 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/controllers/settings.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/recharge_transfer.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/settings_model.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/agent_model.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/common_model.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/view_trans_details.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/layout/side.php</file>
-            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/controllers/agent.php</file>
+            <file>file:/C:/xampp/htdocs/development/sc/trunk/application/views/module_access.php</file>
+            <file>file:/C:/xampp/htdocs/development/sc/trunk/application/controllers/common.php</file>
+            <file>file:/C:/xampp/htdocs/development/sc/trunk/application/models/common_model.php</file>
         </group>
     </open-files>
 </project-private>

@@ -57,7 +57,36 @@ class Settings extends CI_Controller {
                         $this->form_validation->set_rules("city",               "City",             "callback_select_city");
                         $this->form_validation->set_rules("address",            "Address",          "required");
                         if($this->form_validation->run() == TRUE){
-                                $get    =   $this->settings_model->update_profile($valu);
+                            $idP = '';$addp='';
+                            if($_FILES['idproof']['name'] != ''){
+                                $config['upload_path'] = './doc';
+                                $config['allowed_types'] = 'gif|jpg|png';
+                                $file = $_FILES['idproof'];
+                                $uid = date('Y-m-d_i-s');
+                                $uid = 'i'.$uid;
+                                $filename = basename($file['name']); 
+                                $fv=explode(".",$filename);
+                                $idP = $uid.".".$fv['1'];
+                                $name = $config['file_name'] = $idP; //set file name
+                                $this->load->library('upload', $config);
+                                $this->upload->initialize($config);
+                                $this->upload->do_upload('idproof');
+                            }
+                            if($_FILES['addproof']['name'] != ''){
+                                $config['upload_path'] = './doc';
+                                $config['allowed_types'] = 'gif|jpg|png';
+                                $file = $_FILES['addproof'];
+                                $uid = date('Y-m-d_i-s');
+                                $uid = 'p'.$uid;
+                                $filename = basename($file['name']); 
+                                $fv=explode(".",$filename);
+                                $addp = $uid.".".$fv['1'];
+                                $name = $config['file_name'] = $addp; //set file name
+                                $this->load->library('upload', $config);
+                                $this->upload->initialize($config);
+                                $this->upload->do_upload('addproof');
+                            }
+                                $get    =   $this->settings_model->update_profile($valu,$idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Profile has been updated successfully");
                                         redirect("settings/profile");

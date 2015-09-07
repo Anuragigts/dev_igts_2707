@@ -38,7 +38,7 @@ class Settings_model extends CI_Model
                     return array();
                 }   
         }
-        public function update_profile($valu){
+        public function update_profile($valu,$idP,$addp){
                 $ses_id             =   $valu;
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -52,7 +52,9 @@ class Settings_model extends CI_Model
                                 "city"                  =>     $city,
                                 "updated_by"            =>     $ses_id,
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
-                                "address"               =>     $address
+                                "address"               =>     $address,
+                                "id_proof"              =>     "$idP",
+                                "add_proof"              =>     "$addp"
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);

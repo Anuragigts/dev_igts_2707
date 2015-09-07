@@ -298,12 +298,12 @@
                      </ul>
                   </li>
                    <?php } ?>
-                  <li class=" ">
+<!--                  <li class=" ">
                      <a href="#" title="View Modules">
                          <em class="fa fa-cubes"></em>                        
                         <span data-localize="sidebar.nav.DASHBOARD">View Modules</span>
                      </a>                    
-                  </li> 
+                  </li> -->
                    <?php }?>
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>

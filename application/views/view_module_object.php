@@ -23,8 +23,8 @@
                                  <tr>
                                      <th>S.No.</th>
                                     <th>Module Name</th>
-                                    <th>Sub Module Name</th>
-                                    <th>Module Object Name</th>
+                                    <th>Service Type</th>
+                                    <th>Service Name</th>
                                     <?php 
                                     $id =   $this->session->userdata("login_id");
                                     if($id == 1){ ?>
