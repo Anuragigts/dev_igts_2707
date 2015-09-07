@@ -290,9 +290,9 @@ class Common_model extends CI_Model
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
                 $this->db->join('commission as c','c.login_id = l.login_id','left');
                 $this->db->join('package as g','g.package_id = c.package_id','left');
-                $this->db->join('Countries as o','o.Country_id = p.country','left');
-                $this->db->join('States as s','s.State_id = p.state','left');
-                $this->db->join('Cities as y','y.City_id = p.city','left');
+                $this->db->join('countries as o','o.Country_id = p.country','left');
+                $this->db->join('states as s','s.State_id = p.state','left');
+                $this->db->join('cities as y','y.City_id = p.city','left');
                 $this->db->where('l.user_type',$type);
                 $this->db->where('l.login_id',$id);
                 $query = $this->db->get();

@@ -51,7 +51,7 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                   <div class="panel-heading"><b class="red">Note*: </b> You have to add virtual amount only, when you are taking the credit from live.<br> Ex: currently you are having Rs. 100, Now you are taking the credit of Rs. 500. Then yuo have to add Rs. 500 as a virtual money. Then your total virtual money will be Rs. 600.<hr></div>
+                                   <div class="panel-heading"><b class="red">Note*: </b> You have to add amount only, when you are taking the credit from live.<br> Ex: currently you are having Rs. 100, Now you are taking the credit of Rs. 500. Then you have to add Rs. 500 in add money. Then your total balance will be Rs. 600.<hr></div>
                                     <div class="panel-body">                                       
                                         <form method="post"class="form-horizontal" autocomplete="off">                                          
                                           

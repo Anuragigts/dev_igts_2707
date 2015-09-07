@@ -46,19 +46,19 @@
                    <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="visible-lg">
                       <a href="#">
-                          <b>Global Recharge</b> : <span id="phy"></span>
+                          <b>Recharge Balance</b> : <span id="phy"></span>
                       </a>
                   </li>
                   <li class="visible-lg">
                       <a href="#">
-                          <b>Virtual Amount</b> : <span class="vamt">0.00</span>
+                          <b>Main Balance</b> : <span class="vamt">0.00</span>
                       </a>
                   </li>
                    <?php }else{?>
                   
                   <li class="visible-lg">
                       <a href="#">
-                          <b>total Amount</b> : <span class="vamt">0.00</span>
+                          <b>Main Balance</b> : <span class="vamt">0.00</span>
                       </a>
                   </li>
                    <?php }?>

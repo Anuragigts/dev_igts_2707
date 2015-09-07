@@ -302,9 +302,9 @@
                   </li>
                    <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="profile">
-                     <a href="<?= base_url()?>settings/virtualAmt" title="Virtual Amount">
+                     <a href="<?= base_url()?>settings/virtualAmt" title="Add Amount">
                          <em class="fa fa-credit-card"></em>                        
-                        <span data-localize="sidebar.nav.DASHBOARD">Virtual Amount</span>
+                        <span data-localize="sidebar.nav.DASHBOARD">Add Amount</span>
                      </a>                    
                   </li>  
                    <?php }?>

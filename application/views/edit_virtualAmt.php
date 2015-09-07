@@ -53,7 +53,7 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                   <div class="panel-heading"><b class="red">Note*: </b> In case your virtual money is not match with your physical money then only you need to update this.</div>
+                                   <div class="panel-heading"><b class="red">Note*: </b> In case your  Balance is not match with your recharge balance then only you need to update this.</div>
                                     <div class="panel-body">                                       
                                         <form method="post"class="form-horizontal" autocomplete="off">                                          
                                           
