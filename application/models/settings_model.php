@@ -131,7 +131,6 @@ class Settings_model extends CI_Model
         }
         
         public function getVirtualgetter($id){
-            
             $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
             
             if($query && $query->num_rows()== 1){
@@ -140,11 +139,35 @@ class Settings_model extends CI_Model
                    return "0.00";
                }
         }
+        
+        public function getVirtualallgetter($id,$ue){
+                $this->db->select('l.*,p.*,u.user_type as type_user');
+                $this->db->from('login as l');
+                $this->db->join('profile as p','l.login_id = p.login_id','inner');
+                $this->db->join('user_type as u','l.user_type = u.user_type_id','inner');
+                if($ue == 2){
+                    $this->db->where('p.master_distributor_id',$id);
+                }
+                else if($ue == 3){
+                    $this->db->where('p.super_distributor_id',$id);
+                }
+                else if($ue == 4){
+                    $this->db->where('p.distributor_id',$id);
+                }
+                else if($ue == 5){
+                    $this->db->where('p.login_id',$id);
+                }
+                $query = $this->db->get();
+                if($this->db->affected_rows() > 0){
+                  return $query->result();
+               }else{
+                   return array();
+               }
+        }
         public function getprofile($id){
-            
             $query = $this->db->get_where('profile', array('login_id' => $id));
             //echo $this->db->last_query();
-            if($query && $query->num_rows()>0){
+                if($query && $query->num_rows()>0){
                   return $query->row();
                }else{
                    return array();

@@ -305,7 +305,7 @@ class Common_model extends CI_Model
                 } 
         }
         public function access_details($valu){
-                $this->db->select('recharge,utility,dmr');
+                $this->db->select('*');
                 $this->db->from('module_access');
                 $this->db->where('login_id',$valu);
                 $query = $this->db->get();
@@ -318,21 +318,29 @@ class Common_model extends CI_Model
                 } 
         }
         public function update_access($valu){
-                $dmr            =   $this->input->post("dmr");
-                $recharge       =   $this->input->post("recharge");
-                $utility        =   $this->input->post("utility");
+                $dmr                    =   $this->input->post("dmr");
+                $recharge               =   $this->input->post("recharge");
+                $utility                =   $this->input->post("utility");
+                $prepaid_mobile         =   $this->input->post("prepaid_mobile");
+                $postpaid_mobile        =   $this->input->post("postpaid_mobile");
+                $data_card              =   $this->input->post("data_card");
+                $dth                    =   $this->input->post("dth");
+                $electricity            =   $this->input->post("electricity");
+                $gas                    =   $this->input->post("gas");
+                $add_beneficiary        =   $this->input->post("add_beneficiary");
+                $money_transfer         =   $this->input->post("money_transfer");
                 $data           =   array(
                         "recharge"              =>      $recharge,
-                        "prepaid_mobile"        =>      $recharge,
-                        "postpaid_mobile"       =>      $recharge,
-                        'data_card'             =>      $recharge,
-                        "dth"                   =>      $recharge,
+                        "prepaid_mobile"        =>      $prepaid_mobile,
+                        "postpaid_mobile"       =>      $postpaid_mobile,
+                        'data_card'             =>      $data_card,
+                        "dth"                   =>      $dth,
                         "utility"               =>      $utility,
-                        "electricity"           =>      $utility,
-                        "gas"                   =>      $utility,
+                        "electricity"           =>      $electricity,
+                        "gas"                   =>      $gas,
                         "dmr"                   =>      $dmr,
-                        "add_beneficiary"       =>      $dmr,
-                        "money_transfer"        =>      $dmr
+                        "add_beneficiary"       =>      $add_beneficiary,
+                        "money_transfer"        =>      $money_transfer
                 );
 //                print_r($data);exit;
                 $this->db->where('login_id',$valu);

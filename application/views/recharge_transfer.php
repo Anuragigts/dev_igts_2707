@@ -91,6 +91,11 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                <h4><?php echo $profile->first_name;?>'s Current Balance Is : <?php echo  number_format($get,2);?> </h4>
+                                               <?php 
+                                                if($this->uri->segment(4) != "5"){
+                                                    echo $get_co;
+                                                }
+                                               ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <a href="<?= base_url()?>settings/viewTrandDetail/<?php echo $this->uri->segment(3);?>" class="btn btn-warning">View Full Details</a>

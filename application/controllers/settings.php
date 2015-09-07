@@ -182,10 +182,18 @@ class Settings extends CI_Controller {
                             redirect('settings/moneyTransfer/'.$this->uri->segment(3));
                        }
                    }
-              }
-              $data['get']       =  $this->settings_model->getVirtualgetter($this->uri->segment(3)); 
-              $data['profile']       =  $this->settings_model->getprofile($this->uri->segment(3)); 
-             $this->load->view('layout/inner_template',$data);
+            }
+            $val = "<table class='table table-striped'><tr><td>User Type </td><td>Name</td><td>Amount</td></tr>";
+            $data['get']      =  $this->settings_model->getVirtualgetter($this->uri->segment(3)); 
+            $ue = $this->uri->segment(4);
+            $get_co           =  $this->settings_model->getVirtualallgetter($this->uri->segment(3),$ue);
+            foreach($get_co as $co){
+                    $val .= "<tr><td>".$co->type_user."</td><td>".ucfirst($co->first_name)."</td><td>".$this->settings_model->getVirtualgetter($co->login_id)."</td></tr>";
+            }
+            $val .= "</table>";
+            $data['get_co']  = $val;
+            $data['profile']      =  $this->settings_model->getprofile($this->uri->segment(3)); 
+            $this->load->view('layout/inner_template',$data);
          }
          
          public function viewTrandDetail(){

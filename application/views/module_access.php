@@ -35,9 +35,9 @@
                                 <div class="col-sm-9">
                                     <label>DMR 
                                         <ul class="padding-left-15">
-                                            <li>Add Beneficiary</li>
-                                            <li>Add sender</li>
-                                            <li>Money Transfer</li>
+                                            <li><input type="checkbox" <?php echo ($access->add_beneficiary == 1)?"checked=checked":"";?> name="add_beneficiary" value="1"/> Add Beneficiary</li>
+                                            <!--<li><input type="checkbox" <?php echo ($access->dmr == 1)?"checked=checked":"";?> name="dmr" value="1"/> Add sender</li>-->
+                                            <li><input type="checkbox" <?php echo ($access->money_transfer == 1)?"checked=checked":"";?> name="money_transfer" value="1"/> Money Transfer</li>
                                         </ul>
                                     </label>
                                 </div>
@@ -52,10 +52,10 @@
                                 <div class="col-sm-9">
                                     <label>Recharge
                                         <ul class="padding-left-15">
-                                            <li>DATA Card</li>
-                                            <li>DTH</li>
-                                            <li>Postpaid Mobile</li>
-                                            <li>Prepaid Mobile</li>
+                                            <li><input type="checkbox" <?php echo ($access->data_card == 1)?"checked=checked":"";?> name="data_card" value="1"/> DATA Card</li>
+                                            <li><input type="checkbox" <?php echo ($access->dth == 1)?"checked=checked":"";?> name="dth" value="1"/> DTH</li>
+                                            <li><input type="checkbox" <?php echo ($access->postpaid_mobile == 1)?"checked=checked":"";?> name="postpaid_mobile" value="1"/> Postpaid Mobile</li>
+                                            <li><input type="checkbox" <?php echo ($access->prepaid_mobile == 1)?"checked=checked":"";?> name="prepaid_mobile" value="1"/> Prepaid Mobile</li>
                                         </ul>
                                     </label>
                                 </div>
@@ -71,8 +71,8 @@
                                 <div class="col-sm-5">
                                     <label>Utility Payment
                                         <ul class="padding-left-15">
-                                            <li>Electricity</li>
-                                            <li>Gas</li>
+                                            <li><input type="checkbox" <?php echo ($access->electricity == 1)?"checked=checked":"";?> name="electricity" value="1"/> Electricity</li>
+                                            <li><input type="checkbox" <?php echo ($access->gas == 1)?"checked=checked":"";?> name="gas" value="1"/> Gas</li>
                                         </ul>
                                     </label>
                                 </div>

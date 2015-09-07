@@ -43,7 +43,7 @@
                                             <th><?= $view->mobile;?></th>
                                             <th><?= ucfirst($view->login_email);?></th>
                                             <th><?= ucfirst($view->package_name);?></th>
-                                             <th class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></th>
+                                             <th class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>/<?= $view->user_type;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></th>
                                             <th>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->
