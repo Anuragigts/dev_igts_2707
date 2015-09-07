@@ -138,27 +138,32 @@
                      </a>
                      <ul id="recharge" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">Recharge</li>
+                        <?php if($this->session->userdata('prepaid_mobile') == 1){?>
                         <li class="mobile_recharge ">
-                           <a href="<?php echo base_url();?>recharge/mobile_recharge" title="Mobile Recharge">
+                           <a href="<?php echo base_url();?>recharge/mobile_recharge" title="Pre paid Recharge">
                               <span>Pre paid</span>
                            </a>
                         </li>
+                        <?php }?>
+                        <?php if($this->session->userdata('dth') == 1){?>
                          <li class="dth_recharge ">
                            <a href="<?php echo base_url();?>recharge/dth_recharge" title="DTH Recharge">
                               <span>DTH</span>
                            </a>
                         </li>
+                         <?php }?>
+                        <?php if($this->session->userdata('postpaid_mobile') == 1){?>
                         <li class="post_recharge ">
-                           <a href="<?php echo base_url();?>recharge/post_recharge" title="Mobile Recharge">
+                           <a href="<?php echo base_url();?>recharge/post_recharge" title="Post Paid Recharge">
                               <span>Post paid</span>
                            </a>
                         </li>
-                       
-                        <li class="recharge_details ">
+                        <?php }?>
+<!--                        <li class="recharge_details ">
                            <a href="<?php echo base_url();?>recharge/recharge_details" title="Recharge Details">
                               <span>Details</span>
                            </a>
-                        </li>
+                        </li>-->
                      </ul>
                   </li>
                    <?php }if($this->session->userdata('dmr') == 1){?>
@@ -172,21 +177,24 @@
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
 
-                        <li class="topup ">
+<!--                        <li class="topup ">
                            <a href="<?php echo base_url();?>dmr/topup" title="Topup">
                               <span>Topup</span>
                            </a>
-                        </li>
+                        </li>-->
+                        <?php if($this->session->userdata('money_transfer') == 1){?>
                         <li class="dmrUserSearch sender_registration beneficiaryList">
                            <a href="<?php echo base_url();?>dmr/dmrUserSearch" title="Money Transfer">
                               <span>Money Transfer</span>
                            </a>
                         </li>
+                       
                         <li class="viewTransectionHistory ">
                            <a href="<?php echo base_url();?>dmr/viewTransectionHistory" title="Transection History">
                               <span>Transaction History</span>
                            </a>
                         </li>
+                         <?php }?>
 <!--                        <li class="dmrAgents">
                            <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
                               <span>DMR Agents</span>

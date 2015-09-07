@@ -4,10 +4,7 @@
             <h3>
                <!-- Breadcrumb right aligned-->
                <ol class="breadcrumb pull-right">
-<!--                  <li><a href="#">Home</a>
-                  </li>
-                  <li><a href="#">Elements</a>
-                  </li>-->
+
                   <li class="active">Dashboard</li>
                </ol>Dashboard
                <!-- Small text for title-->
@@ -83,7 +80,7 @@
                            <em class="fa fa-money fa-3x"></em>
                         </div>
                         <div class="col-xs-8 pv-lg">
-                           <div class="h2 mt0">Land Line</div>
+                           <div class="h2 mt0">land line</div>
                            <div class="text-uppercase">Bill Payment</div>
                         </div>
                      </div>
@@ -117,7 +114,7 @@
                            <em class="fa fa-send-o fa-3x"></em>
                         </div>
                         <div class="col-xs-8 pv-lg">
-                           <div class="h2 mt0">Flight
+                           <div class="h2 mt0">flight
                            </div>
                            <div class="text-uppercase">Booking</div>
                         </div>
@@ -132,7 +129,7 @@
                            <em class="fa fa-building fa-3x"></em>
                         </div>
                         <div class="col-xs-8 pv-lg">
-                           <div class="h2 mt0">Hotel</div>
+                           <div class="h2 mt0">hotel</div>
                            <div class="text-uppercase">Booking</div>
                         </div>
                      </div>

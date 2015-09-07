@@ -42,9 +42,11 @@
                <div class="col-lg-4 "></div>
                <div class="col-lg-4 "></div>
                <div class="col-lg-4 ">
+                   <?php if($this->session->userdata('add_beneficiary') == 1){?>
                     <div >
                          <a href="<?php echo base_url();?>dmr/addBeneficiary/<?php echo $this->uri->segment(3);?>" class="btn btn-sm btn-warning">Add Beneficiary</a>
                     </div>
+                   <?php }?>
                 </div>
                </div>
            
