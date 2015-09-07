@@ -69,7 +69,7 @@ class Register_model extends CI_Model
                                     "login_mobile"          =>     $mobile,
                                     "login_password"        =>     md5($pass),
                                     "is_confirm"            =>     'confirm',
-                                    "user_type"             =>     2,
+                                    "user_type"             =>     $ref,
                                     "status"                =>     1
                             );
                             $this->db->insert("login",$data);
