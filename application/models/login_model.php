@@ -15,7 +15,7 @@ class Login_model extends CI_Model
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
                 $this->db->join('module_access as m','l.login_id = m.login_id','inner');
                 $this->db->join('user_type as t','t.user_type_id = l.user_type','inner');
-                $this->db->where('l.login_email',$email);
+                $this->db->where('( l.login_email = "'.$email .'" or l.login_mobile = "'.$email.'")');
                 $this->db->where('l.login_password',md5($pass));
                 $this->db->where('l.is_confirm','confirm');
                 $this->db->where('l.status',1);

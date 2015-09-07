@@ -18,7 +18,7 @@ class Login extends CI_Controller {
              'content'       => 'login'
             );
                 if($this->input->post('login')){
-                    $this->form_validation->set_rules("login_email","Email Id","required|valid_email");
+                    $this->form_validation->set_rules("login_email","Email Id","required");
                     $this->form_validation->set_rules("login_password","Password","required|min_length[4]");
                     if($this->form_validation->run() == TRUE){
                             $getdetails      = $this->login_model->getLogindetails();
