@@ -22,7 +22,7 @@ class Register extends CI_Controller {
             if($this->input->post('create_account')){
                     $this->form_validation->set_rules("email",              "Email Id",             "required|valid_email|is_unique[login.login_email]");
                     $this->form_validation->set_rules("mobile",             "Mobile No.",           "required|is_unique[login.login_mobile]|min_length[10]");
-                    $this->form_validation->set_rules("pass",               "Password",             "required|min_length[4]");
+                    $this->form_validation->set_rules("pass",               "Password",             "required|min_length[4]|callback_password_check");
                     $this->form_validation->set_rules("con_pass",           "Confirm Password",     "required|min_length[4]|matches[pass]");
                     $this->form_validation->set_rules("refer",              "Reffered for ",        "required");
                     $this->form_validation->set_rules("state",              "State ",               "required");
@@ -79,6 +79,14 @@ class Register extends CI_Controller {
         $data['city']=$this->common->getcity();
         $this->load->view('layout/register',$data);
     }
+     public function password_check($str)
+            {
+               if ((preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str)) || preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/',$str)) {
+                    return TRUE;
+               }
+               $this->form_validation->set_message('password_check', "Please add alphabets and  numeric charcters in your password.");
+               return FALSE;
+            }
     public function confirm(){
             if($this->session->userdata("my_type") != ""){redirect("dashboard"); }
             $con        =   $this->uri->segment(3);

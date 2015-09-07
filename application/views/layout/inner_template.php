@@ -45,6 +45,7 @@
    <script src="<?php echo $this->config->item('assets_url') ?>vendor/bootstrap/dist/js/bootstrap.js"></script>
     <!--- Accordions -->
     <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery-ui.js"></script>
+    <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery.passstrength.min.js"></script>
     <script>
         $(function() {
                 $( "#accordion" ).accordion();
@@ -53,6 +54,7 @@
             $('input[type=password]').bind('cut copy paste', function (e) {
                e.preventDefault();
             });
+            $("#strpassword").passStrengthify({ rawEntry: true });
         });
     </script> 
     

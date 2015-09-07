@@ -17,7 +17,7 @@ class Settings extends CI_Controller {
                     'content'       => 'change_password'
             );
             if($this->input->post('change_password')){
-                    $this->form_validation->set_rules("pass",               "Password",             "required|min_length[4]");
+                    $this->form_validation->set_rules("pass",               "Password",             "required|min_length[4]|callback_password_check");
                     $this->form_validation->set_rules("con_pass",           "Confirm Password",     "required|min_length[4]|matches[pass]");
                     if($this->form_validation->run() == TRUE){
                             $insert     =   $this->settings_model->change_password();
@@ -33,6 +33,14 @@ class Settings extends CI_Controller {
             }
             $this->load->view('layout/inner_template',$data);
         }
+                public function password_check($str)
+            {
+               if ((preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str)) || preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/',$str)) {
+                    return TRUE;
+               }
+               $this->form_validation->set_message('password_check', "Please add alphabets and  numeric charcters in your password.");
+               return FALSE;
+            }
         public function profile(){
             if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(

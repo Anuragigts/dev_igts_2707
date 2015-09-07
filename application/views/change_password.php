@@ -22,7 +22,7 @@
                            <form role="form" action="" method="post" id="theform">
                                <div class="form-group">
                                   <label>New Password<span class="red">*</span></label>
-                                  <input type="password" placeholder="Password" class="form-control" name="pass">
+                                  <input type="password" placeholder="Password" class="form-control" name="pass" id="strpassword">
                                   <span class="red "><?= form_error('pass');?></span>
                                </div>
                                <div class="form-group">

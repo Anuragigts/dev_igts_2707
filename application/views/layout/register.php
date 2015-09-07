@@ -18,6 +18,7 @@
    <!-- =============== APP STYLES ===============-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/app.css" id="maincss">
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>app/css/my.css" id="maincss">
+ 
    
 </head>
 
@@ -57,7 +58,7 @@
                          <div class="col-md-6">
                             <div class="form-group has-feedback">
                                <label for="signupInputPassword1" class="text-muted">Password<span class="red">*</span></label>
-                               <input id="signupInputPassword1" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password" autocomplete="off" required class="form-control">
+                               <input id="strpassword" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password" autocomplete="off" required class="form-control" >
                                <span class="fa fa-lock form-control-feedback text-muted"></span>
                                 <span class="red"><?=  form_error('pass');?></span>
                             </div>
@@ -179,13 +180,15 @@
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/app.js"></script>
    <script src="<?php echo $this->config->item('assets_url') ?>app/js/my.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery.passstrength.min.js"></script>
 <script>
-         $(document).ready(function () {
-            $('input[type=password]').bind('cut copy paste', function (e) {
-               e.preventDefault();
-            });
-        });
-    </script> 
+        $(document).ready(function () {
+           $('input[type=password]').bind('cut copy paste', function (e) {
+              e.preventDefault();
+           });
+            $("#strpassword").passStrengthify({ rawEntry: true });
+    });
+</script>
 <script>
    function validateR(element,replacement)
    {
@@ -206,6 +209,7 @@
                         $('#city-reg').html('<option value="Select City"> Select City </option>');
                 }                
 	});
+        
 </script>
 </body>
 

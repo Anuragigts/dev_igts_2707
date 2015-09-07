@@ -22,7 +22,7 @@ class Agent extends CI_Controller {
                         $this->form_validation->set_rules("last_name",          "Last Name",            "required|min_length[4]");
                         $this->form_validation->set_rules("mobile_no",          "Mobile No.",           "required|is_unique[login.login_mobile]|min_length[10]");
                         $this->form_validation->set_rules("login_email",        "Email Id",             "required|is_unique[login.login_email]");
-                        $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]");
+                        $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]||callback_password_check");
                         $this->form_validation->set_rules("con_password",       "Confirm Password",     "required|matches[password]");
                         $this->form_validation->set_rules("state",              "State",                "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                 "callback_select_city");
@@ -81,6 +81,14 @@ class Agent extends CI_Controller {
                 $data['dis']        =  $this->getDistributors();
                 $this->load->view('layout/inner_template',$data);		
 	}
+              public function password_check($str)
+            {
+               if ((preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str)) || preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/',$str)) {
+                    return TRUE;
+               }
+               $this->form_validation->set_message('password_check', "Please add alphabets and  numeric charcters in your password.");
+               return FALSE;
+            }
         public function select_country($val){
                 if($val == "Select Country"){
                         $this->form_validation->set_message("select_country", "Please Select Country.");

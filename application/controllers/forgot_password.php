@@ -50,7 +50,7 @@ class Forgot_password extends CI_Controller {
                 $getdetails      = $this->forgot_model->getConfirm($id);
                 if($getdetails == 1){
                     if($this->input->post('reset_password')){
-                            $this->form_validation->set_rules("password","Password","required|min_length[4]");
+                            $this->form_validation->set_rules("password","Password","required|min_length[4]|callback_password_check");
                             $this->form_validation->set_rules("confirm_password","Confirm Password","required|min_length[4]|matches[password]");
                             if($this->form_validation->run() == TRUE){
                                     if($getdetails == 1){
@@ -72,5 +72,12 @@ class Forgot_password extends CI_Controller {
                         redirect("forgot_password");
                 }
                $this->load->view('layout/reset_password',$data);
+        }
+        public function password_check($str) {
+               if ((preg_match('#[0-9]#', $str) && preg_match('#[a-zA-Z]#', $str)) || preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/',$str)) {
+                    return TRUE;
+               }
+               $this->form_validation->set_message('password_check', "Please add alphabets and  numeric charcters in your password.");
+               return FALSE;
         }
 }

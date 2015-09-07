@@ -42,7 +42,7 @@
                      <span class="red"><?= form_error('password');?></span>
                   </div>
                   <div class="form-group has-feedback">
-                     <input id="resetInputPassword" name="confirm_password" type="password" placeholder="Confirm Password" autocomplete="off" class="form-control">
+                     <input id="resetInputPassword1" name="confirm_password" type="password" placeholder="Confirm Password" autocomplete="off" class="form-control">
                      <span class="fa fa-lock form-control-feedback text-muted"></span>
                      <span class="red"><?= form_error('confirm_password');?></span>
                   </div>
@@ -74,11 +74,13 @@
    <script src="<?php echo $this->config->item('assets_url') ?>/vendor/parsleyjs/dist/parsley.min.js"></script>
    <!-- =============== APP SCRIPTS ===============-->
    <script src="<?php echo $this->config->item('assets_url') ?>js/app.js"></script>
+   <script src="<?php echo $this->config->item('assets_url') ?>app/js/jquery.passstrength.min.js"></script>
    <script>
     $(document).ready(function () {
         $('input[type=password]').bind('cut copy paste', function (e) {
            e.preventDefault();
         });
+         $("#resetInputPassword").passStrengthify({ rawEntry: true });
     });
    </script>
 </body>
