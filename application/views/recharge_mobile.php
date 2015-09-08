@@ -44,7 +44,7 @@
              <?php }?>           
              <br>
 			 
-           <div class="col-lg-5">
+           <div class="col-lg-6">
                   <!-- START panel tab-->
                   <div role="tabpanel" class="panel panel-transparent">
                      <!-- Nav tabs-->
@@ -132,14 +132,14 @@
                                                     </button>
                                                  
                                              </div>
-<!--                                             <div class="col-lg-4">                            
+                                             <div class="col-lg-4">                            
                                                 <button id="get-plans" class="btn btn-labeled btn-info" type="button">
                                                   <span class="btn-label">
                                                     <i class="fa fa-check"></i>
                                                   </span>
                                                    Get plans
                                                 </button>
-                                             </div>-->
+                                             </div>
                                           </div>
                                             
                                             
@@ -155,12 +155,8 @@
                      </div>
                   </div>
                   <!-- END panel tab-->
-               </div>
-               
-                <div class="col-lg-7">
-<!--                   START panel tab
-                  <div role="tabpanel" class="panel panel-transparent">
-                      Nav tabs
+                   <div role="tabpanel" class="panel panel-transparent">
+                     
                      <ul role="tablist" class="nav nav-tabs nav-justified">
                         <li role="presentation" class="active">
                            <a href="#full" aria-controls="full" role="tab" data-toggle="tab" class="bb0">
@@ -187,7 +183,7 @@
                              ROAMING</a>
                         </li>
                      </ul>
-                      Tab panes
+                    
                      <div class="tab-content p0 bg-white">
                          <div class="alert alert-block alert-danger fade in alert-er">
                             <button data-dismiss="alert" class="close" type="button">
@@ -198,7 +194,7 @@
                             </p>
                         </div>
                         <div id="full" role="tabpanel" class="tab-pane active">
-                            START list group
+                           
                            <div class="list-group mb0">
                               <div class="table-responsive">                                  
                                   <table class="table table-bordered table-hover table-striped rec-data" id="pln-full">
@@ -207,21 +203,21 @@
                                 <br>
                              </div>
                            </div>
-                            END list group                          
+                                                 
                         </div>
                         <div id="top" role="tabpanel" class="tab-pane">
-                            START table responsive
+                           
                            <div class="table-responsive">                               
                               <table class="table table-bordered table-hover table-striped rec-data" id="pln-top">
                                  
                               </table>
                                 <br>
                            </div>
-                            END table responsive                          
+                                            
                         </div>
                          
                          <div id="special" role="tabpanel" class="tab-pane">
-                            START table responsive
+                           
                            <div class="table-responsive">                               
                               <table class="table table-bordered table-hover table-striped rec-data" id="pln-special">
                                  
@@ -230,7 +226,7 @@
                            </div>                          
                         </div>
                          <div id="twog" role="tabpanel" class="tab-pane">
-                            START table responsive
+                           
                            <div class="table-responsive">                               
                               <table class="table table-bordered table-hover table-striped rec-data" id="pln-tog">
                                  
@@ -239,7 +235,7 @@
                            </div>                          
                         </div>
                          <div id="threeg" role="tabpanel" class="tab-pane">
-                            START table responsive
+                          
                            <div class="table-responsive">                               
                               <table class="table table-bordered table-hover table-striped rec-data" id="pln-thg">
                                  
@@ -248,7 +244,7 @@
                            </div>                          
                         </div>
                          <div id="roaming" role="tabpanel" class="tab-pane">
-                            START table responsive
+                           
                            <div class="table-responsive">                               
                               <table class="table table-bordered table-hover table-striped rec-data" id="pln-rom">
                                  
@@ -261,7 +257,12 @@
                          <br>
                      </div>
                   </div>
-                   END panel tab-->
+                   <!--END panel tab-->
+               </div>
+               
+                <div class="col-lg-6">
+                  
+                 
                    <div class="panel-body" style="border:1px solid #ccc;">
                      <h3> Recharge Details </h3><hr>
                     <table id="datatable1" class="table table-striped table-hover">
@@ -272,7 +273,7 @@
                              <th >Amount</th>
                              <th >Operator</th>                             
                              <th >Time</th>
-                             <th >Done By</th>                             
+                             <!--<th >Done By</th>-->                             
                              <th >Status</th>                             
                           </tr>
                        </thead>
@@ -287,7 +288,7 @@
                                     <td><?php echo $dl->amount;?></td>
                                     <td><?php echo $dl->op_name;?></td>
                                     <td><?php echo $dl->responce_time;?></td>
-                                    <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                    <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                     <td>
                                         <?php if($dl->status == 1){
                                             echo "Success";
@@ -305,7 +306,7 @@
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -324,7 +325,7 @@
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -343,7 +344,7 @@
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -362,7 +363,7 @@
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";

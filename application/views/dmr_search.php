@@ -53,7 +53,7 @@
                                           <div class="form-group">
                                               <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
                                                 <div class="col-lg-9">
-                                                    <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                                    <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" autocomplete="off">
                                                     <span class="red"><?=  form_error('mobile');?></span>
                                                 </div>
                                           </div>

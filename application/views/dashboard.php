@@ -95,8 +95,8 @@
                   <div class="panel widget bg-primary">
                       <a href="<?php echo base_url();?>dmr/dmrUserSearch" style="text-decoration: none;color:#fff;">
                      <div class="row row-table">
-                        <div class="col-xs-4 text-center bg-primary-dark pv-lg">
-                           <em class="fa fa-inr fa-3x"></em>
+                        <div class="col-xs-4 text-center bg-primary-dark pv-lg ">
+                           <em class="fa fa-inr fa-3x fa-spin "></em>
                         </div>
                         <div class="col-xs-8 pv-lg">
                            <div class="h2 mt0">DMR</div>
@@ -135,25 +135,22 @@
                      </div>
                   </div>
                </div>
-               <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                   <!-- START date widget-->
                   <div class="panel widget">
                      <div class="row row-table">
                         <div class="col-xs-4 text-center bg-green pv-lg">                          
-                           <div data-now="" data-format="MMMM" class="text-sm"></div>
-                           <br>
-                           <div data-now="" data-format="D" class="h2 mt0"></div>
+                            <em class="fa fa-bus fa-3x"></em>
                         </div>
                         <div class="col-xs-8 pv-lg">
-                           <div data-now="" data-format="dddd" class="text-uppercase"></div>
-                           <br>
-                           <div data-now="" data-format="h:mm" class="h2 mt0"></div>
-                           <div data-now="" data-format="a" class="text-muted text-sm"></div>
+                           <div class="h2 mt0">bus</div>
+                           <div class="text-uppercase">Booking</div>
                         </div>
                      </div>
                   </div>
                   <!-- END date widget    -->
                </div>
+               
             </div>
             <!-- END widgets box-->
             <br>
@@ -445,7 +442,32 @@
             </div>
             
            </div>
-<?php }?>   
+<?php }?>   <br><br>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    
+                  <!-- START date widget-->
+                    <div class="panel widget">
+                       <div class="row row-table">
+                          <div class="col-xs-4 text-center bg-green pv-lg">                          
+                             <div data-now="" data-format="MMMM" class="text-sm"></div>
+                             <br>
+                             <div data-now="" data-format="D" class="h2 mt0"></div>
+                          </div>
+                          <div class="col-xs-8 pv-lg">
+                             <div data-now="" data-format="dddd" class="text-uppercase"></div>
+                             <br>
+                             <div data-now="" data-format="h:mm" class="h2 mt0"></div>
+                             <div data-now="" data-format="a" class="text-muted text-sm"></div>
+                          </div>
+                       </div>
+                    </div>
+                  <!-- END date widget    -->
+               
+                </div>
+                <div class="col-md-4"></div>
+            </div>
                 
             </div>
             <!-- END Widgets-->

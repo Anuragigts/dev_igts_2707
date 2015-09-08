@@ -333,7 +333,7 @@ class Settings_model extends CI_Model
             $from = $this->session->userdata('login_id');
             $query = $this->db->query ("SELECT t.*,CONCAT(p.first_name,' ',p.last_name)AS from_name, CONCAT(po.first_name,' ',po.last_name)AS to_name FROM trans_detail t"
                     . " INNER JOIN profile p ON p.login_id = t.trans_from"
-                    . " INNER JOIN Profile po On po.login_id = t.trans_to"
+                    . " INNER JOIN profile po On po.login_id = t.trans_to"
                     . " WHERE t.trans_from = $from AND t.trans_to = $id ORDER BY trans_id DESC");
             //echo $this->db->last_query();
             if($query && $query->num_rows()>0){
@@ -347,7 +347,7 @@ class Settings_model extends CI_Model
             $from = $this->session->userdata('login_id');
             $query = $this->db->query ("SELECT t.*,CONCAT(p.first_name,' ',p.last_name)AS from_name, CONCAT(po.first_name,' ',po.last_name)AS to_name FROM trans_detail t"
                     . " INNER JOIN profile p ON p.login_id = t.trans_from"
-                    . " INNER JOIN Profile po On po.login_id = t.trans_to"
+                    . " INNER JOIN profile po On po.login_id = t.trans_to"
                     . " WHERE t.trans_from = $id ORDER BY trans_id DESC");
            // echo $this->db->last_query();
             if($query && $query->num_rows()>0){

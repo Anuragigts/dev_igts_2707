@@ -152,7 +152,7 @@ class Dmr extends CI_Controller {
          $data['details'] = $this->dmr_model->getDMRDetails($transection_id);
         
          if($this->input->post('send')){
-            $this->form_validation->set_rules('trans',  'Transection Id',   'required');
+            $this->form_validation->set_rules('trans',  'Transaction Id',   'required');
             $this->form_validation->set_rules('otp',    'OTP',              'required');
             
              if($this->form_validation->run() == TRUE){
@@ -219,7 +219,7 @@ class Dmr extends CI_Controller {
         $card = $this->uri->segment(3);
         if($this->input->post('add')){
             $this->form_validation->set_rules('card_no',     'Card Number',             'required');
-           // $this->form_validation->set_rules('trans_no',    'Transection Number',      'required');
+           // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
             if($this->input->post('b_type') == 'MMID'){
@@ -258,7 +258,7 @@ class Dmr extends CI_Controller {
         }
         if($this->input->post('verify')){
             $this->form_validation->set_rules('card_no',     'Card Number',             'required');
-           // $this->form_validation->set_rules('trans_no',    'Transection Number',      'required');
+           // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
             if($this->input->post('b_type') == 'MMID'){
@@ -386,7 +386,7 @@ class Dmr extends CI_Controller {
        
         if($this->input->post('edit')){
               $this->form_validation->set_rules('card_no',     'Card Number',             'required');
-           // $this->form_validation->set_rules('trans_no',    'Transection Number',      'required');
+           // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
             if($this->input->post('b_type') == 'MMID'){
@@ -680,7 +680,7 @@ class Dmr extends CI_Controller {
           $data['login_details'] = array(); 
             
             if($this->input->post('send')){
-                $this->form_validation->set_rules('id',  'Transection Id',   'required');
+                $this->form_validation->set_rules('id',  'Transaction Id',   'required');
                  if($this->form_validation->run() == TRUE){
                      $retry = $this->dmr_model->reTryTransfer();
                       if($retry == 1){ 
@@ -714,7 +714,7 @@ class Dmr extends CI_Controller {
           $data['login_details'] = array(); 
             
             if($this->input->post('send')){
-                $this->form_validation->set_rules('id',  'Transection Id',   'required');
+                $this->form_validation->set_rules('id',  'Transaction Id',   'required');
                  if($this->form_validation->run() == TRUE){
                      $retry = $this->dmr_model->reTryTransfer1();
                       if($retry == 1){ 
@@ -920,7 +920,7 @@ class Dmr extends CI_Controller {
              }
              
               $data["searched"] =$this->dmr_model->searchagentHistory($card,$type,$mode);
-              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b class='bold1'>".$mode."</b>";
+              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transaction Type: <b class='bold1'>".$type."</b>, Transaction Mode: <b class='bold1'>".$mode."</b>";
          }
          
          $data['cardholder'] = $this->dmr_model->card_details($card);
@@ -964,7 +964,7 @@ class Dmr extends CI_Controller {
              
             
             $data["searched"] =$this->dmr_model->searchUserHistory($card,$type,$mode);
-              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transection Type: <b class='bold1'>".$type."</b>, Transection Mode: <b class='bold1'>".$mode."</b>";
+              $data['filter_by'] = "Filter By From Date: <b class='bold1'>".$this->input->post('from')."</b>, To Date: <b class='bold1'>".$this->input->post('to')."</b>, Transaction Type: <b class='bold1'>".$type."</b>, Transaction Mode: <b class='bold1'>".$mode."</b>";
          }
          
         // $data['cardholder'] = $this->dmr_model->card_details($card);

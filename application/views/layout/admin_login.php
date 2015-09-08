@@ -36,7 +36,7 @@
                <p class="text-center pv">SUPER ADMIN ACCESS</p>
                <form role="form" data-parsley-validate="" novalidate="" class="mb-lg" method="post" action="">
                   <div class="form-group has-feedback">
-                     <input id="exampleInputEmail1" name="login_email" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email" value="<?= set_value("login_email");?>">
+                     <input id="exampleInputEmail1" name="login_email" type="email" placeholder="Email-Id (or) Mobile No." autocomplete="off" required class="form-control email" value="<?= set_value("login_email");?>">
                      <span class="fa fa-envelope form-control-feedback text-muted"></span>
                      <span class="red"><?php echo form_error('login_email');?></span>
                   </div>

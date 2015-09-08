@@ -36,7 +36,7 @@ class Forgot_model extends CI_Model
                    $this->email->from('support@esytopup.com', 'Support : Esy Topup');
                     $this->email->to($email);
                     $this->email->subject('Esy Top-up Reset Password');
-                    $message = 'Dear '."Urer, <br/><br/>";
+                    $message = 'Dear '."User, <br/><br/>";
                     $message .= 'Please reset your password By clicking on ';
                     $message .='<a href="'.base_url().'forgot_password/reset/'.md5($pass).'">Link</a> ';
                     $message .= ' to reset your password.  <br/><br/><br/>';

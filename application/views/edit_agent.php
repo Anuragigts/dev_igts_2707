@@ -92,10 +92,12 @@
                                     }?>
                                 </select>
                                  <?php } else { 
-                                    foreach($master as $mt){?>
-                                <input type="hidden" value="<?= $mt->login_id;?>" name="master"/>
-                                <input type="text" value="<?= ucfirst($mt->first_name." ".$mt->last_name);?>" disabled="disabled" readonly="readonly" class="form-control"/>
-                                <?php 
+                                    foreach($master as $mt){
+										if($mt->login_id == $view->master_distributor_id){
+										?>
+											<input type="hidden" value="<?= $mt->login_id;?>" name="master"/>
+											<input type="text" value="<?= ucfirst($mt->first_name." ".$mt->last_name);?>" disabled="disabled" readonly="readonly" class="form-control"/>
+										<?php  }
                                     }
                                     } ?>
                                 <span class="red"><?= form_error('master');?></span>

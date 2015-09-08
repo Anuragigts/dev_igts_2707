@@ -217,7 +217,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password<span class="red">*</span></label>
-                                <input type="password" placeholder="Password" class="form-control email" name="password" value="<?= set_value('password');?>">
+                                <input type="password" placeholder="Password" class="form-control email" name="password" value="<?= set_value('password');?>" id="strpassword">
                                 <span class="red"><?= form_error('password');?></span>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>IF Proof</label>
+                                <label>ID Proof</label>
                                  <input id="" name="idproof" type="file"  autocomplete="off"  >                                
                             </div>
                         </div>
@@ -288,7 +288,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password<span class="red">*</span></label>
-                                <input type="password" placeholder="Password" class="form-control email" name="password" value="<?= set_value('password');?>">
+                                <input type="password" placeholder="Password" class="form-control email" name="password" value="<?= set_value('password');?>" id="strpassword">
                                 <span class="red"><?= form_error('password');?></span>
                             </div>
                         </div>
@@ -312,7 +312,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>IF Proof</label>
+                                <label>ID Proof</label>
                                  <input id="" name="idproof" type="file"  autocomplete="off"  >                                
                             </div>
                         </div>

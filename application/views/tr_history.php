@@ -71,17 +71,17 @@
                                    </div>
                                </div>
                                <div class="col-lg-3">
-                                   <label for="Mobile">Transection Type </label>
+                                   <label for="Mobile">Transaction Type </label>
                                    <select name="t_type" class="form-control">
                                        <option value="0">All</option>
-                                       <option value="3">Remited</option>
+                                       <option value="3">Remitted</option>
                                        <option value="5">Rejection</option>
-                                       <option value="6">Refuund</option>
+                                       <option value="6">Refund</option>
                                    </select>
                                    <span class="red"><?=  form_error('t_type');?></span>
                                </div>
                                <div class="col-lg-3">
-                                    <label for="Mobile">Transection Mode </label>
+                                    <label for="Mobile">Transaction Mode </label>
                                    <select name="m_type" class="form-control">
                                        <option value="0">All</option>
                                        <option value="1">IMPS(MMID)</option>
@@ -112,7 +112,7 @@
                                 <thead>
                                    <tr>
                                       <th >S.No.</th>
-                                      <th >Transection ID</th>
+                                      <th >Transaction ID</th>
                                       
                                       <th >Receiver</th>
                                       

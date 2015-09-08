@@ -9,7 +9,7 @@
              <li class="active">Edit Super Distributor</li>
           </ol> Edit Super Distributor
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For the creation of Super Distributor</span>
+          <span class="text-sm hidden-xs">For updating Super Distributor</span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -202,7 +202,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>IF Proof</label>
+                                <label>ID Proof</label>
                                  <input id="" name="idproof" type="file"  autocomplete="off"  >                                
                             </div>
                         </div>

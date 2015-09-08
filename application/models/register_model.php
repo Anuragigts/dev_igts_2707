@@ -41,7 +41,7 @@ class Register_model extends CI_Model
                     $this->email->from('support@esytopup.com', 'Support : Esy Topup');
                     $this->email->to($email);
                     $this->email->subject('Esy Top-up Confirmation');
-                    $message = 'Dear '."Urer, <br/><br/>";
+                    $message = 'Dear '."User, <br/><br/>";
                     $message .= 'Thank you for being with Esy Top-up, We will send your username and password on your mobile<br> For verification Click on this ';
                     $message .='<a href="'.base_url().'register/confirm/'.md5($email).'">Confirmation Link</a> ';
                     $message .= '<br/><br/><br/>';
@@ -67,6 +67,7 @@ class Register_model extends CI_Model
 		$result = curl_exec($ch);
 		curl_close($ch);
 		$xml = @simplexml_load_string($result);
+                //echo "hiii"; die();
                             $data   =   array(
                                     "login_email"           =>     $email,
                                     "login_mobile"          =>     $mobile,

@@ -11,7 +11,7 @@
              <li class="active">Details</li>                 
           </ol>Transaction Details
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">Get the transaction details</span>
+          <span class="text-sm hidden-xs">Get the Transaction details</span>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->

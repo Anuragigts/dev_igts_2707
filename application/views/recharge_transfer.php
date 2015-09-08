@@ -90,7 +90,7 @@
                                        </form>  
                                         <div class="row">
                                             <div class="col-md-8">
-                                               <h4><?php echo $profile->first_name;?>'s Current Balance Is : <?php echo  number_format($get,2);?> </h4>
+                                               <h4><?php echo $profile->first_name;?>'s Current Balance Is : <?php echo  $get;?> </h4>
                                                <?php 
                                                 if($this->uri->segment(4) != "5"){
                                                     echo $get_co;
