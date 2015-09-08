@@ -12,9 +12,9 @@ class Super_distributor extends CI_Controller {
 	public function create_super_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: CREATE SUPER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: CREATE SUPER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: CREATE SUPER DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: CREATE SUPER DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: CREATE SUPER DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: CREATE SUPER DISTRIBUTOR',
                         'content'       => 'create_super_distributor'
                 );
                 if($this->input->post('create_super_distributor')){
@@ -134,9 +134,9 @@ class Super_distributor extends CI_Controller {
         public function view_super_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW SUPER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW SUPER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW SUPER DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
                         'content'       => 'view_super_distributor'
                 );
                 $data['view_dis']   =  $this->super_distributor_model->view_super_distributor();
@@ -145,9 +145,9 @@ class Super_distributor extends CI_Controller {
         public function edit_super_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: EDIT SUPER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: EDIT SUPER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: EDIT SUPER DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: EDIT SUPER DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: EDIT SUPER DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: EDIT SUPER DISTRIBUTOR',
                         'content'       => 'edit_super_distributor'
                 );
                 $valu    = $this->uri->segment(3);
@@ -235,9 +235,9 @@ class Super_distributor extends CI_Controller {
         public function super_distributor_details(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW SUPER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW SUPER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW SUPER DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: VIEW SUPER DISTRIBUTOR',
                         'content'       => 'view_super_distributor_details'
                 );
                 $val    = $this->uri->segment(3);

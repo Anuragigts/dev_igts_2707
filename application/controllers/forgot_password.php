@@ -10,9 +10,9 @@ class Forgot_password extends CI_Controller {
         }
 	public function index(){
                 $data = array(
-                 'title'         => 'SC :: Reset Password',
-                 'metakeyword'   => 'SC :: Reset Password',
-                 'metadesc'      => 'SC :: Reset Password',
+                 'title'         => ' ESY TOPUP :: Reset Password',
+                 'metakeyword'   => ' ESY TOPUP :: Reset Password',
+                 'metadesc'      => ' ESY TOPUP :: Reset Password',
                  'content'       => 'forgot_password'
                 );
                     if($this->input->post('forgot_password')){
@@ -41,9 +41,9 @@ class Forgot_password extends CI_Controller {
 	}
         public function reset(){
                 $data = array(
-                    'title'         => 'SC :: Reset Password',
-                    'metakeyword'   => 'SC :: Reset Password',
-                    'metadesc'      => 'SC :: Reset Password',
+                    'title'         => ' ESY TOPUP :: Reset Password',
+                    'metakeyword'   => ' ESY TOPUP :: Reset Password',
+                    'metadesc'      => ' ESY TOPUP :: Reset Password',
                     'content'       => 'reset_password'
                 );
                 $id = $this->uri->segment(3);

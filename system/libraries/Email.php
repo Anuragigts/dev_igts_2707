@@ -33,8 +33,8 @@ class CI_Email {
 	var	$mailpath		= "/usr/sbin/sendmail";	// Sendmail path
 	var	$protocol		= "smtp";	// mail/sendmail/smtp
 	var	$smtp_host		= "mail.supremecluster.com";		// SMTP Server.  Example: mail.earthlink.net
-	var	$smtp_user		= "info@igravitas.in";		// SMTP Username
-	var	$smtp_pass		= "ankita3108";		// SMTP Password
+	var	$smtp_user		= "support@esytopup.com";		// SMTP Username
+	var	$smtp_pass		= "Admin@123";		// SMTP Password
 	var	$smtp_port		= "25";		// SMTP Port
 	var	$smtp_timeout	= 5;		// SMTP Timeout in seconds
 	var	$smtp_crypto	= "";		// SMTP Encryption. Can be null, tls or ssl.

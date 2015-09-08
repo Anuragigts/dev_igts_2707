@@ -12,7 +12,7 @@ class Dashboard extends CI_Controller {
         //print_r( $this->session->all_userdata());
 //         if($this->session->userdata('user_type') == ""){ redirect("/");}
         $data = array(
-              'title'         => 'SC :: DASHBOARD',
+              'title'         => 'ESY TOPUP :: DASHBOARD',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'dashboard'

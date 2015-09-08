@@ -12,9 +12,9 @@ class Agent extends CI_Controller {
 	public function create_agent(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: CREATE AGENT',
-                        'metakeyword'   => 'SC :: CREATE AGENT',
-                        'metadesc'      => 'SC :: CREATE AGENT',
+                        'title'         => 'ESY TOPUP :: CREATE AGENT',
+                        'metakeyword'   => 'ESY TOPUP :: CREATE AGENT',
+                        'metadesc'      => 'ESY TOPUP :: CREATE AGENT',
                         'content'       => 'create_agent'
                 );
                 if($this->input->post('create_agent')){
@@ -155,9 +155,9 @@ class Agent extends CI_Controller {
         public function view_agent(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW AGENT',
-                        'metakeyword'   => 'SC :: VIEW AGENT',
-                        'metadesc'      => 'SC :: VIEW AGENT',
+                        'title'         => 'ESY TOPUP :: VIEW AGENT',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW AGENT',
+                        'metadesc'      => 'ESY TOPUP :: VIEW AGENT',
                         'content'       => 'view_agent'
                 );
                 $data['view_dis']   =  $this->agent_model->view_agent();
@@ -166,9 +166,9 @@ class Agent extends CI_Controller {
         public function agent_details(){
              if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW AGENT',
-                        'metakeyword'   => 'SC :: VIEW AGENT',
-                        'metadesc'      => 'SC :: VIEW AGENT',
+                        'title'         => 'ESY TOPUP :: VIEW AGENT',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW AGENT',
+                        'metadesc'      => 'ESY TOPUP :: VIEW AGENT',
                         'content'       => 'view_agent_detail'
                 );               
                  $val    = $this->uri->segment(3);
@@ -187,9 +187,9 @@ class Agent extends CI_Controller {
         public function edit_agent(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3 &&  $this->session->userdata('my_type') != 4){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: EDIT AGENT',
-                        'metakeyword'   => 'SC :: EDIT AGENT',
-                        'metadesc'      => 'SC :: EDIT AGENT',
+                        'title'         => 'ESY TOPUP :: EDIT AGENT',
+                        'metakeyword'   => 'ESY TOPUP :: EDIT AGENT',
+                        'metadesc'      => 'ESY TOPUP :: EDIT AGENT',
                         'content'       => 'edit_agent'
                 );
                 $valu    = $this->uri->segment(3);

@@ -33,7 +33,7 @@ class Forgot_model extends CI_Model
                 $pass   =   rand(10000,99999);
                     $this->email->set_newline("\r\n");
                     // Set to, from, message, etc.
-                    $this->email->from('info@igravitas.in', 'Admin');
+                   $this->email->from('support@esytopup.com', 'Support : Esy Topup');
                     $this->email->to($email);
                     $this->email->subject('Esy Top-up Reset Password');
                     $message = 'Dear '."Urer, <br/><br/>";

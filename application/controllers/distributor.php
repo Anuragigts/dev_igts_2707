@@ -12,9 +12,9 @@ class Distributor extends CI_Controller {
 	public function create_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: CREATE DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: CREATE DISTRIBUTOR',
-                        'metadesc'      => 'SC :: CREATE DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: CREATE DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: CREATE DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: CREATE DISTRIBUTOR',
                         'content'       => 'create_distributor'
                 );
                 if($this->input->post('create_distributor')){
@@ -145,9 +145,9 @@ class Distributor extends CI_Controller {
         public function view_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: VIEW DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: VIEW DISTRIBUTOR',
                         'content'       => 'view_distributor'
                 );
                 $data['view_dis']   =  $this->distributor_model->view_distributor();
@@ -156,9 +156,9 @@ class Distributor extends CI_Controller {
         public function edit_distributor(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: EDIT DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: EDIT DISTRIBUTOR',
-                        'metadesc'      => 'SC :: EDIT DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: EDIT DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: EDIT DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: EDIT DISTRIBUTOR',
                         'content'       => 'edit_distributor'
                 );
                 $valu    = $this->uri->segment(3);
@@ -254,9 +254,9 @@ class Distributor extends CI_Controller {
         public function distributor_details(){
             if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 &&  $this->session->userdata('my_type') != 3){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW DISTRIBUTOR',
+                        'title'         => 'ESY TOPUP :: VIEW DISTRIBUTOR',
+                        'metakeyword'   => 'ESY TOPUP :: VIEW DISTRIBUTOR',
+                        'metadesc'      => 'ESY TOPUP :: VIEW DISTRIBUTOR',
                         'content'       => 'view_distributor_details'
                 );
                 $val    = $this->uri->segment(3);

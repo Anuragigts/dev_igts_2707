@@ -11,9 +11,9 @@ class Package extends CI_Controller {
         }
 	public function create_package(){
                 $data = array(
-                        'title'         => 'SC :: CREATE PACKAGE',
-                        'metakeyword'   => 'SC :: CREATE PACKAGE',
-                        'metadesc'      => 'SC :: CREATE PACKAGE',
+                        'title'         => ' ESY TOPUP :: CREATE PACKAGE',
+                        'metakeyword'   => ' ESY TOPUP :: CREATE PACKAGE',
+                        'metadesc'      => ' ESY TOPUP :: CREATE PACKAGE',
                         'content'       => 'create_package'
                 );
                 if($this->input->post('create_package')){
@@ -56,9 +56,9 @@ class Package extends CI_Controller {
         }
         public function view_package(){
                 $data = array(
-                        'title'         => 'SC :: VIEW PACKAGE',
-                        'metakeyword'   => 'SC :: VIEW PACKAGE',
-                        'metadesc'      => 'SC :: VIEW PACKAGE',
+                        'title'         => ' ESY TOPUP :: VIEW PACKAGE',
+                        'metakeyword'   => ' ESY TOPUP :: VIEW PACKAGE',
+                        'metadesc'      => ' ESY TOPUP :: VIEW PACKAGE',
                         'content'       => 'view_package'
                 );
                 $data['view_package']   =  $this->package_model->view_package();
@@ -66,9 +66,9 @@ class Package extends CI_Controller {
 	}
         public function create_commission(){
                 $data = array(
-                        'title'         => 'SC :: COMMISSION',
-                        'metakeyword'   => 'SC :: COMMISSION',
-                        'metadesc'      => 'SC :: COMMISSION',
+                        'title'         => ' ESY TOPUP :: COMMISSION',
+                        'metakeyword'   => ' ESY TOPUP :: COMMISSION',
+                        'metadesc'      => ' ESY TOPUP :: COMMISSION',
                         'content'       => 'create_commission'
                 );
                 $data['recharge']   =   $this->package_model->get_recharge();
@@ -101,9 +101,9 @@ class Package extends CI_Controller {
                         $g_id   =   $this->session->userdata("view_id");
                 }
                 $data = array(
-                        'title'         => 'SC :: VIEW PACKAGE DETAILS',
-                        'metakeyword'   => 'SC :: VIEW PACKAGE DETAILS',
-                        'metadesc'      => 'SC :: VIEW PACKAGE DETAILS',
+                        'title'         => ' ESY TOPUP :: VIEW PACKAGE DETAILS',
+                        'metakeyword'   => ' ESY TOPUP :: VIEW PACKAGE DETAILS',
+                        'metadesc'      => ' ESY TOPUP :: VIEW PACKAGE DETAILS',
                         'content'       => 'view_package_details'
                 );
                 $data["view_det"]   =   $this->package_model->view_package_details($g_id);

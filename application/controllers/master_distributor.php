@@ -12,9 +12,9 @@ class Master_distributor extends CI_Controller {
 	public function create_master_distributor(){
             if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: CREATE MASTER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: CREATE MASTER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: CREATE MASTER DISTRIBUTOR',
+                        'title'         => ' ESY TOPUP :: CREATE MASTER DISTRIBUTOR',
+                        'metakeyword'   => ' ESY TOPUP :: CREATE MASTER DISTRIBUTOR',
+                        'metadesc'      => ' ESY TOPUP :: CREATE MASTER DISTRIBUTOR',
                         'content'       => 'create_master_distributor'
                 );
                 if($this->input->post('create_master_distributor')){
@@ -122,9 +122,9 @@ class Master_distributor extends CI_Controller {
         public function view_master_distributor(){
             if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW MASTER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW MASTER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW MASTER DISTRIBUTOR',
+                        'title'         => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
+                        'metakeyword'   => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
+                        'metadesc'      => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
                         'content'       => 'view_master_distributor'
                 );
                 $data['view_dis']   =  $this->master_distributor_model->view_master_distributor();
@@ -133,9 +133,9 @@ class Master_distributor extends CI_Controller {
         public function edit_master_distributor(){
             if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: EDIT MASTER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: EDIT MASTER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: EDIT MASTER DISTRIBUTOR',
+                        'title'         => ' ESY TOPUP :: EDIT MASTER DISTRIBUTOR',
+                        'metakeyword'   => ' ESY TOPUP :: EDIT MASTER DISTRIBUTOR',
+                        'metadesc'      => ' ESY TOPUP :: EDIT MASTER DISTRIBUTOR',
                         'content'       => 'edit_master_distributor'
                 );
                 $valu    = $this->uri->segment(3);
@@ -217,9 +217,9 @@ class Master_distributor extends CI_Controller {
         public function master_distributor_details(){
             if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
-                        'title'         => 'SC :: VIEW MASTER DISTRIBUTOR',
-                        'metakeyword'   => 'SC :: VIEW MASTER DISTRIBUTOR',
-                        'metadesc'      => 'SC :: VIEW MASTER DISTRIBUTOR',
+                        'title'         => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
+                        'metakeyword'   => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
+                        'metadesc'      => ' ESY TOPUP :: VIEW MASTER DISTRIBUTOR',
                         'content'       => 'view_master_distributor_details'
                 );
                 $val    = $this->uri->segment(3);

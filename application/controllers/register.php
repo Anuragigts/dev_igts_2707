@@ -13,9 +13,9 @@ class Register extends CI_Controller {
     {
         if($this->session->userdata("my_type") != ""){redirect("dashboard"); }
         $data = array(
-             'title'         => 'SC :: REGISTER',
-             'metakeyword'   => 'SC :: REGISTER',
-             'metadesc'      => 'SC :: REGISTER',
+             'title'         => 'ESY TOPUP :: REGISTER',
+             'metakeyword'   => 'ESY TOPUP :: REGISTER',
+             'metadesc'      => 'ESY TOPUP :: REGISTER',
              'content'       => 'register'
             );
         $india = '101';

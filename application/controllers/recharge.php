@@ -150,15 +150,16 @@ class Recharge extends CI_Controller {
            
         }
         
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2']);
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3']);
     }
    
     public function mobile_recharge(){
         if( $this->session->userdata('login_id') == ''){redirect('login');}
-        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
+        if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.');redirect('dashboard');}
+        if( $this->session->userdata('prepaid_mobile') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
-              'title'         => 'SC :: PRE PAID RECHARGE',
+              'title'         => 'ESY TOPUP :: PRE PAID RECHARGE',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'recharge_mobile'
@@ -204,10 +205,11 @@ class Recharge extends CI_Controller {
     }
      public function post_recharge(){
          if( $this->session->userdata('login_id') == ''){redirect('login');}
-        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
+        if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
+        if( $this->session->userdata('postpaid_mobile') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
-              'title'         => 'SC :: POST PAID RECHARGE',
+              'title'         => 'ESY TOPUP :: POST PAID RECHARGE',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'recharge_post_mobile'
@@ -254,10 +256,11 @@ class Recharge extends CI_Controller {
     }
      public function dth_recharge(){
          if( $this->session->userdata('login_id') == ''){redirect('login');}
-        if( $this->session->userdata('recharge') != '1'){redirect('dashboard');}
+        if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
+        if( $this->session->userdata('dth') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
-              'title'         => 'SC :: DTH RECHARGE',
+              'title'         => 'ESY TOPUP :: DTH RECHARGE',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'recharge_dth'
@@ -313,7 +316,7 @@ class Recharge extends CI_Controller {
     
     public function recharge_details(){
          $data = array(
-              'title'         => 'SC :: RECHARGE DETAILS',
+              'title'         => 'ESY TOPUP :: RECHARGE DETAILS',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'recharge_details'

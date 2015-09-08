@@ -12,9 +12,9 @@ class Admin extends CI_Controller {
     {
         if($this->session->userdata("my_type") != ""){redirect("dashboard"); }
             $data = array(
-             'title'         => 'Esy :: Topup',
-             'metakeyword'   => 'Esy :: Topup',
-             'metadesc'      => 'Esy :: Topup',
+             'title'         => 'ESY TOPUP :: Topup',
+             'metakeyword'   => 'ESY TOPUP :: Topup',
+             'metadesc'      => 'ESY TOPUP :: Topup',
              'content'       => 'admin_login'
             );
                 if($this->input->post('login')){

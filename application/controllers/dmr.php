@@ -15,7 +15,7 @@ class Dmr extends CI_Controller {
     public function sender_registration(){
         
          $data = array(
-              'title'         => 'SC :: DMR SENDER REGISTRATION',
+              'title'         => 'ESY TOPUP :: DMR SENDER REGISTRATION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'dmr_sender_registration'
@@ -144,7 +144,7 @@ class Dmr extends CI_Controller {
         
         $transection_id = $this->uri->segment(3);
          $data = array(
-              'title'         => 'DMR :: OTP',
+              'title'         => 'DMR ESY TOPUP :: OTP',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'dmr_register_otp'
@@ -209,7 +209,7 @@ class Dmr extends CI_Controller {
     public function addBeneficiary(){
         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
-              'title'         => 'DMR :: ADD BENEFICIARY',
+              'title'         => 'DMR ESY TOPUP :: ADD BENEFICIARY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'add_beneficiary'
@@ -331,7 +331,7 @@ class Dmr extends CI_Controller {
         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $ben_id = $this->uri->segment(3);
          $data = array(
-              'title'         => 'DMR :: BENEFICIARY OTP',
+              'title'         => 'DMR ESY TOPUP :: BENEFICIARY OTP',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'beneficiary_otp'
@@ -367,7 +367,7 @@ class Dmr extends CI_Controller {
         public function viewBeneficiary(){
             if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
             $data = array(
-                 'title'         => 'DMR :: ADD BENEFICIARY',
+                 'title'         => 'DMR ESY TOPUP :: ADD BENEFICIARY',
                  'metakeyword'   => '',
                  'metadesc'      => '',
                  'content'       => 'view_beneficiary'
@@ -377,7 +377,7 @@ class Dmr extends CI_Controller {
         }
     public function editBeneficary(){
         $data = array(
-              'title'         => 'DMR :: ADD BENEFICIARY',
+              'title'         => 'DMR ESY TOPUP :: ADD BENEFICIARY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'edit_beneficiary'
@@ -462,7 +462,7 @@ class Dmr extends CI_Controller {
         $ben_id = $this->uri->segment(3);
         
          $data = array(
-              'title'         => 'DMR :: BENEFICIARY OTP',
+              'title'         => 'DMR ESY TOPUP :: BENEFICIARY OTP',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'remove_beneficiary_otp'
@@ -538,7 +538,7 @@ class Dmr extends CI_Controller {
     public function dmrUserSearch(){
          if( $this->session->userdata('iddmr') == '1'){redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));}
          $data = array(
-              'title'         => 'DMR :: TRANSACTION',
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'dmr_search'
@@ -565,7 +565,7 @@ class Dmr extends CI_Controller {
     }
     public function verifyUser(){
         $data = array(
-              'title'         => 'DMR :: VERIFY',
+              'title'         => 'DMR ESY TOPUP :: VERIFY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'dmr_verify'
@@ -594,7 +594,7 @@ class Dmr extends CI_Controller {
     public function beneficiaryList(){
         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
          $data = array(
-              'title'         => 'DMR :: TRANSACTION',
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'bene_list_user'
@@ -671,7 +671,7 @@ class Dmr extends CI_Controller {
     
     public function transRequery(){
          $data = array(
-              'title'         => 'DMR :: TRANSACTION',
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'requery'
@@ -705,7 +705,7 @@ class Dmr extends CI_Controller {
     }
      public function transRequery1(){
          $data = array(
-              'title'         => 'DMR :: TRANSACTION',
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'requery'
@@ -739,7 +739,7 @@ class Dmr extends CI_Controller {
     }
     public function printDetail(){
         $data = array(
-              'title'         => 'DMR :: PRINT DETAIL',
+              'title'         => 'DMR ESY TOPUP :: PRINT DETAIL',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'Trans_details'
@@ -753,7 +753,7 @@ class Dmr extends CI_Controller {
    public function transaction(){
        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
          $data = array(
-              'title'         => 'DMR :: TRANSACTION',
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'transfer_amt'
@@ -815,7 +815,7 @@ class Dmr extends CI_Controller {
     public function topup(){
         if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
-              'title'         => 'DMR :: TOPUP',
+              'title'         => 'DMR ESY TOPUP :: TOPUP',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'topup'
@@ -877,7 +877,7 @@ class Dmr extends CI_Controller {
     }
 	 public function senderList(){
          $data = array(
-              'title'         => 'DMR :: SENDER LIST',
+              'title'         => 'DMR ESY TOPUP :: SENDER LIST',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'senderList'
@@ -888,7 +888,7 @@ class Dmr extends CI_Controller {
 	public function viewAgentHistory(){
 	if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
-              'title'         => 'DMR :: VIEW TRANSECTION HISTORY',
+              'title'         => 'DMR ESY TOPUP :: VIEW TRANSECTION HISTORY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'agent_history'
@@ -930,7 +930,7 @@ class Dmr extends CI_Controller {
 	public function viewTransectionHistory(){
 	if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
         $data = array(
-              'title'         => 'DMR :: VIEW TRANSECTION HISTORY',
+              'title'         => 'DMR ESY TOPUP :: VIEW TRANSECTION HISTORY',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'tr_history'
@@ -972,7 +972,7 @@ class Dmr extends CI_Controller {
     }
 	public function doKyc(){
         $data = array(
-              'title'         => 'DMR :: DO KYC',
+              'title'         => 'DMR ESY TOPUP :: DO KYC',
               'metakeyword'   => '',
               'metadesc'      => '',
               'content'       => 'non_to_kyc'

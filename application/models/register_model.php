@@ -38,7 +38,7 @@ class Register_model extends CI_Model
                 
                     $this->email->set_newline("\r\n");
                     // Set to, from, message, etc.
-                    $this->email->from('info@igravitas.in', 'Admin');
+                    $this->email->from('support@esytopup.com', 'Support : Esy Topup');
                     $this->email->to($email);
                     $this->email->subject('Esy Top-up Confirmation');
                     $message = 'Dear '."Urer, <br/><br/>";

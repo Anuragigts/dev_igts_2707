@@ -11,9 +11,9 @@ class Settings extends CI_Controller {
         public function change_password(){
             if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
-                    'title'         => 'SC :: CHANGE PASSWORD',
-                    'metakeyword'   => 'SC :: CHANGE PASSWORD',
-                    'metadesc'      => 'SC :: CHANGE PASSWORD',
+                    'title'         => 'ESY TOPUP :: CHANGE PASSWORD',
+                    'metakeyword'   => 'ESY TOPUP :: CHANGE PASSWORD',
+                    'metadesc'      => 'ESY TOPUP :: CHANGE PASSWORD',
                     'content'       => 'change_password'
             );
             if($this->input->post('change_password')){
@@ -44,9 +44,9 @@ class Settings extends CI_Controller {
         public function profile(){
             if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
-                    'title'         => 'SC :: PROFILE',
-                    'metakeyword'   => 'SC :: PROFILE',
-                    'metadesc'      => 'SC :: PROFILE',
+                    'title'         => 'ESY TOPUP :: PROFILE',
+                    'metakeyword'   => 'ESY TOPUP :: PROFILE',
+                    'metadesc'      => 'ESY TOPUP :: PROFILE',
                     'content'       => 'profile'
             );
                 $valu               =  $this->session->userdata("login_id");
@@ -131,9 +131,9 @@ class Settings extends CI_Controller {
         
         public function virtualAmt(){
              $data = array(
-                    'title'         => 'SC :: VIRTUAL AMOUNT',
-                    'metakeyword'   => 'SC :: VIRTUAL AMOUNT',
-                    'metadesc'      => 'SC :: VIRTUAL AMOUNT',
+                    'title'         => 'ESY TOPUP :: VIRTUAL AMOUNT',
+                    'metakeyword'   => 'ESY TOPUP :: VIRTUAL AMOUNT',
+                    'metadesc'      => 'ESY TOPUP :: VIRTUAL AMOUNT',
                     'content'       => 'virtualAmt'
             );
              if($this->input->post('add')){
@@ -158,9 +158,9 @@ class Settings extends CI_Controller {
         }
         public function editVirtualAmt(){
              $data = array(
-                    'title'         => 'SC :: EDIT VIRTUAL AMOUNT',
-                    'metakeyword'   => 'SC :: EDIT VIRTUAL AMOUNT',
-                    'metadesc'      => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'title'         => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
+                    'metakeyword'   => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
+                    'metadesc'      => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'content'       => 'edit_virtualAmt'
             );
              if($this->input->post('add')){
@@ -190,9 +190,9 @@ class Settings extends CI_Controller {
          
          public function moneyTransfer(){
               $data = array(
-                    'title'         => 'SC :: EDIT VIRTUAL AMOUNT',
-                    'metakeyword'   => 'SC :: EDIT VIRTUAL AMOUNT',
-                    'metadesc'      => 'SC :: EDIT VIRTUAL AMOUNT',
+                    'title'         => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
+                    'metakeyword'   => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
+                    'metadesc'      => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'content'       => 'recharge_transfer'
             );
               if($this->input->post('transfer')){
@@ -205,10 +205,10 @@ class Settings extends CI_Controller {
 
                        if($result == 1){                    
                            $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
-                           redirect('settings/moneyTransfer/'.$this->uri->segment(3));
+                           redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }else{
                             $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
-                            redirect('settings/moneyTransfer/'.$this->uri->segment(3));
+                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }
                    }
             }
@@ -227,9 +227,9 @@ class Settings extends CI_Controller {
          
          public function viewTrandDetail(){
              $data = array(
-                    'title'         => 'SC :: VIEW TRANSFER DETAIL',
-                    'metakeyword'   => 'SC :: VIEW TRANSFER DETAIL',
-                    'metadesc'      => 'SC :: VIEW TRANSFER DETAIL',
+                    'title'         => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'metakeyword'   => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'metadesc'      => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
                     'content'       => 'view_trans_details'
             );
               $data['debit']       =  $this->settings_model->getDebit($this->uri->segment(3)); 

@@ -208,132 +208,185 @@ class Recharge_model extends CI_Model
         }        
         return $str;
     }
-    public function doRechargeoff(  $recharge_type,$codeval,$V,$amt){
-         
-        $a = mt_rand(100000,999999); 
-       for ($i = 0; $i<27; $i++) 
-        {
-            $a .= mt_rand(0,9);
-        }
-        $track_id   = 'SWAMI'.$a;
-        $item       = $V;
-        $desc       = $codeval;
-        $mobile     = $this->input->get('number', TRUE);
-        $amt        = $amt;
-        $circle     = 'ANDHRA PRADESH';
-        
-         $data_insert = array(
-                'track_id'          => $track_id,
-                'done_by'           => $this->session->userdata('login_id'),
-                'recharge_type'     => $recharge_type,
-                'code'              => $item,
-                'op_name'           => $desc,
-                'number'            => $mobile,
-                'amount'            => $amt
-            );
-         
-        $insert = $this->db->insert('recharge_track',$data_insert);
-        if($this->db->affected_rows() == 1){
-            $my_mo_id = $this->db->insert_id();
-       
-                $url = RECHARGEURL;        
-                $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
-                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                    <soap:Header>
-                        <ns1:clsSecurity soap:mustUnderstand="false"
-                    xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
-                          <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
-                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
-                          <ns1:IsAgent>false</ns1:IsAgent>
-                        </ns1:clsSecurity>
-                      </soap:Header>
-            <soap:Body>
-                <MOBILEBOOKINGDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
-                    <pobjSecurity>
-                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
-                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
-                        <IsAgent>false</IsAgent>   
-                    </pobjSecurity>
-                    <PstrInput>
-                            &lt;MobileBookingRequest&gt;
-                            &lt;UsertrackId&gt;'.$track_id.'&lt;/UsertrackId&gt;
-                            &lt;Itemid&gt;'.$item.'&lt;/Itemid&gt;
-                            &lt;ItemDesc&gt;'.$desc.'&lt;/ItemDesc&gt;
-                            &lt;MobileNo&gt;'.$mobile.'&lt;/MobileNo&gt;
-                            &lt;Amount&gt;'.$amt.'&lt;/Amount&gt;
-                            &lt;/MobileBookingRequest&gt;
-                    </PstrInput>
-                    <PstrFinalOutPut /><pstrError/>
-                </MOBILEBOOKINGDETAILS>
-            </soap:Body></soap:Envelope>';
-
-                $curl = curl_init();
-
-                curl_setopt ($curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($curl,CURLOPT_TIMEOUT,120);
-
-                curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
-                    'SOAPAction:"'.RECHARGEACTION.'MOBILEBOOKINGDETAILS"',
-                    'Content-Type: text/xml; charset=utf-8;',
-                ));
-
-                 curl_setopt ($curl, CURLOPT_POST, 1);
-
-                curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
-
-                 $result = curl_exec($curl); 
-
-                curl_close ($curl);
-
-                $keep_array = explode('true', $result);
-                if(count($keep_array)!= 2 ){
-                    return 1;
-                }else{
-               // echo $keep_array[1]; die();
-                $first_tag = explode('</MOBILEBOOKINGDETAILSResult><PstrFinalOutPut>', $keep_array[1]);       
-
-                $get_less =  str_replace("&lt;","<",$first_tag[1]);
-                $get_full =  str_replace("&gt;",">",$get_less);
-
-                $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
-
-               $response = simplexml_load_string($final[0]);
-               print_r($response);die();
-               if($response->Status == 1){
-                $ioff = array(                
-                'descp'            =>$this->input->get('message', TRUE).' number '.$this->input->get('number', TRUE)
-            );
-         $insert = $this->db->insert('offtime',$ioff);
-                $data = array(                        
-                        'hrm_track'              => "$response->TrackId",
-                        'ref_num'                => "$response->RefNo",
-                        'trans_no'               => "$response->TransNo",
-                        'remarks'                => "$response->Remarks",
-                        'desc'                   => "$response->ItemDescription",
-                        'hrm_amount'             => "$response->Amount",
-                        'responce_time'          => "$response->DateTime",
-                        'status'                 =>  $response->Status,
-                        
-                    );
-                $this->db->where('recharge_id',$my_mo_id);
-                $update = $this->db->update('recharge_track',$data);              
-               
-                 if($this->db->affected_rows() == 1){
-                     return 0;
-                 }  else {
-                     return 2;
-                 }
-               }else{
-                   return 1;
-               }
-            }
+    public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt){
+        $sender_no = $this->input->get('number', TRUE);
+            $queryq = $this->db->get_where('login', array('login_mobile' => $sender_no));
+        if($queryq && $queryq->num_rows()> 0){
+            $login_id =   $queryq->login_id;
+            $current_amt = $this->db->get_where('current_virtual_amount', array('virtual_id' => $login_id));
+            if($current_amt->amount > $amt){               
                 
-        }else{
-            return 3;
-        }
+                $a = mt_rand(100000,999999); 
+               for ($i = 0; $i<27; $i++) 
+                {
+                    $a .= mt_rand(0,9);
+                }
+                $track_id   = 'SWAMI'.$a;
+                $item       = $V;
+                $desc       = $codeval;
+               // $mobile     = $this->input->get('number', TRUE);
+                $mobile     = $number;
+                $amt        = $amt;
+                $circle     = 'ANDHRA PRADESH';
+
+                 $data_insert = array(
+                        'track_id'          => $track_id,
+                        'done_by'           => $this->session->userdata('login_id'),
+                        'recharge_type'     => $recharge_type,
+                        'code'              => $item,
+                        'op_name'           => $desc,
+                        'number'            => $mobile,
+                        'amount'            => $amt
+                    );
+
+                $insert = $this->db->insert('recharge_track',$data_insert);
+                if($this->db->affected_rows() == 1){
+                    $my_mo_id = $this->db->insert_id();
+
+                        $url = RECHARGEURL;        
+                        $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+                            xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                            <soap:Header>
+                                <ns1:clsSecurity soap:mustUnderstand="false"
+                            xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
+                                  <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                                  <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
+                                  <ns1:IsAgent>false</ns1:IsAgent>
+                                </ns1:clsSecurity>
+                              </soap:Header>
+                    <soap:Body>
+                        <MOBILEBOOKINGDETAILS xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
+                            <pobjSecurity>
+                                <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                                <WebProviderPassword>'.PASSW.'</WebProviderPassword>
+                                <IsAgent>false</IsAgent>   
+                            </pobjSecurity>
+                            <PstrInput>
+                                    &lt;MobileBookingRequest&gt;
+                                    &lt;UsertrackId&gt;'.$track_id.'&lt;/UsertrackId&gt;
+                                    &lt;Itemid&gt;'.$item.'&lt;/Itemid&gt;
+                                    &lt;ItemDesc&gt;'.$desc.'&lt;/ItemDesc&gt;
+                                    &lt;MobileNo&gt;'.$mobile.'&lt;/MobileNo&gt;
+                                    &lt;Amount&gt;'.$amt.'&lt;/Amount&gt;
+                                    &lt;/MobileBookingRequest&gt;
+                            </PstrInput>
+                            <PstrFinalOutPut /><pstrError/>
+                        </MOBILEBOOKINGDETAILS>
+                    </soap:Body></soap:Envelope>';
+
+                        $curl = curl_init();
+
+                        curl_setopt ($curl, CURLOPT_URL, $url);
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                        curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                            'SOAPAction:"'.RECHARGEACTION.'MOBILEBOOKINGDETAILS"',
+                            'Content-Type: text/xml; charset=utf-8;',
+                        ));
+
+                         curl_setopt ($curl, CURLOPT_POST, 1);
+
+                        curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                         $result = curl_exec($curl); 
+
+                        curl_close ($curl);
+
+                        $keep_array = explode('true', $result);
+                        if(count($keep_array)!= 2 ){
+                            return 1;
+                        }else{
+                       // echo $keep_array[1]; die();
+                        $first_tag = explode('</MOBILEBOOKINGDETAILSResult><PstrFinalOutPut>', $keep_array[1]);       
+
+                        $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                        $get_full =  str_replace("&gt;",">",$get_less);
+
+                        $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
+
+                       $response = simplexml_load_string($final[0]);
+                      
+                       if($response->Status == 1){
+                            $val2 = $current_amt->amount;
+                            $insfrom   =   array(                      
+                                    "amount"     => ($val2 - $amt)
+                                );
+                            $this->db->where("user_id",$login_id);
+                            $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                            $ch = curl_init();
+                            $optArray = array(
+                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account.",
+                                    CURLOPT_RETURNTRANSFER => true
+                            );
+                            curl_setopt_array($ch, $optArray);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                            $result = curl_exec($ch);
+                            curl_close($ch);
+
+                    
+                           
+                           
+                        $ioff = array(                
+                        'descp'            =>$this->input->get('message', TRUE).' number '.$this->input->get('number', TRUE)
+                    );
+                    $insert = $this->db->insert('offtime',$ioff);
+                        $data = array(                        
+                                'hrm_track'              => "$response->TrackId",
+                                'ref_num'                => "$response->RefNo",
+                                'trans_no'               => "$response->TransNo",
+                                'remarks'                => "$response->Remarks",
+                                'desc'                   => "$response->ItemDescription",
+                                'hrm_amount'             => "$response->Amount",
+                                'responce_time'          => "$response->DateTime",
+                                'status'                 =>  $response->Status,
+
+                            );
+                        $this->db->where('recharge_id',$my_mo_id);
+                        $update = $this->db->update('recharge_track',$data);              
+
+                         if($this->db->affected_rows() == 1){
+                             return 0;
+                         }  else {
+                             return 2;
+                         }
+                       }else{
+                           return 1;
+                       }
+                    }
+
+                }else{
+                    return 3;
+                }
+            }else{
+                $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Recharge+fail+you+are+not+having+enough+balance.",
+			CURLOPT_RETURNTRANSFER => true
+		);
+                        curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+            }
+         }else{
+               
+             $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Access+denied+please+use+registered+number.",
+			CURLOPT_RETURNTRANSFER => true
+		);
+                        curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+           } 
     }
     public function getprofile($id){
             
@@ -455,7 +508,7 @@ class Recharge_model extends CI_Model
 
                              $ch = curl_init();
                              $optArray = array(
-                             CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.com+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                             CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
                                      CURLOPT_RETURNTRANSFER => true
                              );
                              curl_setopt_array($ch, $optArray);
@@ -753,7 +806,7 @@ class Recharge_model extends CI_Model
 
                               $ch = curl_init();
                               $optArray = array(
-                              CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.com+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+                              CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
                                       CURLOPT_RETURNTRANSFER => true
                               );
                               curl_setopt_array($ch, $optArray);

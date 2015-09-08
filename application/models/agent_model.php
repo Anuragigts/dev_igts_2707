@@ -75,7 +75,7 @@ class Agent_model extends CI_Model{
                         if($this->db->affected_rows()   >   0){
                              $ch = curl_init();
                             $optArray = array(
-                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile_no&from=ESYTOP&message=Welcome+to+http://esytopup.com++User+Name:+$login_email+Pass:+$password",
+                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile_no&from=ESYTOP&message=Welcome+to+http://esytopup.co.in++User+Name:+$login_email+Pass:+$password",
                             CURLOPT_RETURNTRANSFER => true
                             );
                             curl_setopt_array($ch, $optArray);

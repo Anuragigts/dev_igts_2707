@@ -11,9 +11,9 @@ class Module_object extends CI_Controller {
         }
 	public function create_module_object(){
                 $data = array(
-                 'title'         => 'SC :: CREATE MODULE OBJECT',
-                 'metakeyword'   => 'SC :: CREATE MODULE OBJECT',
-                 'metadesc'      => 'SC :: CREATE MODULE OBJECT',
+                 'title'         => ' ESY TOPUP :: CREATE MODULE OBJECT',
+                 'metakeyword'   => ' ESY TOPUP :: CREATE MODULE OBJECT',
+                 'metadesc'      => ' ESY TOPUP :: CREATE MODULE OBJECT',
                  'content'       => 'create_module_object'
                 );
                 if($this->input->post('create_module_object')){
@@ -71,9 +71,9 @@ class Module_object extends CI_Controller {
         }
         public function view_module_object(){
                 $data = array(
-                 'title'         => 'SC :: VIEW MODULE OBJECTS',
-                 'metakeyword'   => 'SC :: VIEW MODULE OBJECTS',
-                 'metadesc'      => 'SC :: VIEW MODULE OBJECTS',
+                 'title'         => ' ESY TOPUP :: VIEW MODULE OBJECTS',
+                 'metakeyword'   => ' ESY TOPUP :: VIEW MODULE OBJECTS',
+                 'metadesc'      => ' ESY TOPUP :: VIEW MODULE OBJECTS',
                  'content'       => 'view_module_object'
                 );
                 $data['view_module']    =   $this->module_object_model->view_module_object();
