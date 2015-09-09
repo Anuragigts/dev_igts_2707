@@ -43,6 +43,7 @@
                     $('#code').val(res[1]);  						
                     $('#circle').val(res[2]); 
                     $("#loading").modal('hide');
+                    $("#amount").focus();
                 }else{
                     $("#loading").modal('hide');
                     return false;	

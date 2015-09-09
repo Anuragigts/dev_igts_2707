@@ -120,7 +120,7 @@ class Super_distributor_model extends CI_Model{
                 $this->db->where('l.user_type',3);
                 $this->db->where('l.login_id',$val);
                 $query = $this->db->get();
-//                echo $this->db->last_query();exit;
+//             echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->row();
                 }
@@ -128,7 +128,7 @@ class Super_distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_super_distributor($valu,$idp,$addp){
+        public function update_super_distributor($valu,$idp,$addp,$va_em,$mo_em){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -147,12 +147,19 @@ class Super_distributor_model extends CI_Model{
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
                                 "address"               =>     $address,
                                 "id_proof"              => "$idp",
-                                "add_proof"             => "$addp"
+                                "add_proof"             => "$addp",
+                                'mobile'                =>      $mo_em
                         );
-//                        print_r($ins);exit;
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);
                         $var1   =  $this->db->affected_rows(); 
+                        $lo = array(
+                            "login_email"   =>  $va_em,
+                            'login_mobile'  =>  $mo_em
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("login",$lo);
+                        
                         $ins_comm   =   array(
                                 "package_id"            =>     $pkg_id,
                                 "status"                =>     1

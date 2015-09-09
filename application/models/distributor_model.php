@@ -133,7 +133,7 @@ class Distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_distributor($valu,$idP,$addp){
+        public function update_distributor($valu,$idP,$addp,$va_em,$mo_em){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -156,12 +156,19 @@ class Distributor_model extends CI_Model{
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
                                 "address"               =>     $address,
                                 "id_proof"              =>  "$idP",
-                                "add_proof"             =>  "$addp"
+                                "add_proof"             =>  "$addp",
+                                'mobile'                =>      $mo_em
                         );
 //                        print_r($ins);exit;
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);
                         $var1   =  $this->db->affected_rows(); 
+                        $lo = array(
+                            "login_email"   =>  $va_em,
+                            'login_mobile'  =>  $mo_em
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("login",$lo);
                         $ins_comm   =   array(
                                 "package_id"            =>     $pkg_id,
                                 "status"                =>     1

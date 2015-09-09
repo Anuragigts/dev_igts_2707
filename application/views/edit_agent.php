@@ -93,11 +93,11 @@
                                 </select>
                                  <?php } else { 
                                     foreach($master as $mt){
-										if($mt->login_id == $view->master_distributor_id){
-										?>
-											<input type="hidden" value="<?= $mt->login_id;?>" name="master"/>
-											<input type="text" value="<?= ucfirst($mt->first_name." ".$mt->last_name);?>" disabled="disabled" readonly="readonly" class="form-control"/>
-										<?php  }
+                                            if($mt->login_id == $view->master_distributor_id){
+                                            ?>
+                                                    <input type="hidden" value="<?= $mt->login_id;?>" name="master"/>
+                                                    <input type="text" value="<?= ucfirst($mt->first_name." ".$mt->last_name);?>" disabled="disabled" readonly="readonly" class="form-control"/>
+                                            <?php  }
                                     }
                                     } ?>
                                 <span class="red"><?= form_error('master');?></span>
@@ -175,6 +175,24 @@
                         </div>
                         
                     </div>
+                    <?php if($this->session->userdata("my_type") == 1){ ?>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Mobile No<span class="red">*</span></label>
+                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= $view->mobile;?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                <span class="red"><?= form_error('mobile_no');?></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email Id<span class="red">*</span></label>
+                                <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= $view->login_email;?>" maxlength="200">
+                                <span class="red"><?= form_error('login_email');?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } else{ ?>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -191,6 +209,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php }?>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">

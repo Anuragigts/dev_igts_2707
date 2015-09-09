@@ -17,7 +17,9 @@ class Register_model extends CI_Model
                 $zip        =   $this->input->post("zip");
                 $door       =   $this->input->post("door");
                 $street     =   $this->input->post("street");
-                $area       =   $this->input->post("area");               
+                $area       =   $this->input->post("area");
+                $first_name         =   $this->input->post("first_name");
+                $last_name          =   $this->input->post("last_name");
                 
                 
                 $this->db->select("State_id");
@@ -92,8 +94,9 @@ class Register_model extends CI_Model
                                             'add_proof'             =>     "$addp",
                                             'door'                  =>     $door,
                                             'street'                =>     $street,
-                                            'area'                  =>     $area
-                                            
+                                            'area'                  =>     $area,
+                                            "first_name"            =>     $first_name,
+                                            "last_name"             =>     $last_name,
                                     );
                                     $ins_access      =   array(
                                             "login_id"              =>      $val_id,

@@ -19,7 +19,7 @@ class Distributor extends CI_Controller {
                 );
                 if($this->input->post('create_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",           "required|min_length[4]");
-                        $this->form_validation->set_rules("last_name",          "Last Name",            "required|min_length[4]");
+                        $this->form_validation->set_rules("last_name",          "Last Name",            "required");
                         $this->form_validation->set_rules("mobile_no",          "Mobile No.",           "required|is_unique[login.login_mobile]|min_length[10]");
                         $this->form_validation->set_rules("login_email",        "Email Id",             "required|is_unique[login.login_email]");
                         $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]||callback_password_check");
@@ -170,9 +170,34 @@ class Distributor extends CI_Controller {
                         $valu   =   $this->session->userdata("value");
                 }
                 $data['view']       =  $this->distributor_model->edit_distributor($valu);
+                        $original_value =  $data['view']->login_email;
+                        $mol_value =  $data["view"]->mobile;
+                       
+                        if($this->session->userdata("my_type") == 1){
+                            if($this->input->post('login_email') != $original_value) {
+                                $va_em     =  $this->input->post('login_email');
+                                $is_unique =  'required|is_unique[login.login_email]';
+                            } 
+                            else{
+                                $va_em          =   $original_value;
+                                $is_unique      =  '';
+                            }
+                            if($this->input->post('mobile_no') != $mol_value) {
+                                $mo_em     =  $this->input->post('mobile_no');
+                                $is_unie =  'required|min_length[10]|is_unique[login.login_mobile]';
+                            } else{
+                                $mo_em          =   $mol_value;
+                                $is_unie        =  '';
+                            }
+                        }else{
+                                $va_em          =   $original_value;
+                                $is_unique      =  '';
+                                $mo_em          =   $mol_value;
+                                $is_unie        =  '';
+                        }
                 if($this->input->post('update_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",           "required|min_length[4]");
-                        $this->form_validation->set_rules("last_name",          "Last Name",            "required|min_length[4]");
+                        $this->form_validation->set_rules("last_name",          "Last Name",            "required");
                         $this->form_validation->set_rules("country",            "Country",              "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",                "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                 "callback_select_city");
@@ -180,6 +205,8 @@ class Distributor extends CI_Controller {
                         $this->form_validation->set_rules("super",              "Super Distributor",    "callback_select_super");
                         $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",              "required");
+                        $this->form_validation->set_rules("mobile_no",          "Mobile No.",                   $is_unie);
+                        $this->form_validation->set_rules("login_email",        "Email Id",                     $is_unique);
                         if($this->form_validation->run() == TRUE){
                              $idP = $data['view']->id_proof;$addp=$data['view']->add_proof;
                         if($_FILES['idproof']['name'] != ''){
@@ -211,7 +238,7 @@ class Distributor extends CI_Controller {
                             $this->upload->do_upload('addproof');
                         }
                         
-                                $get    =   $this->distributor_model->update_distributor($valu,$idP,$addp);
+                                $get    =   $this->distributor_model->update_distributor($valu,$idP,$addp,$va_em,$mo_em);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Distributor has been updated successfully");
                                         redirect("distributor/edit_distributor/".$valu);

@@ -49,11 +49,7 @@
                           <b>Recharge Balance</b> : <span id="phy"></span>
                       </a>
                   </li>
-                  <li class="visible-lg">
-                      <a href="#">
-                          <b>Main Balance</b> : <span class="vamt">0.00</span>
-                      </a>
-                  </li>
+                  
                    <?php }else{?>
                   
                   <li class="visible-lg">

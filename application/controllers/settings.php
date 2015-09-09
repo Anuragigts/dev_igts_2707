@@ -52,7 +52,7 @@ class Settings extends CI_Controller {
                 $valu               =  $this->session->userdata("login_id");
                 if($this->input->post('update_profile')){
                         $this->form_validation->set_rules("first_name",         "First Name",       "required|min_length[4]");
-                        $this->form_validation->set_rules("last_name",          "Last Name",        "required|min_length[4]");
+                        $this->form_validation->set_rules("last_name",          "Last Name",        "required");
                          $this->form_validation->set_rules("state",              "State",            "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",             "callback_select_city");
                         $this->form_validation->set_rules("address",            "Address",          "required");

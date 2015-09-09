@@ -36,6 +36,22 @@
             <div class="panel-body">
                <p class="text-center pv">SIGNUP TO GET ACCESS.</p>
                <form method="post" role="form" enctype="multipart/form-data" class="mb-lg">
+                     <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group has-feedback">
+                                <label>First Name<span class="red">*</span></label>
+                                <input type="text" placeholder="First Name" class="form-control" name="first_name" value="<?= set_value('first_name');?>" onkeypress="return onlyAlpha(event);" maxlength="50" required>
+                                <span class="red"><?= form_error('first_name');?></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group has-feedback">
+                                <label>Last Name<span class="red">*</span></label>
+                                <input type="text" placeholder="Last Name" class="form-control" name="last_name" value="<?= set_value('last_name');?>" onkeypress="return onlyAlpha(event);" maxlength="50" required>
+                                <span class="red"><?= form_error('last_name');?></span>
+                            </div>
+                        </div>
+                    </div>
                    <div class="row">
                         <div class="col-md-6">
                            <div class="form-group has-feedback">

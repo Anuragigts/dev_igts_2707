@@ -65,7 +65,7 @@
                                           
                                           <div class="form-group">
                                              <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type="submit" class="btn btn-sm btn-info" name="add" value="Add Virtual Money" />                                                
+                                                 <input type="submit" class="btn btn-sm btn-info" name="add" value="Add  Money" />                                                
                                              </div>                                             
                                           </div>
                                        </form>

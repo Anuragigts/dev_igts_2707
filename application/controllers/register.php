@@ -20,6 +20,9 @@ class Register extends CI_Controller {
             );
         $india = '101';
             if($this->input->post('create_account')){
+                    $this->form_validation->set_rules("first_name",             "First Name",                "required");
+                    $this->form_validation->set_rules("last_name",             "Last Name",                "required");
+                     $this->form_validation->set_rules("agreed",             "Agree",                "required");
                     $this->form_validation->set_rules("email",              "Email Id",             "required|valid_email|is_unique[login.login_email]");
                     $this->form_validation->set_rules("mobile",             "Mobile No.",           "required|is_unique[login.login_mobile]|min_length[10]");
                     $this->form_validation->set_rules("pass",               "Password",             "required|min_length[4]|callback_password_check");

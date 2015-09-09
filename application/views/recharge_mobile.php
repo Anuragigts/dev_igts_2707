@@ -72,7 +72,7 @@
                                <div class="panel panel-default">
                                     <div class="panel-heading"></div>
                                     <div class="panel-body">
-                                        <form method="post"class="form-horizontal" id="recharge-form" autocomplete="off">
+                                        <form method="post"class="form-horizontal" id="recharge-form" >
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
                                              <div class="col-lg-9">
@@ -114,7 +114,7 @@
                                           <div class="form-group">
                                               <label class="col-lg-3 control-label">Amount<font class="red">*</font></label>
                                                 <div class="col-lg-9">
-                                                    <input type="text" id="amount" placeholder="Amount" name="amount" value="<?= set_value("amount"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="4" >
+                                                    <input type="text" id="amount" placeholder="Amount" name="amount" value="<?= set_value("amount"); ?>" class="form-control amou" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="4" >
                                                     <span class="red"><?=  form_error('oprator_name');?></span>
                                                 </div>
                                           </div>

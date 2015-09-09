@@ -19,7 +19,7 @@ class Super_distributor extends CI_Controller {
                 );
                 if($this->input->post('create_super_distributor')){
                         $this->form_validation->set_rules("first_name",         "First Name",           "required|min_length[4]");
-                        $this->form_validation->set_rules("last_name",          "Last Name",            "required|min_length[4]");
+                        $this->form_validation->set_rules("last_name",          "Last Name",            "required");
                         $this->form_validation->set_rules("mobile_no",          "Mobile No.",           "required|is_unique[login.login_mobile]|min_length[10]");
                         $this->form_validation->set_rules("login_email",        "Email Id",             "required|is_unique[login.login_email]");
                         $this->form_validation->set_rules("password",           "Password",             "required|min_length[4]||callback_password_check");
@@ -151,22 +151,53 @@ class Super_distributor extends CI_Controller {
                         'content'       => 'edit_super_distributor'
                 );
                 $valu    = $this->uri->segment(3);
+                $id1    = 3;
+                
                 if($valu !=  ""){
-                        $this->session->set_userdata("value",$valu);
-                        $valu   =   $this->session->userdata("value");
+                        $this->session->set_userdata("ve",$valu);
+                        $ve   =   $this->session->userdata("ve");
                 }
                 else{
-                        $valu   =   $this->session->userdata("value");
+                        $ve   =   $this->session->userdata("ve");
                 }
-                $data['view']       =  $this->super_distributor_model->edit_super_distributor($valu);
+                $data['view']       =  $this->super_distributor_model->edit_super_distributor($ve);
                 if($this->input->post('update_super_distributor')){
+                        
+                        $original_value =  $data['view']->login_email;
+                        $mol_value =  $data["view"]->mobile;
+                       
+                        if($this->session->userdata("my_type") == 1){
+                            if($this->input->post('login_email') != $original_value) {
+                                $va_em     =  $this->input->post('login_email');
+                                $is_unique =  'required|is_unique[login.login_email]';
+                            } 
+                            else{
+                                $va_em          =   $original_value;
+                                $is_unique      =  '';
+                            }
+                            if($this->input->post('mobile_no') != $mol_value) {
+                                $mo_em     =  $this->input->post('mobile_no');
+                                $is_unie =  'required|min_length[10]|is_unique[login.login_mobile]';
+                            } else{
+                                $mo_em          =   $mol_value;
+                                $is_unie        =  '';
+                            }
+                        }else{
+                                $va_em          =   $original_value;
+                                $is_unique      =  '';
+                                $mo_em          =   $mol_value;
+                                $is_unie        =  '';
+                        }
+                        
                         $this->form_validation->set_rules("first_name",         "First Name",                   "required|min_length[4]");
-                        $this->form_validation->set_rules("last_name",          "Last Name",                    "required|min_length[4]");
+                        $this->form_validation->set_rules("last_name",          "Last Name",                    "required");
                         $this->form_validation->set_rules("state",              "State",                        "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",                         "callback_select_city");
                         $this->form_validation->set_rules("master",             "Master Distributor",           "callback_select_master");
                         $this->form_validation->set_rules("package",            "Package",                      "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",                      "required");
+                        $this->form_validation->set_rules("mobile_no",          "Mobile No.",                   $is_unie);
+                        $this->form_validation->set_rules("login_email",        "Email Id",                     $is_unique);
                         if($this->form_validation->run() == TRUE){
                                  $idp = $data['view']->id_proof;$addp=$data['view']->add_proof;
                         if($_FILES['idproof']['name'] != ''){
@@ -197,19 +228,18 @@ class Super_distributor extends CI_Controller {
                             $this->upload->initialize($config);
                             $this->upload->do_upload('addproof');
                         }
-                                $get    =   $this->super_distributor_model->update_super_distributor($valu,$idp,$addp);
+                                $get    =   $this->super_distributor_model->update_super_distributor($ve,$idp,$addp,$va_em,$mo_em);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Super Distributor has been updated successfully");
-                                        redirect("super_distributor/edit_super_distributor/".$valu);
+                                        redirect("super_distributor/edit_super_distributor/".$ve);
                                 }
                                 else{
                                         $this->session->set_flashdata("err","Internal error occurred while updating super distributor");
-                                        redirect("super_distributor/edit_super_distributor/".$valu);
+                                        redirect("super_distributor/edit_super_distributor/".$ve);
                                 }
                         }
                 }
-                $id1    = 3;
-                $data['view']       =  $this->super_distributor_model->edit_super_distributor($valu);
+                
                 $data['state']      =  $this->states();
                 $data['city']       =  $this->cities();
                 $data['pkg']        =  $this->getPackages($id1);

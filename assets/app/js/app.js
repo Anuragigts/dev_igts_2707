@@ -2441,7 +2441,7 @@
         showCancelButton : true,
         confirmButtonColor : "#DD6B55",
         confirmButtonText : "Yes, delete it!",
-        cancelButtonText : "No, cancel plx!",
+        cancelButtonText : "No, cancel plz!",
         closeOnConfirm : false,
         closeOnCancel : false
       }, function (isConfirm) {
@@ -2469,7 +2469,7 @@
 		   // type : "info",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
-			confirmButtonText : "Yes, Process it!",
+			confirmButtonText : "Yes",
 			cancelButtonText : "No, cancel plz!",
 			closeOnConfirm : false,
 			closeOnCancel : false
@@ -2499,7 +2499,7 @@
 		   // type : "info",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
-			confirmButtonText : "Yes, Process it!",
+			confirmButtonText : "Yes",
 			cancelButtonText : "No, cancel plz!",
 			closeOnConfirm : false,
 			closeOnCancel : false
@@ -2524,7 +2524,7 @@
         showCancelButton : true,
         confirmButtonColor : "#DD6B55",
         confirmButtonText : "Yes, delete it!",
-        cancelButtonText : "No, cancel plx!",
+        cancelButtonText : "No, cancel plz!",
         closeOnConfirm : false,
         closeOnCancel : false
       }, function (isConfirm) {

@@ -137,7 +137,7 @@ class Master_distributor_model extends CI_Model{
                     return array();
                 } 
         }
-        public function update_master_distributor($valu,$idp,$addp){
+        public function update_master_distributor($valu,$idp,$addp,$va_em,$mol_value){
                 $ses_id             =   $this->session->userdata("login_id");
                 $first_name         =   $this->input->post("first_name");
                 $last_name          =   $this->input->post("last_name");
@@ -155,11 +155,20 @@ class Master_distributor_model extends CI_Model{
                                 "updated_by"            =>     $ses_id,
                                 "updated_on"            =>     date("Y-m-d H:i:s"),
                                 "address"               =>     $address,
-                                "id_proof"              =>  $idp,
-                                "add_proof"             =>  $addp
+                                "id_proof"              =>      $idp,
+                                "add_proof"             =>      $addp,
+                                'mobile'                =>      $mol_value
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);
+                        
+                        $lo = array(
+                            "login_email"   =>  $va_em,
+                            'login_mobile'  =>  $mol_value
+                        );
+                        $this->db->where("login_id",$valu);
+                        $this->db->update("login",$lo);
+                        
                         $var1   =  $this->db->affected_rows(); 
                         $ins_comm   =   array(
                                 "package_id"            =>     $pkg_id,
