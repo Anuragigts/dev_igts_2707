@@ -55,7 +55,7 @@ class Module_object_model extends CI_Model
                 $data  =  array (
                         'module_id'         =>  $module_name,
                         'sub_module_id'     =>  $sub_module_name,
-                        'modules_obj_name'  =>  $module_object_name
+                        'modules_obj_name'  => strtolower($module_object_name) 
                 );
                 $this->db->insert('modules_object',$data);
                 if($this->db->affected_rows() > 0){

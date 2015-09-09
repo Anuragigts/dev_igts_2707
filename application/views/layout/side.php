@@ -164,6 +164,11 @@
                               <span>Details</span>
                            </a>
                         </li>-->
+                    <li class="recharge_details ">
+                           <a href="<?php echo base_url();?>recharge/recharge_details" title="My Commission">
+                              <span>My Commission</span>
+                           </a>
+                        </li>
                      </ul>
                   </li>
                    <?php }if($this->session->userdata('dmr') == 1){?>
@@ -277,7 +282,7 @@
                         </li>
                      </ul>
                   </li>
-                   <?php if($this->session->userdata("preferred_for") == 0){ ?>
+                   <?php if($this->session->userdata('my_type') == 1 ){ ?>
                    <li class="module_object create_module_object view_module_object">
                      <a href="#services" title="Services Type" data-toggle="collapse">
                         <em class="fa fa-cogs"></em>

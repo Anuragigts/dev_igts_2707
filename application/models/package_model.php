@@ -58,7 +58,7 @@ class Package_model extends CI_Model
                 }
 //                $this->db->where('p_created_by',$val);
                 $query = $this->db->get();
-//                echo $this->db->last_query();exit;
+   //             echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
                 }

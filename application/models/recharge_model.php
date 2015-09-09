@@ -209,13 +209,15 @@ class Recharge_model extends CI_Model
         return $str;
     }
     public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt){
-        $sender_no = $this->input->get('number', TRUE);
+        $sender_n = $this->input->get('number', TRUE);
+        $sender_no = substr($sender_n, -10);
             $queryq = $this->db->get_where('login', array('login_mobile' => $sender_no));
+            //echo $this->db->last_query();die();
         if($queryq && $queryq->num_rows()> 0){
-            $login_id =   $queryq->login_id;
-            $current_amt = $this->db->get_where('current_virtual_amount', array('virtual_id' => $login_id));
-            if($current_amt->amount > $amt){               
-                
+           $login_id =   $queryq->row()->login_id;
+            $current_amt = $this->db->get_where('current_virtual_amount', array('user_id' => $login_id));
+            if($current_amt->row()->amount > $amt){               
+             
                 $a = mt_rand(100000,999999); 
                for ($i = 0; $i<27; $i++) 
                 {
@@ -308,7 +310,7 @@ class Recharge_model extends CI_Model
                         $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                        $response = simplexml_load_string($final[0]);
-                      
+                      print_r($response);
                        if($response->Status == 1){
                             $val2 = $current_amt->amount;
                             $insfrom   =   array(                      

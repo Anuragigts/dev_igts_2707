@@ -108,6 +108,9 @@ class Agent_model extends CI_Model{
                 if($this->session->userdata("my_type") == 3){
                         $this->db->where("p.super_distributor_id",$this->session->userdata("login_id"));
                 }
+                if($this->session->userdata("my_type") == 4){
+                        $this->db->where("p.distributor_id",$this->session->userdata("login_id"));
+                }
                  $this->db->order_by("l.login_id","desc");
                 $query = $this->db->get();
 //                echo $this->db->last_query();exit;

@@ -39,7 +39,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->module_name);?></div>
                                             <div class="col-sm-3 col-xs-3"><?= ucfirst($rec->sub_module_name);?></div>
                                             <div class="col-sm-3 col-xs-3">
-                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  value="<?= set_value('commission-'.$rec->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
+                                                <input type="text" class="form-control val_comm" name="commission-<?= $rec->modules_obj_id;?>"  value="<?= set_value('commission-'.$rec->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>
