@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url']				= "http://".$_SERVER['SERVER_NAME']."/developer/sc/trunk/";
+$config['base_url']				= "http://".$_SERVER['SERVER_NAME']."/";
 $config['assets_url']           = $config['base_url'].'assets/';
 
 /*

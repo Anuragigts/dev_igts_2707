@@ -26,10 +26,9 @@
         var code = $('option:selected', this).attr('op_code');
         $('#code').val(code);
     });
-   
     // get operator - anurag
-    $('#mobile-ope-find').keyup(function(){
-        var num = $('#mobile-ope-find').val();
+    $('#mobile-ope-find').on('keyup  change', function() {
+            var num = $('#mobile-ope-find').val();
         if(num.length < 4){
              $('.rec-data').html('');
         }
