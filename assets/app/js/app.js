@@ -2470,12 +2470,12 @@
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
 			confirmButtonText : "Yes",
-			cancelButtonText : "No, cancel plz!",
+			cancelButtonText : "No!",
 			closeOnConfirm : false,
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			  swal("Processing!", "Your recharge is under processing.", "success");
+			 // swal("Processing!", "Your recharge is under processing.", "success");
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your recharge request is cancelled", "error");
@@ -2500,12 +2500,12 @@
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
 			confirmButtonText : "Yes",
-			cancelButtonText : "No, cancel plz!",
+			cancelButtonText : "No!",
 			closeOnConfirm : false,
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			  swal("Processing!", "Your "+op+" recharge is under processing.", "success");
+			 // swal("Processing!", "Your "+op+" recharge is under processing.", "success");
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your "+op+" recharge request is cancelled", "error");
@@ -2523,13 +2523,13 @@
         type : "warning",
         showCancelButton : true,
         confirmButtonColor : "#DD6B55",
-        confirmButtonText : "Yes, delete it!",
-        cancelButtonText : "No, cancel plz!",
+        confirmButtonText : "Yes",
+	cancelButtonText : "No!",
         closeOnConfirm : false,
         closeOnCancel : false
       }, function (isConfirm) {
         if (isConfirm) {
-          swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          swal("Processing!", "successfully added.", "success");;
         } else {
           swal("Cancelled", "Your imaginary file is safe :)", "error");
         }
@@ -2550,13 +2550,13 @@
 			type : "warning",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
-			confirmButtonText : "Yes, Process it!",
-			cancelButtonText : "No, cancel plz!",
+			confirmButtonText : "Yes",
+                        cancelButtonText : "No!",
 			closeOnConfirm : false,
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			  swal("Processing!", "Your Rs. "+amt+" topup is under process.", "success");
+			 // swal("Processing!", "Your Rs. "+amt+" topup is under process.", "success");
 			  $('#topup-form').submit();
 			} else {
 			  swal("Cancelled", "Your Rs. "+amt+" topup request is cancelled", "error");
