@@ -24,9 +24,8 @@
                                  <tr>
                                     <th>S.No.</th>
                                     <th width="20%">Name</th>
-                                    <th width="10%">Mobile No.</th>
                                     <th width="25%">Email</th>
-                                    <th>Package Name</th>
+                                    <th width="10%">Mobile No.</th>
                                     <th>Amount</th>
                                     <th>Recharge Money</th>
                                     <th>Status</th>
@@ -41,10 +40,9 @@
                                         <tr>
                                             <th><?= $i++;?></th>
                                             <th><?= $name;?></th>
-                                            <th><?= $view->mobile;?></th>
                                             <th><?= ucfirst($view->login_email);?></th>
-                                            <th><?= ucfirst($view->package_name);?></th>
-                                             <th><?= $view->amount?$view->amount:"0.00";?></th>
+                                            <th><?= $view->mobile;?></th>
+                                            <th>Rs.<?= $view->amount?number_format($view->amount,2):"0.00";?></th>
                                              <th class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>/<?= $view->user_type;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></th>
                                             <th>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">

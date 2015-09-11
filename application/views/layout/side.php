@@ -334,7 +334,7 @@
                         </li>
                         <li class="offline_reports">
                            <a href="<?= base_url()?>reports/offline_reports" title="Offline Reports">
-                              <span>Offline Report</span>
+                              <span>Offline SMS Report</span>
                            </a>
                         </li>
                      </ul>
