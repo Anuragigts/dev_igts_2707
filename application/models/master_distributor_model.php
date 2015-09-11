@@ -89,11 +89,12 @@ class Master_distributor_model extends CI_Model{
                     }
         }
         public function view_master_distributor(){
-                $this->db->select('l.*,p.*,g.package_name,g.package_id');
+                $this->db->select('l.*,p.*,g.package_name,g.package_id,a.amount');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
                 $this->db->join('commission as c','c.login_id = l.login_id','left');
                 $this->db->join('package as g','g.package_id = c.package_id','left');
+                $this->db->join('current_virtual_amount as a','a.user_id = l.login_id','left');
                 $this->db->where('l.user_type',2);
                 $this->db->order_by("l.login_id","desc");
                 $query = $this->db->get();

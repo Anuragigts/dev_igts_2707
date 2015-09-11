@@ -91,12 +91,13 @@ class Super_distributor_model extends CI_Model{
                     }
         }
         public function view_super_distributor(){
-                $this->db->select('l.*,p.*,g.package_name');
+                $this->db->select('l.*,p.*,g.package_name,a.amount');
                 $this->db->from('login as l');
                 $this->db->join('profile as p','l.login_id = p.login_id','inner');
 //                $this->db->join('profile as pl','l.login_id = pl.login_id and pl.master_distributor_id = pl.login_id');
                 $this->db->join('commission as c','c.login_id = l.login_id','left');
                 $this->db->join('package as g','g.package_id = c.package_id','left');
+                 $this->db->join('current_virtual_amount as a','a.user_id = l.login_id','left');
                 $this->db->where('l.user_type',3);
                 if($this->session->userdata("my_type") == 2){
                         $this->db->where("p.master_distributor_id",$this->session->userdata("login_id"));

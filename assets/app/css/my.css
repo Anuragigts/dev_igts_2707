@@ -7,6 +7,9 @@ and open the template in the editor.
     Created on : Jul 28, 2015, 11:38:02 AM
     Author     : Anurag
 */
+.btn-top{
+    padding-top:30px;    
+}
 .rg-xl{
     width:65% !important;
 }

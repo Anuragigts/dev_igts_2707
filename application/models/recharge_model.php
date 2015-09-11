@@ -579,10 +579,10 @@ class Recharge_model extends CI_Model
                             $coyd    =   $this->getcomdet($myp,$mobjid);
                             $cammat  =   $this->getcamt($my);
                 }
-                $amyt      =   ($amt*($coyd['commission_amt']))/100;
-                $amdt      =   ($amt*($cod['commission_amt']))/100;
-                $amst      =   ($amt*($cosd['commission_amt']))/100;
-                $ammt      =   ($amt*($comd['commission_amt']))/100;
+                $amyt      =   number_format((($amt*($coyd['commission_amt']))/100),2);
+                $amdt      =   number_format((($amt*($cod['commission_amt']))/100),2);
+                $amst      =   number_format((($amt*($cosd['commission_amt']))/100),2);
+                $ammt      =   number_format((($amt*($comd['commission_amt']))/100),2);
                 
                 $deta       =   $amyt;
                 $detd       =   $amdt-$deta;
@@ -600,10 +600,10 @@ class Recharge_model extends CI_Model
                 $this->updatecvamt($d,$cammdt1);
                 $this->updatecvamt($my,$cammat1);
                 
-                $this->insertdeamt($d,$my,$cammat1,$cammat);
-                $this->insertdeamt($sd,$d,$cammdt1,$cammdt);
-                $this->insertdeamt($md,$sd,$cammst1,$cammst);
-                $this->insertdeamt("1",$md,$cammmt1,$cammmt);
+                $this->insertdeamt($d,$my,$cammat1,$cammat,$deta);
+                $this->insertdeamt($sd,$d,$cammdt1,$cammdt,$detd);
+                $this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
+                $this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
                 
         }
         public function getpackage($val){
@@ -631,7 +631,7 @@ class Recharge_model extends CI_Model
                 $qu = $this->db->update("current_virtual_amount",array("amount" => $amt));
                 return $qu;
         }
-        public function insertdeamt($d,$my,$amt,$camount){
+        public function insertdeamt($d,$my,$amt,$camount,$dt){
                 $data   =   array(
                         "from"          =>  $d,
                         "to"            =>  $my,
@@ -645,8 +645,8 @@ class Recharge_model extends CI_Model
                 $inset   =   array(
                         "trans_from"        =>  $d,
                         "trans_to"          =>  $my,
-                        "trans_amt"         =>  $amt,
-                        "cur_amount"        =>  $camount,
+                        "trans_amt"         =>  $dt,
+                        "cur_amount"        =>  $amt,
                         "trans_remark"      =>  "commission amount",
                         "trans_status"      =>  2
                 );

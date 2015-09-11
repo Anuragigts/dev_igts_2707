@@ -310,6 +310,35 @@
                      </a>                    
                   </li> -->
                    <?php }?>
+                 <li class="module_object recharge_reports view_module_object">
+                     <a href="#reports" title="Report" data-toggle="collapse">
+                        <em class="fa fa-list"></em>
+                        <span>Reports</span>
+                     </a>
+                     <ul id="reports" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header module_object recharge_reports">Reports</li>
+                        <li class="recharge_reports">
+                           <a href="<?= base_url()?>reports/recharge_reports" title="Recharge Reports">
+                              <span>Recharge Report</span>
+                           </a>
+                        </li>
+                        <li class="commission_reports">
+                           <a href="<?= base_url()?>reports/commission_reports" title="Commission Reports">
+                              <span>Commission Report</span>
+                           </a>
+                        </li>
+                        <li class="dmr_reports">
+                           <a href="<?= base_url()?>reports/dmr_reports" title="DMR Reports">
+                              <span>DMR Report</span>
+                           </a>
+                        </li>
+                        <li class="offline_reports">
+                           <a href="<?= base_url()?>reports/offline_reports" title="Offline Reports">
+                              <span>Offline Report</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li> 
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
