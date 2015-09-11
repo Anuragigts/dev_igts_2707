@@ -208,16 +208,42 @@ class Recharge_model extends CI_Model
         }        
         return $str;
     }
-    public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt){
+    public function insertOff(){
+        $sender_n = $this->input->get('number', TRUE);
+        $sender_no = substr($sender_n, -10);
+        $id = 0;
+        $queryq = $this->db->get_where('login', array('login_mobile' => $sender_no));
+        if($queryq && $queryq->num_rows()> 0){
+            $id = $queryq->row()->login_id;
+        }
+        $ioff = array(                
+                'descp'            =>$this->input->get('message', TRUE).' number '.$this->input->get('number', TRUE),
+                'done_by'            =>$id
+            );
+            $insert = $this->db->insert('offtime',$ioff);
+            return $this->db->insert_id();
+            
+    }
+    public function updateOff($off_id,$respons){
+        $ioff = array(                
+                'respons'            =>"$respons"
+            );            
+             $this->db->where("off_id",$off_id);
+            $this->db->update("offtime",$ioff);
+            //echo $this->db->last_query();die();
+    }
+    public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt,$req){
+      
         $sender_n = $this->input->get('number', TRUE);
         $sender_no = substr($sender_n, -10);
             $queryq = $this->db->get_where('login', array('login_mobile' => $sender_no));
-            //echo $this->db->last_query();die();
+           // echo $this->db->last_query();die();
         if($queryq && $queryq->num_rows()> 0){
            $login_id =   $queryq->row()->login_id;
             $current_amt = $this->db->get_where('current_virtual_amount', array('user_id' => $login_id));
-            if($current_amt->row()->amount > $amt){               
-             
+           
+            if(floatval($current_amt->row()->amount) > floatval($amt)){               
+            
                 $a = mt_rand(100000,999999); 
                for ($i = 0; $i<27; $i++) 
                 {
@@ -312,16 +338,19 @@ class Recharge_model extends CI_Model
                        $response = simplexml_load_string($final[0]);
                       print_r($response);
                        if($response->Status == 1){
-                            $val2 = $current_amt->amount;
+                            $val2 = floatval($current_amt->row()->amount);
+                            $now = (floatval($current_amt->row()->amount) - floatval($amt));
                             $insfrom   =   array(                      
-                                    "amount"     => ($val2 - $amt)
+                                    "amount"     => ($val2 - floatval($amt))
                                 );
                             $this->db->where("user_id",$login_id);
                             $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
+                            
+                            $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+                            
                             $ch = curl_init();
                             $optArray = array(
-                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account.",
+                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+Total+Amount+is+Rs.+$now+Thank+you.",
                                     CURLOPT_RETURNTRANSFER => true
                             );
                             curl_setopt_array($ch, $optArray);
@@ -332,11 +361,8 @@ class Recharge_model extends CI_Model
 
                     
                            
-                           
-                        $ioff = array(                
-                        'descp'            =>$this->input->get('message', TRUE).' number '.$this->input->get('number', TRUE)
-                    );
-                    $insert = $this->db->insert('offtime',$ioff);
+                         
+                        
                         $data = array(                        
                                 'hrm_track'              => "$response->TrackId",
                                 'ref_num'                => "$response->RefNo",
@@ -365,6 +391,8 @@ class Recharge_model extends CI_Model
                     return 3;
                 }
             }else{
+                 $this->updateOff($req,"ESY TOPUP Recharge fail you are not having enough balance.");
+                            
                 $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Recharge+fail+you+are+not+having+enough+balance.",
@@ -377,7 +405,8 @@ class Recharge_model extends CI_Model
 		curl_close($ch);
             }
          }else{
-               
+                $this->updateOff($req,"ESYTOPUP Access denied please use registered number.");
+                  
              $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Access+denied+please+use+registered+number.",
@@ -507,17 +536,6 @@ class Recharge_model extends CI_Model
                                  );
                              $this->db->where("user_id",$this->session->userdata('login_id'));
                              $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
-                             $ch = curl_init();
-                             $optArray = array(
-                             CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
-                                     CURLOPT_RETURNTRANSFER => true
-                             );
-                             curl_setopt_array($ch, $optArray);
-                             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                             curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-                             $result = curl_exec($ch);
-                             curl_close($ch);
                          } 
             
                 $data = array(                        
@@ -909,16 +927,6 @@ class Recharge_model extends CI_Model
                               $this->db->where("user_id",$this->session->userdata('login_id'));
                               $query1 = $this->db->update("current_virtual_amount",$insfrom);
 
-                              $ch = curl_init();
-                              $optArray = array(
-                              CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Recharge+Successfull+For+$myno+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
-                                      CURLOPT_RETURNTRANSFER => true
-                              );
-                              curl_setopt_array($ch, $optArray);
-                              curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                              curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-                              $result = curl_exec($ch);
-                              curl_close($ch);
                           } 
 
                     $data = array(                        

@@ -17,6 +17,7 @@
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/animate.css/animate.min.css">
    <!-- WHIRL (spinners)-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/whirl/dist/whirl.css">
+   <link rel="icon" href="<?php echo $this->config->item('assets_url') ?>app/img/favi.png" type="image/gif" sizes="16x16">
   
    <!-- DATATABLES-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/datatables-colvis/css/dataTables.colVis.css">

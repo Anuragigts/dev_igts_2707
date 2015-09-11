@@ -11,6 +11,7 @@
    <!-- =============== VENDOR STYLES ===============-->
    <!-- FONT AWESOME-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/fontawesome/css/font-awesome.min.css">
+   <link rel="icon" href="<?php echo $this->config->item('assets_url') ?>app/img/favi.png" type="image/gif" sizes="16x16">
    <!-- SIMPLE LINE ICONS-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/simple-line-icons/css/simple-line-icons.css">
    <!-- =============== BOOTSTRAP STYLES ===============-->
@@ -56,7 +57,7 @@
                         <div class="col-md-6">
                            <div class="form-group has-feedback">
                                 <label for="signupInputEmail1" class="text-muted">Email address<span class="red">*</span></label>
-                                <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email" autocomplete="off" required class="form-control email">
+                                <input id="signupInputEmail1" name="email" value="<?= set_value("email"); ?>" type="email" placeholder="Enter email"   required class="form-control email">
                                <span class="fa fa-envelope form-control-feedback text-muted"></span>
                                 <span class="red"><?=  form_error('email');?></span>
                             </div>
@@ -64,7 +65,7 @@
                         <div class="col-md-6">
                            <div class="form-group has-feedback">
                                 <label for="mobile" class="text-muted">Mobile Number<span class="red">*</span></label>
-                               <input id="signupInputEmail1" name="mobile" value="<?= set_value("mobile"); ?>"  type="mobile" placeholder="Mobile Number" autocomplete="off" required class="form-control" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                               <input id="signupInputEmail1" name="mobile" value="<?= set_value("mobile"); ?>"  type="mobile" placeholder="Mobile Number"   required class="form-control" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                <span class="fa fa-mobile form-control-feedback text-muted"></span>
                                <span class="red"><?=  form_error('mobile');?></span>
                             </div>
@@ -74,7 +75,7 @@
                          <div class="col-md-6">
                             <div class="form-group has-feedback">
                                <label for="signupInputPassword1" class="text-muted">Password<span class="red">*</span></label>
-                               <input id="strpassword" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password" autocomplete="off" required class="form-control" >
+                               <input id="strpassword" name="pass" value="<?= set_value("pass"); ?>" type="password" placeholder="Password"   required class="form-control" >
                                <span class="fa fa-lock form-control-feedback text-muted"></span>
                                 <span class="red"><?=  form_error('pass');?></span>
                             </div>
@@ -82,7 +83,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label for="signupInputRePassword1" class="text-muted">Retype Password<span class="red">*</span></label>
-                                <input id="signupInputRePassword1" name="con_pass" type="password" placeholder="Retype Password" autocomplete="off" required data-parsley-equalto="#signupInputPassword1" class="form-control">
+                                <input id="signupInputRePassword1" name="con_pass" type="password" placeholder="Retype Password"   required data-parsley-equalto="#signupInputPassword1" class="form-control">
                                 <span class="fa fa-lock form-control-feedback text-muted"></span>
                                 <span class="red"><?=  form_error('con_pass');?></span>
                             </div>
@@ -106,7 +107,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label for="signupInputEmail1" class="text-muted">Door No. <span class="red">*</span></label>
-                                <input id="signupInputEmail1" name="door" value="<?= set_value("door"); ?>" type="text" placeholder="Door No." autocomplete="off" required class="form-control">
+                                <input id="signupInputEmail1" name="door" value="<?= set_value("door"); ?>" type="text" placeholder="Door No."   required class="form-control">
                                <span class="fa fa-window form-control-feedback text-muted"></span>
                                <span class="red"><?=  form_error('door');?></span>
                             </div> 
@@ -116,7 +117,7 @@
                          <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label for="signupInputEmail1" class="text-muted">Street <span class="red">*</span></label>
-                                <input id="signupInputEmail1" name="street" value="<?= set_value("street"); ?>" type="text" placeholder="Street" autocomplete="off" required class="form-control">
+                                <input id="signupInputEmail1" name="street" value="<?= set_value("street"); ?>" type="text" placeholder="Street"   required class="form-control">
                                <span class="fa fa-window form-control-feedback text-muted"></span>
                                <span class="red"><?=  form_error('street');?></span>
                             </div> 
@@ -124,7 +125,7 @@
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label for="signupInputEmail1" class="text-muted">Area <span class="red">*</span></label>
-                                <input id="signupInputEmail1" name="area" value="<?= set_value("area"); ?>" type="text" placeholder="Area" autocomplete="off" required class="form-control">
+                                <input id="signupInputEmail1" name="area" value="<?= set_value("area"); ?>" type="text" placeholder="Area"   required class="form-control">
                                <span class="fa fa-window form-control-feedback text-muted"></span>
                                <span class="red"><?=  form_error('area');?></span>
                             </div> 
@@ -160,7 +161,7 @@
                        <div class="col-md-6">
                             <div class="form-group has-feedback">
                               <label for="" class="text-muted">Zip Code<span class="red">*</span></label>
-                               <input id="signupInputRePassword1" name="zip" type="text" placeholder="Zip Code" autocomplete="off" required data-parsley-equalto="#zip" class="form-control" autocomplete="off" required class="form-control" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                               <input id="signupInputRePassword1" name="zip" type="text" placeholder="Zip Code"   required data-parsley-equalto="#zip" class="form-control"   required class="form-control" value="<?= set_value("zip"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
                               <span class="fa fa-map-marker form-control-feedback text-muted"></span>
                               <span class="red"><?=  form_error('zip');?></span>
                            </div>
@@ -170,13 +171,13 @@
                          <div class="col-md-6">
                             <div class="form-group has-feedback">
                               <label for="" class="text-muted">ID Proof</label>
-                               <input id="" name="idproof" type="file" autocomplete="off" required >
+                               <input id="" name="idproof" type="file"   required >
                            </div>
                          </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                              <label for="" class="text-muted">Address Proof</label>
-                              <input id="" name="addproof" type="file" autocomplete="off" required >
+                              <input id="" name="addproof" type="file"   required >
                           </div>
                         </div>
                     </div>

@@ -85,11 +85,11 @@ class Dmr extends CI_Controller {
                     $result = $this->dmr_model->doRegister($iloc, $aloc);
                     //echo $result;exit;
                     if($result == 0){                    
-                        $this->session->set_flashdata('err','Registration fail : Some internal error occurred.');  
+                        $this->session->set_flashdata('err','Registration fail : Some internal validation Account Number Already Registered.');  
                          redirect('dmr/sender_registration');
                     }
                    else if( $result == 20){                    
-                        $this->session->set_flashdata('err','Registration fail : Already Reginster.');  
+                        $this->session->set_flashdata('err','Registration fail : Already Register.');  
                          redirect('dmr/sender_registration');
                     }else{
                         $this->session->set_flashdata('msg','Your Registration is successfull Please verify if by using OTP.');  
@@ -193,7 +193,7 @@ class Dmr extends CI_Controller {
     }
 
     public function resendOTP(){
-        if( $this->session->userdata('iddmr') != '1'){redirect('dmr/dmrUserSearch');}
+        
         $id = $this->uri->segment(4);
         $result = $this->dmr_model->resendOTP();
        if($result == 1){                    
@@ -1044,7 +1044,6 @@ class Dmr extends CI_Controller {
               else{
 					$this->session->set_flashdata('err','Upgradation  fail : Some internal error occurred.');  
                      redirect('dmr/doKyc/'.$id);
-                    
                      
                 }
             }

@@ -47,21 +47,18 @@ class Register_model extends CI_Model
                     $message .= 'Thank you for being with Esy Top-up, We will send your username and password on your mobile<br> For verification Click on this ';
                     $message .='<a href="'.base_url().'register/confirm/'.md5($email).'">Confirmation Link</a> ';
                     $message .= '<br/><br/><br/>';
-                    $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 9985 997675<br>http://esytopup.com</div>'; 
+                    $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 96666 580220<br>+91 96666 580540<br>http://esytopup.com</div>'; 
                     $this->email->message($message);
-//                    print_r($data);exit;
-//                    echo $message;exit;
-                    	// init curl object        
-		
-
 		
                     if($this->email->send()){
                         $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile&from=ESYTOP&message=Welcome+to+http://esytopup.com++User+Name:+$email+Pass:+$pass",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$mobile&from=ESYTOP&message=Welcome+to+http://esytopup.co.in++User+Name:+$email+Pass:+$pass",
 			CURLOPT_RETURNTRANSFER => true
 		);
-
+                    
+                        
+                    
 		// apply those options
 		curl_setopt_array($ch, $optArray);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -116,8 +113,27 @@ class Register_model extends CI_Model
                                     
                                     $this->db->insert("module_access",$ins_access);
                                     if($this->db->affected_rows()   >   0){
-										
+                                        $this->email->clear(TRUE);
+                                        $this->email->set_newline("\r\n");
+                            // Set to, from, message, etc.
+                            $this->email->from('support@esytopup.com', 'Esy Topup : New Enquiry');
+                            $this->email->to('chbhargav9396@gmail.com');
+                            $this->email->subject('Esy Top-up Enquiry');
+                            $message1 = 'Hi '."Support team, <br/><br/>";                    
+                            $message1 .= $first_name.' '.$last_name." want to join Swami communication as a $refer1, the details are :";
+                           
+                            $message1 .="Name : $first_name $last_name<br>"; 
+                            $message1 .="Email : $email<br>"; 
+                            $message1 .="Mobile : $mobile<br>"; 
+                            $message1 .="Referd For: $refer1<br>"; 
+                            $message1 .="Address : $door, $street, $area, $city1, $zip ";
+                           // echo $message1; 
+                            $this->email->message($message1);
+                            if($this->email->send()){
+                             //   print_r($this->email->print_debugger());
+                            //die();
                                         return 1;
+                            }else{echo "dddd";die();return 1;}
                                     }
                                     else{
                                             return 0;

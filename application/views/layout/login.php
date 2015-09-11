@@ -9,6 +9,7 @@
    <meta name="author" content="iGravitas Technosoft India Pvt. Ltd.">
    <title><?php echo $title;?></title>
    <!-- =============== VENDOR STYLES ===============-->
+   <link rel="icon" href="<?php echo $this->config->item('assets_url') ?>app/img/favi.png" type="image/gif" sizes="16x16">
    <!-- FONT AWESOME-->
    <link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>vendor/fontawesome/css/font-awesome.min.css">
    <!-- SIMPLE LINE ICONS-->

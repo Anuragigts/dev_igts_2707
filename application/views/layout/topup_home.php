@@ -18,7 +18,7 @@
 
 	<link href="http://fonts.googleapis.com/css?family=Oswald|Open+Sans:400,600" rel="stylesheet" type="text/css">
 	
-
+<link rel="icon" href="<?php echo $this->config->item('assets_url') ?>app/img/favi.png" type="image/gif" sizes="16x16">
      
 	<link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>home/css/skeleton.css" type="text/css">
 	<link rel="stylesheet" href="<?php echo $this->config->item('assets_url') ?>home/css/reset.css" type="text/css">    

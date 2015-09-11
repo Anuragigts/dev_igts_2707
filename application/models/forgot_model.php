@@ -40,7 +40,7 @@ class Forgot_model extends CI_Model
                     $message .= 'Please reset your password By clicking on ';
                     $message .='<a href="'.base_url().'forgot_password/reset/'.md5($pass).'">Link</a> ';
                     $message .= ' to reset your password.  <br/><br/><br/>';
-                   $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 9985 997675<br>http://esytopup.com</div>'; 
+                   $message .='<div>Regards ,<br/> Esy Top-up Admin <br>+91 96666 580220<br>+91 96666 580540<br>http://esytopup.com</div>'; 
                     $this->email->message($message);
 //                    echo $message;exit;
                     if($this->email->send()){

@@ -18,11 +18,13 @@ class Recharge extends CI_Controller {
     }
     
     public function offLineRecharge(){
+        $req = $this->recharge_model->insertOff();
         $recharge_type = 0;
         $codeval = "";
         $V ="";
        $val = $this->input->get('message', TRUE);
        $url = explode(" ",$val);
+      
       
         $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
@@ -135,6 +137,8 @@ class Recharge extends CI_Controller {
                $recharge_type = 0;
                $codeval = "";
                $V ="";
+               
+                $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
                $number = $this->input->get('number', TRUE);
                 $ch = curl_init();
                         $optArray = array(
@@ -150,7 +154,7 @@ class Recharge extends CI_Controller {
            
         }
         
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3']);
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3'],$req);
     }
    
     public function mobile_recharge(){

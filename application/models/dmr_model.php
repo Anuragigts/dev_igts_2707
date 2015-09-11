@@ -116,6 +116,7 @@ class Dmr_model extends CI_Model
                 $first_tag = explode('<REGISTRATIONResult>', $result);       
                 //print_r($first_tag);die();
                 if(count($first_tag)!= 2 ){
+               // print_r($first_tag);die();
                     return 0;
                 }else{
                     $get_less =  str_replace("&lt;","<",$first_tag[1]);
@@ -456,7 +457,7 @@ class Dmr_model extends CI_Model
 
 
             $curl = curl_init();
-
+//echo $curlData;
             curl_setopt ($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl,CURLOPT_TIMEOUT,120);
@@ -475,7 +476,7 @@ class Dmr_model extends CI_Model
            
            
          $first_tag = explode('<LOGIN_V2Result>', $result);      
-        // print_r($first_tag);die();
+      //  return print_r($first_tag);die();
          if(count($first_tag) == 1 ){
              return 0;
          }else{
