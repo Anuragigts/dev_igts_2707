@@ -38,7 +38,7 @@
                                     <?php if($this->session->userdata("my_type") != "5"){ ?>
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label>Name<span class="red">*</span></label>
+                                            <label>Name</label>
                                             <select class="form-control" name="fname">
                                                 <option value=""> Select  Name</option>
                                                 <?php 
@@ -48,7 +48,6 @@
                                                     }
                                                 ?>
                                             </select>
-                                            <span class="red"><?= form_error('fname');?></span>
                                         </div>
                                     </div>
                                     <?php } ?>

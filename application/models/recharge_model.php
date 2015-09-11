@@ -654,7 +654,7 @@ class Recharge_model extends CI_Model
                         "from"          =>  $d,
                         "to"            =>  $my,
                         "com_amount"    =>  $amt,
-                        "cur_amount"    =>  $camount,
+                        "cur_amount"    =>  $camount?$camount:0,
                         "remarks"       =>  "commission amount"
                 );
                 

@@ -25,9 +25,9 @@ class Reports extends CI_Controller {
             if($this->input->post("search")){
                     $this->form_validation->set_rules("from",  "Date",  "required");
 //                    $this->form_validation->set_rules("to",     "To Date",   "required");
-                    if($this->session->userdata("my_type") != "5"){ 
-                            $this->form_validation->set_rules("fname",     "Name",   "required");
-                           $val =   $this->input->post("fname");
+                    if($this->session->userdata("my_type") != "5"){
+                        //$this->form_validation->set_rules("fname","Name","required");
+                         $val = $this->input->post("fname")?$this->input->post("fname"):$val;
                     }
                     if( $this->form_validation->run() == TRUE ){
                             $from   = $this->input->post("from");
@@ -60,8 +60,8 @@ class Reports extends CI_Controller {
                     $this->form_validation->set_rules("from",  "From Date",  "required");
                     $this->form_validation->set_rules("to",     "To Date",   "required");
                     if($this->session->userdata("my_type") != "5"){ 
-                            $this->form_validation->set_rules("fname",     "Name",   "required");
-                           $val =   $this->input->post("fname");
+                            //$this->form_validation->set_rules("fname",     "Name",   "required");
+                           $val = $this->input->post("fname")?$this->input->post("fname"):$val;
                     }
                     if( $this->form_validation->run() == TRUE ){
                             $from   = $this->input->post("from");
@@ -98,8 +98,7 @@ class Reports extends CI_Controller {
                     $this->form_validation->set_rules("from",  "From Date",  "required");
                     $this->form_validation->set_rules("to",     "To Date",   "required");
                     if($this->session->userdata("my_type") != "5"){ 
-                            $this->form_validation->set_rules("fname",     "Name",   "required");
-                            $val =   $this->input->post("fname");
+                           $val = $this->input->post("fname")?$this->input->post("fname"):$val;
                     }
                     if( $this->form_validation->run() == TRUE ){
                             $from   = $this->input->post("from");

@@ -181,9 +181,7 @@ class Settings_model extends CI_Model
                    return array();
                }
         }
-        public function transferVamt(){
-            $from = $this->session->userdata('login_id');
-            $to = $this->uri->segment(3);
+        public function transferVamt($from,$to){
             $from_m =$this->getprofile($from);
             $from_t =$this->getprofile($to);
             $from_mo = $from_m->mobile;
@@ -218,7 +216,8 @@ class Settings_model extends CI_Model
                         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                         $result = curl_exec($ch);
                         curl_close($ch);
-                    }else{
+                    }
+                    else{
                         $insfrom   =   array(
                                 "user_id"    =>     $from,
                                 "amount"     => (0 - $this->input->post('amount'))

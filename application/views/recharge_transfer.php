@@ -74,6 +74,17 @@
                                                  <span class="red"><?=  form_error('amount');?></span>
                                              </div>
                                           </div>
+                                            <div class="form-group">
+                                             <label class="col-lg-3 control-label">Credit (or)<br/> Roll back<font class="red">*</font></label>
+                                             <div class="col-lg-9">
+                                                 <select class="form-control" name="credit">
+                                                     <option value="">Select Credit (or) Roll back</option>
+                                                     <option value="1">Credit</option>
+                                                     <option value="2">Roll back</option>
+                                                 </select>
+                                                 <span class="red"><?=  form_error('credit');?></span>
+                                             </div>
+                                          </div>
                                              <div class="form-group">
                                              <label class="col-lg-3 control-label" >Remarks<font class="red">*</font></label>
                                              <div class="col-lg-9">

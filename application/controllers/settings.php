@@ -198,11 +198,19 @@ class Settings extends CI_Controller {
               if($this->input->post('transfer')){
                   $this->form_validation->set_rules('amount',' Amount','required');
                   $this->form_validation->set_rules('remarks','Remarks','required');
+                  $this->form_validation->set_rules('credit','Credit or Rollback ','required');
             
                     if($this->form_validation->run() == TRUE){
-
-                       $result = $this->settings_model->transferVamt();
-
+                        if($this->input->post("credit") == 2){
+                            $from     = $this->session->userdata('login_id');
+                            $to   = $this->uri->segment(3);
+                            $result = $this->settings_model->transferVamt($to,$from);
+                        }
+                        else{
+                            $from = $this->session->userdata('login_id');
+                            $to = $this->uri->segment(3);
+                            $result = $this->settings_model->transferVamt($from,$to);
+                        }
                        if($result == 1){                    
                            $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
