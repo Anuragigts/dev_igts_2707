@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller {
        $data['super'] = $this->dashboard_model->superCnt();
        $data['dis'] = $this->dashboard_model->disCnt();
        $data['ag'] = $this->dashboard_model->agCnt();
+       $data['amounts'] = $this->dashboard_model->amounts();
         $this->load->view('layout/inner_template',$data);        
     }
     public function logout(){

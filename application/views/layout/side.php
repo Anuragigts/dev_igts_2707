@@ -327,11 +327,11 @@
                               <span>Commission Report</span>
                            </a>
                         </li>
-                        <li class="dmr_reports">
+<!--                        <li class="dmr_reports">
                            <a href="<?= base_url()?>reports/dmr_reports" title="DMR Reports">
                               <span>DMR Report</span>
                            </a>
-                        </li>
+                        </li>-->
                         <li class="offline_reports">
                            <a href="<?= base_url()?>reports/offline_reports" title="Offline Reports">
                               <span>Offline SMS Report</span>
