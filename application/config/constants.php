@@ -50,6 +50,10 @@ define('POSTPAID', 'http://115.248.39.80/hermesapi/hermesmobile.asmx');
 define('POSTPAIDACTION', 'http://tempuri.org/HERMESAPI/HermesMobile/');
 //DMR url
 define('DMRURL', 'http://202.54.157.77/wsnpci/impsmethods.asmx');
+define('TID', '200094');
+define('LKEY', '0079394869');
+define('MID', '94');
+
 // DMR action
 define('DMRACTIUON', 'http://tempuri.org/');
 

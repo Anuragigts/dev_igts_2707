@@ -60,9 +60,9 @@ class Dmr_model extends CI_Model
                            <REGISTRATION xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;REGISTRATIONREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;KYCFLAG&gt;'.$this->input->post('kyc').'&lt;/KYCFLAG&gt;
@@ -178,9 +178,9 @@ class Dmr_model extends CI_Model
                     <SENDERREGISTER  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;SENDERREGISTERREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$this->input->post('trans').'&lt;/TRANSACTIONID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
@@ -259,9 +259,9 @@ class Dmr_model extends CI_Model
                     <SENDERRESENDOTP  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;SENDERRESENDOTPREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$t_id.'&lt;/TRANSACTIONID&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -365,9 +365,9 @@ class Dmr_model extends CI_Model
                     <LOGIN_V2  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;LOGIN_V1REQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;                            
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -438,9 +438,9 @@ class Dmr_model extends CI_Model
                     <LOGIN_V2  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;LOGIN_V1REQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;                            
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -553,9 +553,9 @@ class Dmr_model extends CI_Model
                            <ADDBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;ADDBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
@@ -586,9 +586,9 @@ class Dmr_model extends CI_Model
                            <ADDBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;ADDBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
@@ -728,9 +728,9 @@ class Dmr_model extends CI_Model
                            <ADDBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;ADDBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
@@ -761,9 +761,9 @@ class Dmr_model extends CI_Model
                            <ADDBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;ADDBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
@@ -868,9 +868,9 @@ class Dmr_model extends CI_Model
                            <TRANSACTION_V2 xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;TRANSACTION_V2REQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
                                    &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
@@ -996,9 +996,9 @@ class Dmr_model extends CI_Model
                            <TRANSACTION_V2 xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;TRANSACTION_V2REQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->uri->segment(5).'&lt;/CARDNO&gt;
                                    &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
                                    &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
@@ -1096,9 +1096,9 @@ class Dmr_model extends CI_Model
                     <VIEWBENEFICIARY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;VIEWBENEFICIARYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;                          
                             &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                            
@@ -1192,9 +1192,9 @@ class Dmr_model extends CI_Model
                            <EDITBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;EDITBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;FLAG&gt;2&lt;/FLAG&gt; 
@@ -1225,9 +1225,9 @@ class Dmr_model extends CI_Model
                            <EDITBENEFICIARY xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;EDITBENEFICIARYREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                    &lt;FLAG&gt;1&lt;/FLAG&gt;                                  
@@ -1333,9 +1333,9 @@ class Dmr_model extends CI_Model
                     <BENEREGISTER  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;BENEREGISTERREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$this->input->post('trans').'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
@@ -1414,9 +1414,9 @@ class Dmr_model extends CI_Model
                     <BENERESENDOTP  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;BENERESENDOTPREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$t_id.'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
@@ -1483,9 +1483,9 @@ class Dmr_model extends CI_Model
                     <REMOVEBENEFICIARY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;REMOVEBENEFICIARYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$b_id.'&lt;/BENEID&gt;
@@ -1552,9 +1552,9 @@ class Dmr_model extends CI_Model
                     <REMOVEBENEOTP  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;REMOVEBENEOTPREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;BENEID&gt;'.$this->input->post('bene_id').'&lt;/BENEID&gt;
@@ -1645,9 +1645,9 @@ class Dmr_model extends CI_Model
                     <CHECKTOPUPLIMIT  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;CHECKTOPUPLIMITREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             
@@ -1732,9 +1732,9 @@ class Dmr_model extends CI_Model
                     <TRANSACTION_V3  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;TRANSACTION_V3REQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;TRANSTYPE&gt;'.$val.'&lt;/TRANSTYPE&gt;
                             &lt;TRANSTYPEDESC&gt;'.$desc.'&lt;/TRANSTYPEDESC&gt;
@@ -1858,9 +1858,9 @@ class Dmr_model extends CI_Model
                     <TOPUP_V2  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;TOPUP_V2REQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
                              &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;   
                             
@@ -2000,9 +2000,9 @@ class Dmr_model extends CI_Model
                            <KYCUPLOAD xmlns="http://tempuri.org/">
                              <RequestData>
                                    &lt;KYCUPLOADREQUEST&gt;
-                                   &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                                   &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                                   &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                                    &lt;CARDNO&gt;'.$this->input->post('card').'&lt;/CARDNO&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                                     &lt;KYCFLAG&gt;2&lt;/KYCFLAG&gt;
@@ -2097,9 +2097,9 @@ class Dmr_model extends CI_Model
                     <TRANSACTIONREQUERY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;TRANSACTIONREQUERYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$this->input->post('id').'&lt;/TRANSACTIONID&gt;
                              &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                            
@@ -2193,9 +2193,9 @@ class Dmr_model extends CI_Model
                     <TRANSACTIONREQUERY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;TRANSACTIONREQUERYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;TRANSACTIONID&gt;'.$this->input->post('id').'&lt;/TRANSACTIONID&gt;
                              &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                            
@@ -2303,9 +2303,9 @@ class Dmr_model extends CI_Model
                     <TRANSACTIONHISTORY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;TRANSACTIONHISTORYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
                             &lt;FROMDATE&gt;'.$this->input->post('from').'&lt;/FROMDATE&gt;
                             &lt;TODATE&gt;'.$this->input->post('to').'&lt;/TODATE&gt;
@@ -2371,9 +2371,9 @@ class Dmr_model extends CI_Model
                     <AGENTTRANSACTIONHISTORY  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;AGENTTRANSACTIONHISTORYREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             
                             &lt;FROMDATE&gt;'.$this->input->post('from').'&lt;/FROMDATE&gt;
                             &lt;TODATE&gt;'.$this->input->post('to').'&lt;/TODATE&gt;
@@ -2443,9 +2443,9 @@ class Dmr_model extends CI_Model
                     <FORGOTPIN  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;FORGOTPINREQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;                          
                             &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;
                             
                             &lt;/FORGOTPINREQUEST&gt;
@@ -2525,9 +2525,9 @@ class Dmr_model extends CI_Model
                     <VALIDATELOGIN_V1  xmlns="http://tempuri.org/">
                       <RequestData>
                             &lt;VALIDATELOGIN_V1REQUEST&gt;
-                            &lt;TERMINALID&gt;200094&lt;/TERMINALID&gt;
-                            &lt;LOGINKEY&gt;0079394869&lt;/LOGINKEY&gt;
-                            &lt;MERCHANTID&gt;94&lt;/MERCHANTID&gt;                          
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;                          
                             &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
                             &lt;OTP&gt;'.$this->input->post('otp').'&lt;/OTP&gt;
