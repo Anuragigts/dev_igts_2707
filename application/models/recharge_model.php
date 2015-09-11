@@ -533,7 +533,12 @@ class Recharge_model extends CI_Model
                     );
                 $this->db->where('recharge_id',$my_mo_id);
                 $update = $this->db->update('recharge_track',$data);              
-               
+                $md = $this->session->userdata("master_distributor_id");
+                $sd = $this->session->userdata("super_distributor_id");
+                $d = $this->session->userdata("distributor_id");
+                $my = $this->session->userdata("login_id");
+                $optna  =   strtolower($desc);
+                $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
                  if($this->db->affected_rows() == 1){
                      return 0;
                  }  else {
@@ -548,7 +553,105 @@ class Recharge_model extends CI_Model
             return 3;
         }
     }
-	
+        public function trans_commission($md,$sd,$d,$my,$desc,$amt){
+                $cammmt     =   0;
+                $cammst     =   0;
+                $cammdt     =   0;
+                $cammat     =   0;
+                $mobjid  =   $this->getmoduleobjectid($desc);
+                if($md != 0){
+                            $mdp     =   $this->getpackage($md);
+                            $comd    =   $this->getcomdet($mdp,$mobjid);
+                            $cammmt  =   $this->getcamt($md);
+                }
+                if($sd != 0){
+                            $sdp     =   $this->getpackage($sd);
+                            $cosd    =   $this->getcomdet($sdp,$mobjid);
+                            $cammst  =   $this->getcamt($sd);
+                }
+                if($d != 0){
+                            $dp = $this->getpackage($d);
+                            $cod    =   $this->getcomdet($dp,$mobjid);
+                            $cammdt  =   $this->getcamt($d);
+                }
+                if($my != 0){
+                            $myp = $this->getpackage($my);
+                            $coyd    =   $this->getcomdet($myp,$mobjid);
+                            $cammat  =   $this->getcamt($my);
+                }
+                $amyt      =   ($amt*($coyd['commission_amt']))/100;
+                $amdt      =   ($amt*($cod['commission_amt']))/100;
+                $amst      =   ($amt*($cosd['commission_amt']))/100;
+                $ammt      =   ($amt*($comd['commission_amt']))/100;
+                
+                $deta       =   $amyt;
+                $detd       =   $amdt-$deta;
+                $dets       =   $amst-$detd;
+                $detm       =   $ammt-$dets;
+                
+                
+                $cammmt1     =   $cammmt+$detm;
+                $cammst1     =   $cammst+$dets;
+                $cammdt1     =   $cammdt+$detd;
+                $cammat1     =   $cammat+$deta;
+                
+                $this->updatecvamt($md,$cammmt1);
+                $this->updatecvamt($sd,$cammst1);
+                $this->updatecvamt($d,$cammdt1);
+                $this->updatecvamt($my,$cammat1);
+                
+                $this->insertdeamt($d,$my,$cammat1,$cammat);
+                $this->insertdeamt($sd,$d,$cammdt1,$cammdt);
+                $this->insertdeamt($md,$sd,$cammst1,$cammst);
+                $this->insertdeamt("1",$md,$cammmt1,$cammmt);
+                
+        }
+        public function getpackage($val){
+                $qu = $this->db->get_where("commission",array("login_id" => $val));
+                $pg = $qu->row_array();
+                return $pg['package_id'];
+        }
+        public function getmoduleobjectid($desc){
+                $qu = $this->db->get_where("modules_object",array("modules_obj_name" => $desc));
+                $od = $qu->row_array();
+                return $od['modules_obj_id'];
+        }
+        public function getcamt($md){
+                $qu = $this->db->get_where("current_virtual_amount",array("user_id" => $md));
+                $od = $qu->row_array();
+                return $od['amount'];
+        }
+        public function getcomdet($mdp,$mobjid){
+                $qu = $this->db->get_where("commission_details",array("package_id" => $mdp,"modules_object_id" => $mobjid));
+                $od = $qu->row_array();
+                return $od;
+        }
+        public function updatecvamt($md,$amt){
+                $this->db->where(array("user_id" => $md));
+                $qu = $this->db->update("current_virtual_amount",array("amount" => $amt));
+                return $qu;
+        }
+        public function insertdeamt($d,$my,$amt,$camount){
+                $data   =   array(
+                        "from"          =>  $d,
+                        "to"            =>  $my,
+                        "com_amount"    =>  $amt,
+                        "cur_amount"    =>  $camount,
+                        "remarks"       =>  "commission amount"
+                );
+                
+                $this->db->insert("comi_virtual_det",$data);
+                
+                $inset   =   array(
+                        "trans_from"        =>  $d,
+                        "trans_to"          =>  $my,
+                        "trans_amt"         =>  $amt,
+                        "cur_amount"        =>  $camount,
+                        "trans_remark"      =>  "commission amount",
+                        "trans_status"      =>  2
+                );
+                $this->db->insert("trans_detail",$inset);
+        }
 	public function getamt(){
 	
 		 $url = RECHARGEURL;        
