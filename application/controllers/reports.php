@@ -50,7 +50,7 @@ class Reports extends CI_Controller {
              $valo    =   $this->session->userdata("login_id");
             $my_type    =   $this->input->post("user");
             $name1      =   $this->report_model->getUsers($valo,$my_type);
-            $val = '<option value=""> Select  Name</option>';
+            $val = '<option value=""> Select Name</option>';
             foreach ($name1 as $na){ 
               $val  .=    '<option value="'.$na->login_id.'" >'.$na->first_name." ".$na->last_name.'</option>';
             }
@@ -148,9 +148,9 @@ class Reports extends CI_Controller {
     public function  trasaction_reports(){
              if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
-                    'title'         => 'ESY TOPUP :: DMR Reports',
-                    'metakeyword'   => 'ESY TOPUP :: DMR Reports',
-                    'metadesc'      => 'ESY TOPUP :: DMR Reports',
+                    'title'         => 'ESY TOPUP :: Trasaction Reports',
+                    'metakeyword'   => 'ESY TOPUP :: Trasaction Reports',
+                    'metadesc'      => 'ESY TOPUP :: Trasaction Reports',
                     'content'       => 'trasaction_reports'
             );
             $data["view"]   =   array();
