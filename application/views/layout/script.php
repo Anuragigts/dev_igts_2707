@@ -304,4 +304,16 @@ function showAgents(str,user) {
     }
 }
 
+
+$("#user_type").change(function(){
+        var id =  $('option:selected', this).val();//$('#state').val();
+       $.post('<?php echo base_url();?>reports/getUsers',{'user':id},function(response){
+               //alert(response);
+               if(response != ""){
+                       $('#fname').html(response);							
+               }else{
+                     $('#fname').html("<option value=''> Select  User type</option>");
+               }					
+           }); 
+ });
 </script>

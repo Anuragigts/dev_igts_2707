@@ -546,6 +546,7 @@ class Recharge_model extends CI_Model
                         'desc'                   => "$response->ItemDescription",
                         'hrm_amount'             => "$response->Amount",
                         'responce_time'          => "$response->DateTime",
+                        'cur_time'               => date("d/m/Y"),
                         'status'                 =>  $response->Status,
                         
                     );

@@ -23,36 +23,41 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label>Date<span class="red">*</span></label>
+                                            <label>From Date<span class="red">*</span></label>
                                             <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="from" value="<?= set_value('from');?>">
                                             <span class="red"><?= form_error('from');?></span>
                                         </div>
                                     </div>
-<!--                                    <div class="col-sm-3">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>To Date<span class="red">*</span></label>
                                             <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="to" value="<?= set_value('to');?>">
                                             <span class="red"><?= form_error('to');?></span>
                                         </div>
-                                    </div>-->
+                                    </div>
                                     <?php if($this->session->userdata("my_type") != "5"){ ?>
                                     <div class="col-sm-3">
                                         <div class="form-group">
+                                            <label>User Type</label>
+                                            <select class="form-control" name="user" id="user_type">
+                                                <option value=""> Select  User type</option>
+                                                <?php foreach($type as $ty) { ?>
+                                                        <option value="<?= $ty->user_type_id;?>" <?= set_select("user",$ty->user_type_id);?> ><?= $ty->user_type;?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
                                             <label>Name</label>
-                                            <select class="form-control" name="fname">
+                                            <select class="form-control" name="fname" id="fname">
                                                 <option value=""> Select  Name</option>
-                                                <?php 
-                                                    foreach ($name1 as $na){ ?>
-                                                <option value="<?= $na->login_id;?>" <?= set_select("fname",$na->login_id);?>><?= $na->first_name." ".$na->last_name;?></option>
-                                                <?php
-                                                    }
-                                                ?>
                                             </select>
                                         </div>
                                     </div>
                                     <?php } ?>
-                                    <div class="form-group">
-                                        <div class="col-xs-offset-3 btn-top">
+                                    <div class="col-sm-12">
+                                        <div class="pull-left">
                                             <input type="submit" class="btn btn-sm btn-info " name="search" value="Search" />
                                         </div>
                                     </div>

@@ -310,13 +310,13 @@
                      </a>                    
                   </li> -->
                    <?php }?>
-                 <li class="module_object recharge_reports view_module_object">
+                 <li class="report recharge_reports commission_reports dmr_reports  offline_reports  trasaction_reports">
                      <a href="#reports" title="Report" data-toggle="collapse">
                         <em class="fa fa-list"></em>
                         <span>Reports</span>
                      </a>
                      <ul id="reports" class="nav sidebar-subnav collapse">
-                        <li class="sidebar-subnav-header module_object recharge_reports">Reports</li>
+                        <li class="sidebar-subnav-header  recharge_reports">Reports</li>
                         <li class="recharge_reports">
                            <a href="<?= base_url()?>reports/recharge_reports" title="Recharge Reports">
                               <span>Recharge Report</span>
@@ -335,6 +335,11 @@
                         <li class="offline_reports">
                            <a href="<?= base_url()?>reports/offline_reports" title="Offline Reports">
                               <span>Offline SMS Report</span>
+                           </a>
+                        </li>
+                        <li class="trasaction_reports">
+                           <a href="<?= base_url()?>reports/trasaction_reports" title="Transaction Reports">
+                              <span>Transaction Report</span>
                            </a>
                         </li>
                      </ul>
