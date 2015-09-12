@@ -12,6 +12,30 @@
                <!-- Breadcrumb below title-->
               
             </h3>
+              <?php if($this->session->flashdata('err') != ''){?>
+                 <div class="alert alert-block alert-danger fade in">
+                     <button data-dismiss="alert" class="close" type="button">
+                       ×
+                     </button>
+                     <p>
+                       <?php echo ($this->session->flashdata('err'))?$this->session->flashdata('err'):''?>
+                     </p>
+                 </div>
+             <br>
+             <?php }?>
+
+             <?php if($this->session->flashdata('msg') != ''){?>
+                 <div class="alert alert-block alert-info fade in no-margin">
+                   <button data-dismiss="alert" class="close" type="button">
+                     ×
+                   </button>
+                   <p>
+                     <?php echo ($this->session->flashdata('msg'))?$this->session->flashdata('msg'):''?>
+                   </p>
+                 </div>
+                 </br>
+             <?php }?>           
+             <br>
              <?php if($this->session->userdata('my_type') != 1 ){?>
             <!-- START widgets box-->
            <div class="row">
@@ -146,7 +170,7 @@
                              <div class="col-xs-4 text-center bg-green pv-lg">                          
                                  <em class="fa fa-bus fa-3x"></em>
                              </div>
-                             <div class="col-xs-8 pv-lg">
+                              <div class="col-xs-8 pv-lg " style="background-color: #B7D0BC">
                                 <div class="h2 mt0">bus</div>
                                 <div class="text-uppercase">Booking</div>
                              </div>
@@ -162,7 +186,7 @@
                              <br>
                              <div data-now="" data-format="D" class="h2 mt0"></div>
                           </div>
-                          <div class="col-xs-8 pv-lg">
+                          <div class="col-xs-8 pv-lg" style="background-color: #B7D0BC">
                              <div data-now="" data-format="dddd" class="text-uppercase"></div>
                              <br>
                              <div data-now="" data-format="h:mm" class="h2 mt0"></div>
@@ -240,9 +264,9 @@
                      <div class="ph">
                         <em class="fa fa-user fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $master;?>
-                        <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $mamt;?></span>
+                        <span class="text-sm text-white">Master Distributors</span>
                         </div>
-                        <div class="text-uppercase">Master Distributors</div>
+                        <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $mamt;?></div>
                      </div>
                       </a>
                   </div>
@@ -254,9 +278,9 @@
                      <div class="ph">
                         <em class="fa fa-user fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $super;?>
-                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $samt;?></span>
+                           <span class="text-sm text-white">Super Distributors</span>
                         </div>
-                        <div class="text-uppercase">Super Distributors</div>
+                        <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $samt;?></div>
                      </div>
                       </a>
                   </div>
@@ -269,9 +293,9 @@
                      <div class="ph">
                         <em class="fa fa-male fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $dis;?>
-                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $damt;?></span>
+                           <span class="text-sm text-white">Distributors</span>
                         </div>
-                        <div class="text-uppercase">Distributors</div>
+                        <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $damt;?></div>
                      </div>
                       </a>
                   </div>
@@ -283,9 +307,9 @@
                      <div class="ph">
                         <em class="fa fa-child fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $ag;?>
-                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $aamt;?></span>
+                           <span class="text-sm text-white">Agents</span>
                         </div>
-                        <div class="text-uppercase">Agents</div>
+                        <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $aamt;?></div>
                      </div>
                        </a>
                   </div>

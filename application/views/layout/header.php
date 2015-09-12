@@ -43,19 +43,26 @@
              
                <!-- START Right Navbar-->
                <ul class="nav navbar-nav navbar-right">
+                   <li class="visible-lg">
+                      <button class='btn btn-labeled btn-warning' style="margin-top: 16px;">
+                        <?php 
+                        date_default_timezone_set("Asia/Kolkata"); 
+                        echo date('d/m/Y - h:i:s');?>
+                      </button>
+                  </li>
                    <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="visible-lg">
-                      <a href="#">
+                      <button class='btn btn-labeled btn-success' style="margin-top: 16px;">
                           <b>Recharge Balance</b> : <span id="phy" class="phy"></span>
-                      </a>
+                      </button>
                   </li>
                   
                    <?php }else{?>
                   
                   <li class="visible-lg">
-                      <a href="#">
+                      <button class='btn btn-labeled btn-success' style="margin-top: 16px;">
                           <b>Main Balance</b> : <span class="vamt">0.00</span>
-                      </a>
+                      </button>
                   </li>
                    <?php }?>
                    

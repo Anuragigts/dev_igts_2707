@@ -53,9 +53,10 @@ class Report_model extends CI_Model{
                 $this->db->select("t.*,p.first_name as frname,p.last_name as  lrname,po.first_name as tofname,po.last_name as tolname");
                 $this->db->from("trans_detail as t");
                 $this->db->join('profile as p','t.trans_from = p.login_id','inner');
-                $this->db->join('profile as po','t.trans_to = po.login_id','inner');
+                $this->db->join('profile as po','t.trans_to = po.login_id','left');
                 $this->db->where("( t.trans_from = ".$val." or t.trans_to = ".$val." )");
                 $this->db->where("( t.trans_date >= '".$gefr."' and t.trans_date <= '".$geto."' )");
+                 $this->db->order_by('trans_id', 'desc');
                 $qu     =   $this->db->get();
                // echo $this->db->last_query();exit;
                 return $qu->result();

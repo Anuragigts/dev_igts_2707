@@ -71,7 +71,7 @@
                                <div class="panel panel-default">
                                     <div class="panel-heading"></div>
                                     <div class="panel-body">
-                                        <form method="post"class="form-horizontal" id="recharge-form" autocomplete="off">                                          
+                                        <form method="post"class="form-horizontal" id="recharge-form" >                                          
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Operator<font class="red">*</font></label>
                                              <div class="col-lg-9">

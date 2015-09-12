@@ -16,6 +16,7 @@ class Recharge extends CI_Controller {
          $data['amt'] = $this->recharge_model->getamt();         
          echo $data['amt']->REMAININGAMOUNT;
     }
+  
     
     public function offLineRecharge(){
         $req = $this->recharge_model->insertOff();
@@ -24,7 +25,25 @@ class Recharge extends CI_Controller {
         $V ="";
        $val = $this->input->get('message', TRUE);
        $url = explode(" ",$val);
-      
+       
+      if(count($url) == 2){
+          if(strtoupper($url['0']) == 'RC' && strtoupper($url['1']) == 'BAL' ){
+           $balance = $this->recharge_model->bal($req);
+       }else{
+            $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
+               $number = $this->input->get('number', TRUE);
+                $ch = curl_init();
+                        $optArray = array(
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=Incorrect+pattern,+Please+Send+Correct",
+			CURLOPT_RETURNTRANSFER => true
+		);
+                        curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+       }
+      }else{
       
         $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
@@ -155,6 +174,7 @@ class Recharge extends CI_Controller {
         }
         
         $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3'],$req);
+      }
     }
    
     public function mobile_recharge(){

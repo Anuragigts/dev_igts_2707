@@ -2465,7 +2465,7 @@
 	  }else{ 
 		  swal({
 			title : "Are you sure?",
-			text : "You are going to recharge the "+ op +" Mobile "+ mo+" with Rs. "+at,
+			text : "You are going to recharge the "+ op +" Mobile '"+ mo+"' with 'Rs. "+at+"'",
 		   // type : "info",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
@@ -2495,7 +2495,7 @@
 	  }else{ 
 		  swal({
 			title : "Are you sure?",
-			text : "You are going to recharge the "+ op +"  "+ mo+" with Rs. "+at,
+			text : "You are going to recharge the DTH- "+ op +"  '"+ mo+"' with 'Rs. "+at+"'",
 		   // type : "info",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
