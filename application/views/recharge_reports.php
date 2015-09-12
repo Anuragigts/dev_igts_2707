@@ -95,10 +95,17 @@
                                     <td><?= $view->amount;?></td>
                                     <td><?= $view->module_name;?></td>
                                     <td>
-                                    <form action="" method="">
-                                        <input type="hidden" name="com_val" value="<?= $view->done_by;?>"/>
-                                        <input type='submit' class="btn btn-danger btn-sm" value="Generate  Complaint" name="submit"/>
-                                    </form>
+                                        <?php
+                                        if($view->st_re == "0"){ ?>
+                                            <a href="javscript:void(0);" class="btn btn-primary btn-sm" title="In Processing">In Processing</a>
+                                        <?php }else if($view->st_re == "1"){ ?>
+                                            <a href="javscript:void(0);" class="btn btn-success btn-sm" title="Approved" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Approved</a>
+                                        <?php }
+                                        else if($view->st_re == "2"){ ?>
+                                            <a href="javscript:void(0);" class="btn btn-warning btn-sm" title="Rejected" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Rejected</a>
+                                        <?php } else { ?>
+                                            <a href="javscript:void(0);" class="btn btn-danger btn-sm refund_req" title="Generate  Complaint" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Generate  Complaint</a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                                <?php 

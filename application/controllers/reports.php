@@ -33,12 +33,11 @@ class Reports extends CI_Controller {
                     if( $this->form_validation->run() == TRUE ){
                             $from   = $this->input->post("from");
                             $ex     =   explode("/",$from);
-                            $gefr   =   $ex["1"]."/".$ex["0"]."/".$ex["2"];
-                           
+                            $gefr   =   $ex["2"]."-".$ex["0"]."-".$ex["1"]." 00:00:00";
                             
-                            $to     =   $this->input->post("to");
+                            $to   = $this->input->post("to");
                             $exto     =   explode("/",$to);
-                            $geto   =   $exto["1"]."/".$exto["0"]."/".$exto["2"];
+                            $geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
                             $data["view"]     =   $this->report_model->recharge_reports($gefr,$geto,$val);
                             
                     }
@@ -172,6 +171,10 @@ class Reports extends CI_Controller {
                     }
             }
             $this->load->view('layout/inner_template',$data);
+    }
+    public function refund_req(){
+            $val    =   $this->report_model->refund_req();
+            echo $val;
     }
 }
 ?>

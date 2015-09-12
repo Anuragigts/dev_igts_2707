@@ -200,7 +200,7 @@
                         </li>
                        
                         <li class="viewTransectionHistory ">
-                           <a href="<?php echo base_url();?>dmr/viewTransectionHistory" title="Transection History">
+                           <a href="<?php echo base_url();?>dmr/viewTransectionHistory" title="Transaction History">
                               <span>Transaction History</span>
                            </a>
                         </li>
@@ -351,6 +351,34 @@
                   </li> 
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
+                  </li>
+                    <li class="funds">
+                        <a href="#funds" title="Fund Request" data-toggle="collapse">
+                           <em class="fa fa-list"></em>
+                           <span>Fund Requests</span>
+                        </a>
+                        <ul id="funds" class="nav sidebar-subnav collapse">
+                           <li class="sidebar-subnav-header">Fund Request</li>
+                            <?php if($this->session->userdata('my_type') > 1 ){ ?>
+                            <li class="send_request">
+                              <a href="<?= base_url()?>funds/send_request" title="Send Request">
+                                 <span>Send Request</span>
+                              </a>
+                           </li>
+                            <?php } ?>
+                           <li class="view_request_details">
+                              <a href="<?= base_url()?>funds/view_request_details" title="Request Details">
+                                 <span>Request Details</span>
+                              </a>
+                           </li>
+                            <?php if($this->session->userdata('my_type') == 1 ){ ?>
+                           <li class="refund_request_details">
+                              <a href="<?= base_url()?>funds/refund_request" title="Refund Request">
+                                 <span>Refund Request</span>
+                              </a>
+                           </li>
+                           <?php } ?>
+                        </ul>
                   </li>
                    <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="module_object recharge_reports view_module_object">

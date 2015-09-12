@@ -237,6 +237,7 @@ $(function(){
                         }
             });
     });
+    
     $('.deactivate').click(function(){
             var login         =   $(this).attr("login");
             var user_name     =   $(this).attr("user_name");
@@ -318,4 +319,109 @@ $("#user_type").change(function(){
                }					
            }); 
  });
+ $('.approvefund').click(function(){
+            var fund         =   $(this).attr("fund");
+            var login         =   $(this).attr("login");
+            var user_name     =   $(this).attr("user_name");
+            var amount      =   $(this).attr("amount");
+            var status      =   1;
+             $.post('<?=base_url()?>funds/fund_actdeact',
+                {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
+                    
+                    alert(response);
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Approved");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not Approved");
+                                $(".success").html("");
+                        }
+            });
+    });
+ $('.notapprovefund').click(function(){
+            var fund         =   $(this).attr("fund");
+            var login         =   $(this).attr("login");
+            var user_name     =   $(this).attr("user_name");
+             var amount      =   $(this).attr("amount");
+            var status      =   2;
+             $.post('<?=base_url()?>funds/fund_actdeact',
+               {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Rejected");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not Rejected");
+                                $(".success").html("");
+                        }
+            });
+    });
+ $('.ref_fund').click(function(){
+            var fund         =   $(this).attr("fund");
+            var login         =   $(this).attr("login");
+            var user_name     =   $(this).attr("user_name");
+             var amount      =   $(this).attr("amount");
+            var status      =  1;
+             $.post('<?=base_url()?>funds/reffund_actdeact',
+               {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Approved");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not Approved");
+                                $(".success").html("");
+                        }
+            });
+    });
+ $('.noref_fund').click(function(){
+            var fund         =   $(this).attr("fund");
+            var login         =   $(this).attr("login");
+            var user_name     =   $(this).attr("user_name");
+             var amount      =   $(this).attr("amount");
+            var status      =  2;
+             $.post('<?=base_url()?>funds/reffund_actdeact',
+               {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
+                        if(response == 1){
+                               $(".success").html(user_name+" has been Rejected");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html(user_name+" has been not Rejected");
+                                $(".success").html("");
+                        }
+            });
+    });
+ $('.refund_req').click(function(){
+            var reid         =   $(this).attr("recharge_id");
+             var amount      =   $(this).attr("amount");
+            var status      =   0;
+             $.post('<?=base_url()?>reports/refund_req',
+               {'status':status,'reid':reid,'amount':amount},function(response){
+                        if(response == 1){
+                               $(".success").html("Your complaint has been succefully transferred to admin");
+                               $(".error").html("");
+                               setTimeout(function(){
+                                        location.reload();
+                                }, 3000);
+                        }
+                        else{
+                                $(".error").html("Your complaint has not been transferred to admin");
+                                $(".success").html("");
+                        }
+            });
+    });
 </script>

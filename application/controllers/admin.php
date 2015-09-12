@@ -29,7 +29,7 @@ class Admin extends CI_Controller {
                                     redirect("dashboard");
                                }else{
                                    $this->session->set_flashdata("err","Access Denied");
-                                redirect("admin/access");
+                                    redirect("admin/access");
                                }
                             }
                             else{

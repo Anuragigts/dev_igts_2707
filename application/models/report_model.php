@@ -1,13 +1,15 @@
 <?php
 class Report_model extends CI_Model{
         public function recharge_reports($gefr,$geto,$val){
-                $this->db->select("r.*,m.module_name");
+                $this->db->select("r.*,q.*,q.status as st_re,m.module_name");
                 $this->db->from("recharge_track as r");
                 $this->db->join("module as m","r.recharge_type = m.module_id","inner");
+                $this->db->join("refund_req as q","r.recharge_id = q.recharge_id","left");
                 $this->db->where("done_by",$val);
-                $this->db->like("responce_time",$gefr."","after");
+                $this->db->where("cur_time >=",$gefr);
                 $this->db->where("cur_time <=",$geto);
                 $qu     =   $this->db->get();
+               // echo $this->db->last_query();exit;
                 return $qu->result();
         }
         public function user_type($my_type){
@@ -101,5 +103,23 @@ class Report_model extends CI_Model{
                 else{
                     return array();
                 } 
+        }
+        public function refund_req(){
+                $status     =   $this->input->post('status');
+                $reid      =   $this->input->post('reid');
+                $amount1     =   $this->input->post('amount');
+                $upd        =   array(
+                        'recharge_id'   =>  $reid,
+                        'trans_amount'   =>  $amount1,
+                        'user_id'   => $this->session->userdata("login_id"),
+                        'status'    =>  $status
+                );                   
+                $this->db->insert('refund_req',$upd);
+                if($this->db->affected_rows() > 0){
+                        return 1;
+                }
+                else{
+                        return 0;
+                }
         }
 }?>
