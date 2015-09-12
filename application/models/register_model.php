@@ -133,7 +133,7 @@ class Register_model extends CI_Model
                              //   print_r($this->email->print_debugger());
                             //die();
                                         return 1;
-                            }else{echo "dddd";die();return 1;}
+                            }else{return 1;}
                                     }
                                     else{
                                             return 0;

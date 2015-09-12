@@ -1072,7 +1072,7 @@ html {
 }
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.52857143;
   color: #515253;
   background-color: #f5f7fa;
@@ -3181,7 +3181,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-success:focus,
 .btn-success.focus {
   color: #ffffff;
-  background-color: #24b145;
+  background-color: #196029;
   border-color: #1f9c3d;
 }
 .btn-success:hover {
@@ -3247,7 +3247,7 @@ fieldset[disabled] .btn-success.active {
 .btn-info:focus,
 .btn-info.focus {
   color: #ffffff;
-  background-color: #E56A06;
+  background-color: #AD520D;
   border-color: #E25C21;
 }
 .btn-info:hover {

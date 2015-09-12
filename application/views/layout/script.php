@@ -37,6 +37,8 @@
             $.post('<?php echo base_url();?>recharge/getAjaxOperator',{'number':num},function(response){
             //alert(response);
             if(response !=''){
+                $('.circle1').hide();
+                $('.circle2').show();
                var res = response.split("@@");
                     $('.select-oprator').html(res[0]);   
                     $('#code').val(res[1]);  						
@@ -102,7 +104,7 @@
     
 $(function(){
      $.ajax({url:'<?php echo base_url();?>recharge/getamt',success:function(result){
-                $('#phy').html(result);
+                $('.phy').html(result);
             }
         });
         $.ajax({url:'<?php echo base_url();?>settings/getVirtual',success:function(result){

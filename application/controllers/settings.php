@@ -215,7 +215,7 @@ class Settings extends CI_Controller {
                            $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }else{
-                            $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                            $this->session->set_flashdata('err',' fail : Some internal error occurred.');  
                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }
                    }
@@ -243,5 +243,30 @@ class Settings extends CI_Controller {
               $data['debit']       =  $this->settings_model->getDebit($this->uri->segment(3)); 
               $data['credit']       =  $this->settings_model->getCredit($this->uri->segment(3)); 
             $this->load->view('layout/inner_template',$data);
+         }
+         
+         public function notes(){
+             $data = array(
+                    'title'         => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'metakeyword'   => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'metadesc'      => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'content'       => 'notice'
+            );
+             if($this->input->post('add')){
+                 $this->form_validation->set_rules('title',' Title','required');
+                  $this->form_validation->set_rules('message','Message','required');
+                    if($this->form_validation->run() == TRUE){
+                        $update = $this->settings_model->noticeUpdate();
+                        if($update == 1){
+                             $this->session->set_flashdata('msg','Notice Board Updated.');  
+                           redirect('settings/notes/');
+                        }else{
+                           $this->session->set_flashdata('err','Fail : Some internal error occurred.');
+                             redirect('settings/notes/');
+                        }
+                    }
+             }
+             $data['notice']       =  $this->settings_model->notice();
+             $this->load->view('layout/inner_template',$data);
          }
 }

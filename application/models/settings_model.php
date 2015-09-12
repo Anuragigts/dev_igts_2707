@@ -358,4 +358,28 @@ class Settings_model extends CI_Model
             }
             
         }
+        
+        public function notice(){
+            $query = $this->db->get_where('notice', array('id' => 1));
+            //echo $this->db->last_query();
+                if($query && $query->num_rows()>0){
+                  return $query->row();
+               }else{
+                   return array();
+               }
+        }
+        public function noticeUpdate(){
+            $insfrom   =   array(                      
+                    "title"     => $this->input->post('title'),
+                    "msg"     => $this->input->post('message'),
+                );
+            $this->db->where("id",1);
+            $query1 = $this->db->update("notice",$insfrom);
+                        
+                if($query1){
+                  return 1;
+               }else{
+                   return 0;
+               }
+        }
 }

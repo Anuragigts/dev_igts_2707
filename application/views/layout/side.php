@@ -25,6 +25,11 @@
                   </li>
                   <!-- END user info-->
                   <!-- Iterates over all sidebar items-->
+                  <li class="nav-heading visible-xs">
+                      <span data-localize="sidebar.heading.HEADER">
+                         <b>Balance</b> : <span style="font-family:rupee;font-size:16px">R</span> <span class="vamt">0.00</span>
+                      </span>
+                  </li>
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                   </li>
@@ -348,11 +353,28 @@
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
                    <?php if($this->session->userdata('my_type') == 1 ){?>
-                  <li class="profile">
-                     <a href="<?= base_url()?>settings/virtualAmt" title="Add Amount">
-                         <em class="fa fa-credit-card"></em>                        
-                        <span data-localize="sidebar.nav.DASHBOARD">Add Amount</span>
-                     </a>                    
+                  <li class="module_object recharge_reports view_module_object">
+                     <a href="#Manage" title="Manage" data-toggle="collapse">
+                        <em class="fa fa-cog"></em>
+                        <span>Manage</span>
+                     </a>
+                     <ul id="Manage" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header module_object recharge_reports">Manage</li>
+                        <li class="virtualAmt">
+                            <a href="<?= base_url()?>settings/virtualAmt" title="Add Amount">
+                               <span data-localize="sidebar.nav.DASHBOARD">Add Amount</span>
+                            </a>
+                        </li>
+                        <li class="notes">
+                           <a href="<?= base_url()?>settings/notes" title="Commission Reports">
+                              <span>Notice Board</span>
+                           </a>
+                        </li>
+
+                     </ul>
+                  </li> 
+                  <li class="virtualAmt">
+                                        
                   </li>  
                    <?php }?>
                   <li class="profile">

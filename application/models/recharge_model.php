@@ -744,6 +744,7 @@ class Recharge_model extends CI_Model
         $this->db->join('user_type as u' , 'l.user_type = u.user_type_id', 'Inner');
        // $this->db->where('done_by',$this->session->userdata('login_id')); 
         $this->db->order_by('recharge_id', 'desc');
+        $this->db->limit(10);
         $query = $this->db->get();
         if($this->db->affected_rows() > 0){
             return $query->result();
@@ -956,6 +957,12 @@ class Recharge_model extends CI_Model
                 
         }else{
             return 3;
+        }
+    }
+    public function circle(){
+        $query = $this->db->get('circle');
+        if($query){
+            return $query->result();
         }
     }
 }

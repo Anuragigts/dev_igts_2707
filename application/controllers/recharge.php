@@ -203,6 +203,7 @@ class Recharge extends CI_Controller {
        $data['details'] = $this->recharge_model->getrechargeDetails();
        $operator_type = 1;
 	   $data['amt'] = $this->recharge_model->getamt();
+	   $data['circle'] = $this->recharge_model->circle();
 	   //$data['amt'] = $this->recharge_model->getamt1();
         $data['all_operator'] = $this->recharge_model->getAllOperator($operator_type);
         $this->load->view('layout/inner_template',$data);

@@ -24,6 +24,20 @@
            <!-- START carousel-->
            
                 <div class="row">
+                    <div class="col-sm-12 visible-xs">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                          <div class="row row-table">
+                             <div class="col-xs-4 text-center bg-green pv-lg">                          
+                                 <em class="fa fa-inr fa-3x"></em>
+                             </div>
+                             <div class="col-xs-8 pv-lg">
+                                <div class="h2 mt0">Balance</div>
+                                <div class="text-uppercase"><span style="font-family:rupee;font-size:16px">R</span> <span class="vamt">0.00</span></div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
                     <div class="col-lg-6 col-sm-6">
                        <!-- START widget-->
                        <div class="panel widget bg-primary">
@@ -172,12 +186,10 @@
                    <div class="row">
                        <div class="col-md-12  ">
                            <div class="greenboard ">
-                               <div class="my-title text-center"><h3><font face="Comic Sans MS"><u>Welcome To Swami Communication</u></font></h3></div>
+                               <div class="my-title text-center"><h3><font face="Comic Sans MS"><u><?php echo $note->title;?></u></font></h3></div>
                                <div class="my-content">
-                                    <p>Hi <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>,<p>
-                                     <p>Welcome to Swami communication, You are Login as a <?php echo $this->session->userdata('user_type');?>, in the Swami Communication.
-                                       Please enjoy the services, We are providing the "Pre-Paid Mobile Recharge, Post-Paid Mobile Recharge, DTH Recharge,
-                                       Domestic Money Transfer, Flight Booking, Hotel Booking and Bus Booking".
+                                    <p>Hi Mr. <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>,<p>
+                                     <p><?php echo $note->msg;?>
                                      </p>
                                      <p>
                                          For More access you need to contact with support team. You are free to call or email,
@@ -200,128 +212,90 @@
 
 <?php if($this->session->userdata('my_type') == 1 ){?>
             <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="row">
                         <div class="col-md-12 text-center">
                             <h2> View Users </h2>
                         </div>
                    </div>
             <div class="row">
-               <div class="col-lg-6 col-sm-6">
+                <div class="col-sm-12 visible-xs">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                          <div class="row row-table">
+                             <div class="col-xs-4 text-center bg-green pv-lg">                          
+                                 <em class="fa fa-inr fa-3x"></em>
+                             </div>
+                             <div class="col-xs-8 pv-lg">
+                                <div class="h2 mt0">Balance</div>
+                                <div class="text-uppercase"><span style="font-family:rupee;font-size:16px">R</span> <span id="phy" class="phy"></span></div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+               <div class="col-lg-3 col-sm-6">
                   <!-- START widget-->
                   <div class="panel bg-l-1 pt b0 widget">
                       <a href="<?php echo base_url();?>master_distributor/view_master_distributor" style="text-decoration: none;color:#fff;">
                      <div class="ph">
                         <em class="fa fa-user fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $master;?>
-                        <span class="text-sm text-white">M.D. (View)</span>
+                        <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $mamt;?></span>
                         </div>
                         <div class="text-uppercase">Master Distributors</div>
                      </div>
                       </a>
                   </div>
                </div>
-               <div class="col-lg-6 col-sm-6">
+               <div class="col-lg-3 col-sm-6">
                   <!-- START widget-->
                   <div class="panel widget bg-l-2 pt b0 widget">
                       <a href="<?php echo base_url();?>super_distributor/view_super_distributor" style="text-decoration: none;color:#fff;">
                      <div class="ph">
                         <em class="fa fa-user fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $super;?>
-                           <span class="text-sm text-white">S.D. (View)</span>
+                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $samt;?></span>
                         </div>
                         <div class="text-uppercase">Super Distributors</div>
                      </div>
                       </a>
                   </div>
                </div>
-            </div>
-                 <div class="row">
-               <div class="col-lg-6 col-md-6 col-sm-12">
+            
+               <div class="col-lg-3 col-md-6 col-sm-12">
                   <!-- START widget-->
                   <div class="panel widget bg-l-3 pt b0 widget">
                       <a href="<?php echo base_url();?>distributor/view_distributor" style="text-decoration: none;color:#fff;">
                      <div class="ph">
                         <em class="fa fa-male fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $dis;?>
-                           <span class="text-sm text-white">D. (View)</span>
+                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $damt;?></span>
                         </div>
                         <div class="text-uppercase">Distributors</div>
                      </div>
                       </a>
                   </div>
                </div>
-               <div class="col-lg-6 col-md-6 col-sm-12">
+               <div class="col-lg-3 col-md-6 col-sm-12">
                   <!-- START widget-->
                   <div class="panel widget bg-l-4 pt b0 widget">
                        <a href="<?php echo base_url();?>agent/view_agent" style="text-decoration: none;color:#fff;">
                      <div class="ph">
                         <em class="fa fa-child fa-lg pull-right"></em>
                         <div class="h2 mt0"><?php echo $ag;?>
-                           <span class="text-sm text-white">A. (View)</span>
+                           <span class="text-sm text-white">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $aamt;?></span>
                         </div>
                         <div class="text-uppercase">Agents</div>
                      </div>
                        </a>
                   </div>
                </div>
-                      <hr>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="panel-body">
-                           <table id="datatable1" class="table table-striped table-hover">
-                              <thead>
-                                 <tr>
-                                    <!--<th>S.No.</th>-->
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                  <?php foreach($amounts as $amt){?>
-                                  <tr>  
-                                      <!--<td></td>-->
-                                      <td><?php echo $amt->name;?></td>
-                                      <td><?php echo $amt->user_type;?></td>
-                                      <td class="text-right"><span style="font-family:rupee;font-size:16px">R</span> <?php echo number_format($amt->amount,2);?></td>
-                                  </tr>
-                                  <?php }?>
-                              </tbody>
-                           </table>
-                    </div>
-                </div>
+                
+                
             </div>
                
             </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h2> Notice Board </h2>
-                        </div>
-                   </div>
-                   <div class="row">
-                       <div class="col-md-12  ">
-                           <div class="greenboard ">
-                               <b class="red">Note:</b> This message will show on each user's dashboard.
-                               <div class="my-title text-center"><h3><font face="Comic Sans MS"><u>Welcome To Swami Communication</u></font></h3></div>
-                               <div class="my-content">
-                                    <p>Hi <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>,<p>
-                                     <p>Welcome to Swami communication, You are Login as a <?php echo $this->session->userdata('user_type');?>, in the Swami Communication.
-                                       Please enjoy the services, We are providing the "Pre-Paid Mobile Recharge, Post-Paid Mobile Recharge, DTH Recharge,
-                                       Domestic Money Transfer, Flight Booking, Hotel Booking and Bus Booking".
-                                     </p>
-                                     <p>
-                                         For More access you need to contact with support team. You are free to call or email,
-                                     </p>
-                                     <p> <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580220<br>
-                                      <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580540<br>
-                                      <i class="fa fa-envelope-o"></i>&nbsp;&nbsp; support@esytopup.com
-                                     </p>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                </div>
+               
             
            </div>
 <?php }?>   

@@ -26,4 +26,66 @@ class Dashboard_model extends CI_Model
         //echo $this->db->last_query();die();
         return $query->result();
     }
+    public function mamt(){
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id WHERE l.user_type = 2");
+        $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+    public function samt(){
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id WHERE l.user_type = 3");
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+    public function damt(){
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id WHERE l.user_type = 4");
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+     public function aamt(){
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id WHERE l.user_type = 5");
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+     public function notice(){
+            $query = $this->db->get_where('notice', array('id' => 1));
+            //echo $this->db->last_query();
+                if($query && $query->num_rows()>0){
+                  return $query->row();
+               }else{
+                   return array();
+               }
+        }
+    
 }

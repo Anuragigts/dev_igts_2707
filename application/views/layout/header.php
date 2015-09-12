@@ -46,7 +46,7 @@
                    <?php if($this->session->userdata('my_type') == 1 ){?>
                   <li class="visible-lg">
                       <a href="#">
-                          <b>Recharge Balance</b> : <span id="phy"></span>
+                          <b>Recharge Balance</b> : <span id="phy" class="phy"></span>
                       </a>
                   </li>
                   
