@@ -148,9 +148,9 @@ class Reports extends CI_Controller {
     public function  trasaction_reports(){
              if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
-                    'title'         => 'ESY TOPUP :: Trasaction Reports',
-                    'metakeyword'   => 'ESY TOPUP :: Trasaction Reports',
-                    'metadesc'      => 'ESY TOPUP :: Trasaction Reports',
+                    'title'         => 'ESY TOPUP :: Transaction Reports',
+                    'metakeyword'   => 'ESY TOPUP :: Transaction Reports',
+                    'metadesc'      => 'ESY TOPUP :: Transaction Reports',
                     'content'       => 'trasaction_reports'
             );
             $data["view"]   =   array();
