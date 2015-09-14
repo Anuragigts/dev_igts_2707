@@ -55,13 +55,9 @@
                                             <?php if( $this->session->userdata("my_type") == 1){ ?>
                                             <th>
                                                 <?php if($view->status == 1){ ?>
-                                                <a  class="btn btn-sm btn-warning" href="javascript:void(0);" title="Approve" fund="<?= $view->fund_id;?>" amount="<?= $view->amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
-                                                       Reject
-                                                </a>
+                                               Approved
                                                 <?php } else if($view->status == 2){ ?>
-                                                <a class="btn btn-sm btn-info"  href="javascript:void(0);" title="Approve" fund="<?= $view->fund_id;?>" amount="<?= $view->amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
-                                                        Approve
-                                                </a>
+                                                Rejected
                                                 <?php }else{ ?>
                                                 <a class="btn btn-sm btn-info approvefund" href="javascript:void(0);" title="Approve" fund="<?= $view->fund_id;?>" amount="<?= $view->amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
                                                         Approve

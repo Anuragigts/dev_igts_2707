@@ -161,6 +161,7 @@ class Super_distributor extends CI_Controller {
                         $ve   =   $this->session->userdata("ve");
                 }
                 $data['view']       =  $this->super_distributor_model->edit_super_distributor($ve);
+                
                 if($this->input->post('update_super_distributor')){
                         
                         $original_value =  $data['view']->login_email;

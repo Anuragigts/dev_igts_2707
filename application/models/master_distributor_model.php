@@ -162,7 +162,7 @@ class Master_distributor_model extends CI_Model{
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("profile",$ins);
-                        
+                        $var3   =  $this->db->affected_rows(); 
                         $lo = array(
                             "login_email"   =>  $va_em,
                             'login_mobile'  =>  $mol_value
@@ -190,7 +190,7 @@ class Master_distributor_model extends CI_Model{
 		                        $this->db->insert("commission",$ins_comm);
 		               }
                         $var2  =   $this->db->affected_rows();
-                        if($var1 == 1 && ( $var2 == 0 || $var2 == 1)){
+                        if($var1 == 1 ||  $var2 == 1 ||  $var3 == 1){
                                 return 1;
                         }
                         else{

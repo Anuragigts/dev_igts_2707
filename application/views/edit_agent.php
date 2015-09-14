@@ -214,7 +214,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>
-                               <textarea placeholder="Address" class="form-control" name="address"><?= $view->address;?></textarea>
+                               <textarea placeholder="Address" class="form-control" name="address"><?php if($view->address == ''){?><?= $view->door;?>-<?= $view->street;?>, <?= $view->area;?> <?php }else{?> <?= $view->address;?> <?php }?></textarea>
                                <span class="red"><?= form_error('address');?></span>
                             </div>
                         </div>

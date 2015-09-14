@@ -301,7 +301,7 @@ function showAgents(str,user) {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 document.getElementById("txtHint_val").innerHTML = xmlhttp.responseText;
             }
-        }
+        }       
         xmlhttp.open("GET", "<?=base_url();?>common/getAgents/" + str, true);
         xmlhttp.send();
     }
@@ -328,7 +328,7 @@ $("#user_type").change(function(){
              $.post('<?=base_url()?>funds/fund_actdeact',
                 {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
                     
-                    alert(response);
+                    //alert(response);
                         if(response == 1){
                                $(".success").html(user_name+" has been Approved");
                                $(".error").html("");
