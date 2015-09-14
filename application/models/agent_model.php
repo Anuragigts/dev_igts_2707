@@ -132,7 +132,7 @@ class Agent_model extends CI_Model{
                 $this->db->where('l.user_type',5);
                 $this->db->where('l.login_id',$val);
                 $query = $this->db->get();
-//                echo $this->db->last_query();exit;
+                //echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->row();
                 }
@@ -178,12 +178,26 @@ class Agent_model extends CI_Model{
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("login",$lo);
-                        $ins_comm   =   array(
-                                "package_id"            =>     $pkg_id,
-                                "status"                =>     1
-                        );
-                        $this->db->where("login_id",$valu);
-                        $this->db->update("commission",$ins_comm);
+                        // $querya = $this->db->get_where('commission', array("login_id",$this->uri->segment(3))); 
+                        $abc = $this->uri->segment(3);
+                          $querya = $this->db->query("SELECT * FROM commission WHERE login_id = $abc");                
+		            if($querya && $querya->num_rows()== 1){
+			                  $ins_comm   =   array(
+		                                "package_id"            =>     $pkg_id,
+			                                "status"                =>     1
+			                     );
+		                        $this->db->where("login_id",$valu);
+		                        $this->db->update("commission",$ins_comm);
+		               }else{
+		                   $ins_comm   =   array(
+		                                "package_id"            =>     $pkg_id,
+			                         "status"                =>     1,
+			                         "login_id"		=> $this->uri->segment(3)
+			                     );
+		                       
+		                        $this->db->insert("commission",$ins_comm);
+		               }
+	                       
                         $var2  =   $this->db->affected_rows();
                         if($var1 == 1 && ( $var2 == 0 || $var2 == 1)){
                                 return 1;
@@ -193,4 +207,3 @@ class Agent_model extends CI_Model{
                         }
         }
 }
-

@@ -199,7 +199,7 @@ class Recharge extends CI_Controller {
                  $recharge_type = 1;
 		$amt = $this->settings_model->checkVirtual();	
                 
-                if($amt > $this->input->post('amount')){ 
+                if($amt >= $this->input->post('amount')){ 
                     $result = $this->recharge_model->doRecharge( $recharge_type);
                     //$result = $this->recharge_model->doRecharge1( );
                     //if($result == 1){                    
@@ -255,7 +255,7 @@ class Recharge extends CI_Controller {
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 4;
                  $amt = $this->settings_model->checkVirtual();	
-                if($amt > $this->input->post('amount')){
+                if($amt >= $this->input->post('amount')){
                     $result = $this->recharge_model->doPostRecharge( $recharge_type);
                     if($result == 0){                    
                         $this->session->set_flashdata('msg','Your Recharge is success full.');  
@@ -291,7 +291,7 @@ class Recharge extends CI_Controller {
               'content'       => 'recharge_dth'
              );
          if($this->input->post('amount')){
-            $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|numeric');
+            $this->form_validation->set_rules('mobile','Mobile','required|numeric');
             $this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
@@ -299,7 +299,7 @@ class Recharge extends CI_Controller {
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 2;
                  $amt = $this->settings_model->checkVirtual();	
-                if($amt > $this->input->post('amount')){
+                if($amt >= $this->input->post('amount')){
                     $result = $this->recharge_model->doRecharge( $recharge_type);
                     if($result == 0){                    
                         $this->session->set_flashdata('msg','Your Recharge is success full.');  
