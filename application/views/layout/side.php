@@ -131,7 +131,7 @@
                   </li>
                   <?php }?>
                   <?php }?>
-                  <?php if($this->session->userdata('my_type') != 1 ){?>
+                  <?php if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 && $this->session->userdata('my_type') != 3){?>
                    <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Services</span>
                   </li>
@@ -169,11 +169,11 @@
                               <span>Details</span>
                            </a>
                         </li>-->
-                    <li class="recharge_details ">
-                           <a href="<?php echo base_url();?>recharge/recharge_details" title="My Commission">
+<!--                    <li class="recharge_details ">
+                           <a href="<?php //echo base_url();?>recharge/recharge_details" title="My Commission">
                               <span>My Commission</span>
                            </a>
-                        </li>
+                        </li>-->
                      </ul>
                   </li>
                    <?php }if($this->session->userdata('dmr') == 1){?>

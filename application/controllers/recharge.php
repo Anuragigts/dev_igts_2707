@@ -181,6 +181,7 @@ class Recharge extends CI_Controller {
         if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.');redirect('dashboard');}
         if( $this->session->userdata('prepaid_mobile') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
+        if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         //print_r( $this->session->all_userdata());
         $data = array(
               'title'         => 'ESY TOPUP :: PRE PAID RECHARGE',
@@ -232,7 +233,7 @@ class Recharge extends CI_Controller {
          if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         if( $this->session->userdata('postpaid_mobile') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
-        //print_r( $this->session->all_userdata());
+        if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         $data = array(
               'title'         => 'ESY TOPUP :: POST PAID RECHARGE',
               'metakeyword'   => '',
@@ -283,7 +284,7 @@ class Recharge extends CI_Controller {
          if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         if( $this->session->userdata('dth') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
-        //print_r( $this->session->all_userdata());
+        if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         $data = array(
               'title'         => 'ESY TOPUP :: DTH RECHARGE',
               'metakeyword'   => '',

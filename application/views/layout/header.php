@@ -34,7 +34,7 @@
                   <!-- START lock screen-->
                   <li>
                      <a href="javascript:void(0);" >
-                         <b><?php echo $this->session->userdata('user_type');?></b>
+                         <b><?php echo $this->session->userdata('user_type');?> [ <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?> ]</b>
                      </a>
                   </li>
                   <!-- END lock screen-->

@@ -13,7 +13,7 @@ class Dmr extends CI_Controller {
         $result = $this->dmr_model->knowIp();
     }
     public function sender_registration(){
-        
+        if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
          $data = array(
               'title'         => 'ESY TOPUP :: DMR SENDER REGISTRATION',
               'metakeyword'   => '',
@@ -536,7 +536,9 @@ class Dmr extends CI_Controller {
         
     }
     public function dmrUserSearch(){
+        if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
          if( $this->session->userdata('iddmr') == '1'){redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));}
+         
          $data = array(
               'title'         => 'DMR ESY TOPUP :: TRANSACTION',
               'metakeyword'   => '',
@@ -550,6 +552,23 @@ class Dmr extends CI_Controller {
                if($this->form_validation->run() == TRUE){
                 $mo = $this->input->post('mobile');
                 $result = $this->dmr_model->verifyUser($mo);
+               //print_r($this->session->all_userdata());die();
+                if(count($result) == 1){
+                    redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
+                }
+              else{
+                     $this->session->set_flashdata('msg','This number is not registered please register first');  
+                       redirect('dmr/sender_registration');
+                }
+            }
+         }
+         if($this->input->post('pin')){
+              $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
+              $this->form_validation->set_rules('pin',  'PIN',   'required');
+              
+               if($this->form_validation->run() == TRUE){
+                $mo = $this->input->post('mobile');
+                $result = $this->dmr_model->dmrLogin1($mo);
                //print_r($this->session->all_userdata());die();
                 if(count($result) == 1){
                     redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
@@ -809,7 +828,8 @@ class Dmr extends CI_Controller {
         $mo = $_POST['mo'];
         //$card = $this->dmr_model->cardByMo($mo);
         $card = '';
-        echo  $result = $this->dmr_model->dmrLogin1($card,$mo);
+        //echo  $result = $this->dmr_model->dmrLogin1($card,$mo);
+        echo  $result = $this->dmr_model->dmrLogin_cp($card,$mo);
         
     }
     public function topup(){

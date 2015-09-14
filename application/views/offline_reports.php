@@ -75,6 +75,7 @@
                           <tr>
                              <th>S.No.</th>
                              <th>Name</th>
+                             <th>Sender</th>
                              <th>Description</th>  
                              <th>Response</th>     
                           </tr>
@@ -87,6 +88,11 @@
                                 <tr>
                                     <td><?= $i++;?></td>
                                     <td><?= $view->first_name." ".$view->last_name;?></td>
+                                    <td>
+                                        <?php $url = explode(" ",$view->descp);
+                                            if(count($url) == 4){echo $url['3'];}else{echo $url['2'];}
+                                        ?>
+                                    </td>
                                     <td><?= $view->descp;?></td>
                                     <td><?= $view->respons;?></td>
                                 </tr>

@@ -47,35 +47,90 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                    <div class="panel-heading"> Enter your with Mobile number</div>
-                                    <div class="panel-body">                                       
-                                        <form method="post"class="form-horizontal" autocomplete="off">
-                                          <div class="form-group">
-                                              <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
-                                                <div class="col-lg-9">
-                                                    <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" >
-                                                    <span class="red"><?=  form_error('mobile');?></span>
-                                                </div>
-                                          </div>
-                                          <div class="form-group myotp"> 
-                                              <label class="col-lg-3 control-label">OTP<font class="red">*</font></label>
-                                             <div class="col-lg-9">
-                                            <input name="otp" id="charge" class="form-control m-c" placeholder="******" type="password" value=""  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
-                                           <span class="red"><?=  form_error('otp');?></span>
-                                             </div>
-                                       </div>
-                                          <div class="form-group">
-                                             <div class="col-lg-offset-3 col-lg-4">
-                                                 <input type='submit' class='btn btn-sm btn-info myotp'   name='send' value='Login' />
-                                                 <input type="button" class="btn btn-sm btn-info" id="getpin" name="pin" value="Search" />
-                                                                                               
-                                             </div>
-                                             <div class="col-lg-4">                            
-                                                 <a href="<?php echo base_url()?>dmr/sender_registration"><buttion  class="btn btn-sm btn-warning" name="send"  />New Registration For DMR</buttion></a>
-                                             </div>
-                                          </div>
-                                       </form>
-                                    </div>
+                                   
+                                    <div id="panelDemo14" >
+                                        <div class="panel-heading">DMR Login</div>
+                                        <div class="panel-body">
+                                           <div role="tabpanel">
+                                              <!-- Nav tabs-->
+                                              <ul role="tablist" class="nav nav-tabs">
+                                                 <li role="presentation" class="active"><a href="#otp" aria-controls="home" role="tab" data-toggle="tab">OTP Based Login</a>
+                                                 </li>
+                                                 <li role="presentation"><a href="#pin" aria-controls="profile" role="tab" data-toggle="tab">PIN Based Login</a>
+                                                 </li>                                                
+                                              </ul>
+                                              <!-- Tab panes-->
+                                              <div class="tab-content">
+                                                  <div id="otp" role="tabpanel" class="tab-pane active">
+                                                        <div class="panel-heading"> Enter mobile number and search after that enter OTP fro login</div>
+                                                        <div class="panel-body">                                       
+                                                            <form method="post"class="form-horizontal" autocomplete="off">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
+                                                                    <div class="col-lg-9">
+                                                                        <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" >
+                                                                        <span class="red"><?=  form_error('mobile');?></span>
+                                                                    </div>
+                                                              </div>
+                                                              <div class="form-group myotp"> 
+                                                                  <label class="col-lg-3 control-label">OTP<font class="red">*</font></label>
+                                                                 <div class="col-lg-9">
+                                                                <input name="otp" id="charge" class="form-control m-c" placeholder="******" type="password" value=""  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
+                                                               <span class="red"><?=  form_error('otp');?></span>
+                                                                 </div>
+                                                           </div>
+                                                              <div class="form-group">
+                                                                 <div class="col-lg-offset-3 col-lg-4">
+                                                                     <input type='submit' class='btn btn-sm btn-info myotp'   name='send' value='Login' />
+                                                                     <input type="button" class="btn btn-sm btn-info" id="getpin" name="pin" value="Search" />
+
+                                                                 </div>
+                                                                 <div class="col-lg-4">                            
+                                                                     <a href="<?php echo base_url()?>dmr/sender_registration"><buttion  class="btn btn-sm btn-warning" name="send"  />New Registration For DMR</buttion></a>
+                                                                 </div>
+                                                              </div>
+                                                           </form>
+                                                        </div>
+                                                      
+                                                  </div>
+                                                  <div id="pin" role="tabpanel" class="tab-pane">
+                                                      <div class="panel-heading"> Enter Customer's with Mobile number and PIN number for login</div>
+                                                        <div class="panel-body">
+                                                       <form method="post"class="form-horizontal" autocomplete="off">
+                                                              <div class="form-group">
+                                                                  <label class="col-lg-3 control-label">Mobile<font class="red">*</font></label>
+                                                                    <div class="col-lg-9">
+                                                                        <input name="mobile" id="mob" class="form-control" type="text" value="<?= set_value("mobile"); ?>" placeholder="Mobile Number" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10" >
+                                                                        <span class="red"><?=  form_error('mobile');?></span>
+                                                                    </div>
+                                                              </div>
+                                                              <div class="form-group "> 
+                                                                  <label class="col-lg-3 control-label">PIN<font class="red">*</font></label>
+                                                                 <div class="col-lg-9">
+                                                                <input name="pin"  class="form-control" placeholder="******" type="password" value=""  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
+                                                               <span class="red"><?=  form_error('otp');?></span>
+                                                                 </div>
+                                                           </div>
+                                                              <div class="form-group">
+                                                                 <div class="col-lg-offset-3 col-lg-4">
+                                                                     <input type='submit' class='btn btn-sm btn-info '   name='pin' value='Login' />
+                                                                     
+                                                                 </div>
+                                                                 <div class="col-lg-4">                            
+                                                                     <a href="<?php echo base_url()?>dmr/sender_registration"><buttion  class="btn btn-sm btn-warning" name="send"  />New Registration For DMR</buttion></a>
+                                                                 </div>
+                                                              </div>
+                                                           </form>
+                                                        </div>
+                                                      
+                                                  </div>                                                 
+                                              </div>
+                                           </div>
+                                        </div>
+                                     </div>
+                                   
+                                   
+                                                    
                                  </div>
                                  <!-- END panel-->
                            </div>

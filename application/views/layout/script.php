@@ -37,14 +37,21 @@
             $.post('<?php echo base_url();?>recharge/getAjaxOperator',{'number':num},function(response){
             //alert(response);
             if(response !=''){
-                $('.circle1').hide();
-                $('.circle2').show();
+               
                var res = response.split("@@");
+               //alert( $( res ).size());
+               if($( res ).size() > 2){
                     $('.select-oprator').html(res[0]);   
                     $('#code').val(res[1]);  						
                     $('#circle').val(res[2]); 
                     $("#loading").modal('hide');
                     $("#amount").focus();
+                     $('.circle1').hide();
+                    $('.circle2').show();
+                }else{
+                   $("#loading").modal('hide');
+                    return false; 
+                }
                 }else{
                     $("#loading").modal('hide');
                     return false;	

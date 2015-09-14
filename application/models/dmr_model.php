@@ -495,6 +495,76 @@ class Dmr_model extends CI_Model
          }
         
     }
+    // OTP based ...........
+    public function dmrLogin_cp($card,$mo){
+       
+        //$pin = $getmo->pin;
+        
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <LOGIN_CP  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;LOGIN_CPREQUEST&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
+                            &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;                            
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                            &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                            &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                            &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                            &lt;/LOGIN_CPREQUEST&gt;
+                       </RequestData>
+                     </LOGIN_CP>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+//echo $curlData;
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'LOGIN_CP',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+           
+           
+         $first_tag = explode('<LOGIN_CPResult>', $result);      
+      //  return print_r($first_tag);die();
+         if(count($first_tag) == 1 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+            
+             $final = explode('</LOGIN_CPResult></LOGIN_CPResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+            //return print_r($response);
+             if($response->STATUS == 'Success'){
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
+        
+    }
     public function setPin($transection_id){
         $up = array(
             'pin' => $this->input->post('pin')            
