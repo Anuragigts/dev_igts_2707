@@ -46,6 +46,18 @@
                      </div>
                </div>
                <!-- END DATATABLE 1 -->
+               <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "From Name"; }
+	td:nth-of-type(3):before { content: "To Name"; }
+	td:nth-of-type(4):before { content: "Commission Amount"; }
+	td:nth-of-type(5):before { content: "Total Amount"; }
+	td:nth-of-type(6):before { content: "Remarks"; }
+}
+               </style>
         <div class="row">  
            <div class="col-lg-12">
                <div class="panel-body">
@@ -68,7 +80,7 @@
                                 <tr>
                                     <td><?= $i++;?></td>
                                     <td><?= $view->frname." ".$view->lrname;?></td>
-                                    <td><?= $view->tofname." ".$view->tolname;?></td>
+                                    <td><?php if($view->tofname != ''){ echo $view->tofname." ".$view->tolname;}else{echo 'N/A';}?></td>
                                     <td><?= $view->trans_amt;?></td>
                                     <td><?= $view->cur_amount;?></td>
                                     <td><?= $view->trans_remark;?></td>

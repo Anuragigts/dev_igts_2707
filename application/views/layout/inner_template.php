@@ -228,76 +228,29 @@ $(".pr_m").change(function () {
     }
 });
 
-$(document).ready(function () {
-   var breakpointDefinition, tableElement;
-var rHelperData, rHelperCar, rHelperAdminCar;
-rHelperData = void 0;
-rHelperAdminCar = void 0;
-rHelperCar = void 0;
-breakpointDefinition = {
-    tablet: 1300,
-    phone: 480
-};
-tableElement = $("#datatable1");
-tableElement.dataTable({
-    responsive: true,
-    autoWidth: false,
-    pagingType: "full",
-    jQueryUI: true,
-    preDrawCallback: function () {
-        if (!rHelperData) {
-            rHelperData = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-    },
-    rowCallback: function (nRow) {
-        rHelperData.createExpandIcon(nRow);
-    },
-    drawCallback: function (oSettings) {
-        rHelperData.respond();
-    }
-});
-tableElement = $("#admincarstable");
-tableElement.dataTable({
-    responsive: true,
-    autoWidth: false,
-    pagingType: "full",
-    jQueryUI: true,
-    processing: true,
-    serverSide: true,
-    ajax: $('#admincarstable').data('source'),
-    preDrawCallback: function () {
-        if (!rHelperAdminCar) {
-            rHelperAdminCar = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-    },
-    rowCallback: function (nRow) {
-        rHelperAdminCar.createExpandIcon(nRow);
-    },
-    drawCallback: function (oSettings) {
-        rHelperAdminCar.respond();
-    }
-});
-tableElement = $("#carstable");
-tableElement.dataTable({
-    responsive: true,
-    autoWidth: false,
-    pagingType: "full",
-    jQueryUI: true,
-    processing: true,
-    serverSide: true,
-    ajax: $('#carstable').data('source'),
-    preDrawCallback: function () {
-        if (!rHelperCar) {
-            rHelperCar = new ResponsiveDatatablesHelper(tableElement, breakpointDefinition);
-        }
-    },
-    rowCallback: function (nRow) {
-        rHelperCar.createExpandIcon(nRow);
-    },
-    drawCallback: function (oSettings) {
-        rHelperCar.respond();
-    }
-});
-    });
+//$(window).load(function() {
+//
+//  if ($(this).width() < 500) {
+//
+//    var str = $("<div>");
+//    $("table tr").each(function(){
+//        var ul = $("<ul>");
+//        $("th", this).each(function(){
+//            var li = $("<li>").html(this.innerHTML);
+//            ul.append(li);
+//        });
+//        $("td", this).each(function(){
+//            var li = $("<li>").html(this.innerHTML);
+//            ul.append(li);
+//        });
+//        str.append(ul);
+//    })    
+//    $("table").replaceWith(str); 
+//  } else {
+//    
+//
+//    }
+//
+//});
 
 </script>
