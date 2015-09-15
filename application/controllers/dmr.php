@@ -568,7 +568,8 @@ class Dmr extends CI_Controller {
               
                if($this->form_validation->run() == TRUE){
                 $mo = $this->input->post('mobile');
-                $result = $this->dmr_model->dmrLogin1($mo);
+                $pin = $this->input->post('pin');
+                $result = $this->dmr_model->dmrLogin1($mo,$pin);
                //print_r($this->session->all_userdata());die();
                 if(count($result) == 1){
                     redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));

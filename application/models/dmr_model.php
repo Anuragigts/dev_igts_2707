@@ -426,7 +426,7 @@ class Dmr_model extends CI_Model
         }
         
     }
-    public function dmrLogin1($card,$mo){
+    public function dmrLogin1($mo,$pin){
        
         //$pin = $getmo->pin;
         
@@ -438,18 +438,18 @@ class Dmr_model extends CI_Model
                 <soap:Body>
                     <LOGIN_V2  xmlns="http://tempuri.org/">
                       <RequestData>
-                            &lt;LOGIN_V1REQUEST&gt;
+                            &lt;LOGIN_V2REQUEST&gt;
                             &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
                             &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
                             &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;                            
                             &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                            &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                            &lt;PARAM1&gt;'.$pin.'&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
                             &lt;PARAM4&gt;&lt;/PARAM4&gt;
                             &lt;PARAM5&gt;&lt;/PARAM5&gt;
-                            &lt;/LOGIN_V1REQUEST&gt;
+                            &lt;/LOGIN_V2REQUEST&gt;
                        </RequestData>
                      </LOGIN_V2>
                    </soap:Body>
@@ -486,9 +486,10 @@ class Dmr_model extends CI_Model
              $final = explode('</LOGIN_V2Result></LOGIN_V2Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-             
-             if($response->STATUS == 'Success'){
-                 return 1;
+             echo "<pre>";
+             print_r($response);die();
+             if($response->STATUSCODE == '1'){
+                 return 1; // Invalid PIN
              }else{
                  return 0;
              }

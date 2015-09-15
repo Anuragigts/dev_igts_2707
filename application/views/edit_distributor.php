@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <label>Super Distributor<span class="red">*</span></label>
                                 <?php if($this->session->userdata("my_type") == 1 || $this->session->userdata("my_type") == 2){ ?>
-                                <select class="form-control" name="super" id="super-id"  val-dis="3">
+                                <select class="form-control" name="super" id=""  val-dis="3">
                                     <option value="Select Super Distributor"> Select Super Distributor </option>
                                     <?php foreach($sup as $sp){ 
                                         if($view->super_distributor_id == $sp->login_id){
