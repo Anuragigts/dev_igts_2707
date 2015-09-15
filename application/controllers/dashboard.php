@@ -26,6 +26,15 @@ class Dashboard extends CI_Controller {
        $data['damt'] = $this->dashboard_model->damt();
        $data['aamt'] = $this->dashboard_model->aamt();
        $data['note'] = $this->dashboard_model->notice();
+       
+       $data['msamt'] = $this->dashboard_model->msamt();
+       $data['mdamt'] = $this->dashboard_model->mdamt();
+       $data['maamt'] = $this->dashboard_model->maamt();
+       
+       $data['sdamt'] = $this->dashboard_model->sdamt();
+       $data['saamt'] = $this->dashboard_model->saamt();
+       
+       
         $this->load->view('layout/inner_template',$data);        
     }
     public function logout(){

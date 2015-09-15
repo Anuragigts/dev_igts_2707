@@ -547,7 +547,7 @@ class Dmr_model extends CI_Model
            
            
          $first_tag = explode('<LOGIN_CPResult>', $result);      
-      //  return print_r($first_tag);die();
+      // return print_r($first_tag);die();
          if(count($first_tag) == 1 ){
              return 0;
          }else{

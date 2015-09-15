@@ -78,6 +78,88 @@ class Dashboard_model extends CI_Model
              return $val;
          }
     }
+    
+    /*************************/
+    public function msamt(){
+        $login_id = $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id "
+                . " INNER JOIN profile p ON p.login_id = l.login_id  WHERE l.user_type = 3 AND p.master_distributor_id = $login_id" );
+         $val = 0.00;
+         //echo $this->db->last_query();die();
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+    public function mdamt(){
+        $login_id = $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id "
+                . " INNER JOIN profile p ON p.login_id = l.login_id  WHERE l.user_type = 4 AND p.master_distributor_id = $login_id" );
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+     public function maamt(){
+         $login_id = $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id "
+                . " INNER JOIN profile p ON p.login_id = l.login_id  WHERE l.user_type = 5 AND p.master_distributor_id = $login_id" );
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+    
+     public function sdamt(){
+        $login_id = $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id "
+                . " INNER JOIN profile p ON p.login_id = l.login_id  WHERE l.user_type = 4 AND p.super_distributor_id = $login_id" );
+         $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+     public function saamt(){
+         $login_id = $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT v.amount FROM current_virtual_amount v"
+                . " INNER JOIN login l ON l.login_id = v.user_id "
+                . " INNER JOIN profile p ON p.login_id = l.login_id  WHERE l.user_type = 5 AND p.super_distributor_id = $login_id" );
+        //echo $this->db->last_query();die(); 
+        $val = 0.00;
+         if($query && $query->num_rows()> 0){
+             foreach($query->result() as $result){
+                 $val = $val + $result->amount;
+             }
+                return $val;
+         }else{
+             return $val;
+         }
+    }
+    /*************************/
+    
      public function notice(){
             $query = $this->db->get_where('notice', array('id' => 1));
             //echo $this->db->last_query();

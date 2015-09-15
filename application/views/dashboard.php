@@ -36,7 +36,7 @@
                  </br>
              <?php }?>           
              <br>
-             <?php if($this->session->userdata('my_type') != 1 ){?>
+             <?php if($this->session->userdata('my_type') == 4 || $this->session->userdata('my_type') == 5 ){?>
             <!-- START widgets box-->
            <div class="row">
                <div class="col-md-6 ">
@@ -322,7 +322,240 @@
                
             
            </div>
-<?php }?>   
+<?php }?>  
+            
+            <?php if($this->session->userdata('my_type') == 2 ){?>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h2> View Users Quick View</h2>
+                        </div>
+                   </div>
+                    <div class="row">
+                        <div class="col-sm-12 visible-xs">
+                               <!-- START widget-->
+                               <div class="panel widget">
+                                  <div class="row row-table">
+                                     <div class="col-xs-4 text-center bg-green pv-lg">                          
+                                         <em class="fa fa-inr fa-3x"></em>
+                                     </div>
+                                     <div class="col-xs-8 pv-lg">
+                                        <div class="h2 mt0">Balance</div>
+                                        <div class="text-uppercase"><span style="font-family:rupee;font-size:16px">R</span> <span class="vamt">0.00</span></div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                       <div class="col-lg-6 col-sm-6">
+                          <!-- START widget-->
+                          <div class="panel widget bg-l-2 pt b0 widget">
+                              <a href="<?php echo base_url();?>super_distributor/view_super_distributor" style="text-decoration: none;color:#fff;">
+                             <div class="ph">
+                                <em class="fa fa-user fa-lg pull-right"></em>
+                                <div class="h2 mt0"><?php echo $super;?>
+                                   <span class="text-sm text-white">Super Distributors</span>
+                                </div>
+                                <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $msamt;?></div>
+                             </div>
+                              </a>
+                          </div>
+                       </div>
+
+                       <div class="col-lg-6 col-md-6 col-sm-12">
+                          <!-- START widget-->
+                          <div class="panel widget bg-l-3 pt b0 widget">
+                              <a href="<?php echo base_url();?>distributor/view_distributor" style="text-decoration: none;color:#fff;">
+                             <div class="ph">
+                                <em class="fa fa-male fa-lg pull-right"></em>
+                                <div class="h2 mt0"><?php echo $dis;?>
+                                   <span class="text-sm text-white">Distributors</span>
+                                </div>
+                                <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $mdamt;?></div>
+                             </div>
+                              </a>
+                          </div>
+                       </div>
+                       <div class="col-lg-6 col-md-6 col-sm-12">
+                          <!-- START widget-->
+                          <div class="panel widget bg-l-4 pt b0 widget">
+                               <a href="<?php echo base_url();?>agent/view_agent" style="text-decoration: none;color:#fff;">
+                             <div class="ph">
+                                <em class="fa fa-child fa-lg pull-right"></em>
+                                <div class="h2 mt0"><?php echo $ag;?>
+                                   <span class="text-sm text-white">Agents</span>
+                                </div>
+                                <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $maamt;?></div>
+                             </div>
+                               </a>
+                          </div>
+                       </div>
+                         <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START date widget-->
+                       <div class="panel widget">
+                       <div class="row row-table">
+                          <div class="col-xs-4 text-center bg-green pv-lg">                          
+                             <div data-now="" data-format="MMMM" class="text-sm"></div>
+                             <br>
+                             <div data-now="" data-format="D" class="h2 mt0"></div>
+                          </div>
+                          <div class="col-xs-8 pv-lg" style="background-color: #B7D0BC">
+                             <div data-now="" data-format="dddd" class="text-uppercase"></div>
+                             <br>
+                             <div data-now="" data-format="h:mm" class="h2 mt0"></div>
+                             <div data-now="" data-format="a" class="text-muted text-sm"></div>
+                          </div>
+                       </div>
+                    </div>
+                       <!-- END date widget    -->
+                    </div>
+
+
+                    </div>
+               </div>
+                   <div class="col-md-6 ">
+                   <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h2> Notice Board </h2>
+                        </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-12  ">
+                           <div class="greenboard ">
+                               <div class="my-title text-center"><h3><font face="Comic Sans MS"><u><?php echo $note->title;?></u></font></h3></div>
+                               <div class="my-content">
+                                    <p>Hi Mr. <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>,<p>
+                                     <p><?php echo $note->msg;?>
+                                     </p>
+                                     <p>
+                                         For More access you need to contact with support team. You are free to call or email,
+                                     </p>
+                                     <p> <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580220<br>
+                                      <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580540<br>
+                                      <i class="fa fa-envelope-o"></i>&nbsp;&nbsp; support@esytopup.com
+                                     </p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               
+               
+            
+               
+            
+           </div>
+<?php }?>  
+            <?php if($this->session->userdata('my_type') == 3 ){?>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h2> View Users Quick View</h2>
+                        </div>
+                   </div>
+                    <div class="row">
+                       
+                       <div class="col-lg-6 col-md-6 col-sm-12">
+                          <!-- START widget-->
+                          <div class="panel widget bg-l-3 pt b0 widget">
+                              <a href="<?php echo base_url();?>distributor/view_distributor" style="text-decoration: none;color:#fff;">
+                             <div class="ph">
+                                <em class="fa fa-male fa-lg pull-right"></em>
+                                <div class="h2 mt0"><?php echo $dis;?>
+                                   <span class="text-sm text-white">Distributors</span>
+                                </div>
+                                <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $sdamt;?></div>
+                             </div>
+                              </a>
+                          </div>
+                       </div>
+                       <div class="col-lg-6 col-md-6 col-sm-12">
+                          <!-- START widget-->
+                          <div class="panel widget bg-l-4 pt b0 widget">
+                               <a href="<?php echo base_url();?>agent/view_agent" style="text-decoration: none;color:#fff;">
+                             <div class="ph">
+                                <em class="fa fa-child fa-lg pull-right"></em>
+                                <div class="h2 mt0"><?php echo $ag;?>
+                                   <span class="text-sm text-white">Agents</span>
+                                </div>
+                                <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $saamt;?></div>
+                             </div>
+                               </a>
+                          </div>
+                       </div>
+                         <div class="col-lg-6 col-sm-12 ">
+                               <!-- START widget-->
+                               <div class="panel widget">
+                                  <div class="row row-table">
+                                     <div class="col-xs-4 text-center bg-green pv-lg">                          
+                                         <em class="fa fa-inr fa-3x"></em>
+                                     </div>
+                                     <div class="col-xs-8 pv-lg">
+                                        <div class="h2 mt0">Balance</div>
+                                        <div class="text-uppercase"><span style="font-family:rupee;font-size:16px">R</span> <span class="vamt">0.00</span></div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START date widget-->
+                       <div class="panel widget">
+                       <div class="row row-table">
+                          <div class="col-xs-4 text-center bg-green pv-lg">                          
+                             <div data-now="" data-format="MMMM" class="text-sm"></div>
+                             <br>
+                             <div data-now="" data-format="D" class="h2 mt0"></div>
+                          </div>
+                          <div class="col-xs-8 pv-lg" style="background-color: #B7D0BC">
+                             <div data-now="" data-format="dddd" class="text-uppercase"></div>
+                             <br>
+                             <div data-now="" data-format="h:mm" class="h2 mt0"></div>
+                             <div data-now="" data-format="a" class="text-muted text-sm"></div>
+                          </div>
+                       </div>
+                    </div>
+                       <!-- END date widget    -->
+                    </div>
+
+
+                    </div>
+               </div>
+                   <div class="col-md-6 ">
+                   <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h2> Notice Board </h2>
+                        </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-12  ">
+                           <div class="greenboard ">
+                               <div class="my-title text-center"><h3><font face="Comic Sans MS"><u><?php echo $note->title;?></u></font></h3></div>
+                               <div class="my-content">
+                                    <p>Hi Mr. <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>,<p>
+                                     <p><?php echo $note->msg;?>
+                                     </p>
+                                     <p>
+                                         For More access you need to contact with support team. You are free to call or email,
+                                     </p>
+                                     <p> <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580220<br>
+                                      <i class="icon icon-call-end"></i>&nbsp;&nbsp; +91 9666 580540<br>
+                                      <i class="fa fa-envelope-o"></i>&nbsp;&nbsp; support@esytopup.com
+                                     </p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               
+               
+            
+               
+            
+           </div>
+<?php }?>  
+            
+            
             </div>
             <!-- END Widgets-->
          </div>
