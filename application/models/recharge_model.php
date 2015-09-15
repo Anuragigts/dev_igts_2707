@@ -661,7 +661,7 @@ class Recharge_model extends CI_Model
                             $cammdt  =   $this->getcamt($d);
                 }
                 if($my != 0){
-                            $myp = $this->getpackage($my);
+                            $myp    = $this->getpackage($my);
                             $coyd    =   $this->getcomdet($myp,$mobjid);
                             $cammat  =   $this->getcamt($my);
                 }
@@ -672,9 +672,8 @@ class Recharge_model extends CI_Model
                 
                 $deta       =   $amyt;
                 $detd       =   $amdt-$deta;
-                $dets       =   $amst-$detd;
-                $detm       =   $ammt-$dets;
-                
+                $dets       =   $amst-$amdt;
+                $detm       =   $ammt-$amst;
                 
                 $cammmt1     =   $cammmt+$detm;
                 $cammst1     =   $cammst+$dets;

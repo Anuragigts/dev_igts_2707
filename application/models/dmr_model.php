@@ -429,6 +429,7 @@ class Dmr_model extends CI_Model
     public function dmrLogin1($mo,$pin){
        
         //$pin = $getmo->pin;
+       
         
         $url = DMRURL; 
        
@@ -457,7 +458,7 @@ class Dmr_model extends CI_Model
 
 
             $curl = curl_init();
-//echo $curlData;
+ 
             curl_setopt ($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl,CURLOPT_TIMEOUT,120);
@@ -474,9 +475,10 @@ class Dmr_model extends CI_Model
             $result = curl_exec($curl);                 
             curl_close ($curl);
            
-           
-         $first_tag = explode('<LOGIN_V2Result>', $result);      
-      //  return print_r($first_tag);die();
+          // echo $result;die();
+         $first_tag = explode('<LOGIN_V2Result>', $result);  
+        // echo "hiii";die();
+        // print_r($first_tag);die();
          if(count($first_tag) == 1 ){
              return 0;
          }else{
@@ -486,11 +488,30 @@ class Dmr_model extends CI_Model
              $final = explode('</LOGIN_V2Result></LOGIN_V2Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-             echo "<pre>";
-             print_r($response);die();
+             //echo "<pre>";
+             print_r($response);
              if($response->STATUSCODE == '1'){
                  return 1; // Invalid PIN
-             }else{
+             }else if($response->STATUSCODE == '0' && $response->OTPSTATUS == '0'){
+                 $this->session->set_userdata('iddmr', 1);
+                 $this->session->set_userdata('dmrname', "$response->NAME");
+                 $this->session->set_userdata('dmrmidname', "$response->MIDDLENAME");
+                 $this->session->set_userdata('dmrlastname', "$response->LASTNAME");
+                 $this->session->set_userdata('dmrmo', "$response->MOBILE");
+                 $this->session->set_userdata('dmrcard', "$response->CARDNO");
+                 $this->session->set_userdata('dmrtranslimit', "$response->TRANSACTIONLIMIT");
+                 $this->session->set_userdata('dmrbalance', "$response->BALANCE");
+                 $this->session->set_userdata('dmrkyc', "$response->KYCSTATUS");
+                 $this->session->set_userdata('dmrkey', "$response->SECURITYKEY");
+                 $this->session->set_userdata('dmrpin', "$response->PINCODE");
+                 $this->session->set_userdata('dmrad', "$response->ADDRESS");
+                 $this->session->set_userdata('dmrcity', "$response->CITY");
+                 $this->session->set_userdata('dmrstate', "$response->STATE"); 
+                 return 2;
+             }else if($response->STATUSCODE == '0' && $response->OTPSTATUS == '1'){
+                 return 3;
+             }
+             else{
                  return 0;
              }
          }

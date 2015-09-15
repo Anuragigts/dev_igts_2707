@@ -562,17 +562,25 @@ class Dmr extends CI_Controller {
                 }
             }
          }
-         if($this->input->post('pin')){
+         if($this->input->post('pinbut')){
+            
               $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
               $this->form_validation->set_rules('pin',  'PIN',   'required');
               
                if($this->form_validation->run() == TRUE){
+                 
                 $mo = $this->input->post('mobile');
                 $pin = $this->input->post('pin');
                 $result = $this->dmr_model->dmrLogin1($mo,$pin);
                //print_r($this->session->all_userdata());die();
-                if(count($result) == 1){
+                if(count($result) == 2){
                     redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
+                }else  if(count($result) == 1){
+                    $this->session->set_flashdata('err','Login Fail Invalid Pin');  
+                       redirect('dmr/dmrUserSearch');
+                }else  if(count($result) == 3){
+                    $this->session->set_flashdata('msg','Login Fail : Please verify account using OTP.');   
+                       redirect('dmr/dmrverify/'.$mo);
                 }
               else{
                      $this->session->set_flashdata('msg','This number is not registered please register first');  
@@ -583,6 +591,37 @@ class Dmr extends CI_Controller {
          
          $this->load->view('layout/inner_template',$data);
     }
+    
+    public function dmrverify(){
+        
+         $data = array(
+              'title'         => 'DMR ESY TOPUP :: TRANSACTION',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'dmr_login_verify'
+             );
+        $mobile =  $this->uri->segment(3);
+          if($this->input->post('send')){
+             
+              $this->form_validation->set_rules('otp',  'OTP',   'required');
+               if($this->form_validation->run() == TRUE){
+               
+                $result = $this->dmr_model->verifyUser($mobile);
+               
+                if(count($result) == 1){
+                    redirect('dmr/beneficiaryList/'.$this->uri->segment(3));
+                }
+              else{
+                     $this->session->set_flashdata('err','This number is not registered please register first');  
+                       redirect('dmr/verifyUser/'.$this->uri->segment(3));
+                }
+            }
+         }
+         $this->load->view('layout/inner_template',$data); 
+    }
+
+
+    
     public function verifyUser(){
         $data = array(
               'title'         => 'DMR ESY TOPUP :: VERIFY',
@@ -604,7 +643,7 @@ class Dmr extends CI_Controller {
                 }
               else{
                      $this->session->set_flashdata('err','This number is not registered please register first');  
-                       redirect('dmr/verifyUser.'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                       redirect('dmr/verifyUser/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                 }
             }
          }

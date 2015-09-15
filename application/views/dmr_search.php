@@ -108,12 +108,12 @@
                                                                   <label class="col-lg-3 control-label">PIN<font class="red">*</font></label>
                                                                  <div class="col-lg-9">
                                                                 <input name="pin"  class="form-control" placeholder="******" type="password" value=""  onkeyup="validateR(this, '')" ruleset="[^0-9.]">
-                                                               <span class="red"><?=  form_error('otp');?></span>
+                                                               <span class="red"><?=  form_error('pin');?></span>
                                                                  </div>
                                                            </div>
                                                               <div class="form-group">
                                                                  <div class="col-lg-offset-3 col-lg-4">
-                                                                     <input type='submit' class='btn btn-sm btn-info '   name='pin' value='Login' />
+                                                                     <input type='submit' class='btn btn-sm btn-info '   name='pinbut' value='Login' />
                                                                      
                                                                  </div>
                                                                  <div class="col-lg-4">                            
