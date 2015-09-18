@@ -689,10 +689,27 @@ class Recharge_model extends CI_Model
                 $this->updatecvamt($d,$cammdt1);
                 $this->updatecvamt($my,$cammat1);
                 
-                $this->insertdeamt($d,$my,$cammat1,$cammat,$deta);
-                $this->insertdeamt($sd,$d,$cammdt1,$cammdt,$detd);
-                $this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
-                $this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+				if($d != 0 && $sd != 0 && $md != 0){
+						$this->insertdeamt($d,$my,$cammat1,$cammat,$deta);
+						$this->insertdeamt($sd,$d,$cammdt1,$cammdt,$detd);
+						$this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
+						$this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+				}
+				if($d == 0 && $sd != 0 && $md != 0){
+						$this->insertdeamt($sd,$my,$cammat1,$cammat,$deta);
+						$this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
+						$this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+				}
+				/*
+				if($d == 0 && $sd = 0 && $md != 0){
+						$this->insertdeamt($md,$my,$cammat1,$cammat,$deta);
+						$this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+				}
+				if($d == 0 && $sd == 0 && $md == 0){
+						$this->insertdeamt("1",$my,$cammat1,$cammat,$deta);
+				}
+				*/
+               
                 
         }
         public function getpackage($val){
