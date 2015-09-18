@@ -313,7 +313,40 @@ class Recharge_model extends CI_Model
 
                 $insert = $this->db->insert('recharge_track',$data_insert);
                 if($this->db->affected_rows() == 1){
+                    
                     $my_mo_id = $this->db->insert_id();
+                    
+                    $val2 = floatval($current_amt->row()->amount);
+                    $now = (floatval($current_amt->row()->amount) - floatval($amt));
+                    $insfrom   =   array(                      
+                            "amount"     => ($val2 - floatval($amt))
+                        );
+                    $this->db->where("user_id",$login_id);
+                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                    $myupdate = array(
+                        "trans_from"    =>   $login_id,
+                        "trans_to"      =>     0,
+                        "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "trans_amt"     =>     floatval($amt),
+                        "trans_remark"  =>     "Off-Line Recharge $mobile",
+                        "type"  =>     "2"
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+
+                    $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+
+                    $ch = curl_init();
+                    $optArray = array(
+                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
+                            CURLOPT_RETURNTRANSFER => true
+                    );
+                    curl_setopt_array($ch, $optArray);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                            
 
                         $url = RECHARGEURL;        
                         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
@@ -382,36 +415,6 @@ class Recharge_model extends CI_Model
                        $response = simplexml_load_string($final[0]);
                       print_r($response);
                        if($response->Status == 1){
-                            $val2 = floatval($current_amt->row()->amount);
-                            $now = (floatval($current_amt->row()->amount) - floatval($amt));
-                            $insfrom   =   array(                      
-                                    "amount"     => ($val2 - floatval($amt))
-                                );
-                            $this->db->where("user_id",$login_id);
-                            $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                            
-                            $myupdate = array(
-                                "trans_from"    =>   $login_id,
-                                "trans_to"      =>     0,
-                                "cur_amount"      =>    ($val2 - $this->input->post('amount')),
-                                "trans_amt"     =>     floatval($amt),
-                                "trans_remark"  =>     "Off-Line Recharge $mobile"
-                             );
-                            $query =   $this->db->insert("trans_detail", $myupdate);
-                            
-                            $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
-                            
-                            $ch = curl_init();
-                            $optArray = array(
-                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
-                                    CURLOPT_RETURNTRANSFER => true
-                            );
-                            curl_setopt_array($ch, $optArray);
-                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                            curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-                            $result = curl_exec($ch);
-                            curl_close($ch);
-                         
                         
                         $data = array(                        
                                 'hrm_track'              => "$response->TrackId",
@@ -514,6 +517,31 @@ class Recharge_model extends CI_Model
         $insert = $this->db->insert('recharge_track',$data_insert);
         if($this->db->affected_rows() == 1){
             $my_mo_id = $this->db->insert_id();
+            
+            $from_m =$this->getprofile($this->session->userdata('login_id'));
+            $from_mo = $from_m->mobile;
+            $myamt = $this->input->post('amount');
+            $myno = $this->input->post('mobile');
+            $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                 if($query2 && $query2->num_rows()== 1){                        
+                     $val2 = $query2->row()->amount;
+                     $insfrom   =   array(                      
+                             "amount"     => ($val2 - $this->input->post('amount'))
+                         );
+                     $this->db->where("user_id",$this->session->userdata('login_id'));
+                     $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                      $myupdate = array(
+                        "trans_from"    =>   $this->session->userdata('login_id'),
+                        "trans_to"      =>     0,
+                       "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "trans_amt"     =>     floatval($this->input->post('amount')),
+                        "trans_remark"  =>     "Recharge $mobile",
+                          "type"  =>     "2"
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                 } 
+                         
        
                 $url = RECHARGEURL;        
                 $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
@@ -582,30 +610,6 @@ class Recharge_model extends CI_Model
                $response = simplexml_load_string($final[0]);
               // print_r($response);die();
                if($response->Status == 1){
-                    $from_m =$this->getprofile($this->session->userdata('login_id'));
-                    $from_mo = $from_m->mobile;
-                    $myamt = $this->input->post('amount');
-                    $myno = $this->input->post('mobile');
-                    $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-                         if($query2 && $query2->num_rows()== 1){                        
-                             $val2 = $query2->row()->amount;
-                             $insfrom   =   array(                      
-                                     "amount"     => ($val2 - $this->input->post('amount'))
-                                 );
-                             $this->db->where("user_id",$this->session->userdata('login_id'));
-                             $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                             
-                              $myupdate = array(
-                                "trans_from"    =>   $this->session->userdata('login_id'),
-                                "trans_to"      =>     0,
-                               "cur_amount"      =>    ($val2 - $this->input->post('amount')),
-                                "trans_amt"     =>     floatval($this->input->post('amount')),
-                                "trans_remark"  =>     "Recharge $mobile"
-                             );
-                            $query =   $this->db->insert("trans_detail", $myupdate);
-                         } 
-                         
-            
                 $data = array(                        
                         'hrm_track'              => "$response->TrackId",
                         'ref_num'                => "$response->RefNo",
@@ -733,7 +737,8 @@ class Recharge_model extends CI_Model
                         "trans_amt"         =>  $dt,
                         "cur_amount"        =>  $amt,
                         "trans_remark"      =>  "commission amount",
-                        "trans_status"      =>  2
+                        "trans_status"      =>  2,
+                        "type"  =>     "1"
                 );
                 $this->db->insert("trans_detail",$inset);
         }
@@ -1001,7 +1006,8 @@ class Recharge_model extends CI_Model
                                 "trans_to"      =>     0,
                                 "cur_amount"      =>    ($val2 - $this->input->post('amount')),
                                 "trans_amt"     =>     floatval($this->input->post('amount')),
-                                "trans_remark"  =>     "Post-paid Recharge $mobile"
+                                "trans_remark"  =>     "Post-paid Recharge $mobile",
+                                  "type"  =>     "2"
                              );
                             $query =   $this->db->insert("trans_detail", $myupdate);
                           } 

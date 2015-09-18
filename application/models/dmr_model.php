@@ -52,6 +52,7 @@ class Dmr_model extends CI_Model
         $insert = $this->db->insert('dmr_registration_track',$data_insert);
         if($this->db->affected_rows() == 1){
             $my_DMR_id = $this->db->insert_id();
+            
             $url = DMRURL; 
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -231,6 +232,25 @@ class Dmr_model extends CI_Model
 
 
              if($response->STATUS == 'Successfully Registered'){
+                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                 if($query2 && $query2->num_rows()== 1){                        
+                     $val2 = $query2->row()->amount;
+                     $insfrom   =   array(                      
+                             "amount"     => ($val2 - 15.00)
+                         );
+                     $this->db->where("user_id",$this->session->userdata('login_id'));
+                     $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                      $myupdate = array(
+                        "trans_from"    =>   $this->session->userdata('login_id'),
+                        "trans_to"      =>     0,
+                       "cur_amount"      =>    ($val2 - 15),
+                        "trans_amt"     =>     15.00,
+                        "trans_remark"  =>     "DMR sender registration charge"
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                 } 
+                 
                  $up = array(
                      'mmid' => $response->MMID,
                      'serial_no' => $response->SERIALNO

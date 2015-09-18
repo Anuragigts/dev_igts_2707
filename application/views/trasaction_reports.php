@@ -53,9 +53,10 @@ only screen and (max-width: 760px),
 	td:nth-of-type(1):before { content: "S.No."; }
 	td:nth-of-type(2):before { content: "From Name"; }
 	td:nth-of-type(3):before { content: "To Name"; }
-	td:nth-of-type(4):before { content: "Commission Amount"; }
-	td:nth-of-type(5):before { content: "Total Amount"; }
-	td:nth-of-type(6):before { content: "Remarks"; }
+	td:nth-of-type(4):before { content: " Amount"; }
+	td:nth-of-type(5):before { content: " Type"; }
+	td:nth-of-type(6):before { content: "Total Amount"; }
+	td:nth-of-type(7):before { content: "Remarks"; }
 }
                </style>
         <div class="row">  
@@ -67,7 +68,8 @@ only screen and (max-width: 760px),
                              <th>S.No.</th>
                             <td> From Name</td>
                             <td> To Name</td>
-                             <th>Commission Amount</th>
+                             <th>Amount</th>
+                             <th>Type</th>
                              <th>Total Amount</th>
                              <th>Date & Time</th>
                              <th>Remarks</th>       
@@ -83,7 +85,9 @@ only screen and (max-width: 760px),
                                     <td><?= $view->frname." ".$view->lrname;?></td>
                                     <td><?php if($view->tofname != ''){ echo $view->tofname." ".$view->tolname;}else{echo 'N/A';}?></td>
                                     <td><?= $view->trans_amt;?></td>
+                                     <td><?php if($view->type == 1){ echo "Debited";}else if($view->type == 2){echo "Credited";}else{echo "N/A";}?></td>
                                     <td><?= $view->cur_amount;?></td>
+                                   
                                     <td><?= $view->trans_date;?></td>
                                     <td><?= $view->trans_remark;?></td>
                                 </tr>
