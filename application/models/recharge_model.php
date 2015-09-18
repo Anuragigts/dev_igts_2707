@@ -218,7 +218,8 @@ class Recharge_model extends CI_Model
         }
         $ioff = array(                
                 'descp'            =>$this->input->get('message', TRUE).' number '.$this->input->get('number', TRUE),
-                'done_by'            =>$id
+                'done_by'            =>$id,
+                'done'              => date('Y-m-d H:i:s')
             );
             $insert = $this->db->insert('offtime',$ioff);
             return $this->db->insert_id();
@@ -308,45 +309,14 @@ class Recharge_model extends CI_Model
                         'code'              => $item,
                         'op_name'           => $desc,
                         'number'            => $mobile,
-                        'amount'            => $amt
+                        'amount'            => $amt,
+                        'cur_time'          => date('Y-m-d H:i:s')
                     );
 
                 $insert = $this->db->insert('recharge_track',$data_insert);
                 if($this->db->affected_rows() == 1){
                     
                     $my_mo_id = $this->db->insert_id();
-                    
-                    $val2 = floatval($current_amt->row()->amount);
-                    $now = (floatval($current_amt->row()->amount) - floatval($amt));
-                    $insfrom   =   array(                      
-                            "amount"     => ($val2 - floatval($amt))
-                        );
-                    $this->db->where("user_id",$login_id);
-                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
-                    $myupdate = array(
-                        "trans_from"    =>   $login_id,
-                        "trans_to"      =>     0,
-                        "cur_amount"      =>    ($val2 - $this->input->post('amount')),
-                        "trans_amt"     =>     floatval($amt),
-                        "trans_remark"  =>     "Off-Line Recharge $mobile",
-                        "type"  =>     "2"
-                     );
-                    $query =   $this->db->insert("trans_detail", $myupdate);
-
-                    $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
-
-                    $ch = curl_init();
-                    $optArray = array(
-                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
-                            CURLOPT_RETURNTRANSFER => true
-                    );
-                    curl_setopt_array($ch, $optArray);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-                    $result = curl_exec($ch);
-                    curl_close($ch);
-                            
 
                         $url = RECHARGEURL;        
                         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
@@ -415,7 +385,45 @@ class Recharge_model extends CI_Model
                        $response = simplexml_load_string($final[0]);
                       print_r($response);
                        if($response->Status == 1){
-                        
+                        $val2 = floatval($current_amt->row()->amount);
+                    $now = (floatval($current_amt->row()->amount) - floatval($amt));
+                    $insfrom   =   array(                      
+                            "amount"     => ($val2 - floatval($amt))
+                        );
+                    $this->db->where("user_id",$login_id);
+                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                    $myupdate = array(
+                        "trans_from"    =>   $login_id,
+                        "trans_to"      =>     0,
+                        "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "trans_amt"     =>     floatval($amt),
+                        "trans_remark"  =>     "Off-Line Recharge $mobile",
+                        "type"  =>     "2",
+                        'trans_date' => date('Y-m-d H:i:s')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+
+                    $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+
+                    $ch = curl_init();
+                    $optArray = array(
+                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
+                            CURLOPT_RETURNTRANSFER => true
+                    );
+                    curl_setopt_array($ch, $optArray);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                     $md = $queryq->row()->master_distributor_id;
+                    $sd = $queryq->row()->super_distributor_id;
+                    $d = $queryq->row()->distributor_id;
+                    $my = $queryq->row()->login_id;
+                    $optna  =   strtolower($desc);
+                    //echo $md ."-".$sd."-".$d."-".$my ;
+                    $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                    
                         $data = array(                        
                                 'hrm_track'              => "$response->TrackId",
                                 'ref_num'                => "$response->RefNo",
@@ -428,15 +436,7 @@ class Recharge_model extends CI_Model
 
                             );
                         $this->db->where('recharge_id',$my_mo_id);
-                        $update = $this->db->update('recharge_track',$data); 
-                        
-                        $md = $queryq->row()->master_distributor_id;
-                        $sd = $queryq->row()->super_distributor_id;
-                        $d = $queryq->row()->distributor_id;
-                        $my = $queryq->row()->login_id;
-                        $optna  =   strtolower($desc);
-                        //echo $md ."-".$sd."-".$d."-".$my ;
-                        $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                        $update = $this->db->update('recharge_track',$data);
 
                          if($this->db->affected_rows() == 1){
                              return 0;
@@ -504,6 +504,7 @@ class Recharge_model extends CI_Model
         $amt        = $this->input->post('amount');
         $circle     = $this->input->post('circle');
         
+        
          $data_insert = array(
                 'track_id'          => $track_id,
                 'done_by'           => $this->session->userdata('login_id'),
@@ -511,7 +512,8 @@ class Recharge_model extends CI_Model
                 'code'              => $item,
                 'op_name'           => $desc,
                 'number'            => $mobile,
-                'amount'            => $amt
+                'amount'            => $amt,
+                'cur_time'          => date('Y-m-d H:i:s')
             );
          
         $insert = $this->db->insert('recharge_track',$data_insert);
@@ -520,28 +522,6 @@ class Recharge_model extends CI_Model
             
             $from_m =$this->getprofile($this->session->userdata('login_id'));
             $from_mo = $from_m->mobile;
-            $myamt = $this->input->post('amount');
-            $myno = $this->input->post('mobile');
-            $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-                 if($query2 && $query2->num_rows()== 1){                        
-                     $val2 = $query2->row()->amount;
-                     $insfrom   =   array(                      
-                             "amount"     => ($val2 - $this->input->post('amount'))
-                         );
-                     $this->db->where("user_id",$this->session->userdata('login_id'));
-                     $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
-                      $myupdate = array(
-                        "trans_from"    =>   $this->session->userdata('login_id'),
-                        "trans_to"      =>     0,
-                       "cur_amount"      =>    ($val2 - $this->input->post('amount')),
-                        "trans_amt"     =>     floatval($this->input->post('amount')),
-                        "trans_remark"  =>     "Recharge $mobile",
-                          "type"  =>     "2"
-                     );
-                    $query =   $this->db->insert("trans_detail", $myupdate);
-                 } 
-                         
        
                 $url = RECHARGEURL;        
                 $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
@@ -610,6 +590,36 @@ class Recharge_model extends CI_Model
                $response = simplexml_load_string($final[0]);
               // print_r($response);die();
                if($response->Status == 1){
+                   $myamt = $this->input->post('amount');
+            $myno = $this->input->post('mobile');
+            $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                 if($query2 && $query2->num_rows()== 1){                        
+                     $val2 = $query2->row()->amount;
+                     $insfrom   =   array(                      
+                             "amount"     => ($val2 - $this->input->post('amount'))
+                         );
+                     $this->db->where("user_id",$this->session->userdata('login_id'));
+                     $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                      $myupdate = array(
+                        "trans_from"    =>   $this->session->userdata('login_id'),
+                        "trans_to"      =>     0,
+                       "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "trans_amt"     =>     floatval($this->input->post('amount')),
+                        "trans_remark"  =>     "Recharge $mobile",
+                          "type"  =>     "2",
+                          'trans_date' => date('Y-m-d H:i:s')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                 } 
+                    
+                 $md = $this->session->userdata("master_distributor_id");
+                $sd = $this->session->userdata("super_distributor_id");
+                $d = $this->session->userdata("distributor_id");
+                $my = $this->session->userdata("login_id");
+                $optna  =   strtolower($desc);
+                $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                
                 $data = array(                        
                         'hrm_track'              => "$response->TrackId",
                         'ref_num'                => "$response->RefNo",
@@ -622,13 +632,8 @@ class Recharge_model extends CI_Model
                         
                     );
                 $this->db->where('recharge_id',$my_mo_id);
-                $update = $this->db->update('recharge_track',$data);              
-                $md = $this->session->userdata("master_distributor_id");
-                $sd = $this->session->userdata("super_distributor_id");
-                $d = $this->session->userdata("distributor_id");
-                $my = $this->session->userdata("login_id");
-                $optna  =   strtolower($desc);
-                $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                $update = $this->db->update('recharge_track',$data);             
+               
                  if($this->db->affected_rows() == 1){
                      return 0;
                  }  else {
@@ -723,9 +728,20 @@ class Recharge_model extends CI_Model
                 return $od['modules_obj_id'];
         }
         public function getcamt($md){
+            $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $md));
+             if($query2 && $query2->num_rows()== 1){
                 $qu = $this->db->get_where("current_virtual_amount",array("user_id" => $md));
                 $od = $qu->row_array();
                 return $od['amount'];
+             }else{
+                  $insfrom   =   array(
+                        "user_id"    =>   $md,
+                        "amount"     => 0
+                    );
+
+                $query =   $this->db->insert("current_virtual_amount", $insfrom);
+                return '0';
+             }
         }
         public function getcomdet($mdp,$mobjid){
                 $qu = $this->db->get_where("commission_details",array("package_id" => $mdp,"modules_object_id" => $mobjid));
@@ -743,7 +759,8 @@ class Recharge_model extends CI_Model
                         "to"            =>  $my,
                         "com_amount"    =>  $amt,
                         "cur_amount"    =>  $camount?$camount:0,
-                        "remarks"       =>  "commission amount"
+                        "remarks"       =>  "commission amount",
+                        "date_time"     => date('Y-m-d H:i:s')
                 );
                 
                 $this->db->insert("comi_virtual_det",$data);
@@ -755,7 +772,8 @@ class Recharge_model extends CI_Model
                         "cur_amount"        =>  $amt,
                         "trans_remark"      =>  "commission amount",
                         "trans_status"      =>  2,
-                        "type"  =>     "1"
+                        "type"  =>     "1",
+                    'trans_date' => date('Y-m-d H:i:s')
                 );
                 $this->db->insert("trans_detail",$inset);
         }
@@ -930,7 +948,8 @@ class Recharge_model extends CI_Model
                 'code'              => $item,
                 'op_name'           => $desc,
                 'number'            => $mobile,
-                'amount'            => $amt
+                'amount'            => $amt,
+                'cur_time'          => date('Y-m-d H:i:s')
             );
          
         $insert = $this->db->insert('recharge_track',$data_insert);
@@ -1024,7 +1043,8 @@ class Recharge_model extends CI_Model
                                 "cur_amount"      =>    ($val2 - $this->input->post('amount')),
                                 "trans_amt"     =>     floatval($this->input->post('amount')),
                                 "trans_remark"  =>     "Post-paid Recharge $mobile",
-                                  "type"  =>     "2"
+                                  "type"  =>     "2",
+                                  'trans_date' => date('Y-m-d H:i:s')
                              );
                             $query =   $this->db->insert("trans_detail", $myupdate);
                           } 
@@ -1043,12 +1063,12 @@ class Recharge_model extends CI_Model
                     $this->db->where('recharge_id',$my_mo_id);
                     $update = $this->db->update('recharge_track',$data);    
                     
-//                        $md = $this->session->userdata("master_distributor_id");
-//                        $sd = $this->session->userdata("super_distributor_id");
-//                        $d = $this->session->userdata("distributor_id");
-//                        $my = $this->session->userdata("login_id");
-//                        $optna  =   strtolower($desc);
-//                        $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                        $md = $this->session->userdata("master_distributor_id");
+                        $sd = $this->session->userdata("super_distributor_id");
+                        $d = $this->session->userdata("distributor_id");
+                        $my = $this->session->userdata("login_id");
+                        $optna  =   strtolower($desc);
+                        $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
 
                      if($this->db->affected_rows() == 1){
                          return 0;

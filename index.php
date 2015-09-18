@@ -47,6 +47,22 @@ if (defined('ENVIRONMENT'))
 }
 
 /*
+|---------------------------------------------------------------
+| DEFAULT TIMEZONE
+|---------------------------------------------------------------
+|
+| Set the default timezone for date/time functions to use if
+| none is set on the server.
+|
+*/
+
+if( ! ini_get('date.timezone') )
+{
+   date_default_timezone_set('Asia/Kolkata');
+} 
+
+
+/*
  *---------------------------------------------------------------
  * SYSTEM FOLDER NAME
  *---------------------------------------------------------------

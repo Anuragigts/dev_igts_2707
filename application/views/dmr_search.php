@@ -140,6 +140,15 @@
                   
                   <!-- END panel tab-->
                </div>
+             
+            <div class="col-lg-12">
+                <p><h4>DMR Terms & Condition</h4></p>
+            <ol>
+                <li>For each sender registration <span style="font-family:rupee;font-size:13px">R</span> 15.00 will be service charge.</li>
+                <li>For Non-KYC the monthly transaction amount is <span style="font-family:rupee;font-size:13px">R</span> 10,000 And for KYC <span style="font-family:rupee;font-size:13px">R</span> 25,000</li>
+                <li>If in case transection is fail then money will debited on sender's account within seven working days. </li>
+            </ol>
+            </div>
        </div>            
     </div>
  </section>

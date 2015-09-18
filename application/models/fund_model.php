@@ -10,7 +10,8 @@
                             "bank_name"  => $this->input->post("bank_name"),
                             "ptype"  => $this->input->post("ptype"),
                             "cheque"  => $this->input->post("cheque"),
-                            "status"  => 3
+                            "status"  => 3,
+                            "date_time"        => date('Y-m-d H:i:s')
                     );
                     //print_r($data);exit;
                     $this->db->insert("fund_request",$data);

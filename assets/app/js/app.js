@@ -2475,7 +2475,7 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			 // swal("Processing!", "Your recharge is under processing.", "success");
+			 swal("Please Wait!", "...", "success");
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your recharge request is cancelled", "error");
@@ -2505,7 +2505,7 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			 // swal("Processing!", "Your "+op+" recharge is under processing.", "success");
+                            swal("Please Wait!", "...", "success");
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your "+op+" recharge request is cancelled", "error");
@@ -2556,7 +2556,7 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			 // swal("Processing!", "Your Rs. "+amt+" topup is under process.", "success");
+			 swal("Processing!", "Please Wait ...", "success");
 			  $('#topup-form').submit();
 			} else {
 			  swal("Cancelled", "Your Rs. "+amt+" topup request is cancelled", "error");

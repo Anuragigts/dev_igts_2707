@@ -85,7 +85,7 @@ only screen and (max-width: 760px),
                                     <td><?= $view->frname." ".$view->lrname;?></td>
                                     <td><?php if($view->tofname != ''){ echo $view->tofname." ".$view->tolname;}else{echo 'N/A';}?></td>
                                     <td><?= $view->trans_amt;?></td>
-                                     <td><?php if($view->type == 1){ echo "Debited";}else if($view->type == 2){echo "Credited";}else{echo "N/A";}?></td>
+                                     <td><?php if($view->type == 1){ echo "Credited";}else if($view->type == 2){echo "Debited";}else{echo "N/A";}?></td>
                                     <td><?= $view->cur_amount;?></td>
                                    
                                     <td><?= $view->trans_date;?></td>

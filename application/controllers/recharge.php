@@ -198,22 +198,27 @@ class Recharge extends CI_Controller {
            // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
                  $recharge_type = 1;
-		$amt = $this->settings_model->checkVirtual();	
+                  $amt = $this->settings_model->checkVirtual();	
                 
                 if($amt >= $this->input->post('amount')){ 
-                    $result = $this->recharge_model->doRecharge( $recharge_type);
-                    //$result = $this->recharge_model->doRecharge1( );
-                    //if($result == 1){                    
-                    if($result == 0){                    
-                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
-                        redirect('recharge/mobile_recharge');
-                    }
-                    else if($result == 2){
-                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
-                       redirect('recharge/mobile_recharge');
+                    if($this->input->post('oprator_name') == 'AIRTEL'){
+                        $this->session->set_flashdata('err','Recharge fail : AIRTEL Server is down.');  
+                           redirect('recharge/mobile_recharge');
                     }else{
-                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
-                        redirect('recharge/mobile_recharge');
+                        $result = $this->recharge_model->doRecharge( $recharge_type);
+                        //$result = $this->recharge_model->doRecharge1( );
+                        //if($result == 1){                    
+                        if($result == 0){                    
+                            $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                            redirect('recharge/mobile_recharge');
+                        }
+                        else if($result == 2){
+                            $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                           redirect('recharge/mobile_recharge');
+                        }else{
+                             $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                            redirect('recharge/mobile_recharge');
+                        }
                     }
                 }else{
                     $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  

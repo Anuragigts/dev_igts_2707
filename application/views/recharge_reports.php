@@ -109,7 +109,7 @@ only screen and (max-width: 760px),
                                     <td><?= $view->op_name;?></td>
                                     <td><?= $view->number;?></td>
                                     <td><?= $view->amount;?></td>
-                                    <td><?= $view->cur_time;?></td>
+                                    <td><?= $view->responce_time;?></td>
                                     <td><?= $view->trans_no;?></td>
                                     <td><?= $view->module_name;?></td>
                                     <td><?php if($view->trans_no != ''){echo "Success";}else{echo "Fail";}?></td>

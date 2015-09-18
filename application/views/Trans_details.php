@@ -56,50 +56,50 @@
                                     <div class="panel-body">   
                                         <table class="table">
                                             <tr>
-                                                <th><b>Name</b></th>
+                                                <th><b>Sender Name</b></th>
                                                   <td>
-                                                      : <?php echo $detail->ben_name;?>
+                                                      : <?php echo $detail->SENDERNAME;?>
                                                   </td>
                                              </tr>
-                                        <tr>
-                                           <th><b>Transection Id</b></th>
-                                             <td>
-                                                 : <?php echo $detail->track_id;?>
-                                             </td>
-                                        </tr>
+                                            <tr>
+                                                <th><b>Sender Mobile</b></th>
+                                                  <td>
+                                                      : <?php echo $detail->SENDERMOBILE;?>
+                                                  </td>
+                                             </tr>
+                                            <tr>
+                                                <th><b>Receiver Name</b></th>
+                                                  <td>
+                                                      : <?php echo $detail->RECEIVERNAME;?>
+                                                  </td>
+                                             </tr>
+                                             <?php if($detail->RECEIVERBANKNAME != ''){?>
+                                            <tr>
+                                                <th><b>Receiver Bank</b></th>
+                                                  <td>
+                                                      : <?php echo $detail->RECEIVERBANKNAME;?>
+                                                  </td>
+                                             </tr>
+                                             <?php }?>
+                                            <tr>
+                                                <th><b>Receiver Account</b></th>
+                                                  <td>
+                                                      : <?php echo $detail->RECEIVERACCOUNTNO;?>
+                                                  </td>
+                                             </tr>
+                                        
                                         <tr>
                                            <th><b>Amount</b></th>
                                              <td>
-                                                : <?php echo $detail->amount;?>
+                                                : <?php echo $detail->TRANSFERAMOUNT;?>
                                              </td>
                                         </tr>
                                         <tr>
-                                           <th><b>Status</b></th>
+                                           <th><b>Transaction ID</b></th>
                                              <td>
-                                                : <?php echo $detail->tstatus;?>
+                                                : <?php echo $detail->TRANSID;?>
                                              </td>
                                         </tr>
-                                        <tr>
-                                           <th><b>Transfer Mode</b></th>
-                                             <td>
-                                                : <?php echo $detail->ben_type;?>
-                                             </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                           <th><b>Account Number</b></th>
-                                             <td>
-                                                : <?php if($detail->ben_mmid !=''){ echo $detail->ben_mmid;}else{echo $detail->acc;}?>
-                                             </td>
-                                        </tr>
-                                        <?php if($detail->bank_ifsc !=''){?>
-                                        <tr>
-                                           <th><b>IFSC Code</b></th>
-                                             <td>
-                                                : <?php echo $detail->bank_ifsc;?>
-                                             </td>
-                                        </tr>
-                                        <?php }?>
                                         
                                          <tr>
                                            <td></td>
