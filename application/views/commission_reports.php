@@ -67,6 +67,19 @@
                      </div>
                </div>
                <!-- END DATATABLE 1 -->
+               
+                            <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Commission Amount"; }
+	td:nth-of-type(3):before { content: "Total Amount"; }
+	td:nth-of-type(4):before { content: "Date & Time"; }
+	td:nth-of-type(5):before { content: "Remarks"; }
+}
+               </style>
+               
         <div class="row">  
            <div class="col-lg-12">
                <div class="panel-body">
@@ -76,6 +89,7 @@
                              <th>S.No.</th>
                              <th>Commission Amount</th>
                              <th>Total Amount</th>
+                             <th>Date & Time</th>
                              <th>Remarks</th>       
                           </tr>
                        </thead>
@@ -88,6 +102,7 @@
                                     <td><?= $i++;?></td>
                                     <td><?= $view->trans_amt;?></td>
                                     <td><?= $view->cur_amount;?></td>
+                                    <td><?= $view->trans_date;?></td>
                                     <td><?= $view->trans_remark;?></td>
                                 </tr>
                                <?php 

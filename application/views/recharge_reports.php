@@ -67,6 +67,21 @@
                      </div>
                </div>
                <!-- END DATATABLE 1 -->
+               
+                 <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Operator Name"; }
+	td:nth-of-type(3):before { content: "Number"; }
+	td:nth-of-type(4):before { content: "Amount"; }
+	td:nth-of-type(5):before { content: "Date & Time"; }
+	td:nth-of-type(6):before { content: "Recharge Type"; }
+	td:nth-of-type(7):before { content: "Status"; }
+	td:nth-of-type(8):before { content: "Complaint"; }
+}
+               </style>
         <div class="row">  
            <div class="col-lg-12">
                <div class="panel-body">
@@ -74,11 +89,13 @@
                        <thead>
                           <tr>
                              <th>S.No.</th>
-                             <th>Transaction ID</th>
                              <th>Operator Name</th>
                              <th>Number</th>
                              <th>Amount</th>
+                             <th>Date & Time</th>
+                             <th>Tractarians No</th>
                              <th>Recharge Type</th>
+                             <th>Status</th>
                              <th>Complaint</th>       
                           </tr>
                        </thead>
@@ -89,11 +106,13 @@
                                 ?>
                                 <tr>
                                     <td><?= $i++;?></td>
-                                    <td><?= $view->track_id;?></td>
                                     <td><?= $view->op_name;?></td>
                                     <td><?= $view->number;?></td>
                                     <td><?= $view->amount;?></td>
+                                    <td><?= $view->cur_time;?></td>
+                                    <td><?= $view->trans_no;?></td>
                                     <td><?= $view->module_name;?></td>
+                                    <td><?php if($view->trans_no != ''){echo "Success";}else{echo "Fail";}?></td>
                                     <td>
                                         <?php
                                         if($view->st_re == "0"){ ?>

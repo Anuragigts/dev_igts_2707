@@ -34,7 +34,7 @@ class Recharge extends CI_Controller {
                $number = $this->input->get('number', TRUE);
                 $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=Incorrect+pattern,+Please+Send+Correct",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=ESY+TOPUP+Incorrect+pattern,+Please+Send+Correct",
 			CURLOPT_RETURNTRANSFER => true
 		);
                         curl_setopt_array($ch, $optArray);
@@ -161,7 +161,7 @@ class Recharge extends CI_Controller {
                $number = $this->input->get('number', TRUE);
                 $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=Incorrect+pattern,+Please+Send+Correct",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=ESY+TOPUP+Incorrect+pattern,+Please+Send+Correct",
 			CURLOPT_RETURNTRANSFER => true
 		);
                         curl_setopt_array($ch, $optArray);

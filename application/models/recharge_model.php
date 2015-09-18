@@ -249,7 +249,7 @@ class Recharge_model extends CI_Model
                             
             $ch = curl_init();
             $optArray = array(
-            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_n&from=ESYTOP&message=Hi+your+current+balance+is+$amount",
+            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_n&from=ESYTOP&message=ESY+TOPUP+Hi+your+current+balance+is+$amount",
                     CURLOPT_RETURNTRANSFER => true
             );
             curl_setopt_array($ch, $optArray);
@@ -262,7 +262,7 @@ class Recharge_model extends CI_Model
                             
                 $ch = curl_init();
                 $optArray = array(
-                CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_n&from=ESYTOP&message=Access+denied,+Please+Use+registered+mobile+number",
+                CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_n&from=ESYTOP&message=ESY+TOPUP+Access+denied,+Please+Use+registered+number",
                         CURLOPT_RETURNTRANSFER => true
                 );
                 curl_setopt_array($ch, $optArray);
@@ -403,7 +403,7 @@ class Recharge_model extends CI_Model
                             
                             $ch = curl_init();
                             $optArray = array(
-                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+Total+Amount+is+Rs.+$now+Thank+you.",
+                            CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
                                     CURLOPT_RETURNTRANSFER => true
                             );
                             curl_setopt_array($ch, $optArray);

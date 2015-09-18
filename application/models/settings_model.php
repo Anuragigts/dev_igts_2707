@@ -200,6 +200,7 @@ class Settings_model extends CI_Model
                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $from));           
                     if($query2 && $query2->num_rows()== 1){                        
                         $val2 = $query2->row()->amount;
+                        $cur = $val2 - $this->input->post('amount');
                         $insfrom   =   array(                      
                                 "amount"     => ($val2 - $this->input->post('amount'))
                             );
@@ -208,7 +209,7 @@ class Settings_model extends CI_Model
                         
                         $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account+Now+current+balance+is+Rs.+$cur.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -218,6 +219,7 @@ class Settings_model extends CI_Model
                         curl_close($ch);
                     }
                     else{
+                        $cur = 0 - $this->input->post('amount');
                         $insfrom   =   array(
                                 "user_id"    =>     $from,
                                 "amount"     => (0 - $this->input->post('amount'))
@@ -227,7 +229,7 @@ class Settings_model extends CI_Model
                         
                         $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+debited+from+your+Esy+Topup+account.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account+Now+current+balance+is+Rs.+$cur.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -247,7 +249,7 @@ class Settings_model extends CI_Model
                     
                      $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+credited+from+in+Esy+Topup+account.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+credited+from+in+Esy+Topup+account.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -277,7 +279,7 @@ class Settings_model extends CI_Model
                         
                         $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+debited+from+your+Esy+Topup+account,+your+current+balance+is+$curr.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account,+your+current+balance+is+$curr.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -296,7 +298,7 @@ class Settings_model extends CI_Model
                         
                         $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+debited+from+your+Esy+Topup+account,+your+current+balance+is+$curr.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account,+your+current+balance+is+$curr.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -317,7 +319,7 @@ class Settings_model extends CI_Model
                     
                      $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=Welcome+to+http://esytopup.co.in+Rs.+$myamt+credited+from+in+Esy+Topup+account,+your+current+balance+is+$curr.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=ESY+TOPUP+Rs.+Rs.+$myamt+credited+from+in+Esy+Topup+account,+your+current+balance+is+$curr.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);

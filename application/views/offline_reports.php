@@ -67,6 +67,19 @@
                      </div>
                </div>
                <!-- END DATATABLE 1 -->
+               
+                 <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Sender"; }
+	td:nth-of-type(4):before { content: "Description"; }
+	td:nth-of-type(5):before { content: "Response"; }
+}
+               </style>
+               
         <div class="row">  
            <div class="col-lg-12">
                <div class="panel-body">

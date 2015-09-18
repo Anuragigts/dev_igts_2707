@@ -266,13 +266,25 @@
                   </div>
                    <!--END panel tab-->
                </div>
-               
-                <div class="col-lg-6">
-                  
+                    
+                     <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Amount"; }
+	td:nth-of-type(3):before { content: "Talktime"; }
+	td:nth-of-type(4):before { content: "Validity"; }
+	td:nth-of-type(5):before { content: "Description"; }
+	td:nth-of-type(6):before { content: "Get"; }
+}
+               </style>
+                <div class="col-lg-6 heddin-xs">
+              
                  
                    <div class="panel-body" style="border:1px solid #ccc;">
                      <h3> Recharge Details </h3><hr>
-                    <table id="datatable1" class="table table-striped table-hover ">
+                    <table id="" class="table table-striped table-hover ">
                        <thead>
                           <tr>
                              <th >S.No.</th>

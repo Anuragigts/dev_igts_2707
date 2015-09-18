@@ -12,48 +12,62 @@
           <!-- Breadcrumb below title-->
 
         </h3>
-        <div class="row">
-            <!-- START DATATABLE 1 -->
-               <div class="row">
-                  <div class="col-lg-12">
-                        <p class="success"></p>
-                        <p class="error"></p>
-                        <div class="panel-body">
-                           <table id="datatable1" class="table table-striped table-hover">
-                              <thead>
-                                 <tr>
-                                    <th>S.No.</th>
-                                    <th width="20%">Name</th>
-                                    <th width="10%">Mobile No.</th>
-                                    <th width="10%">Bank Name</th>
-                                    <th width="10%">Payment Type</th>
-                                    <th width="10%">Cheque / Transaction No.</th>
-                                    <th>Amount Request</th>
-                                    <th>Status</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                  <?php 
+        
+           
+                 <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Mobile No."; }
+	td:nth-of-type(4):before { content: "Bank Name"; }
+	td:nth-of-type(5):before { content: "Payment"; }
+	td:nth-of-type(6):before { content: "Transaction No"; }
+	td:nth-of-type(7):before { content: "Amount Request"; }
+	td:nth-of-type(8):before { content: "Status"; }
+}
+               </style>
+               
+        <div class="row">  
+           <div class="col-lg-12">
+               <div class="panel-body">
+                    <table id="datatable1" class="table table-striped table-hover">
+                       <thead>
+                          <tr>
+                            <th>S.No.</th>
+                            <th>Name</th>
+                            <th>Mobile No.</th>
+                            <th>Bank Name</th>
+                            <th>Payment Type</th>
+                            <th>Cheque / Transaction No.</th>
+                            <th>Amount Request</th>
+                            <th>Status</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+                         
+                               <?php 
                                     $i = 1;
                                     foreach ($view as $view){
                                       $name = ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);
                                       ?>
                                         <tr>
-                                            <th><?= $i++;?></th>
-                                            <th><?= $name;?></th>
-                                            <th><?= $view->mobile;?></th>
-                                            <th><?= $view->bank_name;?></th>
-                                            <th><?php 
+                                            <td><?= $i++;?></td>
+                                            <td><?= $name;?></td>
+                                            <td><?= $view->mobile;?></td>
+                                            <td><?= $view->bank_name;?></td>
+                                            <td><?php 
                                                 if($view->ptype == 1) echo "Draft";
                                                 if($view->ptype == 2) echo "Cash";
                                                 if($view->ptype == 3) echo "Cheque";
                                                 if($view->ptype == 4) echo "NEFT";
                                                 if($view->ptype == 5) echo "Online";
-                                            ?></th>
-                                            <th><?= $view->cheque?$view->cheque:"N/A";?></th>
-                                            <th>Rs.<?= $view->amount?number_format($view->amount,2):"0.00";?></th>
+                                            ?></td>
+                                            <td><?= $view->cheque?$view->cheque:"N/A";?></td>
+                                            <td>Rs.<?= $view->amount?number_format($view->amount,2):"0.00";?></td>
                                             <?php if( $this->session->userdata("my_type") == 1){ ?>
-                                            <th>
+                                            <td>
                                                 <?php if($view->status == 1){ ?>
                                                Approved
                                                 <?php } else if($view->status == 2){ ?>
@@ -66,22 +80,24 @@
                                                        Reject
                                                 </a>
                                                 <?php }?>
-                                            </th>
+                                            </td>
                                             <?php } else {?>
-                                            <th><?php  
+                                            <td><?php  
                                                     if($view->status == 1) echo "Aprroved";
                                                     if($view->status == 2) echo "Not Approved";
                                                     if($view->status == 3) echo "Draft";
-                                                ?></th>
+                                                ?></td>
                                             <?php } ?>
                                          </tr>
                                   <?php }?>
-                              </tbody>
-                           </table>
-                        </div>
-                     </div>
+                               
+                       </tbody>
+                    </table>
                </div>
-               <!-- END DATATABLE 1 -->
+
+            </div>
         </div>
+         
+      
     </div>
  </section>

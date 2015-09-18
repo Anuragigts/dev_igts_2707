@@ -66,6 +66,7 @@ only screen and (max-width: 760px),
 		border-bottom: 1px solid #eee; 
 		position: relative;
 		padding-left: 50%; 
+                padding-right:  48% ;
 	}
 	
 	td:before { 
@@ -81,6 +82,12 @@ only screen and (max-width: 760px),
 	}
         #datatable1_length{display:none;}
         #datatable1_filter{display:none;}
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 1px solid #eeeeee;
+    line-height: 1.52857;
+    padding-right: 50%;
+    vertical-align: top;
+}
 	
 	
 }

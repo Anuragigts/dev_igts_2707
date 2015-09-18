@@ -69,6 +69,7 @@ only screen and (max-width: 760px),
                             <td> To Name</td>
                              <th>Commission Amount</th>
                              <th>Total Amount</th>
+                             <th>Date & Time</th>
                              <th>Remarks</th>       
                           </tr>
                        </thead>
@@ -83,6 +84,7 @@ only screen and (max-width: 760px),
                                     <td><?php if($view->tofname != ''){ echo $view->tofname." ".$view->tolname;}else{echo 'N/A';}?></td>
                                     <td><?= $view->trans_amt;?></td>
                                     <td><?= $view->cur_amount;?></td>
+                                    <td><?= $view->trans_date;?></td>
                                     <td><?= $view->trans_remark;?></td>
                                 </tr>
                                <?php 

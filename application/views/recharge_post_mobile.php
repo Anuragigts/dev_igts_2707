@@ -60,7 +60,6 @@
                            <a href="<?php echo base_url();?>recharge/post_recharge#post_tab" class="bb0 ">
                               <em class="fa fa-mobile-phone fa-fw"></em>Post Paid</a>
                         </li>
-                        
                        
                      </ul>
                      <!-- Tab panes-->
@@ -154,10 +153,11 @@
                   </div>
                   <!-- END panel tab-->
                </div>
-             <div class="col-md-7">
+            
+             <div class="col-md-7 hidden-xs">
                  <div class="panel-body" style="border:1px solid #ccc;">
                      <h3> Recharge Details </h3><hr>
-                    <table id="datatable1" class="table table-striped table-hover">
+                    <table id="" class="table table-striped table-hover ">
                        <thead>
                           <tr>
                              <th >S.No.</th>
@@ -165,7 +165,7 @@
                              <th >Amount</th>
                              <th >Operator</th>                             
                              <th >Time</th>
-                             <th >Done By</th>                             
+                             <!--<th >Done By</th>-->                             
                              <th >Status</th>                             
                           </tr>
                        </thead>
@@ -180,7 +180,7 @@
                                     <td><?php echo $dl->amount;?></td>
                                     <td><?php echo $dl->op_name;?></td>
                                     <td><?php echo $dl->responce_time;?></td>
-                                    <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                    <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                     <td>
                                         <?php if($dl->status == 1){
                                             echo "Success";
