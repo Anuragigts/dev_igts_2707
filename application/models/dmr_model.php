@@ -246,7 +246,8 @@ class Dmr_model extends CI_Model
                         "trans_to"      =>     0,
                        "cur_amount"      =>    ($val2 - 15),
                         "trans_amt"     =>     15.00,
-                        "trans_remark"  =>     "DMR sender registration charge"
+                        "trans_remark"  =>     "DMR sender registration charge",
+                           "type"  =>     "2"
                      );
                     $query =   $this->db->insert("trans_detail", $myupdate);
                  } 
