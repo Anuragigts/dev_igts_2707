@@ -157,7 +157,7 @@ class Recharge extends CI_Controller {
                $codeval = "";
                $V ="";
                
-                $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
+               echo  $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
                $number = $this->input->get('number', TRUE);
                 $ch = curl_init();
                         $optArray = array(
@@ -172,8 +172,11 @@ class Recharge extends CI_Controller {
            }
            
         }
-        
+        if($codeval == "AIRTEL"){
+            $result = $this->recharge_model->doairteloff($url['2'],$url['3'],$req,$codeval); 
+        }else{
         $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3'],$req);
+        }
       }
     }
    
@@ -202,12 +205,11 @@ class Recharge extends CI_Controller {
                 
                 if($amt >= $this->input->post('amount')){ 
                     if($this->input->post('oprator_name') == 'AIRTEL'){
-                        $this->session->set_flashdata('err','Recharge fail : AIRTEL Server is down.');  
-                           redirect('recharge/mobile_recharge');
+                        $result = $this->recharge_model->doairtel(); 
                     }else{
                         $result = $this->recharge_model->doRecharge( $recharge_type);
-                        //$result = $this->recharge_model->doRecharge1( );
-                        //if($result == 1){                    
+                    }
+                                          
                         if($result == 0){                    
                             $this->session->set_flashdata('msg','Your Recharge is success full.');  
                             redirect('recharge/mobile_recharge');
@@ -219,7 +221,7 @@ class Recharge extends CI_Controller {
                              $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
                             redirect('recharge/mobile_recharge');
                         }
-                    }
+                   
                 }else{
                     $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
                     redirect('recharge/mobile_recharge');

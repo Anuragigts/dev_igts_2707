@@ -119,6 +119,7 @@ class Recharge_model extends CI_Model
 		return (string)$xml->errorcode;
 		*/
 	}
+       
     public function getOperator($number){       
         $val = "";
         $code="";
@@ -274,7 +275,168 @@ class Recharge_model extends CI_Model
         }
         
     }
+    
+     /*** Air tel recharge ***********/
+         
+        public function doairtel(){
+                 $mobile = $this->input->post('mobile');
+                 $amt    = $this->input->post('amount');
+                 $desc       = $this->input->post('oprator_name');
+               //  echo "http://www.mrupees.com/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=1&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL";
+		$ch = curl_init();
+		
+		$optArray = array(
+			CURLOPT_URL => "http://www.mrupees.com/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
+			CURLOPT_RETURNTRANSFER => true
+		);
+		curl_setopt_array($ch, $optArray);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		$result = curl_exec($ch);
+		curl_close($ch);
+                $get = explode("STATUS:",$result);
+                if(Count($get) == 2){
+                    if($get['1'] == "SUCCESS"){
+                        $myamt = $this->input->post('amount');
+                        $myno = $this->input->post('mobile');
+                        $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                             if($query2 && $query2->num_rows()== 1){                        
+                                 $val2 = $query2->row()->amount;
+                                 $insfrom   =   array(                      
+                                         "amount"     => ($val2 - $this->input->post('amount'))
+                                     );
+                                 $this->db->where("user_id",$this->session->userdata('login_id'));
+                                 $query1 = $this->db->update("current_virtual_amount",$insfrom);
 
+                                  $myupdate = array(
+                                    "trans_from"    =>   $this->session->userdata('login_id'),
+                                    "trans_to"      =>     0,
+                                   "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                                    "trans_amt"     =>     floatval($this->input->post('amount')),
+                                    "trans_remark"  =>     "Recharge $mobile",
+                                      "type"  =>     "2",
+                                      'trans_date' => date('Y-m-d H:i:s')
+                                 );
+                                $query =   $this->db->insert("trans_detail", $myupdate);
+                             } 
+
+                             $md = $this->session->userdata("master_distributor_id");
+                            $sd = $this->session->userdata("super_distributor_id");
+                            $d = $this->session->userdata("distributor_id");
+                            $my = $this->session->userdata("login_id");
+                            $optna  =   strtolower($desc);
+                            $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                        return 0;
+                    }
+                }else{
+                    return 2;
+                }
+            
+        }
+        public function doairteloff($mobile,$amt,$req,$desc){
+                 
+                $sender_n = $this->input->get('number', TRUE);
+                $sender_no = substr($sender_n, -10);
+                    $queryq = $this->db->query("SELECT l.*,p.* FROM login l "
+                            . "INNER JOIN profile p ON p.login_id = l.login_id WHERE l.login_mobile = $sender_no" );
+                   
+                if($queryq && $queryq->num_rows()> 0){
+                   $login_id =   $queryq->row()->login_id;
+                    $current_amt = $this->db->get_where('current_virtual_amount', array('user_id' => $login_id));
+
+                    if(floatval($current_amt->row()->amount) > floatval($amt)){                
+                 
+                        $ch = curl_init();
+
+                        $optArray = array(
+                                CURLOPT_URL => "http://www.mrupees.com/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
+                                CURLOPT_RETURNTRANSFER => true
+                        );
+                        curl_setopt_array($ch, $optArray);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                        $result = curl_exec($ch);
+                        curl_close($ch);
+                        $get = explode("STATUS:",$result);
+                        if(Count($get) == 2){
+                            if($get['1'] == "SUCCESS"){
+                                
+                                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                                     if($query2 && $query2->num_rows()== 1){                        
+                                         $val2 = $query2->row()->amount;
+                                         $insfrom   =   array(                      
+                                                 "amount"     => ($val2 - $this->input->post('amount'))
+                                             );
+                                         $this->db->where("user_id",$this->session->userdata('login_id'));
+                                         $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                                          $myupdate = array(
+                                            "trans_from"    =>   $this->session->userdata('login_id'),
+                                            "trans_to"      =>     0,
+                                           "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                                            "trans_amt"     =>     floatval($this->input->post('amount')),
+                                            "trans_remark"  =>     "Recharge $mobile",
+                                              "type"  =>     "2",
+                                              'trans_date' => date('Y-m-d H:i:s')
+                                         );
+                                        $query =   $this->db->insert("trans_detail", $myupdate);
+                                     } 
+
+                                     $md = $this->session->userdata("master_distributor_id");
+                                    $sd = $this->session->userdata("super_distributor_id");
+                                    $d = $this->session->userdata("distributor_id");
+                                    $my = $this->session->userdata("login_id");
+                                    $optna  =   strtolower($desc);
+                                    $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                                    
+                                    $this->updateOff($req,"ESY TOPUP Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+
+                                    $ch = curl_init();
+                                    $optArray = array(
+                                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
+                                            CURLOPT_RETURNTRANSFER => true
+                                    );
+                                    curl_setopt_array($ch, $optArray);
+                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                                    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                                    $result = curl_exec($ch);
+                                    curl_close($ch);
+                                return 0;
+                            }
+                        }else{
+                            return 2;
+                        }
+                    }else{
+                        $this->updateOff($req,"ESY TOPUP Recharge fail you are not having enough balance.");
+
+                       $ch = curl_init();
+                               $optArray = array(
+                               CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Recharge+fail+you+are+not+having+enough+balance.",
+                               CURLOPT_RETURNTRANSFER => true
+                       );
+                               curl_setopt_array($ch, $optArray);
+                       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                       curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                       $result = curl_exec($ch);
+                       curl_close($ch);
+                   }
+                }else{
+                       $this->updateOff($req,"ESYTOPUP Access denied please use registered number.");
+
+                    $ch = curl_init();
+                               $optArray = array(
+                               CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP++Access+denied+please+use+registered+number.",
+                               CURLOPT_RETURNTRANSFER => true
+                       );
+                               curl_setopt_array($ch, $optArray);
+                       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                       curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                       $result = curl_exec($ch);
+                       curl_close($ch);
+                  }
+            
+        }
+        /***************************/
     public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt,$req){
       
         $sender_n = $this->input->get('number', TRUE);
@@ -404,7 +566,7 @@ class Recharge_model extends CI_Model
                      );
                     $query =   $this->db->insert("trans_detail", $myupdate);
 
-                    $this->updateOff($req,"Welcome to http://esytopup.co.in Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+                    $this->updateOff($req,"ESY TOPUP Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
 
                     $ch = curl_init();
                     $optArray = array(

@@ -12,6 +12,20 @@
           <!-- Breadcrumb below title-->
 
         </h3>
+         <style>
+          @media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+	td:nth-of-type(1):before { content: "S.No."; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Email"; }
+	td:nth-of-type(4):before { content: " Mobile No."; }
+	td:nth-of-type(5):before { content: " Amount"; }
+	td:nth-of-type(6):before { content: "Amount"; }
+	td:nth-of-type(7):before { content: "Recharge Money"; }
+	td:nth-of-type(7):before { content: "Status"; }
+}
+               </style>
         <div class="row">
             <!-- START DATATABLE 1 -->
                <div class="row">
@@ -38,13 +52,13 @@
                                         $name   =   ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);
                                         ?>
                                         <tr>      
-                                            <th><?= $i++;?></th>
-                                            <th><?= $name;?></th>
-                                            <th><?= ucfirst($view->login_email);?></th>
-                                            <th><?= $view->mobile;?></th>
-                                            <th>Rs.<?= $view->amount?number_format($view->amount,2):"0.00";?></th>
-                                            <th class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>/<?= $view->user_type;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></th>
-                                            <th>
+                                            <td><?= $i++;?></td>
+                                            <td><?= $name;?></td>
+                                            <td><?= ucfirst($view->login_email);?></td>
+                                            <td><?= $view->mobile;?></td>
+                                            <td>Rs.<?= $view->amount?number_format($view->amount,2):"0.00";?></td>
+                                            <td class="text-center"><a href="<?php echo base_url();?>settings/moneyTransfer/<?= $view->login_id;?>/<?= $view->user_type;?>" title="Money Transfer For Recharge" class="green"><i class="fa fa-paypal fa-1x"></i></a></td>
+                                            <td>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->
                                                     <label class="switch switch-sm">
@@ -61,7 +75,7 @@
                                                 <a href="<?= base_url();?>distributor/module_access_dis/<?= $view->login_id;?>" title="Module Access">
                                                     <i class="fa fa-paw"></i>
                                                 </a>
-                                            </th>
+                                            </td>
                                          </tr>
                                   <?php }?>
                               </tbody>

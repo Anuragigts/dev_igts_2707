@@ -6,8 +6,10 @@ class Report_model extends CI_Model{
                 $this->db->join("module as m","r.recharge_type = m.module_id","inner");
                 $this->db->join("refund_req as q","r.recharge_id = q.recharge_id","left");
                 $this->db->where("done_by",$val);
+                $this->db->where("trans_no !=","");
                 $this->db->where("cur_time >=",$gefr);
                 $this->db->where("cur_time <=",$geto);
+                $this->db->order_by('r.recharge_id', 'desc');
                 $qu     =   $this->db->get();
                // echo $this->db->last_query();exit;
                 return $qu->result();

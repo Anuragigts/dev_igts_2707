@@ -116,8 +116,9 @@
                                           <div class="col-lg-3" >                                              
                                               <input type='submit' name='trans' class='btn btn-info' value='<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?> Paymwnt'>
                                           </div>
-                                         <?php if($dl->IFSCCODE != '') {?>
-                                          <div class="col-lg-3" >                                              
+                                         <?php if(strlen($dl->IFSCCODE) == 11) {?>
+                                          <div class="col-lg-3" >  
+                                              
                                               <input type='submit' name='transneft' class='btn btn-info' value='NEFT Payment'>
                                           </div>
                                         <?php }?>
@@ -125,10 +126,10 @@
                                              <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->BENEID;?>" class="btn btn-danger" title="Remove"><i class="fa fa-trash-o "></i> Remove</a>
                                          </div> 
                                           <div class="col-lg-3">
-                                              <?php  if($dl->verification != 1){?>
-                                              <a href="<?php echo base_url()?>dmr/accountVerification/<?php if($dl->IFSCCODE == ''){echo '1';}else{echo '2';}?>/<?php echo $dl->BENEID;?>/<?php echo $this->session->userdata('dmrcard');?>/<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>/<?php if($dl->MOBILE !='0'){echo $dl->MOBILE;}else{echo '0';}?>/<?php if($dl->IFSCCODE != ''){echo $dl->IFSCCODE;}else{echo '0';}?>/<?php if($dl->BANKNAME != ''){echo $dl->BANKNAME;}else{echo '0';}?>/<?php if($dl->BRANCHNAME != ''){echo $dl->BRANCHNAME;}else{echo '0';}?>" class="btn btn-warning" >Account Verification</a>
+                                              <?php //  if($dl->verification != 1){?>
+                                              <!--<a href="<?php echo base_url()?>dmr/accountVerification/<?php if($dl->IFSCCODE == ''){echo '1';}else{echo '2';}?>/<?php echo $dl->BENEID;?>/<?php echo $this->session->userdata('dmrcard');?>/<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>/<?php if($dl->MOBILE !='0'){echo $dl->MOBILE;}else{echo '0';}?>/<?php if($dl->IFSCCODE != ''){echo $dl->IFSCCODE;}else{echo '0';}?>/<?php if($dl->BANKNAME != ''){echo $dl->BANKNAME;}else{echo '0';}?>/<?php if($dl->BRANCHNAME != ''){echo $dl->BRANCHNAME;}else{echo '0';}?>" class="btn btn-warning" >Account Verification</a>-->
                                             
-                                            <?php }?>
+                                            <?php // }?>
                                              
                                          </div> 
                                      </div>
@@ -153,7 +154,7 @@
         var getvel = $(this).attr('get');
        var amt =  parseInt($('#total_'+getvel).val());
        var cal = (amt * 0.45)/100;
-       $('#service_ch_'+getvel).html("<b>Service Charge </b> <br>"+cal.toFixed(2));
+       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2));
        
 //        if(amt >= 100 && amt < 25001){
 //           if(amt < 1001){

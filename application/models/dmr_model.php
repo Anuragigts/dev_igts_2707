@@ -1817,79 +1817,79 @@ class Dmr_model extends CI_Model
     public function dotransferAmt($key,$card,$mo,$type=0,$cardval){
          $url = DMRURL; 
          /******** Doing topup **********/
-         $ser = ($cardval * 0.45)/100;
-         $topup_amt = ($this->input->post('tr_amt') - $cardval); 
-         if($topup_amt > 0){// if transfered amount is greater then topup amount
-                $t_amt = 0.00;
-                $loop = $topup_amt/5;  
-
-                if($loop > 1){
-                     $per = (explode(".",$loop));
-                    for($i = 1; $i<= $per['0']; $i++){ // check the loop timing
-                        if($topup_amt > $t_amt){
-                              $dotop = $this->doTopup($this->session->userdata('dmrkey'),5000);
-                        }
-                        $t_amt = $t_amt + 5;
-                    }
-                    if($topup_amt > $t_amt){
-                        $val = $topup_amt - $t_amt;
-                          $dotop = $this->doTopup($this->session->userdata('dmrkey'),$val);
-                        $t_amt = $t_amt + $val;
-                    }
-
-                }else{
-                     $dotop = $this->doTopup($this->session->userdata('dmrkey'),$topup_amt);
-                    $t_amt = $topup_amt;
-                }
-                // cut the balance from agent's acc with service charge
-               $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-               if($query2 && $query2->num_rows()== 1){ 
-                   $totalcharge= $topup_amt + $ser;
-                   $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
-                   $val2 = $query2->row()->amount;
-                   $insfrom   =   array(                      
-                           "amount"     => ($val2 - $totalcharge)
-                       );
-                   $this->db->where("user_id",$this->session->userdata('login_id'));
-                   $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
-                    $myupdate = array(
-                      "trans_from"    =>   $this->session->userdata('login_id'),
-                      "trans_to"      =>     0,
-                     "cur_amount"      =>    ($val2 - $totalcharge),
-                      "trans_amt"     =>     floatval($totalcharge),
-                      "trans_remark"  =>     "DMR transfer to $name",
-                        "type"  =>     "2",
-                        'trans_date' => date('Y-m-d H:i:s')
-                   );
-                  $query =   $this->db->insert("trans_detail", $myupdate);
-               } 
-            }else{// if transfered amountis lessthen topup account
-                // taking the service charge from agent's acc
-                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-                   if($query2 && $query2->num_rows()== 1){ 
-                       $totalcharge =  $ser;
-                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
-                       $val2 = $query2->row()->amount;
-                       $insfrom   =   array(                      
-                               "amount"     => ($val2 - $totalcharge)
-                           );
-                       $this->db->where("user_id",$this->session->userdata('login_id'));
-                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                      
-                        $myupdate = array(
-                          "trans_from"    =>   $this->session->userdata('login_id'),
-                          "trans_to"      =>     0,
-                         "cur_amount"      =>    ($val2 - $totalcharge),
-                          "trans_amt"     =>     floatval($totalcharge),
-                          "trans_remark"  =>     "DMR service charge $name",
-                            "type"  =>     "2",
-                            'trans_date' => date('Y-m-d H:i:s')
-                       );
-                      $query =   $this->db->insert("trans_detail", $myupdate);
-                   } 
-            }
-            // End The topup and service charge things
+//         $ser = ($cardval * 0.45)/100;
+//         $topup_amt = ($this->input->post('tr_amt') - $cardval); 
+//         if($topup_amt > 0){// if transfered amount is greater then topup amount
+//                $t_amt = 0.00;
+//                $loop = $topup_amt/5;  
+//
+//                if($loop > 1){
+//                     $per = (explode(".",$loop));
+//                    for($i = 1; $i<= $per['0']; $i++){ // check the loop timing
+//                        if($topup_amt > $t_amt){
+//                              $dotop = $this->doTopup($this->session->userdata('dmrkey'),5000);
+//                        }
+//                        $t_amt = $t_amt + 5;
+//                    }
+//                    if($topup_amt > $t_amt){
+//                        $val = $topup_amt - $t_amt;
+//                          $dotop = $this->doTopup($this->session->userdata('dmrkey'),$val);
+//                        $t_amt = $t_amt + $val;
+//                    }
+//
+//                }else{
+//                     $dotop = $this->doTopup($this->session->userdata('dmrkey'),$topup_amt);
+//                    $t_amt = $topup_amt;
+//                }
+//                // cut the balance from agent's acc with service charge
+//               $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+//               if($query2 && $query2->num_rows()== 1){ 
+//                   $totalcharge= $topup_amt + $ser;
+//                   $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+//                   $val2 = $query2->row()->amount;
+//                   $insfrom   =   array(                      
+//                           "amount"     => ($val2 - $totalcharge)
+//                       );
+//                   $this->db->where("user_id",$this->session->userdata('login_id'));
+//                   $query1 = $this->db->update("current_virtual_amount",$insfrom);
+//
+//                    $myupdate = array(
+//                      "trans_from"    =>   $this->session->userdata('login_id'),
+//                      "trans_to"      =>     0,
+//                     "cur_amount"      =>    ($val2 - $totalcharge),
+//                      "trans_amt"     =>     floatval($totalcharge),
+//                      "trans_remark"  =>     "DMR transfer to $name",
+//                        "type"  =>     "2",
+//                        'trans_date' => date('Y-m-d H:i:s')
+//                   );
+//                  $query =   $this->db->insert("trans_detail", $myupdate);
+//               } 
+//            }else{// if transfered amountis lessthen topup account
+//                // taking the service charge from agent's acc
+//                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+//                   if($query2 && $query2->num_rows()== 1){ 
+//                       $totalcharge =  $ser;
+//                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+//                       $val2 = $query2->row()->amount;
+//                       $insfrom   =   array(                      
+//                               "amount"     => ($val2 - $totalcharge)
+//                           );
+//                       $this->db->where("user_id",$this->session->userdata('login_id'));
+//                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
+//                      
+//                        $myupdate = array(
+//                          "trans_from"    =>   $this->session->userdata('login_id'),
+//                          "trans_to"      =>     0,
+//                         "cur_amount"      =>    ($val2 - $totalcharge),
+//                          "trans_amt"     =>     floatval($totalcharge),
+//                          "trans_remark"  =>     "DMR service charge $name",
+//                            "type"  =>     "2",
+//                            'trans_date' => date('Y-m-d H:i:s')
+//                       );
+//                      $query =   $this->db->insert("trans_detail", $myupdate);
+//                   } 
+//            }
+//            // End The topup and service charge things
        
           $ben_id = $this->input->post('ben_id');
           $ben_anme = $this->input->post('bene');
@@ -1928,7 +1928,7 @@ class Dmr_model extends CI_Model
                             &lt;IFSCCODE&gt;'.$this->input->post('ifsc').'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
-                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.20) /100).'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.45) /100).'&lt;/SERVICECHARGE&gt;
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
                             &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
@@ -1976,9 +1976,32 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-
-             print_r($response);die();
+             
              if($response->STATUSCODE == 0){
+                 $ser = (($this->input->post('tr_amt') * 0.45) /100);
+                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                   if($query2 && $query2->num_rows()== 1){ 
+                       $totalcharge =  $ser;
+                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                       $val2 = $query2->row()->amount;
+                       $insfrom   =   array(                      
+                               "amount"     => ($val2 - $totalcharge)
+                           );
+                       $this->db->where("user_id",$this->session->userdata('login_id'));
+                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                      
+                        $myupdate = array(
+                          "trans_from"    =>   $this->session->userdata('login_id'),
+                          "trans_to"      =>     0,
+                         "cur_amount"      =>    ($val2 - $totalcharge),
+                          "trans_amt"     =>     floatval($totalcharge),
+                          "trans_remark"  =>     "DMR transaction charge $name",
+                            "type"  =>     "2",
+                            'trans_date' => date('Y-m-d H:i:s')
+                       );
+                      $query =   $this->db->insert("trans_detail", $myupdate);
+                   }
+                 
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'to_id'    => $this->input->post('bene'),
@@ -2002,6 +2025,30 @@ class Dmr_model extends CI_Model
              }else if($response->STATUSCODE == 1){
                  return 2;
              }else if($response->STATUSCODE == 2){
+                  $ser = (($this->input->post('tr_amt') * 0.45) /100);
+                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                   if($query2 && $query2->num_rows()== 1){ 
+                       $totalcharge =  $ser;
+                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                       $val2 = $query2->row()->amount;
+                       $insfrom   =   array(                      
+                               "amount"     => ($val2 - $totalcharge)
+                           );
+                       $this->db->where("user_id",$this->session->userdata('login_id'));
+                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                      
+                        $myupdate = array(
+                          "trans_from"    =>   $this->session->userdata('login_id'),
+                          "trans_to"      =>     0,
+                         "cur_amount"      =>    ($val2 - $totalcharge),
+                          "trans_amt"     =>     floatval($totalcharge),
+                          "trans_remark"  =>     "DMR transaction charge $name",
+                            "type"  =>     "2",
+                            'trans_date' => date('Y-m-d H:i:s')
+                       );
+                      $query =   $this->db->insert("trans_detail", $myupdate);
+                   }
+                 
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'to_id'    => $this->input->post('bene'),
@@ -2022,7 +2069,36 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function doTopup($key,$topup_amt){
+    public function doTopup($key){
+        $topup_amt = $this->input->post('amount');
+        //$ser = ($cardval * 0.20)/100;
+         //$topup_amt = ($this->input->post('tr_amt') - $cardval); 
+         
+                $t_amt = 0.00;
+                $loop = $topup_amt/5000;  
+
+                if($loop > 1){
+                     $per = (explode(".",$loop));
+                    for($i = 1; $i<= $per['0']; $i++){ // check the loop timing
+                        if($topup_amt > $t_amt){
+                              $dotop = $this->dmrTOP($this->session->userdata('dmrkey'),5000);
+                        }
+                        $t_amt = $t_amt + 5000;
+                    }
+                    if($topup_amt > $t_amt){
+                        $val = $topup_amt - $t_amt;
+                          $dotop = $this->dmrTOP($this->session->userdata('dmrkey'),$val);
+                        $t_amt = $t_amt + $val;
+                    }
+
+                }else{
+                     $dotop = $this->dmrTOP($this->session->userdata('dmrkey'),$topup_amt);
+                    $t_amt = $topup_amt;
+                }
+               return $dotop;
+            
+    }
+    public function dmrTOP($key, $topup_amt){
         $url = DMRURL; 
        //$data = $this->getCardMore($this->session->userdata('login_id'));
       // print_r($data);die();
@@ -2053,8 +2129,8 @@ class Dmr_model extends CI_Model
                             &lt;TOPUPAMOUNT&gt;'.$topup_amt.'&lt;/TOPUPAMOUNT&gt;
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
                             &lt;MOBILE&gt;'.$this->session->userdata('dmrmo').'&lt;/MOBILE&gt;                           
-                            &lt;REGIONID&gt;1&lt;/REGIONID&gt;
-                            &lt;SERVICECHARGE&gt;0.20&lt;/SERVICECHARGE&gt;
+                            &lt;REGIONID&gt;'.$this->input->post('region').'&lt;/REGIONID&gt;
+                            &lt;SERVICECHARGE&gt;'.(($topup_amt * 0.20)/100).'&lt;/SERVICECHARGE&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;'.$key.'&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -2099,8 +2175,31 @@ class Dmr_model extends CI_Model
 
              $response = simplexml_load_string($final[0]);
 
-
              if($response->STATUSCODE == 0){
+                 $ser = (($topup_amt * 0.20)/100);
+                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+               if($query2 && $query2->num_rows()== 1){ 
+                   $totalcharge= $topup_amt + $ser;
+                   $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                   $val2 = $query2->row()->amount;
+                   $insfrom   =   array(                      
+                           "amount"     => ($val2 - $totalcharge)
+                       );
+                   $this->db->where("user_id",$this->session->userdata('login_id'));
+                   $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                    $myupdate = array(
+                      "trans_from"    =>   $this->session->userdata('login_id'),
+                      "trans_to"      =>     0,
+                     "cur_amount"      =>    ($val2 - $totalcharge),
+                      "trans_amt"     =>     floatval($totalcharge),
+                      "trans_remark"  =>     "Topup with service charge to $name",
+                        "type"  =>     "2",
+                        'trans_date' => date('Y-m-d H:i:s')
+                   );
+                  $query =   $this->db->insert("trans_detail", $myupdate);
+               }
+                 
              $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'serial_no' => "$response->SERIALNO",

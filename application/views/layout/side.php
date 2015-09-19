@@ -187,11 +187,11 @@
                      <ul id="dmr" class="nav sidebar-subnav collapse">
                         <li class="sidebar-subnav-header">DMR</li>
 
-<!--                        <li class="topup ">
+                        <li class="topup ">
                            <a href="<?php echo base_url();?>dmr/topup" title="Topup">
                               <span>Topup</span>
                            </a>
-                        </li>-->
+                        </li>
                         <?php if($this->session->userdata('money_transfer') == 1){?>
                         <li class="dmrUserSearch sender_registration beneficiaryList">
                            <a href="<?php echo base_url();?>dmr/dmrUserSearch" title="Money Transfer">
