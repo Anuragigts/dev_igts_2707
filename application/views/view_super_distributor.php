@@ -21,9 +21,9 @@ only screen and (max-width: 760px),
 	td:nth-of-type(3):before { content: "Email"; }
 	td:nth-of-type(4):before { content: " Mobile No."; }
 	td:nth-of-type(5):before { content: " Amount"; }
-	td:nth-of-type(6):before { content: "Total Amount"; }
-	td:nth-of-type(7):before { content: "Recharge Money"; }
-	td:nth-of-type(7):before { content: "Status"; }
+	
+	td:nth-of-type(6):before { content: "Recharge Money"; }
+	td:nth-of-type(7):before { content: ""; }
 }
                </style>
         <div class="row">
@@ -42,7 +42,7 @@ only screen and (max-width: 760px),
                                     <th width="10%">Mobile No.</th>
                                     <th>Amount</th>
                                     <th>Recharge Money</th>
-                                    <th>Status</th>
+                                    <th></th>
                                  </tr>
                               </thead>
                               <tbody>
