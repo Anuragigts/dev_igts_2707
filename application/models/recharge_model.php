@@ -845,7 +845,11 @@ class Recharge_model extends CI_Model
                 
                 $deta       =   $amyt;
                 $detd       =   $amdt-$deta;
+                if($d != 0){
                 $dets       =   $amst-$amdt;
+                }else{
+                    $dets       =   $amst-$amyt;
+                }
                 $detm       =   $ammt-$amst;
                 
                 $cammmt1     =   $cammmt+$detm;
