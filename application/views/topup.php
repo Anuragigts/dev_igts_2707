@@ -26,15 +26,19 @@
               <?php $this->load->view("layout/success_error");?> 
          <div class="row text-center"> 
                 <?php if(count($limit) != 0){?>
-                   <div class="col-lg-4">
-                       <h4>Face Value: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->FACEVALUE;?></fotn></h4> 
+                    <div class="col-lg-3">
+                       <h4>Current Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
                    </div>
-                   <div class="col-lg-4">
-                       <h4>Current Value: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4> 
-                   </div>
-                   <div class="col-lg-4">
+                    <div class="col-lg-3">
                        <h4>Topup Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
                    </div>
+                   <div class="col-lg-3">
+                       <h4>Used Card: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->CONSUMEDLIMIT;?></fotn></h4> 
+                   </div>
+                   <div class="col-lg-3">
+                       <h4>Remaining Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->REMAININGLIMIT;?></fotn></h4> 
+                   </div>
+                   
                 <?php }?>
                
                </div>

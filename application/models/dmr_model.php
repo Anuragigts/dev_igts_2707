@@ -1814,6 +1814,72 @@ class Dmr_model extends CI_Model
          }
     }
     
+    public function checkCard($card){
+        $url = DMRURL; 
+       //$data = $this->getCardMore($this->session->userdata('login_id'));
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <CHECKCARDBALANCE  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;CHECKCARDBALANCEREQUEST&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
+                            &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                            &lt;CARDNO&gt;'.$card.'&lt;/CARDNO&gt;
+                            &lt;/CHECKCARDBALANCEREQUEST&gt;
+                       </RequestData>
+                     </CHECKCARDBALANCE>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'CHECKCARDBALANCE',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<CHECKCARDBALANCEResult>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</CHECKCARDBALANCEResult></CHECKCARDBALANCEResponse></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+
+//             echo "<pre>";
+//             print_r($response);
+//             die();
+             if($response->STATUSCODE == 0){
+                  return $response;  
+             }else{
+                 return array();//invalid OTP
+             }
+         }
+    }
+    
     public function dotransferAmt($key,$card,$mo,$type=0,$cardval){
         
         $this->load->model('recharge_model');

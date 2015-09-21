@@ -667,6 +667,8 @@ class Dmr extends CI_Controller {
          $data['kyc'] = $this->dmr_model->knowKYC($card);
          $data['limit'] = $this->dmr_model->checktopupLimit($this->session->userdata('dmrcard'));
          $cardval = $data['limit']->CURRENTVALUE;
+         $data['card_bal']= $this->dmr_model->checkCard($this->session->userdata('dmrcard'));
+         $remening = $data['card_bal']->REMAININGLIMIT;
              if($this->input->post('trans')){ 
                 
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
@@ -674,33 +676,38 @@ class Dmr extends CI_Controller {
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
-                    $amt = $this->settings_model->checkVirtual();	
-                
-                    if($amt >= $this->input->post('tr_amt')){ 
-                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
+                    $amt = $this->settings_model->checkVirtual();
+                    
+                        if($remening >= $this->input->post('tr_amt')){
+                            if($amt >= $this->input->post('tr_amt')){ 
+                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
 
-                      //echo $result;die();
-                        if($result == 1){                    
-                            $this->session->set_flashdata('msg','Amount transferred successfull .');  
-                            redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                        }
-                       else if( $result == 2){                    
-                            $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
-                             redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                        }else if( $result == 5){ 
-                            $this->session->set_flashdata('err','Unknown : Internal error.');  
-                           redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
-                        }else if( $result == 4){                    
-                            $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
-                             redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                        }else{
-                            $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
-                            redirect('dmr/transRequery/'.$result);
+                              //echo $result;die();
+                                if($result == 1){                    
+                                    $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                                    redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                }
+                               else if( $result == 2){                    
+                                    $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
+                                     redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                }else if( $result == 5){ 
+                                    $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                   redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
+                                }else if( $result == 4){                    
+                                    $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
+                                     redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                }else{
+                                    $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                                    redirect('dmr/transRequery/'.$result);
+                                }
+                            }else{
+                            $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
+                            redirect('dmr/beneficiaryList');
                         }
                     }else{
-                    $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
-                    redirect('dmr/beneficiaryList');
-                }
+                        $this->session->set_flashdata('err',"DMR fail : You are exceeding the limit, Your remaining limit is Rs: $remening .");  
+                            redirect('dmr/beneficiaryList');
+                    }
                 }
              }
              if($this->input->post('transneft')){ 
@@ -711,30 +718,34 @@ class Dmr extends CI_Controller {
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
                     $amt = $this->settings_model->checkVirtual();	
-                
-                    if($amt >= $this->input->post('tr_amt')){ 
-                        $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval);
+                         if($remening >= $this->input->post('tr_amt')){
+                            if($amt >= $this->input->post('tr_amt')){ 
+                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval);
 
-                        //echo $result;die();
-                          if($result == 1){                    
-                              $this->session->set_flashdata('msg','Amount transferred successfull .');  
-                              redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                          }
-                         else if( $result == 2){                    
-                              $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
-                               redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                          }else if( $result == 5){ 
-                              $this->session->set_flashdata('err','Unknown : Internal error.');  
-                             redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
-                          }else if( $result == 4){                    
-                              $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
-                               redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
-                          }else{
-                              $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
-                              redirect('dmr/transRequery/'.$result);
-                          }
+                                //echo $result;die();
+                                  if($result == 1){                    
+                                      $this->session->set_flashdata('msg','Amount transferred successfull .');  
+                                      redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                  }
+                                 else if( $result == 2){                    
+                                      $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
+                                       redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                  }else if( $result == 5){ 
+                                      $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                     redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
+                                  }else if( $result == 4){                    
+                                      $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
+                                       redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
+                                  }else{
+                                      $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                                      redirect('dmr/transRequery/'.$result);
+                                  }
+                                }else{
+                                $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
+                                redirect('dmr/beneficiaryList');
+                            }
                         }else{
-                        $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
+                        $this->session->set_flashdata('err',"DMR fail : You are exceeding the limit, Your remaining limit is Rs: $remening .");  
                         redirect('dmr/beneficiaryList');
                     }
                 }
@@ -899,6 +910,8 @@ class Dmr extends CI_Controller {
              );
         $data['login_details'] = array(); 
        $key = '';
+        $data['card_bal']= $this->dmr_model->checkCard($this->session->userdata('dmrcard'));
+        $data['limit'] = $this->dmr_model->checktopupLimit($this->session->userdata('dmrcard'));
         
         if($this->input->post('amount')){
             $this->form_validation->set_rules('amount',  'Amount',   'required');
@@ -907,20 +920,30 @@ class Dmr extends CI_Controller {
             $this->form_validation->set_rules('charge',  'Service Charge',   'required');
            // $this->form_validation->set_rules('otp',  'OTP',   'required');
             if($this->form_validation->run() == TRUE){
-              //  echo "lll";die();
-                $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'));
-                if($result !=0){                    
-                    $this->session->set_flashdata('msg','Topup successfull .');  
-                    redirect('dmr/topup');
-                }
-               else{
-                     $this->session->set_flashdata('err','Unknown : Please try after some time.');  
-                       redirect('dmr/topup');
-                }
+                 $amt = $this->settings_model->checkVirtual();	
+                     if($data['limit']->TOPUPLIMIT >= $this->input->post('amount')){    
+                        if($amt >= $this->input->post('amount')){ 
+                            $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'));
+                            if($result !=0){                    
+                                $this->session->set_flashdata('msg','Topup successfull .');  
+                                redirect('dmr/topup');
+                            }
+                           else{
+                                 $this->session->set_flashdata('err','Unknown : Please try after some time.');  
+                                   redirect('dmr/topup');
+                            }
+                        }else{
+                            $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to topup this amount.');  
+                            redirect('dmr/topup');
+                        }
+                    }else{
+                        $this->session->set_flashdata('err','DMR fail : You can not topup more then topup limit.');  
+                        redirect('dmr/topup');
+                    }
             }
             
         }
-        $data['limit'] = $this->dmr_model->checktopupLimit($this->session->userdata('dmrcard'));
+        
         $this->load->view('layout/inner_template',$data);
     }
     
