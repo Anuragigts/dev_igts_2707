@@ -2087,7 +2087,7 @@ class Dmr_model extends CI_Model
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt); 
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'to_id'    => $this->input->post('bene'),
