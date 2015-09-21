@@ -295,6 +295,7 @@ class Recharge_model extends CI_Model
 		$result = curl_exec($ch);
 		curl_close($ch);
                 $get = explode("STATUS:",$result);
+                //echo $result; die();
                 if(Count($get) == 2){
                     if($get['1'] == "SUCCESS"){
                         $myamt = $this->input->post('amount');
