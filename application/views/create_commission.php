@@ -59,7 +59,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= $ut->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $ut->sub_module_name;?></div>
                                             <div class="col-sm-3 col-xs-3">
-                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>"  value="<?= set_value('commission-'.$ut->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
+                                                <input type="text" class="form-control" name="commission-<?=$ut->modules_obj_id;?>"  value="<?= set_value('commission-'.$ut->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -79,7 +79,7 @@
                                             <div class="col-sm-3 col-xs-3"><?= $dr->module_name;?></div>
                                             <div class="col-sm-3 col-xs-3"><?= $dr->sub_module_name;?></div>
                                             <div class="col-sm-3 col-xs-3">
-                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"   value="<?= set_value('commission-'.$dr->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="20" placeholder="Commission Amount"/>
+                                                <input type="text" class="form-control" name="commission-<?=$dr->modules_obj_id;?>"   value="<?= set_value('commission-'.$dr->modules_obj_id);?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
                                             </div>
                                         </div>
                                     <?php } ?>
