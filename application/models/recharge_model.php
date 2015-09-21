@@ -775,7 +775,7 @@ class Recharge_model extends CI_Model
                     $query =   $this->db->insert("trans_detail", $myupdate);
                  } 
                     
-                 $md = $this->session->userdata("master_distributor_id");
+                $md = $this->session->userdata("master_distributor_id");
                 $sd = $this->session->userdata("super_distributor_id");
                 $d = $this->session->userdata("distributor_id");
                 $my = $this->session->userdata("login_id");
@@ -836,6 +836,7 @@ class Recharge_model extends CI_Model
                             $coyd    =   $this->getcomdet($myp,$mobjid);
                             $cammat  =   $this->getcamt($my);
                 }
+                //echo $cammat; die();
                 $amyt      =   number_format((($amt*($coyd['commission_amt']))/100),2);
                 $amdt      =   number_format((($amt*($cod['commission_amt']))/100),2);
                 $amst      =   number_format((($amt*($cosd['commission_amt']))/100),2);
@@ -850,7 +851,7 @@ class Recharge_model extends CI_Model
                 $cammst1     =   $cammst+$dets;
                 $cammdt1     =   $cammdt+$detd;
                 $cammat1     =   $cammat+$deta;
-                
+               // echo $cammat1; die();
                 $this->updatecvamt($md,$cammmt1);
                 $this->updatecvamt($sd,$cammst1);
                 $this->updatecvamt($d,$cammdt1);
