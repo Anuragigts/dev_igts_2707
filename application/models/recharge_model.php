@@ -286,7 +286,7 @@ class Recharge_model extends CI_Model
 		$ch = curl_init();
 		
 		$optArray = array(
-			CURLOPT_URL => "http://www.mrupees.com/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
+			CURLOPT_URL => "http://www.mobi2pay.in/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
 			CURLOPT_RETURNTRANSFER => true
 		);
 		curl_setopt_array($ch, $optArray);
@@ -350,7 +350,7 @@ class Recharge_model extends CI_Model
                         $ch = curl_init();
 
                         $optArray = array(
-                                CURLOPT_URL => "http://www.mrupees.com/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
+                                CURLOPT_URL => "http://www.mobi2pay.in/api/api.asp?USERID=1012&PASSWORD=99859&OPERATOR=2&AMOUNT=$amt&SUBSCRIBER=$mobile&TRANNO=A1002&RECTYPE=NORMAL",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);

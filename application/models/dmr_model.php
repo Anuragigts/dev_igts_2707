@@ -798,6 +798,7 @@ class Dmr_model extends CI_Model
     }
     
     public function addVerifyBeneficiary(){
+         $url = DMRURL; 
         $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
          {
@@ -943,8 +944,20 @@ class Dmr_model extends CI_Model
                              );
 
                             $this->db->where('ben_id',$my_DMR_id);
-                           $update = $this->db->update('beneficiary_track',$data_status); 
-                           return $my_DMR_id;
+                           $update = $this->db->update('beneficiary_track',$data_status);
+                           if($this->input->post('b_type') == 'IFSC'){
+                                $type = 2;
+                                $id = $this->input->post('ac_no');
+                            }else{
+                                $type = 1;
+                                $id = $this->input->post('mmid');
+                            }
+                          $accver =  $this->accVerify($type,$id);
+                          if($accver == 0){
+                           return $my_DMR_id; // verified
+                          }else{
+                              return $my_DMR_id;
+                          }
                         
                     } if($response->STATUSCODE == 1){
                         $data_status = array(
@@ -962,15 +975,12 @@ class Dmr_model extends CI_Model
                     }
                     
                 }
-                
-/*            if($this->input->post('b_type') == 'IFSC'){
-                $type = 2;
-                $id = $this->input->post('ac_no');
-            }else{
-                $type = 1;
-                $id = $this->input->post('mmid');
-            }
-             $a = mt_rand(100000,999999); 
+
+        }
+    }
+    public function accVerify($type,$id){
+        $url = DMRURL;
+        $a = mt_rand(100000,999999); 
                 for ($i = 0; $i<22; $i++) 
                  {
                      $a .= mt_rand(0,9);
@@ -989,17 +999,17 @@ class Dmr_model extends CI_Model
                                    &lt;CARDNO&gt;'.$this->input->post('card_no').'&lt;/CARDNO&gt;
                                    &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
                                    &lt;TRANSTYPEDESC&gt;'.$id.'&lt;/TRANSTYPEDESC&gt;
-                                   &lt;BENEMOBILE&gt;'.$mobile.'&lt;/BENEMOBILE&gt; 
-                                   &lt;IFSCCODE&gt;'.$ifsc_code.'&lt;/IFSCCODE&gt;
+                                   &lt;BENEMOBILE&gt;'.$this->input->post('mobile').'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$this->input->post('ifsc_code').'&lt;/IFSCCODE&gt;
                                    &lt;OTP&gt;&lt;/OTP&gt; 
                                    &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
                                    &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
                                    &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
                                    &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
-                                  &lt;BANKNAME&gt;'.$bank_name.'&lt;/BANKNAME&gt;
-                                  &lt;BRANCHNAME&gt;'.$branch_name.'&lt;/BRANCHNAME&gt;
+                                  &lt;BANKNAME&gt;'.$this->input->post('bank_name').'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$this->input->post('branch_name').'&lt;/BRANCHNAME&gt;
                                    
-                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
+                                    &lt;PARAM1&gt;0.00&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
                                     &lt;PARAM4&gt;&lt;/PARAM4&gt;
@@ -1010,7 +1020,7 @@ class Dmr_model extends CI_Model
                           </soap:Body>
                         </soap:Envelope>';
             
-
+//echo $curlData;
 
                    $curl = curl_init();
 
@@ -1041,30 +1051,65 @@ class Dmr_model extends CI_Model
                     $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
                     
                     $response = simplexml_load_string($final[0]);
-                   // print_r($response);
+                    
+                  //  print_r($response); die();
+                    
                      if($response->STATUSCODE == 0){
-                        $data_status = array(
-                                 'status_code'       => "$response->STATUSCODE",
-                                 'status'           => "$response->STATUS",
-                                 'otp_status'      => "0",
-                                 'verification'    => "1"
-                             );
-
-                            $this->db->where('ben_id',$my_DMR_id);
-                           $update = $this->db->update('beneficiary_track',$data_status);   
-                         if($this->db->affected_rows() == 1){
-                              return $my_DMR_id;
-                         }else{
-                             return 0;
-                         }
+                       
+                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                   if($query2 && $query2->num_rows()== 1){ 
+                       $totalcharge =  6.00;
+                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                       $val2 = $query2->row()->amount;
+                       $insfrom   =   array(                      
+                               "amount"     => ($val2 - $totalcharge)
+                           );
+                       $this->db->where("user_id",$this->session->userdata('login_id'));
+                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                      
+                        $myupdate = array(
+                          "trans_from"    =>   $this->session->userdata('login_id'),
+                          "trans_to"      =>     0,
+                         "cur_amount"      =>    ($val2 - $totalcharge),
+                          "trans_amt"     =>     6.00,
+                          "trans_remark"  =>     "Account verification charge of $name",
+                          "type"  =>     "2",
+                            'trans_date' => date('Y-m-d H:i:s')
+                       );
+                      $query =   $this->db->insert("trans_detail", $myupdate);
+                    }
+                         
+                      return 0;  
 
                     }else if($response->STATUSCODE == 1){ 
-                        $this->session->set_flashdata('msg','Your Beneficiary registration And verification is successfull Please verify if by using OTP.');  
+                        $this->session->set_flashdata('msg','Your Beneficiary registration is successfull but verification is failed  Please verify if by using OTP.');  
                          redirect('dmr/beneficiaryOTP/'.$my_DMR_id.'/'.$this->input->post('card_no'));
                         
-                    }else if($response->STATUSCODE == 2){                        
-                         $this->session->set_flashdata('err','Account Confirm Failure');
-                         redirect('dmr/beneficiaryOTP/'.$my_DMR_id.'/'.$this->input->post('card_no'));
+                    }else if($response->STATUSCODE == 2){
+                        $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                        if($query2 && $query2->num_rows()== 1){ 
+                            $totalcharge =  6.00;
+                            $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                            $val2 = $query2->row()->amount;
+                            $insfrom   =   array(                      
+                                    "amount"     => ($val2 - $totalcharge)
+                                );
+                            $this->db->where("user_id",$this->session->userdata('login_id'));
+                            $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                             $myupdate = array(
+                               "trans_from"    =>   $this->session->userdata('login_id'),
+                               "trans_to"      =>     0,
+                              "cur_amount"      =>    ($val2 - $totalcharge),
+                               "trans_amt"     =>     6.00,
+                               "trans_remark"  =>     "Account verification charge of $name",
+                               "type"  =>     "2",
+                                 'trans_date' => date('Y-m-d H:i:s')
+                            );
+                           $query =   $this->db->insert("trans_detail", $myupdate);
+                         }
+                         $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                          redirect('dmr/transRequery/'.$track_id);
                     }else if($response->STATUSCODE == 3){                        
                         return 3;
                     }
@@ -1072,19 +1117,6 @@ class Dmr_model extends CI_Model
                         return 0;
                     } 
                 }
-              
-        }else{
-            return 0;
-        }   
-    }
-    public function beneDetails($ben_id){
-         $query = $this->db->get_where('beneficiary_track', array('ben_id' => $ben_id));
-        if($query && $query->num_rows()== 1){
-              return $query->row();
-           }else{
-               return array();
-           }*/
-        }
     }
 
     public function verifyBeneficiary(){
@@ -2400,7 +2432,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-//echo $curlData;
+echo $curlData;
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -2432,7 +2464,7 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTIONREQUERYResult></TRANSACTIONREQUERYResponse></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-
+             //print_r($response); die();
 
              if($response->STATUSCODE == 0){
              $data_status = array(
@@ -2444,6 +2476,8 @@ class Dmr_model extends CI_Model
                   $update = $this->db->update('transection_track',$data_status);   
                 if($this->db->affected_rows() == 1){
                      return 1;
+                }else{
+                    return 1;
                 }
                
              }else if( $response->STATUSCODE == 1){

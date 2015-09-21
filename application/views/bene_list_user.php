@@ -81,7 +81,11 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-2"><br>
+                                            <?php if(strlen($dl->IFSCCODE) == 11) {?>
                                             <input type="radio" name="typeamt" checked="checked"> NEFT <br>
+                                            <?php }else{?>
+                                            <input type="radio" name="typeamt" checked="checked"> IFSC <br>
+                                            <?php }?>
                                             <input type="radio" name="typeamt" > Tatkal
                                            
                                         </div>
@@ -117,10 +121,11 @@
                                 </div>
                                  <div class="panel-footer">
                                      <div class="row">
+                                         <?php if(strlen($dl->IFSCCODE) != 11) {?>
                                           <div class="col-lg-3" >                                              
                                               <input type='submit' name='trans' class='btn btn-info' value='<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?> Paymwnt'>
                                           </div>
-                                         <?php if(strlen($dl->IFSCCODE) == 11) {?>
+                                         <?php } if(strlen($dl->IFSCCODE) == 11) {?>
                                           <div class="col-lg-3" >  
                                               
                                               <input type='submit' name='transneft' class='btn btn-info' value='NEFT Payment'>
