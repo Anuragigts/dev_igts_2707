@@ -2081,7 +2081,13 @@ class Dmr_model extends CI_Model
                        );
                       $query =   $this->db->insert("trans_detail", $myupdate);
                    }
-                 
+                    $md = $this->session->userdata("master_distributor_id");
+                    $sd = $this->session->userdata("super_distributor_id");
+                    $d = $this->session->userdata("distributor_id");
+                    $my = $this->session->userdata("login_id");
+                    $optna  =   strtolower('dmr');
+                    $amt = $this->input->post('tr_amt');
+                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'to_id'    => $this->input->post('bene'),
@@ -2432,7 +2438,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-echo $curlData;
+            //echo $curlData;
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
