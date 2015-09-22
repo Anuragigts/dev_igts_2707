@@ -188,8 +188,8 @@
                         <li class="sidebar-subnav-header">DMR</li>
 
                         <li class="topup ">
-                           <a href="<?php echo base_url();?>dmr/topup" title="Topup">
-                              <span>Topup</span>
+                           <a href="<?php echo base_url();?>dmr/topup" title="Add In wallet">
+                              <span>Add In wallet</span>
                            </a>
                         </li>
                         <?php if($this->session->userdata('money_transfer') == 1){?>

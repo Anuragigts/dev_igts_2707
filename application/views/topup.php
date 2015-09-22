@@ -8,7 +8,7 @@
              </li>                  
                               
              <li class="active">DMR</li>                 
-          </ol>Topup
+          </ol>Add In wallet
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
@@ -26,16 +26,16 @@
          <div class="row text-center"> 
                 <?php if(count($limit) != 0){?>
                     <div class="col-lg-3">
-                       <h4>Current Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
+                       <h4>Wallet Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
                    </div>
                     <div class="col-lg-3">
-                       <h4>Topup Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
+                      <h4>Remaining Wallet: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
                    </div>
                    <div class="col-lg-3">
                        <h4>Used Card: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->CONSUMEDLIMIT;?></fotn></h4> 
                    </div>
                    <div class="col-lg-3">
-                       <h4>Remaining Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->REMAININGLIMIT;?></fotn></h4> 
+                       <h4>Remaining Card: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->REMAININGLIMIT;?></fotn></h4> 
                    </div>
                    
                 <?php }?>
@@ -56,8 +56,8 @@
                                     <span class="red"><?  //form_error('mob');?></span>
                                 </div>-->
                                 <div class="col-lg-12">
-                                     <label for="Mobile" >Topup Amount<font class="red mmid-imp">*</font></label>
-                                     <input name="amount" id="amt"  class="form-control m-c" placeholder="Topup Amount" type="text" value="<?= set_value("amount"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
+                                     <label for="Mobile" >Wallet Amount<font class="red mmid-imp">*</font></label>
+                                     <input name="amount" id="amt"  class="form-control m-c" placeholder="Wallet Amount" type="text" value="<?= set_value("amount"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
                                     <span class="red"><?=  form_error('amount');?></span>
                                 </div>
 
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-lg-12 text-center">
                             <br>
-                            <input type='button' class='btn btn-sm btn-info dotopup myotp'   name='topup' value='Topup' />
+                            <input type='button' class='btn btn-sm btn-info dotopup myotp'   name='topup' value='Add In Wallet' />
                             
                         </div>
                         </div>
@@ -95,11 +95,11 @@
            </div>
        </form>   
       <div class="col-lg-12">
-                <p><h4>Top-Up Terms & Condition</h4></p>
+                <p><h4>Wallet Terms & Condition</h4></p>
             <ol>
-                <li>Minimum top-up amount is <span style="font-family:rupee;font-size:13px">R</span> 100.00</li>
-                <li>For each top-up service charge will be <span style="font-family:rupee;font-size:13px">R</span> 0.20 %</li>
-                <li>Any how money will not directly revert from customer's account to agent's account. </li>
+                <li>Minimum wallet amount is <span style="font-family:rupee;font-size:13px">R</span> 100.00</li>
+                <li>For each wallet service charge will be <span style="font-family:rupee;font-size:13px">R</span> 0.20 %</li>
+                <li>Any how money will not directly revert from customer's wallet account to agent's account. </li>
             </ol>
             </div>
        </div>

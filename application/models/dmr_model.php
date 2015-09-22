@@ -2058,6 +2058,7 @@ class Dmr_model extends CI_Model
              }else if($response->STATUSCODE == 1){
                  return 2;
              }else if($response->STATUSCODE == 2){
+                 $track_id1 = $track_id;
                   $ser = (($this->input->post('tr_amt') * 0.45) /100);
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                    if($query2 && $query2->num_rows()== 1){ 
@@ -2099,7 +2100,8 @@ class Dmr_model extends CI_Model
                      
             );       
                  $insert = $this->db->insert('transection_track',$up);
-                 return $track_id;
+                 //echo $track_id;die();
+                 return $track_id1;
              }else if($response->STATUSCODE == 3){
                  return 4;
              }else{
@@ -2108,8 +2110,12 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function doTopup($key){
-        $topup_amt = $this->input->post('amount');
+    public function doTopup($key,$tamt = 0){
+        if($tamt == 0){
+            $topup_amt = $this->input->post('amount');
+        }else{
+             $topup_amt = $tamt;
+        }
         //$ser = ($cardval * 0.20)/100;
          //$topup_amt = ($this->input->post('tr_amt') - $cardval); 
          
@@ -2141,7 +2147,12 @@ class Dmr_model extends CI_Model
         $url = DMRURL; 
        //$data = $this->getCardMore($this->session->userdata('login_id'));
       // print_r($data);die();
-         if($this->input->post('card') == 'MMID'){
+         if($this->input->post('card') == 'MMID' && $this->input->post('card') != ''){
+             $val = '1';
+         }else{
+             $val = '2';
+         }
+         if($this->input->post('bene') == 'MMID' && $this->input->post('bene') != ''){
              $val = '1';
          }else{
              $val = '2';
@@ -2168,7 +2179,7 @@ class Dmr_model extends CI_Model
                             &lt;TOPUPAMOUNT&gt;'.$topup_amt.'&lt;/TOPUPAMOUNT&gt;
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
                             &lt;MOBILE&gt;'.$this->session->userdata('dmrmo').'&lt;/MOBILE&gt;                           
-                            &lt;REGIONID&gt;'.$this->input->post('region').'&lt;/REGIONID&gt;
+                            &lt;REGIONID&gt;1&lt;/REGIONID&gt;
                             &lt;SERVICECHARGE&gt;'.(($topup_amt * 0.20)/100).'&lt;/SERVICECHARGE&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;'.$key.'&lt;/PARAM2&gt;
@@ -2232,7 +2243,7 @@ class Dmr_model extends CI_Model
                       "trans_to"      =>     0,
                      "cur_amount"      =>    ($val2 - $totalcharge),
                       "trans_amt"     =>     floatval($totalcharge),
-                      "trans_remark"  =>     "Topup with service charge to $name",
+                      "trans_remark"  =>     "Added in wallet with service charge to $name",
                         "type"  =>     "2",
                         'trans_date' => date('Y-m-d H:i:s')
                    );

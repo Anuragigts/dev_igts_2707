@@ -30,16 +30,16 @@
            <div class="row text-center"> 
                 <?php if(count($limit) != 0){?>
                    <div class="col-lg-3">
-                       <h4>Current Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
+                       <h4>Wallet Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
                    </div>
                     <div class="col-lg-3">
-                       <h4>Topup Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
+                       <h4>Remaining Wallet: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->TOPUPLIMIT;?></fotn></h4> 
                    </div>
                    <div class="col-lg-3">
                        <h4>Used Card: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->CONSUMEDLIMIT;?></fotn></h4> 
                    </div>
                    <div class="col-lg-3">
-                       <h4>Remaining Limit: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->REMAININGLIMIT;?></fotn></h4> 
+                       <h4>Remaining Card: <fotn style="color:#4AC3E9 !important;"><?php echo $card_bal->REMAININGLIMIT;?></fotn></h4> 
                    </div>
                   
                 <?php }?>
@@ -125,22 +125,24 @@
                                      <div class="row">
                                          <?php if(strlen($dl->IFSCCODE) != 11) {?>
                                           <div class="col-lg-3" >                                              
-                                              <input type='submit' name='trans' class='btn btn-info' value='Transfer Money'>
+                                              <input type='submit' name='trans' class='btn btn-info' value='Transfer From Wallet' />
+                                          </div>
+                                          <div class="col-lg-3" >                                              
+                                              <input type='submit' name='trans_top' class='btn btn-warning' value='Transfer From Topup' />
                                           </div>
                                          <?php } if(strlen($dl->IFSCCODE) == 11) {?>
-                                          <div class="col-lg-3" >  
-                                              
-                                              <input type='submit' name='transneft' class='btn btn-info' value='Transfer Money'>
+                                          <div class="col-lg-3" >
+                                              <input type='submit' name='transneft' class='btn btn-info' value='Transfer From Wallet' />
                                           </div>
+                                         <div class="col-lg-3" >
+                                             <input type='submit' name='transneft_top' class='btn btn-warning' value='Transfer From Topup' />
+                                         </div>
                                         <?php }?>
                                          <div class="col-lg-3">
                                              <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->BENEID;?>" class="btn btn-danger" title="Remove"><i class="fa fa-trash-o "></i> Remove</a>
                                          </div> 
                                           <div class="col-lg-3">
-                                              <?php //  if($dl->verification != 1){?>
-                                              <!--<a href="<?php echo base_url()?>dmr/accountVerification/<?php if($dl->IFSCCODE == ''){echo '1';}else{echo '2';}?>/<?php echo $dl->BENEID;?>/<?php echo $this->session->userdata('dmrcard');?>/<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>/<?php if($dl->MOBILE !='0'){echo $dl->MOBILE;}else{echo '0';}?>/<?php if($dl->IFSCCODE != ''){echo $dl->IFSCCODE;}else{echo '0';}?>/<?php if($dl->BANKNAME != ''){echo $dl->BANKNAME;}else{echo '0';}?>/<?php if($dl->BRANCHNAME != ''){echo $dl->BRANCHNAME;}else{echo '0';}?>" class="btn btn-warning" >Account Verification</a>-->
-                                            
-                                            <?php // }?>
+                                             
                                              
                                          </div> 
                                      </div>
