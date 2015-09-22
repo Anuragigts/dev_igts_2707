@@ -49,6 +49,7 @@ class Report_model extends CI_Model{
                 $this->db->from("trans_detail");
                 $this->db->where("trans_to",$val);
                 $this->db->where("( trans_date >= '".$gefr."' and trans_date <= '".$geto."' )");
+                $this->db->order_by('trans_id', 'desc');
                 $qu     =   $this->db->get();
                // echo $this->db->last_query();exit;
                 return $qu->result();
@@ -60,7 +61,7 @@ class Report_model extends CI_Model{
                 $this->db->join('profile as po','t.trans_to = po.login_id','left');
                 $this->db->where("( t.trans_from = ".$val." or t.trans_to = ".$val." )");
                 $this->db->where("( t.trans_date >= '".$gefr."' and t.trans_date <= '".$geto."' )");
-                 $this->db->order_by('trans_id', 'desc');
+                 $this->db->order_by('t.trans_id', 'desc');
                 $qu     =   $this->db->get();
                // echo $this->db->last_query();exit;
                 return $qu->result();
@@ -71,6 +72,7 @@ class Report_model extends CI_Model{
                 $this->db->where("done_by",$val);
                 $this->db->join('profile as p','o.done_by = p.login_id','inner');
                 $this->db->where("( done >= '".$gefr."' and done <= '".$geto."' )");
+                $this->db->order_by('o.off_id', 'desc');
                 $qu     =   $this->db->get();
                // echo $this->db->last_query();exit;
                 return $qu->result();

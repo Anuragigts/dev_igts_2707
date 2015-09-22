@@ -12,8 +12,7 @@
           <!-- Small text for title-->
           <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
-              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
-              <b>Transection Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>, &nbsp;
+              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>,
 			  <?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
 				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
 				<?php }; ?>
@@ -95,7 +94,14 @@
                  </div>
            </div>
        </form>   
-      
+      <div class="col-lg-12">
+                <p><h4>Top-Up Terms & Condition</h4></p>
+            <ol>
+                <li>Minimum top-up amount is <span style="font-family:rupee;font-size:13px">R</span> 100.00</li>
+                <li>For each top-up service charge will be <span style="font-family:rupee;font-size:13px">R</span> 0.20 %</li>
+                <li>Any how money will not directly revert from customer's account to agent's account. </li>
+            </ol>
+            </div>
        </div>
     </div>
  </section>

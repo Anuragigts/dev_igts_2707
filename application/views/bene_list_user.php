@@ -14,7 +14,7 @@
           <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
               <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
-              <b>Transaction Limit:</b> <?php echo $this->session->userdata('dmrtranslimit');?>,&nbsp;
+             
 				<?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
 				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
 				<?php }/*if($this->session->userdata('dmrkyc') =="KYC Processing"){echo "KYC Processing";}*/ ?>
@@ -83,8 +83,10 @@
                                         <div class="col-lg-2"><br>
                                             <?php if(strlen($dl->IFSCCODE) == 11) {?>
                                             <input type="radio" name="typeamt" checked="checked"> NEFT <br>
-                                            <?php }else{?>
+                                            <?php }else if(strlen($dl->IFSCCODE) == 4){?>
                                             <input type="radio" name="typeamt" checked="checked"> IFSC <br>
+                                            <?php }else{?>
+                                            <input type="radio" name="typeamt" checked="checked"> MIID <br>
                                             <?php }?>
                                             <input type="radio" name="typeamt" > Tatkal
                                            
@@ -107,10 +109,10 @@
                                             <input type="hidden" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" readonly="readonly"/>
                                             <input type="hidden" name="mo" value="<?php if($dl->MOBILE != '0'){echo $dl->MOBILE;}?>" readonly="readonly"/>
                                              <!--<label for="Mobile" >Total Amount<font class="red mmid-imp">*</font></label>-->
-                                             <label for="Mobile" >Description<font class="red mmid-imp">*</font></label>
+                                             <!--<label for="Mobile" >Description<font class="red mmid-imp">*</font></label>-->
                                             <!--<input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount" readonly="readonly" type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >-->
-                                            <input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php // echo $i;?>" placeholder="Description" type="text" value="<?= set_value("remark"); ?>" >
-                                            <span class="red"><?=  form_error('remark');?></span>
+                                            <!--<input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php // echo $i;?>" placeholder="Description" type="text" value="<?= set_value("remark"); ?>" >-->
+                                            <!--<span class="red"><?=  form_error('remark');?></span>-->
                                         </div>
                                         <div class="col-lg-3">
                                             <span id="service_ch_<?php echo $i;?>"></span>
@@ -123,12 +125,12 @@
                                      <div class="row">
                                          <?php if(strlen($dl->IFSCCODE) != 11) {?>
                                           <div class="col-lg-3" >                                              
-                                              <input type='submit' name='trans' class='btn btn-info' value='<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?> Paymwnt'>
+                                              <input type='submit' name='trans' class='btn btn-info' value='Transfer Money'>
                                           </div>
                                          <?php } if(strlen($dl->IFSCCODE) == 11) {?>
                                           <div class="col-lg-3" >  
                                               
-                                              <input type='submit' name='transneft' class='btn btn-info' value='NEFT Payment'>
+                                              <input type='submit' name='transneft' class='btn btn-info' value='Transfer Money'>
                                           </div>
                                         <?php }?>
                                          <div class="col-lg-3">
