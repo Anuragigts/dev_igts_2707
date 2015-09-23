@@ -390,11 +390,11 @@ class Recharge_model extends CI_Model
                                     $optna  =   strtolower($desc);
                                     $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
                                     
-                                    $this->updateOff($req,"ESY TOPUP Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+                                    $this->updateOff($req,"ESY TOPUP Recharge successfull on $mobile Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
 
                                     $ch = curl_init();
                                     $optArray = array(
-                                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
+                                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+$mobile+,+Total+Amount+is+Rs.+$now+Thank+you.",
                                             CURLOPT_RETURNTRANSFER => true
                                     );
                                     curl_setopt_array($ch, $optArray);
@@ -567,11 +567,11 @@ class Recharge_model extends CI_Model
                      );
                     $query =   $this->db->insert("trans_detail", $myupdate);
 
-                    $this->updateOff($req,"ESY TOPUP Recharge successfull Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+                    $this->updateOff($req,"ESY TOPUP Recharge successfull on $mobile, Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
 
                     $ch = curl_init();
                     $optArray = array(
-                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+Total+Amount+is+Rs.+$now+Thank+you.",
+                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+$mobile+,+Total+Amount+is+Rs.+$now+Thank+you.",
                             CURLOPT_RETURNTRANSFER => true
                     );
                     curl_setopt_array($ch, $optArray);

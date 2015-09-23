@@ -679,7 +679,8 @@ class Dmr extends CI_Controller {
                     $amt = $this->settings_model->checkVirtual();
                     
                         if($remening >= $this->input->post('tr_amt')){
-                           // if($amt >= $this->input->post('tr_amt')){ 
+                           // if($amt >= $this->input->post('tr_amt')){
+							   $iscomm = 0;
                                 $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
 
                               //echo $result;die();
@@ -721,8 +722,9 @@ class Dmr extends CI_Controller {
                             if($amt >= $this->input->post('tr_amt')){ 
                                 $amountpost = $this->input->post('tr_amt');
                                 $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'),$amountpost);
-                                if($result !=0){                    
-                                     $result1 = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
+                                if($result !=0){    
+									$iscomm = 1;
+                                     $result1 = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval,$iscomm);
 
                                    
                                       if($result1 == 1){                    
@@ -769,8 +771,9 @@ class Dmr extends CI_Controller {
                  if($this->form_validation->run() == TRUE){
                     $amt = $this->settings_model->checkVirtual();	
                          if($remening >= $this->input->post('tr_amt')){
-                           // if($amt >= $this->input->post('tr_amt')){ 
-                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval);
+                           // if($amt >= $this->input->post('tr_amt')){
+								$iscomm = 0;							   
+                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval, $iscomm);
 
                                 //echo $result;die();
                                   if($result == 1){                    
@@ -812,8 +815,9 @@ class Dmr extends CI_Controller {
                             if($amt >= $this->input->post('tr_amt')){ 
                                 $amountpost = $this->input->post('tr_amt');
                                 $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'),$amountpost);
-                                if($result !=0){                    
-                                     $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval);
+                                if($result !=0){ 
+									$iscomm = 1;								
+                                     $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval,$iscomm);
 
                                     //echo $result;die();
                                       if($result1 == 1){                    

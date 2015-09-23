@@ -115,7 +115,7 @@
                                             <!--<span class="red"><?=  form_error('remark');?></span>-->
                                         </div>
                                         <div class="col-lg-3">
-                                            <span id="service_ch_<?php echo $i;?>"></span>
+                                            <!--span id="service_ch_<?php //echo $i;?>"></span-->
                                         </div>
                                         
                                         
@@ -164,10 +164,10 @@
 <script>
     $('.myamt').val('');
     $('.myamt').keyup(function(){
-        var getvel = $(this).attr('get');
+      /*  var getvel = $(this).attr('get');
        var amt =  parseInt($('#total_'+getvel).val());
        var cal = (amt * 0.45)/100;
-       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2));
+       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2));*/
        
 //        if(amt >= 100 && amt < 25001){
 //           if(amt < 1001){

@@ -98,7 +98,7 @@
                 <p><h4>Wallet Terms & Condition</h4></p>
             <ol>
                 <li>Minimum wallet amount is <span style="font-family:rupee;font-size:13px">R</span> 100.00</li>
-                <li>For each wallet service charge will be <span style="font-family:rupee;font-size:13px">R</span> 0.20 %</li>
+                <li>For each wallet service charge will be <span style="font-family:rupee;font-size:13px">R</span> 0.45 %</li>
                 <li>Any how money will not directly revert from customer's wallet account to agent's account. </li>
             </ol>
             </div>

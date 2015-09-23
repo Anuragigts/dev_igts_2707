@@ -1912,7 +1912,7 @@ class Dmr_model extends CI_Model
          }
     }
     
-    public function dotransferAmt($key,$card,$mo,$type=0,$cardval){
+    public function dotransferAmt($key,$card,$mo,$type=0,$cardval, $iscomm){
         
         $this->load->model('recharge_model');
         
@@ -1954,7 +1954,7 @@ class Dmr_model extends CI_Model
                             &lt;IFSCCODE&gt;'.$this->input->post('ifsc').'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
-                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.20) /100).'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;0&lt;/SERVICECHARGE&gt;
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
                             &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
@@ -2004,7 +2004,7 @@ class Dmr_model extends CI_Model
              $response = simplexml_load_string($final[0]);
            //  print_r($response);die();
              if($response->STATUSCODE == 0){
-                 $ser = (($this->input->post('tr_amt') * 0.45) /100);
+                 /*$ser = (($this->input->post('tr_amt') * 0.45) /100);
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                    if($query2 && $query2->num_rows()== 1){ 
                        $totalcharge =  $ser;
@@ -2026,7 +2026,8 @@ class Dmr_model extends CI_Model
                             'trans_date' => date('Y-m-d H:i:s')
                        );
                       $query =   $this->db->insert("trans_detail", $myupdate);
-                   }
+                   }*/
+				   if($iscomm == 1){
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
@@ -2034,6 +2035,7 @@ class Dmr_model extends CI_Model
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
                     $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
+				   }
                  
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
@@ -2059,7 +2061,7 @@ class Dmr_model extends CI_Model
                  return 2;
              }else if($response->STATUSCODE == 2){
                  $track_id1 = $track_id;
-                  $ser = (($this->input->post('tr_amt') * 0.45) /100);
+                 /* $ser = (($this->input->post('tr_amt') * 0.45) /100);
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                    if($query2 && $query2->num_rows()== 1){ 
                        $totalcharge =  $ser;
@@ -2081,14 +2083,16 @@ class Dmr_model extends CI_Model
                             'trans_date' => date('Y-m-d H:i:s')
                        );
                       $query =   $this->db->insert("trans_detail", $myupdate);
-                   }
+                   }*/
+				    if($iscomm == 1){
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt); 
+                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
+					}					
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
                      'to_id'    => $this->input->post('bene'),
@@ -2116,9 +2120,6 @@ class Dmr_model extends CI_Model
         }else{
              $topup_amt = $tamt;
         }
-        //$ser = ($cardval * 0.20)/100;
-         //$topup_amt = ($this->input->post('tr_amt') - $cardval); 
-         
                 $t_amt = 0.00;
                 $loop = $topup_amt/5000;  
 
@@ -2180,7 +2181,7 @@ class Dmr_model extends CI_Model
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
                             &lt;MOBILE&gt;'.$this->session->userdata('dmrmo').'&lt;/MOBILE&gt;                           
                             &lt;REGIONID&gt;1&lt;/REGIONID&gt;
-                            &lt;SERVICECHARGE&gt;'.(($topup_amt * 0.20)/100).'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;'.(($topup_amt * 0.25)/100).'&lt;/SERVICECHARGE&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;'.$key.'&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
@@ -2226,7 +2227,7 @@ class Dmr_model extends CI_Model
              $response = simplexml_load_string($final[0]);
 
              if($response->STATUSCODE == 0){
-                 $ser = (($topup_amt * 0.20)/100);
+                 $ser = (($topup_amt * 0.45)/100);
                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                if($query2 && $query2->num_rows()== 1){ 
                    $totalcharge= $topup_amt + $ser;
