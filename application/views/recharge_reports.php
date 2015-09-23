@@ -116,14 +116,14 @@ only screen and (max-width: 760px),
                                     <td>
                                         <?php
                                         if($view->st_re == "0"){ ?>
-                                            <a href="javscript:void(0);" class="btn btn-primary btn-sm" title="In Processing">In Processing</a>
+                                            <a href="#" class="btn btn-primary btn-sm" title="In Processing">In Processing</a>
                                         <?php }else if($view->st_re == "1"){ ?>
-                                            <a href="javscript:void(0);" class="btn btn-success btn-sm" title="Approved" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Approved</a>
+                                            <a href="#" class="btn btn-success btn-sm" title="Approved" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Approved</a>
                                         <?php }
                                         else if($view->st_re == "2"){ ?>
-                                            <a href="javscript:void(0);" class="btn btn-warning btn-sm" title="Rejected" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Rejected</a>
+                                            <a href="#" class="btn btn-warning btn-sm" title="Rejected" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Rejected</a>
                                         <?php } else { ?>
-                                            <a href="javscript:void(0);" class="btn btn-danger btn-sm refund_req" title="Generate  Complaint" amount="<?= $view->amount;?>"  recharge_id="<?= $view->recharge_id;?>">Generate  Complaint</a>
+                                            <a href="#" class="btn btn-danger btn-sm refund_req" title="Generate  Complaint" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Generate  Complaint</a>
                                         <?php } ?>
                                     </td>
                                 </tr>

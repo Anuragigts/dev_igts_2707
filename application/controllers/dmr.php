@@ -679,7 +679,7 @@ class Dmr extends CI_Controller {
                     $amt = $this->settings_model->checkVirtual();
                     
                         if($remening >= $this->input->post('tr_amt')){
-                            if($amt >= $this->input->post('tr_amt')){ 
+                           // if($amt >= $this->input->post('tr_amt')){ 
                                 $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
 
                               //echo $result;die();
@@ -700,10 +700,10 @@ class Dmr extends CI_Controller {
                                     $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
                                     redirect('dmr/transRequery/'.$result);
                                 }
-                            }else{
+                            /*}else{
                             $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
                             redirect('dmr/beneficiaryList');
-                        }
+                        }*/
                     }else{
                         $this->session->set_flashdata('err',"DMR fail : You are exceeding the limit, Your remaining limit is Rs: $remening .");  
                             redirect('dmr/beneficiaryList');
@@ -769,7 +769,7 @@ class Dmr extends CI_Controller {
                  if($this->form_validation->run() == TRUE){
                     $amt = $this->settings_model->checkVirtual();	
                          if($remening >= $this->input->post('tr_amt')){
-                            if($amt >= $this->input->post('tr_amt')){ 
+                           // if($amt >= $this->input->post('tr_amt')){ 
                                 $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval);
 
                                 //echo $result;die();
@@ -794,10 +794,10 @@ class Dmr extends CI_Controller {
                                 $this->session->set_flashdata('err','DMR fail : You are not having sufficient balance to transfer this amount.');  
                                 redirect('dmr/beneficiaryList');
                             }
-                        }else{
+                       /* }else{
                         $this->session->set_flashdata('err',"DMR fail : You are exceeding the limit, Your remaining limit is Rs: $remening .");  
                         redirect('dmr/beneficiaryList');
-                    }
+                    }*/
                 }
              }
              /*** start wallet */
@@ -1026,7 +1026,7 @@ class Dmr extends CI_Controller {
                         if($amt >= $this->input->post('amount')){ 
                             $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'));
                             if($result !=0){                    
-                                $this->session->set_flashdata('msg','Topup successfull .');  
+                                $this->session->set_flashdata('msg','Added in wallet successfull .');  
                                 redirect('dmr/topup');
                             }
                            else{

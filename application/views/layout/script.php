@@ -420,6 +420,7 @@ $("#user_type").change(function(){
             var status      =   0;
              $.post('<?=base_url()?>reports/refund_req',
                {'status':status,'reid':reid,'amount':amount},function(response){
+				  // alert(response);
                         if(response == 1){
                                $(".success").html("Your complaint has been succefully transferred to admin");
                                $(".error").html("");

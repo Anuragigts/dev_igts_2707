@@ -30,6 +30,7 @@
                         }
                         $this->db->order_by("f.fund_id","desc");
                         $qu =   $this->db->get();
+						//echo $this->db->last_query();
                         if($this->db->affected_rows() > 0){
                                 return $qu->result();
                         }else{
@@ -91,6 +92,7 @@
                     }
                     $this->db->order_by("f.refund_req_id","desc");
                     $qu =   $this->db->get();
+					
                     if($this->db->affected_rows() > 0){
                             return $qu->result();
                     }else{

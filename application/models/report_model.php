@@ -1,7 +1,7 @@
 <?php
 class Report_model extends CI_Model{
         public function recharge_reports($gefr,$geto,$val){
-                $this->db->select("r.*,q.*,q.status as st_re,m.module_name");
+                $this->db->select("r.*,r.recharge_id as rid,q.*,q.status as st_re,m.module_name");
                 $this->db->from("recharge_track as r");
                 $this->db->join("module as m","r.recharge_type = m.module_id","inner");
                 $this->db->join("refund_req as q","r.recharge_id = q.recharge_id","left");
@@ -119,6 +119,7 @@ class Report_model extends CI_Model{
                         'status'    =>  $status
                 );                   
                 $this->db->insert('refund_req',$upd);
+				//return $this->db->last_query();
                 if($this->db->affected_rows() > 0){
                         return 1;
                 }

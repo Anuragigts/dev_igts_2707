@@ -817,6 +817,7 @@ class Recharge_model extends CI_Model
                 $cammdt     =   0;
                 $cammat     =   0;
                 $mobjid  =   $this->getmoduleobjectid($desc);
+				//echo $mobjid;die();
                 if($md != 0){
                             $mdp     =   $this->getpackage($md);
                             $comd    =   $this->getcomdet($mdp,$mobjid);
@@ -837,7 +838,7 @@ class Recharge_model extends CI_Model
                             $coyd    =   $this->getcomdet($myp,$mobjid);
                             $cammat  =   $this->getcamt($my);
                 }
-                //echo $cammat; die();
+               
                 $amyt      =   number_format((($amt*($coyd['commission_amt']))/100),2);
                 $amdt      =   number_format((($amt*($cod['commission_amt']))/100),2);
                 $amst      =   number_format((($amt*($cosd['commission_amt']))/100),2);
@@ -856,7 +857,7 @@ class Recharge_model extends CI_Model
                 $cammst1     =   $cammst+$dets;
                 $cammdt1     =   $cammdt+$detd;
                 $cammat1     =   $cammat+$deta;
-               // echo $cammat1; die();
+                //echo $deta; die();
                 $this->updatecvamt($md,$cammmt1);
                 $this->updatecvamt($sd,$cammst1);
                 $this->updatecvamt($d,$cammdt1);
@@ -892,6 +893,7 @@ class Recharge_model extends CI_Model
         }
         public function getmoduleobjectid($desc){
                 $qu = $this->db->get_where("modules_object",array("modules_obj_name" => $desc));
+				//echo $this->db->last_query();die();
                 $od = $qu->row_array();
                 return $od['modules_obj_id'];
         }

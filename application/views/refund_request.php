@@ -43,13 +43,12 @@
                                             <?php if( $this->session->userdata("my_type") == 1){ ?>
                                             <th>
                                                 <?php if($view->status == 1){ ?>
-                                                <a  class="btn btn-sm btn-warning" href="javascript:void(0);" title="Reject" fund="<?= $view->refund_req_id;?>" amount="<?= $view->trans_amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
+                                                
                                                        Reject
-                                                </a>
+                                                
                                                 <?php } else if($view->status == 2){ ?>
-                                                <a class="btn btn-sm btn-info"  href="javascript:void(0);" title="Approve" fund="<?= $view->refund_req_id;?>" amount="<?= $view->trans_amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
-                                                        Approve
-                                                </a>
+                                                       Approve
+                                                
                                                 <?php }else{ ?>
                                                 <a class="btn btn-sm btn-info ref_fund" href="javascript:void(0);" title="Approve" fund="<?= $view->refund_req_id;?>" amount="<?= $view->trans_amount;?>"  login="<?= $view->login_id;?>" user_name="<?= $name;?>">
                                                         Approve

@@ -1954,7 +1954,7 @@ class Dmr_model extends CI_Model
                             &lt;IFSCCODE&gt;'.$this->input->post('ifsc').'&lt;/IFSCCODE&gt;
                             &lt;OTP&gt;&lt;/OTP&gt;
                             &lt;TRANSAMOUNT&gt;'.$this->input->post('tr_amt').'&lt;/TRANSAMOUNT&gt;
-                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.45) /100).'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;'.(($this->input->post('tr_amt') * 0.20) /100).'&lt;/SERVICECHARGE&gt;
                             &lt;REMARKS&gt;'.$this->input->post('remark').'&lt;/REMARKS&gt;
                             &lt;BENEID&gt;'.$ben_id.'&lt;/BENEID&gt;
                             &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
