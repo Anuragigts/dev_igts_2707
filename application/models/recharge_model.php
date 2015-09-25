@@ -361,12 +361,14 @@ class Recharge_model extends CI_Model
                         $get = explode("STATUS:",$result);
                         if(Count($get) == 2){
                             if($get['1'] == "SUCCESS"){
-                                
+                                 $now = (floatval($current_amt->row()->amount) - floatval($amt));
                                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                                      if($query2 && $query2->num_rows()== 1){                        
                                          $val2 = $query2->row()->amount;
+                                        
+                                         
                                          $insfrom   =   array(                      
-                                                 "amount"     => ($val2 - $this->input->post('amount'))
+                                                 "amount"     => ($val2 - $amt)
                                              );
                                          $this->db->where("user_id",$this->session->userdata('login_id'));
                                          $query1 = $this->db->update("current_virtual_amount",$insfrom);
@@ -584,7 +586,7 @@ class Recharge_model extends CI_Model
                     $d = $queryq->row()->distributor_id;
                     $my = $queryq->row()->login_id;
                     $optna  =   strtolower($desc);
-                    //echo $md ."-".$sd."-".$d."-".$my ;
+                   
                     $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
                     
                         $data = array(                        

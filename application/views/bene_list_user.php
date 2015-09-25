@@ -82,13 +82,14 @@
                                     <div class="row">
                                         <div class="col-lg-2"><br>
                                             <?php if(strlen($dl->IFSCCODE) == 11) {?>
-                                            <input type="radio" name="typeamt" checked="checked"> NEFT <br>
+                                            <input type="radio" name="typeamt" value="NEFT" checked="checked"> NEFT <br>
+											<input type="radio" name="typeamt" value="IFSC"> IFSC (Tatkal)<br>
                                             <?php }else if(strlen($dl->IFSCCODE) == 4){?>
-                                            <input type="radio" name="typeamt" checked="checked"> IFSC <br>
+                                            <input type="radio" name="typeamt" checked="checked" value="IFSC"> IFSC (Tatkal)<br>
                                             <?php }else{?>
-                                            <input type="radio" name="typeamt" checked="checked"> MIID <br>
+                                            <input type="radio" name="typeamt" checked="checked" value="MIID"> MIID (Tatkal) <br>
                                             <?php }?>
-                                            <input type="radio" name="typeamt" > Tatkal
+                                            <!--input type="radio" name="typeamt" > Tatkal-->
                                            
                                         </div>
                                         <div class="col-lg-3">

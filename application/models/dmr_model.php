@@ -1928,9 +1928,11 @@ class Dmr_model extends CI_Model
             $val = '2';
             $desc = $this->input->post('ac');
         }
-        if($type != 0){
-            $val = $type;
-        }
+        if($type != 0 && $this->input->post('typeamt')== 'IFSC'){
+            $val = 2;
+        }if($type != 0 && $this->input->post('typeamt')== 'NEFT'){
+			$val = $type;
+		}
         
         $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
@@ -2002,7 +2004,7 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-           //  print_r($response);die();
+            // print_r($response);die();
              if($response->STATUSCODE == 0){
                  /*$ser = (($this->input->post('tr_amt') * 0.45) /100);
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           

@@ -681,7 +681,7 @@ class Dmr extends CI_Controller {
                         if($remening >= $this->input->post('tr_amt')){
                            // if($amt >= $this->input->post('tr_amt')){
 							   $iscomm = 0;
-                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval);
+                                $result = $this->dmr_model->dotransferAmt($key,$card,$mo,0,$cardval,$iscomm);
 
                               //echo $result;die();
                                 if($result == 1){                    
