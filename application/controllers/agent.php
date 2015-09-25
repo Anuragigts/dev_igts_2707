@@ -67,7 +67,7 @@ class Agent extends CI_Controller {
                                         redirect("agent/create_agent");
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while creating agent");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("agent/create_agent");
                                 }
                         }
@@ -275,7 +275,7 @@ class Agent extends CI_Controller {
                                         redirect("agent/edit_agent/".$valu);
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while updating agent");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("agent/edit_agent/".$valu);
                                 }
                         }

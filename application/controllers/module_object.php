@@ -30,7 +30,7 @@ class Module_object extends CI_Controller {
                                             redirect("module_object/create_module_object");
                                     }
                                     else{
-                                            $this->session->set_flashdata("err","Internal error occurred while creating module Object");
+                                            $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                             redirect("module_object/create_module_object");
                                     }
                                 }

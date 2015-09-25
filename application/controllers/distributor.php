@@ -67,7 +67,7 @@ class Distributor extends CI_Controller {
                                         redirect("distributor/create_distributor");
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while creating distributor");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("distributor/create_distributor");
                                 }
                         }
@@ -244,7 +244,7 @@ class Distributor extends CI_Controller {
                                         redirect("distributor/edit_distributor/".$valu);
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while updating distributor");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("distributor/edit_distributor/".$valu);
                                 }
                         }

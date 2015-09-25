@@ -111,7 +111,7 @@ class Dmr extends CI_Controller {
                 $result = $this->dmr_model->setPin();
                 //echo $result;exit;
                 if($result == 0){                    
-                    $this->session->set_flashdata('err','PIN verification fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','PIN verification fail : Server Busy. Please try after some time.');  
                      redirect('dmr/sender_registration');
                 } else{
                     $this->session->set_flashdata('msg','Your PIN verification is successfull.');  
@@ -168,7 +168,7 @@ class Dmr extends CI_Controller {
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
                       redirect('dmr/otp/'.$transection_id);
                 }else{
-                     $this->session->set_flashdata('err','Verification fail : Some internal error occurred.');  
+                     $this->session->set_flashdata('err','Verification fail : Server Busy. Please try after some time.');  
                        redirect('dmr/otp/'.$transection_id);
                 }
             }
@@ -187,7 +187,7 @@ class Dmr extends CI_Controller {
             $this->session->set_flashdata('msg','Your pin has been sent successfully .');  
             redirect('dmr/otp/'.$id);
         }else{
-            $this->session->set_flashdata('err','Fail : Some internal error occurred.');  
+            $this->session->set_flashdata('err','Fail : Server Busy. Please try after some time.');  
              redirect('dmr/otp/'.$id);
         }
         
@@ -201,7 +201,7 @@ class Dmr extends CI_Controller {
             $this->session->set_flashdata('msg','Resent OTP Enter New OTP.');  
            redirect('dmr/otp/'.$id);
         }else{
-             $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
+             $this->session->set_flashdata('err','Resend OTP fail : Server Busy. Please try after some time.');  
                redirect('dmr/otp/'.$id);
         }
     }
@@ -243,7 +243,7 @@ class Dmr extends CI_Controller {
                 $result = $this->dmr_model->addBeneficiary();
                 
                 if($result == 0){                    
-                    $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);
                 }else if($result == 1){
                     $this->session->set_flashdata('err','Beneficiary registration fail : User already exist.');  
@@ -282,7 +282,7 @@ class Dmr extends CI_Controller {
                 $result = $this->dmr_model->addVerifyBeneficiary();
                 //echo $result;exit;
                 if($result == 0){                    
-                    $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);
                 }else if($result == 1){
                     $this->session->set_flashdata('err','Confirm Failure');  
@@ -291,7 +291,7 @@ class Dmr extends CI_Controller {
                     $this->session->set_flashdata('err','User Already added.');  
                      redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                 }else if($result == 3){                     
-                      $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
+                      $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
@@ -356,7 +356,7 @@ class Dmr extends CI_Controller {
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
                       redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4).'/'.$this->uri->segment(5));
                 }else{
-                     $this->session->set_flashdata('err','Verification fail : Some internal error occurred.');  
+                     $this->session->set_flashdata('err','Verification fail : Server Busy. Please try after some time.');  
                        redirect('dmr/beneficiaryOTP/'.$ben_id.'/'.$this->uri->segment(4).'/'.$this->uri->segment(5));
                 }
             }
@@ -407,7 +407,7 @@ class Dmr extends CI_Controller {
                 $result = $this->dmr_model->editBeneficiary( $data['ben_details']->beneid);
                 //echo $result;exit;
                 if($result == 0){                    
-                    $this->session->set_flashdata('err','Beneficiary registration fail : Some internal error occurred.');  
+                    $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/editBeneficary'.$id);
                 }else if($result == 0){
                     $this->session->set_flashdata('err','Beneficiary registration fail : User already exist.');  
@@ -437,7 +437,7 @@ class Dmr extends CI_Controller {
             $this->session->set_flashdata('msg','Resent OTP Enter New OTP.');  
            redirect('dmr/beneficiaryOTP/'.$id.'/'.$this->uri->segment(5).'/'.$this->uri->segment(6));
         }else{
-             $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
+             $this->session->set_flashdata('err','Resend OTP fail : Server Busy. Please try after some time.');  
                redirect('dmr/beneficiaryOTP/'.$id.'/'.$this->uri->segment(5).'/'.$this->uri->segment(6));
         }
     }
@@ -452,7 +452,7 @@ class Dmr extends CI_Controller {
             $this->session->set_flashdata('msg','OTP has been sent on your mobile.');  
            redirect('dmr/removeBenOtp/'.$id);
         }else{
-             $this->session->set_flashdata('err','Resend OTP fail : Some internal error occurred.');  
+             $this->session->set_flashdata('err','Resend OTP fail : Server Busy. Please try after some time.');  
                redirect('dmr/beneficiaryList/'.$id);
         }
     }
@@ -487,7 +487,7 @@ class Dmr extends CI_Controller {
                     $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
                       redirect('dmr/removeBenOtp/'.$ben_id);
                 }else{
-                     $this->session->set_flashdata('err','Verification fail : Some internal error occurred.');  
+                     $this->session->set_flashdata('err','Verification fail : Server Busy. Please try after some time.');  
                        redirect('dmr/removeBenOtp/'.$ben_id);
                 }
             }
@@ -692,7 +692,7 @@ class Dmr extends CI_Controller {
                                     $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
                                      redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                                 }else if( $result == 5){ 
-                                    $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                    $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                                    redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
                                 }else if( $result == 4){                    
                                     $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
@@ -735,7 +735,7 @@ class Dmr extends CI_Controller {
                                           $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
                                            redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                                       }else if( $result1 == 5){ 
-                                          $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                          $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                                          redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
                                       }else if( $result1 == 4){                    
                                           $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
@@ -784,7 +784,7 @@ class Dmr extends CI_Controller {
                                       $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
                                        redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                                   }else if( $result == 5){ 
-                                      $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                      $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                                      redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
                                   }else if( $result == 4){                    
                                       $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
@@ -828,7 +828,7 @@ class Dmr extends CI_Controller {
                                           $this->session->set_flashdata('err','Transaction fail :  The transaction has failed.');  
                                            redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                                       }else if( $result1 == 5){ 
-                                          $this->session->set_flashdata('err','Unknown : Internal error.');  
+                                          $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                                          redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
                                       }else if( $result1 == 4){                    
                                           $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
@@ -888,7 +888,7 @@ class Dmr extends CI_Controller {
                           $this->session->set_flashdata('err','Invalid Transaction.'); 
                           redirect('dmr/transRequery/'.$t_id);
                      }else{
-                          $this->session->set_flashdata('err','Retry Failed: due to Internal error.'); 
+                          $this->session->set_flashdata('err','Retry Failed: Server Busy. Please try after some time.'); 
                           redirect('dmr/transRequery/'.$t_id);
                      }
                  }
@@ -922,7 +922,7 @@ class Dmr extends CI_Controller {
                           $this->session->set_flashdata('err','Invalid Transaction.'); 
                           redirect('dmr/transRequery/'.$t_id);
                      }else{
-                          $this->session->set_flashdata('err','Retry Failed: due to Internal error.'); 
+                          $this->session->set_flashdata('err','Retry Failed: Server Busy. Please try after some time.'); 
                           redirect('dmr/transRequery/'.$t_id);
                      }
                  }
@@ -985,7 +985,7 @@ class Dmr extends CI_Controller {
                     $this->session->set_flashdata('err','Transaction failed : check your transfer amount, it is not valid.');  
                       redirect('dmr/transaction');
                 }else{
-                     $this->session->set_flashdata('err','Unknown : Internal error.');  
+                     $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                        redirect('dmr/transaction');
                 }
             }
@@ -1247,7 +1247,7 @@ class Dmr extends CI_Controller {
                     redirect('dmr/beneficiaryList');
                 }
               else{
-					$this->session->set_flashdata('err','Upgradation  fail : Some internal error occurred.');  
+					$this->session->set_flashdata('err','Upgradation  fail : Server Busy. Please try after some time.');  
                      redirect('dmr/doKyc/'.$id);
                      
                 }

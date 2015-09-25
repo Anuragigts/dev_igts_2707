@@ -215,10 +215,10 @@ class Recharge extends CI_Controller {
                             redirect('recharge/mobile_recharge');
                         }
                         else if($result == 2){
-                            $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                            $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                            redirect('recharge/mobile_recharge');
                         }else{
-                             $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                             $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                             redirect('recharge/mobile_recharge');
                         }
                    
@@ -270,10 +270,10 @@ class Recharge extends CI_Controller {
                         redirect('recharge/post_recharge');
                     }
                     else if($result == 2){
-                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                        $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                        redirect('recharge/post_recharge');
                     }else{
-                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                         $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                         redirect('recharge/post_recharge');
                     }
                 }else{
@@ -314,10 +314,10 @@ class Recharge extends CI_Controller {
                         redirect('recharge/dth_recharge');
                     }
                     else if($result == 2){
-                        $this->session->set_flashdata('err','Recharge fail : Some surver error occurred.');  
+                        $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                        redirect('recharge/dth_recharge');
                     }else{
-                         $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                         $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
                         redirect('recharge/dth_recharge');
                     }
                 }else{

@@ -92,7 +92,7 @@ class Settings extends CI_Controller {
                                         redirect("settings/profile");
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while updating your profile");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("settings/profile");
                                 }
                         }
@@ -148,7 +148,7 @@ class Settings extends CI_Controller {
                     $this->session->set_flashdata('msg','Virtual Amount Added Successfully.');  
                     redirect('settings/virtualAmt');
                 }else{
-                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                     $this->session->set_flashdata('err','Recharge fail : Server Busy. Please try after some time..');  
                      redirect('settings/virtualAmt');
                 }
             }
@@ -175,7 +175,7 @@ class Settings extends CI_Controller {
                     $this->session->set_flashdata('msg','Virtual Amount Added Successfully.');  
                     redirect('settings/virtualAmt');
                 }else{
-                     $this->session->set_flashdata('err','Recharge fail : Some internal error occurred.');  
+                     $this->session->set_flashdata('err','Recharge fail : Server Busy. Please try after some time.');  
                      redirect('settings/editVirtualAmt');
                 }
             }
@@ -215,7 +215,7 @@ class Settings extends CI_Controller {
                            $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }else{
-                            $this->session->set_flashdata('err',' fail : Some internal error occurred.');  
+                            $this->session->set_flashdata('err',' fail : Server Busy. Please try after some time.');  
                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }
                    }
@@ -261,7 +261,7 @@ class Settings extends CI_Controller {
                              $this->session->set_flashdata('msg','Notice Board Updated.');  
                            redirect('settings/notes/');
                         }else{
-                           $this->session->set_flashdata('err','Fail : Some internal error occurred.');
+                           $this->session->set_flashdata('err','Fail : Server Busy. Please try after some time.');
                              redirect('settings/notes/');
                         }
                     }

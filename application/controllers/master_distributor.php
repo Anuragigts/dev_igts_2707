@@ -65,7 +65,7 @@ class Master_distributor extends CI_Controller {
                                         redirect("master_distributor/create_master_distributor");
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while creating master distributor");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("master_distributor/create_master_distributor");
                                 }
                         }
@@ -211,7 +211,7 @@ class Master_distributor extends CI_Controller {
                                         redirect("master_distributor/edit_master_distributor/".$valu);
                                 }
                                 else{
-                                        $this->session->set_flashdata("err","Internal error occurred while updating master distributor");
+                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("master_distributor/edit_master_distributor/".$valu);
                                 }
                         }
