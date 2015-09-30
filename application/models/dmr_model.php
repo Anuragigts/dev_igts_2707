@@ -1053,9 +1053,9 @@ class Dmr_model extends CI_Model
                     
                     $response = simplexml_load_string($final[0]);
                     
-                  // print_r($response); die();
+                   //print_r($response); die();
                     
-                     if($response->STATUSCODE == 0){
+                     if($response->STATUSCODE == 0 || $response->RESPONSECODE == 92 ){
                        
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                    if($query2 && $query2->num_rows()== 1){ 
