@@ -834,6 +834,7 @@ class Dmr_model extends CI_Model
         if($this->db->affected_rows() == 1){           
             
             $my_DMR_id = $this->db->insert_id();
+			//echo $my_DMR_id; die();
             $url = DMRURL; 
             
            if($this->input->post('b_type') == 'IFSC'){
@@ -934,7 +935,7 @@ class Dmr_model extends CI_Model
                     $final = explode('</ADDBENEFICIARYResult></ADDBENEFICIARYResponse></soap:Body></soap:Envelope>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                   // print_r($response);
+                  
                      if($response->STATUSCODE == 0){
                         $data_status = array(
                                  'status_code'       => "$response->STATUSCODE",
@@ -952,7 +953,7 @@ class Dmr_model extends CI_Model
                                 $type = 1;
                                 $id = $this->input->post('mmid');
                             }
-                          $accver =  $this->accVerify($type,$id);
+                          $accver =  $this->accVerify($type,$id,$my_DMR_id);
                           if($accver == 0){
                            return $my_DMR_id; // verified
                           }else{
@@ -978,7 +979,7 @@ class Dmr_model extends CI_Model
 
         }
     }
-    public function accVerify($type,$id){
+    public function accVerify($type,$id,$my_DMR_id = 0){
         $url = DMRURL;
         $a = mt_rand(100000,999999); 
                 for ($i = 0; $i<22; $i++) 
@@ -1052,7 +1053,7 @@ class Dmr_model extends CI_Model
                     
                     $response = simplexml_load_string($final[0]);
                     
-                  //  print_r($response); die();
+                  // print_r($response); die();
                     
                      if($response->STATUSCODE == 0){
                        

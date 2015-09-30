@@ -280,7 +280,6 @@ class Dmr extends CI_Controller {
             if($this->form_validation->run() == TRUE){
                 
                 $result = $this->dmr_model->addVerifyBeneficiary();
-                //echo $result;exit;
                 if($result == 0){                    
                     $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);
@@ -289,7 +288,7 @@ class Dmr extends CI_Controller {
                      redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                 }else if($result == 8){
                     $this->session->set_flashdata('err','User Already added.');  
-                     redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
+                      redirect('dmr/addBeneficiary/'.$this->input->post('card_no'));
                 }else if($result == 3){                     
                       $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);
