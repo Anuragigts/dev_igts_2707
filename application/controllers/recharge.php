@@ -31,7 +31,8 @@ class Recharge extends CI_Controller {
            $balance = $this->recharge_model->bal($req);
        }else{
             $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
-               $number = $this->input->get('number', TRUE);
+               //$number = $this->input->get('number', TRUE);
+               $number = $this->input->get('mobilenumber', TRUE);
                 $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=ESY+TOPUP+Incorrect+pattern,+Please+Send+Correct",
@@ -158,7 +159,8 @@ class Recharge extends CI_Controller {
                $V ="";
                
                echo  $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
-               $number = $this->input->get('number', TRUE);
+               //$number = $this->input->get('number', TRUE);
+               $number = $this->input->get('mobilenumber', TRUE);
                 $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=ESY+TOPUP+Incorrect+pattern,+Please+Send+Correct",
@@ -172,7 +174,7 @@ class Recharge extends CI_Controller {
            }
            
         }
-        if($codeval == "AIRTEL"){
+        if($codeval == "AIRTEL1"){
             $result = $this->recharge_model->doairteloff($url['2'],$url['3'],$req,$codeval); 
         }else{
         $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3'],$req);
@@ -204,7 +206,7 @@ class Recharge extends CI_Controller {
                   $amt = $this->settings_model->checkVirtual();	
                 
                 if($amt >= $this->input->post('amount')){ 
-                    if($this->input->post('oprator_name') == 'AIRTEL'){
+                    if($this->input->post('oprator_name') == 'AIRTEL1'){
                         $result = $this->recharge_model->doairtel(); 
                     }else{
                         $result = $this->recharge_model->doRecharge( $recharge_type);
@@ -356,5 +358,10 @@ class Recharge extends CI_Controller {
              );
          $data['details'] = $this->recharge_model->getrechargeDetails();
         $this->load->view('layout/inner_template',$data);
+    }
+    public function getsatus(){
+        $track = $_POST['id'];
+        $val = $this->recharge_model->getsatus($track);
+        echo $val;
     }
 }

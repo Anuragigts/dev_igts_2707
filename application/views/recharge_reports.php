@@ -125,6 +125,7 @@ only screen and (max-width: 760px),
                                         <?php } else { ?>
                                             <a href="#" class="btn btn-danger btn-sm refund_req" title="Generate  Complaint" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Generate  Complaint</a>
                                         <?php } ?>
+                                            <a href="#" class="trackmo" trackid="<?php echo $view->track_id;?>">check</a>
                                     </td>
                                 </tr>
                                <?php 
@@ -138,3 +139,24 @@ only screen and (max-width: 760px),
         </div>
     </div>
  </section>
+<script>
+        $(".trackmo").click(function(){
+            var id = $(this).attr('trackid');
+           // alert(id);
+             $.post('<?php echo base_url();?>recharge/getsatus',{'id':id},function(response){
+            
+            if(response =='1'){
+               alert("Successfully recharged.");
+                }else if(response =='0'){
+                    alert("Pending status.It may get success or failure.");
+                }else if(response =='2'){
+                    alert("Status Unknown (Continue checking this method until you get the status 1/3) .It may get success or failure.");
+                }else if(response =='3'){
+                    alert("Transaction Not Available on our Host / Failure-which is a Confirmed Failure .");
+                }else{
+                    alert("Unknown operator.");
+                }
+                					
+            });
+        });
+</script>

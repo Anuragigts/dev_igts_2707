@@ -2183,7 +2183,7 @@ class Dmr_model extends CI_Model
                             &lt;TOPUPTRANSID&gt;'.$track_id.'&lt;/TOPUPTRANSID&gt;
                             &lt;MOBILE&gt;'.$this->session->userdata('dmrmo').'&lt;/MOBILE&gt;                           
                             &lt;REGIONID&gt;1&lt;/REGIONID&gt;
-                            &lt;SERVICECHARGE&gt;'.(($topup_amt * 0.25)/100).'&lt;/SERVICECHARGE&gt;
+                            &lt;SERVICECHARGE&gt;0.00&lt;/SERVICECHARGE&gt;
                             &lt;PARAM1&gt;&lt;/PARAM1&gt;
                             &lt;PARAM2&gt;'.$key.'&lt;/PARAM2&gt;
                             &lt;PARAM3&gt;&lt;/PARAM3&gt;
