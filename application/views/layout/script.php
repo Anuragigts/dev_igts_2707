@@ -219,7 +219,7 @@ $(function(){
                 if(master != "Select Distributor" ) {
                         $.post('<?=base_url()?>common/packages',
                                     {'master':master,'valdist':valdist},function(response){
-                                    $('#package').html(response);
+                                   // $('#package').html(response);
                         });
                 }else{
                         $('#package').html('<option value="Select Package"> Select Package </option>');
