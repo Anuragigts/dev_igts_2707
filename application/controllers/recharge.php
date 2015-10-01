@@ -211,7 +211,7 @@ class Recharge extends CI_Controller {
                     }else{
                         $result = $this->recharge_model->doRecharge( $recharge_type);
                     }
-                                          
+                                        
                         if($result == 0){                    
                             $this->session->set_flashdata('msg','Your Recharge is success full.');  
                             redirect('recharge/mobile_recharge');

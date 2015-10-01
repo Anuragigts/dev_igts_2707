@@ -114,11 +114,13 @@
                                             <!--<input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount" readonly="readonly" type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >-->
                                             <!--<input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php // echo $i;?>" placeholder="Description" type="text" value="<?= set_value("remark"); ?>" >-->
                                             <!--<span class="red"><?=  form_error('remark');?></span>-->
+                                             <label for="Mobile" >Total amount</label>
+                                             <input name="" class="form-control m-c myamtt" id="total_amt<?php echo $i;?>" placeholder="Total Charge"  type="text" value="" readonly="readonly" >
+                                            
                                         </div>
                                         <div class="col-lg-3">
-                                            <!--span id="service_ch_<?php //echo $i;?>"></span-->
+                                            <span id="service_ch_<?php echo $i;?>"></span>
                                         </div>
-                                        
                                         
                                     </div>
                                 </div>
@@ -143,7 +145,7 @@
                                              <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->BENEID;?>" class="btn btn-danger" title="Remove"><i class="fa fa-trash-o "></i> Remove</a>
                                          </div> 
                                           <div class="col-lg-3">
-                                             
+                                              <button class="btn btn-danger cancel" >Cancel</button> 
                                              
                                          </div> 
                                      </div>
@@ -152,9 +154,6 @@
                          </div>
                       </div>
                    <?php $i++;}?>
-
-                   
-                   
                     
                </div>
 
@@ -164,11 +163,19 @@
  </section>
 <script>
     $('.myamt').val('');
+    $('.myamtt').val('');
+    $('.cancel').click(function(){
+        $('.myamt').val('');
+    $('.myamtt').val('');
+    });
     $('.myamt').keyup(function(){
-      /*  var getvel = $(this).attr('get');
+        var getvel = $(this).attr('get');
        var amt =  parseInt($('#total_'+getvel).val());
        var cal = (amt * 0.45)/100;
-       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2));*/
+       
+       var t = (amt + cal);
+       $('#total_amt'+getvel).val(t.toFixed(2));
+       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2)+" <br> No Charge for wallet transfer");
        
 //        if(amt >= 100 && amt < 25001){
 //           if(amt < 1001){

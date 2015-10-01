@@ -745,6 +745,7 @@ class Recharge_model extends CI_Model
                 curl_close ($curl);
 
                 $keep_array = explode('true', $result);
+				
                 if(count($keep_array)!= 2 ){
                     return 1;
                 }else{
@@ -757,7 +758,7 @@ class Recharge_model extends CI_Model
                 $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                $response = simplexml_load_string($final[0]);
-              // print_r($response);die();
+             // print_r($response);die();
                $this->db->reconnect();
                if($response->Status == 1){
                    

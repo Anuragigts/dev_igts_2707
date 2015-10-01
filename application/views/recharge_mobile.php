@@ -107,7 +107,7 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Circle Area<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <select class="select-oprator form-control circle1" id="" name="circle" >
+                                                 <select class=" form-control circle1"  name="circle" >
                                                      <option value="">Select</option> 
                                                      <?php foreach($circle as $c){?>
                                                         <option value="<?php echo $c->name;?>"><?php echo $c->name;?></option> 
