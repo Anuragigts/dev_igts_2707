@@ -110,7 +110,7 @@
    
     $('#amt').change(function(){
         var amt = parseInt($('#amt').val());
-        var ch = (amt * 0.20)/100;
+        var ch = (amt * 0.45)/100;
         $('#charge').val(ch.toFixed(2));
         
     });
