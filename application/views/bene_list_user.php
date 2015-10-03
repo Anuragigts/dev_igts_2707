@@ -99,7 +99,7 @@
                                         <div class="col-lg-2">
                                             <label for="Mobile" >IFSC<font class="red">*</font></label>
                                             <input type="text" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" class="form-control " id="ifedit_<?php echo $i;?>" readonly="readonly"/>
-                                            
+                                             <span class="red"><?=  form_error('ifsc');?></span>
                                             <input type="hidden" name="ben_id" value="<?php echo $dl->BENEID;?>" readonly="readonly"/>
                                             <input type="hidden" name="bene" value="<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?>" readonly="readonly"/>
                                             <input type="hidden" name="ac" value="<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>" readonly="readonly"/>
