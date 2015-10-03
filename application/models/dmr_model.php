@@ -2840,14 +2840,11 @@ class Dmr_model extends CI_Model
                             &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
                             &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;                          
                             &lt;USERMOBILENO&gt;'.$mo.'&lt;/USERMOBILENO&gt;
-                            
                             &lt;/FORGOTPINREQUEST&gt;
                        </RequestData>
                      </FORGOTPIN>
                    </soap:Body>
                  </soap:Envelope>';
-
-//echo $curlData;
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);

@@ -15,7 +15,7 @@
               <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
               <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
              
-				<?php  if($this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<?php if($this->session->userdata('dmrkyc') !="KYC  Processing"){?>
 				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
 				<?php }/*if($this->session->userdata('dmrkyc') =="KYC Processing"){echo "KYC Processing";}*/ ?>
 			  &nbsp;
