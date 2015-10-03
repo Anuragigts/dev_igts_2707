@@ -672,6 +672,7 @@ class Dmr extends CI_Controller {
                 
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
                  //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                 $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
@@ -712,7 +713,7 @@ class Dmr extends CI_Controller {
              }
              if($this->input->post('trans_top')){
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
-                 //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                  $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                 if($this->form_validation->run() == TRUE){
@@ -764,7 +765,7 @@ class Dmr extends CI_Controller {
              if($this->input->post('transneft')){ 
                 
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
-                 //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                  $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
@@ -805,7 +806,7 @@ class Dmr extends CI_Controller {
              /*** start wallet */
              if($this->input->post('transneft_top')){
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
-                 //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
+                 $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                 if($this->form_validation->run() == TRUE){

@@ -1035,7 +1035,7 @@ class Recharge_model extends CI_Model
         $this->db->join('user_type as u' , 'l.user_type = u.user_type_id', 'Inner');
         $this->db->where('r.hrm_track <>', ''); 
         $this->db->order_by('recharge_id', 'desc');
-        $this->db->limit(10);
+        $this->db->limit(20);
         $query = $this->db->get();
         //echo $this->db->last_query();
         if($this->db->affected_rows() > 0){

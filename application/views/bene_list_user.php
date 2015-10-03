@@ -27,7 +27,7 @@
        <?php //echo $this->session->userdata('dmrkyc');?>
        <div class="row">
            <?php $this->load->view("layout/success_error");?> 
-           <div class="row text-center"> 
+            <div class="row text-center"> 
                 <?php if(count($limit) != 0){?>
                    <div class="col-lg-3">
                        <h4>Wallet Amount: <fotn style="color:#4AC3E9 !important;"><?php echo $limit->CURRENTVALUE;?></fotn></h4>  
@@ -52,7 +52,7 @@
                     </div>
                    <?php }?>
                 </div>
-               </div>
+            </div>
            
            <div class="col-lg-12">
                <div class="panel-body">
@@ -81,40 +81,32 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-2"><br>
-                                            <?php if(strlen($dl->IFSCCODE) == 11) {?>
-                                            <input type="radio" name="typeamt" value="NEFT" checked="checked"> NEFT <br>
-											<input type="radio" name="typeamt" value="IFSC"> IFSC (Tatkal)<br>
-                                            <?php }else if(strlen($dl->IFSCCODE) == 4){?>
-                                            <input type="radio" name="typeamt" checked="checked" value="IFSC"> IFSC (Tatkal)<br>
+                                            <?php if(strlen($dl->IFSCCODE) != '') {?>
+                                                <input type="radio" name="typeamt" value="IFSC" checked="checked" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IFSC (Tatkal)<br>
+                                                <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>"> NEFT <br>
                                             <?php }else{?>
-                                            <input type="radio" name="typeamt" checked="checked" value="MIID"> MIID (Tatkal) <br>
+                                            <input type="radio" name="typeamt" checked="checked" value="MIID"> MIID (Tatkal) 
                                             <?php }?>
                                             <!--input type="radio" name="typeamt" > Tatkal-->
                                            
                                         </div>
-                                        <div class="col-lg-3">
-                                             <label for="Mobile" >Amount</label>
-                                             <!--<input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php echo $i;?>" placeholder="Amount" type="text" value="<?= set_value("remark"); ?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]">-->
+                                        <div class="col-lg-2">
+                                             <label for="Mobile" >Amount<font class="red">*</font></label>
                                              <input name="tr_amt" class="form-control m-c myamt" get="<?php echo $i;?>" id="total_<?php echo $i;?>" placeholder="Total Amount"  type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
-                                              <span class="red"><?=  form_error('tr_amt');?></span>
+                                             <span class="red"><?=  form_error('tr_amt');?></span>
                                         </div>
-<!--                                        <div class="col-lg-3">
-                                            <label for="Mobile" >Service Charge<font class="red mmid-imp">*</font></label>
-                                            <input name="tr_charge" id="charge_<?php echo $i;?>" class="form-control m-c" placeholder="Service Charge" type="hidden" value="<?= set_value("tr_charge"); ?>" readonly="readonly" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >
-                                           <span class="red"><?=  form_error('tr_charge');?></span>
-                                        <!--</div>-->
-                                        <div class="col-lg-3">
+                                        
+                                        <div class="col-lg-2">
+                                            <label for="Mobile" >IFSC<font class="red">*</font></label>
+                                            <input type="text" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" class="form-control " id="ifedit_<?php echo $i;?>" readonly="readonly"/>
+                                            
                                             <input type="hidden" name="ben_id" value="<?php echo $dl->BENEID;?>" readonly="readonly"/>
                                             <input type="hidden" name="bene" value="<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?>" readonly="readonly"/>
                                             <input type="hidden" name="ac" value="<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>" readonly="readonly"/>
-                                            <input type="hidden" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" readonly="readonly"/>
                                             <input type="hidden" name="mo" value="<?php if($dl->MOBILE != '0'){echo $dl->MOBILE;}?>" readonly="readonly"/>
-                                             <!--<label for="Mobile" >Total Amount<font class="red mmid-imp">*</font></label>-->
-                                             <!--<label for="Mobile" >Description<font class="red mmid-imp">*</font></label>-->
-                                            <!--<input name="tr_amt" class="form-control m-c" id="total_<?php echo $i;?>" placeholder="Total Amount" readonly="readonly" type="text" value="<?= set_value("tr_amt"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9.]" >-->
-                                            <!--<input name="remark"  class="form-control m-c amt" id="amt_<?php echo $i;?>" get="<?php // echo $i;?>" placeholder="Description" type="text" value="<?= set_value("remark"); ?>" >-->
-                                            <!--<span class="red"><?=  form_error('remark');?></span>-->
-                                             <label for="Mobile" >Total amount</label>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="Mobile" >Total amount</label>
                                              <input name="" class="form-control m-c myamtt" id="total_amt<?php echo $i;?>" placeholder="Total Charge"  type="text" value="" readonly="readonly" >
                                             
                                         </div>
@@ -168,6 +160,24 @@
         $('.myamt').val('');
     $('.myamtt').val('');
     });
+    
+     $('.nefradio').click(function(){
+        var atval = $(this).attr('ifcod');
+        var ifval = $('#ifedit_'+atval).val().length;
+        if(ifval != 11){
+           $('#ifedit_'+atval).removeAttr("readonly"); 
+           $('#ifedit_'+atval).val('');
+        }
+    });
+    $('.ifradio').click(function(){
+        var atval = $(this).attr('ifcod');
+        var ifs = $(this).attr('totalifsc');
+       $('#ifedit_'+atval).val(ifs);
+        $('#ifedit_'+atval).attr("readonly","readonly"); 
+         
+
+    });
+    
     $('.myamt').keyup(function(){
         var getvel = $(this).attr('get');
        var amt =  parseInt($('#total_'+getvel).val());
@@ -175,7 +185,7 @@
        
        var t = (amt + cal);
        $('#total_amt'+getvel).val(t.toFixed(2));
-       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2)+" <br> No Charge for wallet transfer");
+       $('#service_ch_'+getvel).html("<b>Transaction Charge </b> <br>"+cal.toFixed(2)+" <br> No Charge for wallet");
        
 //        if(amt >= 100 && amt < 25001){
 //           if(amt < 1001){
