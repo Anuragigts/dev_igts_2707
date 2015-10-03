@@ -3071,4 +3071,67 @@ class Dmr_model extends CI_Model
             
          }
     }
+    
+    public function forgotpin($mobile){
+        $url = DMRURL; 
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                <soap:Body>
+                    <FORGOTPIN  xmlns="http://tempuri.org/">
+                      <RequestData>
+                            &lt;FORGOTPINREQUEST&gt;
+                            &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                            &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                            &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;                          
+                            &lt;USERMOBILENO&gt;'.$mobile.'&lt;/USERMOBILENO&gt;
+                           
+                            &lt;/FORGOTPINREQUEST&gt;
+                       </RequestData>
+                     </FORGOTPIN>
+                   </soap:Body>
+                 </soap:Envelope>';
+
+//echo $curlData;
+            $curl = curl_init();
+
+            curl_setopt ($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+            curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                'SOAPAction:'.DMRACTIUON.'FORGOTPIN',
+                'Content-Type: text/xml; charset=utf-8;',
+            ));
+
+             curl_setopt ($curl, CURLOPT_POST, 1);
+
+            curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl);                 
+            curl_close ($curl);
+
+
+
+         $first_tag = explode('<VALIDATELOGIN_V1Result>', $result);       
+        // print_r($first_tag);die();
+         if(count($first_tag)!= 2 ){
+             return 0;
+         }else{
+             $get_less =  str_replace("&lt;","<",$first_tag[1]);
+             $get_full =  str_replace("&gt;",">",$get_less);
+
+             $final = explode('</VALIDATELOGIN_V1Result></VALIDATELOGIN_V1Response></soap:Body></soap:Envelope>', $get_full);
+
+             $response = simplexml_load_string($final[0]);
+            //echo "<pre>";
+			//print_r($response);die();
+             if($response->STATUSCODE == 0){
+                 return 1;
+             }else{
+                 return 0;
+             }
+         }
+    }
 }

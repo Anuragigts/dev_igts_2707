@@ -588,6 +588,23 @@ class Dmr extends CI_Controller {
                 }
             }
          }
+         if($this->input->post('pinget')){
+              $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
+              
+               if($this->form_validation->run() == TRUE){
+                $mo = $this->input->post('mobile');
+                $result = $this->dmr_model->forgotpin($mo);
+               //print_r($this->session->all_userdata());die();
+                if(count($result) == 1){
+                    $this->session->set_flashdata('msg','Please check your mobile to get the pin');  
+                       redirect('dmr/dmrUserSearch');
+                }
+              else{
+                     $this->session->set_flashdata('msg','Please use registered mobile umber.');  
+                       redirect('dmr/dmrUserSearch');
+                }
+            }
+         }
          
          $this->load->view('layout/inner_template',$data);
     }
