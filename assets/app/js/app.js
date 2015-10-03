@@ -2495,7 +2495,7 @@
 	  }else{ 
 		  swal({
 			title : "Are you sure?",
-			text : "You are going to recharge the DTH- "+ op +"  '"+ mo+"' with 'Rs. "+at+"'",
+			text : "You are going to recharge the Postpaid "+ op +"  '"+ mo+"' with 'Rs. "+at+"'",
 		   // type : "info",
 			showCancelButton : true,
 			confirmButtonColor : "#DD6B55",
