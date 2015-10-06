@@ -1974,7 +1974,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-        print_r($curlData);
+       // print_r($curlData);
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -2006,7 +2006,7 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-             print_r($response);die();
+            // print_r($response);die();
              if($response->STATUSCODE == 0){
                  
 		if($iscomm == 1){

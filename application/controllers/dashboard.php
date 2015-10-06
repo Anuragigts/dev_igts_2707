@@ -9,7 +9,8 @@ class Dashboard extends CI_Controller {
     }
     //index funs
      public function index(){
-        //print_r( $this->session->all_userdata());
+       //  $this->session->set_userdata('User_type', "1");
+    //    print_r( $this->session->all_userdata());
 //         if($this->session->userdata('user_type') == ""){ redirect("/");}
         $data = array(
               'title'         => 'ESY TOPUP :: DASHBOARD',
