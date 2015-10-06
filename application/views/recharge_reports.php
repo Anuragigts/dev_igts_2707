@@ -94,7 +94,7 @@ only screen and (max-width: 760px),
                              <th>Amount</th>
                              <th>Date & Time</th>
                              <th>Tractarians No</th>
-                             <th>Recharge Type</th>
+                             <th>Details</th>
                              <th>Status</th>
                              <th>Complaint</th>       
                           </tr>
@@ -111,7 +111,15 @@ only screen and (max-width: 760px),
                                     <td><?= $view->amount;?></td>
                                     <td><?= $view->responce_time;?></td>
                                     <td><?= $view->trans_no;?></td>
-                                    <td><?= $view->module_name;?></td>
+                                    <td><?= strtolower($view->op_name);?>
+                                                <?php if($view->recharge_type == 1){
+                                                    echo "Prepaid , ";
+                                                }else if($view->recharge_type == 2){
+                                                    echo "DTH, ";
+                                                }else if($view->recharge_type == 4){
+                                                    echo " ";
+                                                }?><br>
+                                               <?= $view->number;?></td>
                                     <td><?php if($view->trans_no != ''){echo "Success";}else{echo "Fail";}?></td>
                                     <td>
                                         <?php

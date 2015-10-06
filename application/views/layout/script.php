@@ -377,10 +377,16 @@ $("#user_type").change(function(){
             var login         =   $(this).attr("login");
             var user_name     =   $(this).attr("user_name");
              var amount      =   $(this).attr("amount");
+             var recharge      =   $(this).attr("recharge");
+             var op_name      =   $(this).attr("op_name");
+             var md      =   $(this).attr("md");
+             var sd      =   $(this).attr("sd");
+             var d      =   $(this).attr("d");
             var status      =  1;
              $.post('<?=base_url()?>funds/reffund_actdeact',
-               {'status':status,'fund':fund,'login':login,'amount':amount},function(response){
-                        if(response == 1){
+               {'status':status,'fund':fund,'login':login,'amount':amount,'recharge':recharge,'op_name':op_name,"md":md,"sd":sd,"d":d},function(response){
+               // alert(response);       
+                if(response == 1){
                                $(".success").html(user_name+" has been Approved");
                                $(".error").html("");
                                setTimeout(function(){

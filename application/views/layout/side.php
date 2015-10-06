@@ -327,11 +327,11 @@
                               <span>Recharge Report</span>
                            </a>
                         </li>
-                        <li class="commission_reports">
+<!--                        <li class="commission_reports">
                            <a href="<?= base_url()?>reports/commission_reports" title="Commission Reports">
                               <span>Commission Report</span>
                            </a>
-                        </li>
+                        </li>-->
 <!--                        <li class="dmr_reports">
                            <a href="<?= base_url()?>reports/dmr_reports" title="DMR Reports">
                               <span>DMR Report</span>

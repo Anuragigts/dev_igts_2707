@@ -52,7 +52,8 @@
                                        <label for="code" >Beneficiary Type<font class="red">*</font></label>
                                         <select class="form-control"  name="b_type" id='b_type' >
 <!--                                            <option value="">Select</option>-->
-                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IFSC</option>
+                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IMPS(without IFSC)</option>
+                                            <option value="IFSC1" <?php echo set_select('b_type','IFSC1', ( !empty($data) && $data == "IFSC1") ? TRUE : FALSE )?>>IMPS/NEFT</option>
                                             <option value="MMID" <?php echo set_select('b_type','MMID', ( !empty($data) && $data == "MMID") ? TRUE : FALSE )?>>MMID</option>
                                             
                                         </select> 
@@ -94,13 +95,13 @@
                                     <input name="b_name" class="form-control" type="text" value="<?= set_value("b_name"); ?>" placeholder="Beneficiary Name" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                     <span class="red"><?=  form_error('b_name');?></span>
                                 </div>
-                                 <div class="col-lg-4 m-c">
-                                    <label for="Mobile" >Mobile<font class="red mmid-imp">*</font></label>
+                                 <div class="col-lg-4 ">
+                                    <label for="Mobile" >Mobile<font class="red ">*</font></label>
                                     <input name="mobile" class="form-control " placeholder="Mobile" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                     <span class="red"><?=  form_error('mobile');?></span>
                                 </div>
                                 <div class="col-lg-4 b-c">
-                                     <label for="Mobile" >IFSC Code<font class="red ifsc-imp">*</font></label>
+                                     <label for="Mobile" >IFSC Code<font class="red b-i">*</font></label>
                                      <input name="ifsc_code" class="form-control  ajaxval" id="ifsc" type="text" value="<?= set_value("ifsc_code"); ?>" placeholder="IFSC Code" maxlength="11">
                                     <span class="red"><?=  form_error('ifsc_code');?></span>
                                 </div>
@@ -189,6 +190,12 @@
              $(".b-i").hide();
              $(".b-c").show('slide', {direction: 'left'}, 1400);
             $(".m-c").hide('slide', {direction: 'right'}, 1400);;
+        }else if(val == 'IFSC1'){
+            $('.ifsc-imp').show();
+            $('.mmid-imp').hide();
+             $(".b-i").show();
+             $(".b-c").show('slide', {direction: 'left'}, 1400);
+            $(".m-c").hide('slide', {direction: 'right'}, 1400);;
         }else{
             $('.ifsc-imp').hide();
             $('.mmid-imp').hide();
@@ -200,7 +207,7 @@
         //var require = $('#bnk_name').attr('is_require');$('option:selected', this).attr('is_require')
         var require = $('#bnk_name option:selected', this).attr('is_require');
         //alert(require);
-        if(require == '1'){
+        if(require == '1' && val == 'IFSC'){
              $('#ifsc').attr('readonly', 'readonly');
             $(".b-i").hide('slide', {direction: 'right'}, 1400);
              $('#reqval').val('');
@@ -214,7 +221,7 @@
                   // $("#loading").modal('hide'); 
                 }
             });
-        }else if(require == '0'){
+        }else if(require == '1' && val == 'IFSC1'){
              $('#ifsc').removeAttr('readonly', 'readonly');
             $(".b-i").show('slide', {direction: 'left'}, 1400);
              $('#reqval').val('1');
@@ -239,6 +246,13 @@
             $('.ifsc-imp').show();
             $('.mmid-imp').hide();
              $(".b-i").hide();
+            $(".b-c").show('slide', {direction: 'left'}, 1400);
+            $(".m-c").hide('slide', {direction: 'right'}, 1400);;
+        }else if(val == 'IFSC1'){
+            $('#bnk_name').val('');
+            $('.ifsc-imp').show();
+            $('.mmid-imp').hide();
+             $(".b-i").show();
             $(".b-c").show('slide', {direction: 'left'}, 1400);
             $(".m-c").hide('slide', {direction: 'right'}, 1400);;
         }else{
@@ -282,7 +296,11 @@
     $('#bnk_name').change(function(){
         var require = $('option:selected', this).attr('is_require');
         $('.ajaxval').val('');
-        if(require == '1'){
+        var val = $('#b_type').val();
+        var require = $('option:selected', this).attr('is_require');
+        //alert(val);
+        if(val == 'IFSC'){
+            if(require == 1){
             $('#ifsc').attr('readonly', 'readonly');
             $(".b-i").hide('slide', {direction: 'right'}, 1400);
             $('#reqval').val('');
@@ -300,12 +318,14 @@
              $('#ifsc').removeAttr('readonly', 'readonly');
             $(".b-i").show('slide', {direction: 'left'}, 1400);
              $('#reqval').val('1');
+        }
         }else{
-            $(".b-i").hide('slide', {direction: 'right'}, 1400);
-            $('#reqval').val('1');
+        $('#ifsc').removeAttr('readonly', 'readonly');
+            //$(".b-i").hide('slide', {direction: 'right'}, 1400);
+           // $('#reqval').val('1');
         }
     });
-    $('#ifsc').keyup(function(){
+    $('#ifsc').blur(function(){
         var ifsc = $('#ifsc').val(); 
         var bank =$('#bnk_name').val();
        // alert('jj');

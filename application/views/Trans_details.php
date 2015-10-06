@@ -105,6 +105,7 @@
                                            <td></td>
                                              <td>
                                                 <button type="button" onclick="window.print();" class="btn btn-info pull-left">Print</button>
+                                                &nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>dmr/beneficiaryList" class="btn  btn-default">Do Another Transaction</a>
                                              </td>
                                         </tr>
                                         </table>

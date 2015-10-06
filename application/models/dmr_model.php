@@ -660,7 +660,7 @@ class Dmr_model extends CI_Model
         if($this->db->affected_rows() == 1){
             $my_DMR_id = $this->db->insert_id();
             $url = DMRURL; 
-            if($this->input->post('b_type') == 'IFSC'){
+            if($this->input->post('b_type') == 'IFSC' || $this->input->post('b_type') == 'IFSC1'){
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
@@ -1921,19 +1921,20 @@ class Dmr_model extends CI_Model
         $ben_id = $this->input->post('ben_id');
         $ben_anme = $this->input->post('bene');
 
-        if($ben_anme == 'MMID'){
+        if($this->input->post('typeamt') == 'MIID'){
             $val = '1';
             $desc = $this->input->post('ac');
-
-        }else{
+        }else if($this->input->post('typeamt')== 'IFSC'){
             $val = '2';
             $desc = $this->input->post('ac');
+        }else if($this->input->post('typeamt')== 'NEFT'){
+            $val = '8';
+            $desc = $this->input->post('ac');
+        }else{
+            $val = '';
+            $desc = '';
         }
-        if($type != 0 && $this->input->post('typeamt')== 'IFSC'){
-            $val = 2;
-        }if($type != 0 && $this->input->post('typeamt')== 'NEFT'){
-			$val = $type;
-		}
+
         
         $a = mt_rand(100000,999999); 
         for ($i = 0; $i<22; $i++) 
@@ -1973,7 +1974,7 @@ class Dmr_model extends CI_Model
                    </soap:Body>
                  </soap:Envelope>';
 
-       // echo $curlData;
+        print_r($curlData);
             $curl = curl_init();
 
             curl_setopt ($curl, CURLOPT_URL, $url);
@@ -2005,32 +2006,10 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-            // print_r($response);die();
+             print_r($response);die();
              if($response->STATUSCODE == 0){
-                 /*$ser = (($this->input->post('tr_amt') * 0.45) /100);
-                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-                   if($query2 && $query2->num_rows()== 1){ 
-                       $totalcharge =  $ser;
-                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
-                       $val2 = $query2->row()->amount;
-                       $insfrom   =   array(                      
-                               "amount"     => ($val2 - $totalcharge)
-                           );
-                       $this->db->where("user_id",$this->session->userdata('login_id'));
-                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                      
-                        $myupdate = array(
-                          "trans_from"    =>   $this->session->userdata('login_id'),
-                          "trans_to"      =>     0,
-                         "cur_amount"      =>    ($val2 - $totalcharge),
-                          "trans_amt"     =>     floatval($totalcharge),
-                          "trans_remark"  =>     "DMR transaction charge $name",
-                            "type"  =>     "2",
-                            'trans_date' => date('Y-m-d H:i:s')
-                       );
-                      $query =   $this->db->insert("trans_detail", $myupdate);
-                   }*/
-				   if($iscomm == 1){
+                 
+		if($iscomm == 1){
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
@@ -2063,31 +2042,8 @@ class Dmr_model extends CI_Model
              }else if($response->STATUSCODE == 1){
                  return 2;
              }else if($response->STATUSCODE == 2){
-                 $track_id1 = $track_id;
-                 /* $ser = (($this->input->post('tr_amt') * 0.45) /100);
-                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
-                   if($query2 && $query2->num_rows()== 1){ 
-                       $totalcharge =  $ser;
-                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
-                       $val2 = $query2->row()->amount;
-                       $insfrom   =   array(                      
-                               "amount"     => ($val2 - $totalcharge)
-                           );
-                       $this->db->where("user_id",$this->session->userdata('login_id'));
-                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                      
-                        $myupdate = array(
-                          "trans_from"    =>   $this->session->userdata('login_id'),
-                          "trans_to"      =>     0,
-                         "cur_amount"      =>    ($val2 - $totalcharge),
-                          "trans_amt"     =>     floatval($totalcharge),
-                          "trans_remark"  =>     "DMR transaction charge $name",
-                            "type"  =>     "2",
-                            'trans_date' => date('Y-m-d H:i:s')
-                       );
-                      $query =   $this->db->insert("trans_detail", $myupdate);
-                   }*/
-				    if($iscomm == 1){
+                 
+		if($iscomm == 1){
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
@@ -2108,7 +2064,7 @@ class Dmr_model extends CI_Model
             );       
                  $insert = $this->db->insert('transection_track',$up);
                  //echo $track_id;die();
-                 return $track_id1;
+                 return $track_id;
              }else if($response->STATUSCODE == 3){
                  return 4;
              }else{

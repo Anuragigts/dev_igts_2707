@@ -111,18 +111,19 @@
                              <table id="datatable1" class="table table-striped table-hover">
                                 <thead>
                                    <tr>
-                                      <th >S.No.</th>
+                                      <!--<th >S.No.</th>-->
+                                       <th >Time</th>
                                       <th >Transaction ID</th>
                                       
                                       <th >Receiver</th>
                                       
                                       <th >Receiver Mobile</th>
-                                      <th >Time</th>
+                                      
                                       <th>Type</th>
                                       <th>MMID/Acc</th>
                                       <th >From Acc</th>
                                       <th >Amount</th>
-                                      <th >Service Charge</th> 
+                                     
                                       <th >Status</th>                             
                                    </tr>
                                 </thead>
@@ -131,19 +132,26 @@
                                         if($i>2){
                                         ?>
                                      <tr>
-                                         <td><?php echo $j;$j++; ?></td>
+                                         <!--<td><?php // echo $j;$j++; ?></td>-->
+                                          <td><?php echo $sc->DATETIME;?></td>
                                          <td><?php echo $sc->TRANSACTIONID;?></td>
                                         
                                          <td><?php echo $sc->BENENAME;?></td>
                                          
-                                         <td><?php echo ($sc->BENEMOBILE!="?>")?$sc->BENEMOBILE:'N/A';?></td>
-                                         <td><?php echo $sc->DATETIME;?></td>
-                                         <td><?php if($sc->MMID !=''){echo "MMID";}else{echo "IFSC";}?></td>                                         
+                                         <td><?php echo ($sc->BENEMOBILE!="")?$sc->BENEMOBILE:'N/A';?></td>
+                                        
+                                         <td><?php echo $sc->ACCOUNTTYPE; ?></td>                                         
                                          <td><?php if($sc->MMID !=''){echo $sc->MMID;}else{echo $sc->TOACCOUNTNO;}?></td>
                                          <td><?php echo $sc->FROMACCOUNTNO;?></td>
                                          <td><?php echo $sc->TRANSACTIONAMOUNT;?></td>
-                                         <td><?php echo $sc->SERVICECHARGE;?></td>
-                                         <td><?php echo $sc->TRANSACTIONSTATUS;?></td>
+                                         
+                                         <td><?php 
+                                         if($sc->TRANSACTIONAMOUNT == '1.00'){
+                                             echo "Account verified";
+                                         }else if($sc->TRANSACTIONSTATUS == "Unknown"){
+                                             echo "Success";
+                                         }else{
+                                         echo $sc->TRANSACTIONSTATUS;}?></td>
                                      </tr>
                                         <?php }$i++;}?>
                                 </tbody>

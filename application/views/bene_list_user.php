@@ -79,12 +79,14 @@
                          <div class="panel-wrapper collapsing">
                              <form method="post">
                                 <div class="panel-body">
-                                    <div class="row">
+                                    <div class="row"><?php //echo "<pre>"; print_r($dl);?>
                                         <div class="col-lg-2"><br>
-                                            <?php if(strlen($dl->IFSCCODE) != '') {?>
-                                                <input type="radio" name="typeamt" value="IFSC" checked="checked" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IFSC (Tatkal)<br>
-                                                <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>"> NEFT <br>
-                                            <?php }else{?>
+                                            <?php if(strlen($dl->IFSCCODE) == 11) {?>
+                                                <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>" checked="checked"> NEFT / IMPS <br>
+                                                <!--<input type="radio" name="typeamt" value="IFSC"  class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IFSC (Tatkal)<br>-->
+                                            <?php }if(strlen($dl->IFSCCODE) != 11 && strlen($dl->IFSCCODE) != '') {?>
+                                                <input type="radio" name="typeamt" value="IFSC" checked="checked" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IMPS (Tatkal)<br>
+                                            <?php }if(strlen($dl->IFSCCODE) == '') {?>
                                             <input type="radio" name="typeamt" checked="checked" value="MIID"> MIID (Tatkal) 
                                             <?php }?>
                                             <!--input type="radio" name="typeamt" > Tatkal-->
@@ -96,9 +98,9 @@
                                              <span class="red"><?=  form_error('tr_amt');?></span>
                                         </div>
                                         
-                                        <div class="col-lg-2">
-                                            <label for="Mobile" >IFSC<font class="red">*</font></label>
-                                            <input type="text" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" class="form-control " id="ifedit_<?php echo $i;?>" readonly="readonly"/>
+                                        <div class="col-lg-1">
+                                            <!--<label for="Mobile" >IFSC<font class="red">*</font></label>-->
+                                            <input type="hidden" name="ifsc" value="<?php echo $dl->IFSCCODE;?>" class="form-control " id="ifedit_<?php echo $i;?>" readonly="readonly"/>
                                              <span class="red"><?=  form_error('ifsc');?></span>
                                             <input type="hidden" name="ben_id" value="<?php echo $dl->BENEID;?>" readonly="readonly"/>
                                             <input type="hidden" name="bene" value="<?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?>" readonly="readonly"/>
@@ -110,13 +112,13 @@
                                              <input name="" class="form-control m-c myamtt" id="total_amt<?php echo $i;?>" placeholder="Total Charge"  type="text" value="" readonly="readonly" >
                                             
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <span id="service_ch_<?php echo $i;?>"></span>
                                         </div>
                                         
                                     </div>
                                 </div>
-                                 <div class="panel-footer">
+                                 <div class="panel-footer" style="background-color: #ccc;">
                                      <div class="row">
                                          <?php if(strlen($dl->IFSCCODE) != 11) {?>
                                           <div class="col-lg-3" >                                              
@@ -161,22 +163,22 @@
     $('.myamtt').val('');
     });
     
-     $('.nefradio').click(function(){
-        var atval = $(this).attr('ifcod');
-        var ifval = $('#ifedit_'+atval).val().length;
-        if(ifval != 11){
-           $('#ifedit_'+atval).removeAttr("readonly"); 
-           $('#ifedit_'+atval).val('');
-        }
-    });
-    $('.ifradio').click(function(){
-        var atval = $(this).attr('ifcod');
-        var ifs = $(this).attr('totalifsc');
-       $('#ifedit_'+atval).val(ifs);
-        $('#ifedit_'+atval).attr("readonly","readonly"); 
-         
-
-    });
+//     $('.nefradio').click(function(){
+//        var atval = $(this).attr('ifcod');
+//        var ifval = $('#ifedit_'+atval).val().length;
+//        if(ifval != 11){
+//           $('#ifedit_'+atval).removeAttr("readonly"); 
+//           $('#ifedit_'+atval).val('');
+//        }
+//    });
+//    $('.ifradio').click(function(){
+//        var atval = $(this).attr('ifcod');
+//        var ifs = $(this).attr('totalifsc');
+//       $('#ifedit_'+atval).val(ifs);
+//        $('#ifedit_'+atval).attr("readonly","readonly"); 
+//         
+//
+//    });
     
     $('.myamt').keyup(function(){
         var getvel = $(this).attr('get');

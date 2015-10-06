@@ -223,9 +223,9 @@ class Dmr extends CI_Controller {
            // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
+             $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
             if($this->input->post('b_type') == 'MMID'){
                 $this->form_validation->set_rules('mmid',     "MMID Number",            'required');
-                $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
@@ -236,6 +236,16 @@ class Dmr extends CI_Controller {
                     $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
                     $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
                  }
+               
+            }
+            if($this->input->post('b_type') == 'IFSC1'){
+                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
+                $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                $this->form_validation->set_rules('state',     "State",                 'required');
+                $this->form_validation->set_rules('city',      "City",                  'required');
+                $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                $this->form_validation->set_rules('address',"Address",          'required');
+                $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
                
             }
             if($this->form_validation->run() == TRUE){
@@ -262,9 +272,9 @@ class Dmr extends CI_Controller {
            // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
+            $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
             if($this->input->post('b_type') == 'MMID'){
                 $this->form_validation->set_rules('mmid',     "MMID Number",            'required');
-                $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
@@ -689,7 +699,7 @@ class Dmr extends CI_Controller {
                 
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
                  //$this->form_validation->set_rules('tr_charge',  'Service Charge',   'required');
-                 $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
+                 //$this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                  if($this->form_validation->run() == TRUE){
@@ -730,7 +740,7 @@ class Dmr extends CI_Controller {
              }
              if($this->input->post('trans_top')){
                  $this->form_validation->set_rules('tr_amt',  'Transfer Amount',   'required');
-                  $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
+                 // $this->form_validation->set_rules('ifsc',  'IFSC',   'required');
                  $this->form_validation->set_rules('ben_id',  'Beneficiary Id',   'required');
                 // $this->form_validation->set_rules('otp',  'OTP',   'required');
                 if($this->form_validation->run() == TRUE){
