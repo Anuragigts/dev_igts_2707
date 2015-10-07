@@ -132,7 +132,7 @@
                    $('#br').html(response);
 				    $("#loading").modal('hide');
                 }else{
-                  return false;
+                  $('#br').html("<option value=''>Select</option>");
 				   $("#loading").modal('hide');
                 }
             });

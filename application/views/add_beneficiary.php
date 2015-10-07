@@ -228,7 +228,7 @@
             if(response !=''){
                    $('#br').html(response);
                 }else{
-                  return false;
+                  $('#br').html("<option value=''>Select</option>");
                 }
             });
     });
