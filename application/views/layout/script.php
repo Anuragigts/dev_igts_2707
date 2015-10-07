@@ -127,7 +127,7 @@
 			
            
             $.post('<?php echo base_url();?>dmr/getbran',{'name':name,'state':val,'city':''},function(response){            
-              alert(response); 
+             
             if(response !=''){
                    $('#br').html(response);
 				    $("#loading").modal('hide');
