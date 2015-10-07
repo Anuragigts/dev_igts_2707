@@ -242,7 +242,7 @@ class Dmr extends CI_Controller {
                     $minmax = "|min_length[13]|max_length[14]|numeric";
                 }
                  $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
-                 if($this->input->post('reqval') == '1'){ 
+                 if($this->input->post('reqval') == '0'){ 
                     $this->form_validation->set_rules('state',     "State",                 'required');
                     $this->form_validation->set_rules('city',      "City",                  'required');
                     $this->form_validation->set_rules('branch_name',"Branch Name",          'required');

@@ -52,9 +52,9 @@
                                        <label for="code" >Beneficiary Type<font class="red">*</font></label>
                                         <select class="form-control"  name="b_type" id='b_type' >
 <!--                                            <option value="">Select</option>-->
-                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IMPS(without IFSC)</option>
-                                            <option value="IFSC1" <?php echo set_select('b_type','IFSC1', ( !empty($data) && $data == "IFSC1") ? TRUE : FALSE )?>>IMPS/NEFT</option>
-                                            <option value="MMID" <?php echo set_select('b_type','MMID', ( !empty($data) && $data == "MMID") ? TRUE : FALSE )?>>MMID</option>
+                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IMPS(Tatkal Transfer)</option>
+                                            <option value="IFSC1" <?php echo set_select('b_type','IFSC1', ( !empty($data) && $data == "IFSC1") ? TRUE : FALSE )?>>NEFT Transfer</option>
+                                            <option value="MMID" <?php echo set_select('b_type','MMID', ( !empty($data) && $data == "MMID") ? TRUE : FALSE )?>>MMID Transfer</option>
                                             
                                         </select> 
                                         <span class="red"><?=  form_error('b_type');?></span>
@@ -237,15 +237,17 @@
         var city = $('.mycity').val();
         var state = $('.mystate').val();
         var br = $('#br').val();
-           
+            $("#loading").modal('show');
             $.post('<?php echo base_url();?>dmr/dearchBranch',{'name':name,'state':state,'city':city,'br':br},function(response){            
-            //alert(response); 
+           // alert(response); 
             if(response !=''){
                 $('.search-details').css('display',"inline");
                    $('.search-details').html(response);
+				   $("#loading").modal('hide');
                 }else{
                     $('.search-details').css('display',"inline");
                   $('.search-details').html("No Branch found.");
+				  $("#loading").modal('hide');
                 }
             });
     });
@@ -278,9 +280,16 @@
              $(".b-c").hide('slide', {direction: 'right'}, 1400);
             $(".m-c").show('slide', {direction: 'left'}, 1400);
         }else if(val == 'IFSC'){
+			var require = $('#bnk_name option:selected', this).attr('is_require');
+			
             $('.ifsc-imp').show();
             $('.mmid-imp').hide();
-             $(".b-i").hide();
+			if(require == 1){
+				$(".b-i").hide();
+			}else{
+				$(".b-i").show();
+			}
+             
              $(".b-c").show('slide', {direction: 'left'}, 1400);
             $(".m-c").hide('slide', {direction: 'right'}, 1400);;
         }else if(val == 'IFSC1'){

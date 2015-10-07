@@ -112,7 +112,7 @@
     // Get city by ajax
     $('#statea').change(function(){
         var id =  $('option:selected', this).attr('state_id');//$('#state').val();
-      // alert(id);
+       $("#loading").modal('show');
         $.post('<?php echo base_url();?>common/citya',{'state':id},function(response){
                 //alert(response);
                 if(response != ""){
@@ -120,6 +120,21 @@
                 }else{
                       $('#city').html("<option value=''>Select</option>");
                 }					
+            });
+			var val = $('#statea').val();
+			var name = $('#bnk_name').val();
+			var city = $('.mycity').val();
+			
+           
+            $.post('<?php echo base_url();?>dmr/getbran',{'name':name,'state':val,'city':''},function(response){            
+              alert(response); 
+            if(response !=''){
+                   $('#br').html(response);
+				    $("#loading").modal('hide');
+                }else{
+                  return false;
+				   $("#loading").modal('hide');
+                }
             });
     });
      
