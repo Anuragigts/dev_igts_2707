@@ -1083,7 +1083,7 @@ class Dmr_model extends CI_Model
                       return 0;  
 
                     }else if($response->STATUSCODE == 1){ 
-                        $this->session->set_flashdata('msg','Your Beneficiary registration is successfull but verification is failed  Please verify if by using OTP.');  
+                        $this->session->set_flashdata('err','Your Beneficiary registration is successfull but verification is failed  Please verify if by using OTP.');  
                          redirect('dmr/beneficiaryOTP/'.$my_DMR_id.'/'.$this->input->post('card_no'));
                         
                     }else if($response->STATUSCODE == 2){
