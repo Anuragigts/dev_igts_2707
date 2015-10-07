@@ -169,20 +169,18 @@
                                         <div class="col-lg-12 search-hide"><h4>Search Branch</h4></div>
                                         <div class="col-lg-3">
                                             <label for="Mobile" >State</label>
-                                            <select class="form-control mystate" id="statea" >
+                                            <select class="form-control mystate" id="stateb" >
                                                 <option value="">Select</option>
-                                                <?php foreach($states as $st){?>
-                                                <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
+                                                <?php foreach($states1 as $st){?>
+                                                <option value="<?php echo $st->state?>"  <?php echo set_select('state',$st->state, ( !empty($data) && $data == "$st->state") ? TRUE : FALSE )?>><?php echo $st->state?></option>
                                                 <?php }?>
                                             </select>
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="Mobile" >City</label>
-                                            <select class="form-control mycity" id="city"  >
+                                            <select class="form-control mycity" id="citya"  >
                                                 <option value="">Select</option>
-                                                <?php foreach($citys as $ct){?>
-                                                <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
-                                                <?php }?>
+                                                
                                             </select>     
                                         </div>
                                         <div class="col-lg-3">
@@ -199,8 +197,6 @@
                                 </div>
                                 <div class="col-lg-12 ">&nbsp;<br></div>
                                 <div class="col-lg-12 search-details"></div>
-                               
-                                
                               
 
                             </div>
@@ -218,6 +214,17 @@
     $("#searchIFSC").click(function(){
         $('.search-hide').css('display',"inline");
     });
+    $('#stateb').change(function(){
+		var st = $('#stateb').val();
+		$.post('<?php echo base_url();?>dmr/getbrcity',{'st':st},function(response){            
+             // alert(response); 
+            if(response !=''){
+                   $('#citya').html(response);
+                }else{
+                  $('#citya').html("<option value=''>Select</option>");
+                }
+            });
+	});
     $('.mycity').change(function(){
         var name = $('#bnk_name').val();
         var city = $('.mycity').val();

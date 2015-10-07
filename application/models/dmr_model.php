@@ -1053,9 +1053,9 @@ class Dmr_model extends CI_Model
                     
                     $response = simplexml_load_string($final[0]);
                     
-                   //print_r($response); die();
+                  // print_r($response); die();
                     
-                     if($response->STATUSCODE == 0 || $response->RESPONSECODE == 92 ){
+                     if($response->STATUSCODE == 0 ){
                        
                   $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                    if($query2 && $query2->num_rows()== 1){ 
@@ -3097,6 +3097,32 @@ class Dmr_model extends CI_Model
             return 0;
         }
     }
+	public function getStateBank(){
+        $bank = $this->input->post('bank_name');
+        $query = $this->db->query("SELECT DISTINCT(state)state FROM bank_details ORDER BY state ");
+        if($query && $query->num_rows()>0){
+            return $query->result();
+        }else{
+            return array();
+        }
+    }
+	public function getcityBank(){
+       
+    }
+	public function getbrcity($st){
+        $bank = $this->input->post('bank_name');
+        $query = $this->db->query("SELECT DISTINCT(city)city FROM bank_details WHERE state='$st' ORDER BY state desc");
+        if($query && $query->num_rows()>0){
+			$val = "<option value=''>Select</option>";
+             foreach($query->result() as $data){
+                 $val .="<option value='".$data->city."'>".$data->city."</option>"; 
+              }
+        }else{
+            $val = "";
+        }
+		return $val;
+    }
+	
     public function getbranchbank($bnk, $state, $city){
         $where = "bank = '$bnk'";
         if($state != ''){

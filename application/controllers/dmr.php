@@ -369,7 +369,7 @@ class Dmr extends CI_Controller {
                      redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
-                  $this->session->set_flashdata('msg','Beneficary Account Addedd  but not verified Please try again, Please confirm with OTP.');  
+                  $this->session->set_flashdata('err','Beneficary Account Addedd  but not verified Please try again, Please confirm with OTP.');  
                    redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                 }
             }
@@ -379,6 +379,8 @@ class Dmr extends CI_Controller {
         $india = '101';
         $data['states']=$this->common->getState($india);
         $data['citys']=$this->common->getcity();
+		$data['states1']=$this->dmr_model->getStateBank();
+        $data['citys1']=$this->dmr_model->getcityBank();
        
         $data['banks'] = $this->common->bank_name();
          $this->load->view('layout/inner_template',$data);
@@ -1359,6 +1361,12 @@ class Dmr extends CI_Controller {
         $state = $_POST['state'];
         $city = $_POST['city'];
        $br = $this->dmr_model->getbranchbank($bnk, $state, $city);
+       echo $br;
+    }
+	public function getbrcity(){
+        $st = $_POST['st'];
+       
+       $br = $this->dmr_model->getbrcity($st);
        echo $br;
     }
     public function dearchBranch(){
