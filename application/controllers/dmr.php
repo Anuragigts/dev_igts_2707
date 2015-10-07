@@ -247,19 +247,18 @@ class Dmr extends CI_Controller {
                     $this->form_validation->set_rules('city',      "City",                  'required');
                     $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
                     $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+					$this->form_validation->set_rules('address',"Address",          'required');
                  }
                
             }
-            if($this->input->post('b_type') == 'IFSC1'){
-                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');                
-                $this->form_validation->set_rules('state',     "State",                 'required');
-                $this->form_validation->set_rules('city',      "City",                  'required');
-                $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+			
+            if($this->input->post('b_type') == 'IFSC1'){ 
+                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
                 $bnkacc_cnt = $this->dmr_model->bnkcnt();
                 if($bnkacc_cnt == "" || $bnkacc_cnt == 0){
-                    $minmax = "| min_length[10]|numeric";
+                    $minmax = "|min_length[10]|max_length[18]|numeric";
                 }else{
-                     $minmax = "| min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
+                     $minmax = "|min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
                 }
                 if($this->input->post('bank_name') == "IDBI BANK"){
                     $minmax = "|min_length[13]|max_length[16]|numeric";
@@ -267,10 +266,14 @@ class Dmr extends CI_Controller {
                 if($this->input->post('bank_name') == "HDFC BANK"){
                     $minmax = "|min_length[13]|max_length[14]|numeric";
                 }
-                $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
-                $this->form_validation->set_rules('address',"Address",          'required');
-                $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
-               
+                 $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
+                
+                    $this->form_validation->set_rules('state',     "State",                 'required');
+                    $this->form_validation->set_rules('city',      "City",                  'required');
+                    $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                    $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+					$this->form_validation->set_rules('address',"Address",          'required');
+                 
             }
             if($this->form_validation->run() == TRUE){
                 //echo "jiiii";die();
@@ -292,24 +295,61 @@ class Dmr extends CI_Controller {
             }
         }
         if($this->input->post('verify')){
-            $this->form_validation->set_rules('card_no',     'Card Number',             'required');
+             $this->form_validation->set_rules('card_no',     'Card Number',             'required');
            // $this->form_validation->set_rules('trans_no',    'Transaction Number',      'required');
             $this->form_validation->set_rules('b_type',      'Beneficiary Type',        'required');
             $this->form_validation->set_rules('b_name',      'Beneficiary Name',        'required');
-            $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
+             $this->form_validation->set_rules('mobile',   "Mobile",                 'required|min_length[10]|max_length[10]|numeric');
             if($this->input->post('b_type') == 'MMID'){
                 $this->form_validation->set_rules('mmid',     "MMID Number",            'required');
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
-                 $this->form_validation->set_rules('ac_no',      "Account No",           'required');
-                 if($this->input->post('reqval') == '1'){ 
+                $bnkacc_cnt = $this->dmr_model->bnkcnt();
+                if($bnkacc_cnt == "" || $bnkacc_cnt == 0){
+                    $minmax = "|min_length[10]|max_length[18]|numeric";
+                }else{
+                     $minmax = "|min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
+                }
+                if($this->input->post('bank_name') == "IDBI BANK"){
+                    $minmax = "|min_length[13]|max_length[16]|numeric";
+                }
+                if($this->input->post('bank_name') == "HDFC BANK"){
+                    $minmax = "|min_length[13]|max_length[14]|numeric";
+                }
+                 $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
+                 if($this->input->post('reqval') == '0'){ 
                     $this->form_validation->set_rules('state',     "State",                 'required');
                     $this->form_validation->set_rules('city',      "City",                  'required');
                     $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
                     $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+					$this->form_validation->set_rules('address',"Address",          'required');
                  }
                
+            }
+			
+            if($this->input->post('b_type') == 'IFSC1'){ 
+                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
+                $bnkacc_cnt = $this->dmr_model->bnkcnt();
+                if($bnkacc_cnt == "" || $bnkacc_cnt == 0){
+                    $minmax = "|min_length[10]|max_length[18]|numeric";
+                }else{
+                     $minmax = "|min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
+                }
+                if($this->input->post('bank_name') == "IDBI BANK"){
+                    $minmax = "|min_length[13]|max_length[16]|numeric";
+                }
+                if($this->input->post('bank_name') == "HDFC BANK"){
+                    $minmax = "|min_length[13]|max_length[14]|numeric";
+                }
+                 $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
+                
+                    $this->form_validation->set_rules('state',     "State",                 'required');
+                    $this->form_validation->set_rules('city',      "City",                  'required');
+                    $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                    $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
+					$this->form_validation->set_rules('address',"Address",          'required');
+                 
             }
             if($this->form_validation->run() == TRUE){
                 

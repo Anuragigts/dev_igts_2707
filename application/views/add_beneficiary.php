@@ -169,7 +169,7 @@
                                         <div class="col-lg-12 search-hide"><h4>Search Branch</h4></div>
                                         <div class="col-lg-3">
                                             <label for="Mobile" >State</label>
-                                            <select class="form-control mystate" id="statea" name="state">
+                                            <select class="form-control mystate" id="statea" >
                                                 <option value="">Select</option>
                                                 <?php foreach($states as $st){?>
                                                 <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
@@ -178,7 +178,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="Mobile" >City</label>
-                                            <select class="form-control mycity" id="city" name="city" >
+                                            <select class="form-control mycity" id="city"  >
                                                 <option value="">Select</option>
                                                 <?php foreach($citys as $ct){?>
                                                 <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
@@ -187,7 +187,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="Mobile" >Branch</label>
-                                             <select class="form-control " id="br" name="city" >
+                                             <select class="form-control " id="br"  >
                                                 <option value="">Select</option>
                                                 
                                             </select>     
