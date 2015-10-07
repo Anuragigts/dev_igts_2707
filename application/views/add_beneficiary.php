@@ -255,7 +255,7 @@
         var city = $(this).attr('city');
         var add = $(this).attr('add');
         var br = $(this).attr('branch');
-        alert(ifsc);
+       
         $('#ifsc').val(ifsc);
         $('#state1').val(state);
         $('#city1').val(city);
