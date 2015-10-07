@@ -73,7 +73,7 @@
                                         <span class="red"><?=  form_error('first_name');?></span>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                     <div class="form-group">
                                        <label for="code" >Middle Name<font class="red n">*</font></label>
                                         <input name="middle_name" id="code" placeholder="Middle Name" class="form-control " type="text" value="<?= set_value("middle_name"); ?>" >
@@ -91,24 +91,24 @@
                     <div class="row">
                         <div class="panel panel-default">                            
                             <div class="panel-body">
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                     <label for="Mobile" >Mother's Name<font class="red n">*</font></label>
                                     <input name="m_name" placeholder="Mother's Name" class="form-control" type="text" value="<?= set_value("m_name"); ?>" >
                                     <span class="red"><?=  form_error('m_name');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                     <label for="Mobile" >Date Of Birth<font class="red  n">*</font></label>
                                     <input name="dob" class="form-control" type="text" value="<?= set_value("dob"); ?>"  placeholder="dd/mm/yyyy">
                                     <span class="red"><?=  form_error('dob');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                     <label for="Mobile" >Email<font class="red n">*</font></label>
                                     <input name="email" placeholder="Email" class="form-control" type="email" value="<?= set_value("email"); ?>">
                                     <span class="red"><?=  form_error('email');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Mobile<font class="red">*</font></label>
-                                    <input name="mobile" class="form-control" placeholder="Mobile" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                    <input name="mobile" class="form-control" placeholder="Mobile" type="text" value="<?= $this->uri->segment(3) ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                     <span class="red"><?=  form_error('mobile');?></span>
                                 </div>
                                 <div class="col-lg-4">
@@ -145,7 +145,7 @@
                                     <span class="red"><?=  form_error('zip');?></span>
                                 </div>
                                 
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                      <label for="Mobile" >ID Proof Type<font class="red n">*</font></label>
                                      <select class="form-control"  name="id_proof_type" >
                                         <option value="">Select</option>                                       
@@ -159,17 +159,17 @@
                                     <!--<input name="id_proof_type" class="form-control" type="text" value="">-->
                                     <span class="red"><?=  form_error('id_proof_type');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                       <label for="Mobile" >ID Proof<font class="red n">*</font></label>
                                     <input name="id_proof" placeholder="ID Proof" class="form-control" type="text" value="<?= set_value("id_proof"); ?>">
                                     <span class="red"><?=  form_error('id_proof');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                       <label for="Mobile" >ID Proof Image<font class="red n">*</font></label>
                                     <input name="id_proof_url" placeholder="ID Proof image" class="form-control" type="file" value="<?= set_value("id_proof_url"); ?>">
                                     <span class="red"><?=  form_error('id_proof_url');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                      <label for="Mobile" >Address Proof Type<font class="red n">*</font></label>
                                     <select class="form-control"  name="address_proof_type" >
                                         <option value="">Select</option>
@@ -184,12 +184,12 @@
                                      <!--<input name="address_proof_type" class="form-control" type="text" value="">-->
                                     <span class="red"><?=  form_error('address_proof_type');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                       <label for="Mobile" >Address Proof<font class="red n">*</font></label>
                                     <input name="address_proof" placeholder="Address Proof" class="form-control" type="text" value="<?= set_value("address_proof"); ?>">
                                     <span class="red"><?=  form_error('address_proof');?></span>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 n">
                                       <label for="Mobile" >Address Proof Image<font class="red n">*</font></label>
                                     <input name="address_proof_url" placeholder="Address Proof image" class="form-control" type="file" value="<?= set_value("address_proof_url"); ?>">
                                     <span class="red"><?=  form_error('address_proof_url');?></span>

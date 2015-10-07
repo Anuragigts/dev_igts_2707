@@ -3087,4 +3087,70 @@ class Dmr_model extends CI_Model
              }
          }
     }
+    
+    public function bnkcnt(){
+        $bank = $this->input->post('bank_name');
+        $query = $this->db->query("SELECT DISTINCT(num_len)num_len FROM bank_details WHERE bank = '$bank'");
+        if($query){
+            return $query->row()->num_len;
+        }else{
+            return 0;
+        }
+    }
+    public function getbranchbank($bnk, $state, $city){
+        $where = "bank = '$bnk'";
+        if($state != ''){
+            $where .= " AND state = '$state'";
+        }
+        if($city != ''){
+            $where .= " AND city = '$city'";
+        }
+        $query = $this->db->query("SELECT branch FROM bank_details WHERE $where");
+        //return $this->db->last_query();
+         if($query && $query->num_rows()>0){
+             $val = "<option value=''>Select</option>";
+              foreach($query->result() as $data){
+                 $val .="<option value='".$data->branch."'>".$data->branch."</option>"; 
+              }
+           }else{
+              $val = "";
+           }
+           return $val;
+    }
+    
+    public function dearchBranch($bnk, $state, $city, $br){
+        $where = "bank = '$bnk'";
+        if($state != ''){
+            $where .= " AND state = '$state'";
+        }
+        if($city != ''){
+            $where .= " AND city = '$city'";
+        }
+        if($br != ''){
+            $where .= " AND branch = '$br'";
+        }
+        $query = $this->db->query("SELECT * FROM bank_details WHERE $where");
+        //return $this->db->last_query();
+         if($query && $query->num_rows()>0){
+             $val = "<table border='1'>";
+             $val .="<tr>"; 
+             $val .="<th>Select</th>"; 
+             $val .="<th>Branch</th>"; 
+             $val .="<th>IFSC</th>"; 
+             $val .="<th>Address</th>"; 
+              $val .="</tr>"; 
+              foreach($query->result() as $data){
+                 $val .="<tr>"; 
+                    $val .="<td align='center'><input type='radio' name='mychoose' class='choose' ifsc='".$data->ifsc."' state='".$data->state."' city='".$data->city."'  branch='".$data->branch."'  add='".$data->address."'></td>"; 
+                    $val .="<td>".$data->branch."</td>"; 
+                    $val .="<td>".$data->ifsc."</td>"; 
+                    $val .="<td width='30%'>".$data->address."</td>"; 
+                 $val .="</tr>"; 
+              }
+              $val .= "</table>";
+           }else{
+              $val = "";
+           }
+           return $val;
+    }
 }

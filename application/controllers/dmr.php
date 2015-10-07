@@ -229,7 +229,19 @@ class Dmr extends CI_Controller {
             }
             if($this->input->post('b_type') == 'IFSC'){
                 $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
-                 $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                $bnkacc_cnt = $this->dmr_model->bnkcnt();
+                if($bnkacc_cnt == "" || $bnkacc_cnt == 0){
+                    $minmax = "|min_length[10]|max_length[18]|numeric";
+                }else{
+                     $minmax = "|min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
+                }
+                if($this->input->post('bank_name') == "IDBI BANK"){
+                    $minmax = "|min_length[13]|max_length[16]|numeric";
+                }
+                if($this->input->post('bank_name') == "HDFC BANK"){
+                    $minmax = "|min_length[13]|max_length[14]|numeric";
+                }
+                 $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
                  if($this->input->post('reqval') == '1'){ 
                     $this->form_validation->set_rules('state',     "State",                 'required');
                     $this->form_validation->set_rules('city',      "City",                  'required');
@@ -239,11 +251,23 @@ class Dmr extends CI_Controller {
                
             }
             if($this->input->post('b_type') == 'IFSC1'){
-                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');
-                $this->form_validation->set_rules('ac_no',      "Account No",           'required');
+                $this->form_validation->set_rules('bank_name', "Bank Name",             'required');                
                 $this->form_validation->set_rules('state',     "State",                 'required');
                 $this->form_validation->set_rules('city',      "City",                  'required');
                 $this->form_validation->set_rules('branch_name',"Branch Name",          'required');
+                $bnkacc_cnt = $this->dmr_model->bnkcnt();
+                if($bnkacc_cnt == "" || $bnkacc_cnt == 0){
+                    $minmax = "| min_length[10]|numeric";
+                }else{
+                     $minmax = "| min_length[$bnkacc_cnt]|max_length[$bnkacc_cnt]|numeric";
+                }
+                if($this->input->post('bank_name') == "IDBI BANK"){
+                    $minmax = "|min_length[13]|max_length[16]|numeric";
+                }
+                if($this->input->post('bank_name') == "HDFC BANK"){
+                    $minmax = "|min_length[13]|max_length[14]|numeric";
+                }
+                $this->form_validation->set_rules('ac_no',      "Account No",           "required $minmax");
                 $this->form_validation->set_rules('address',"Address",          'required');
                 $this->form_validation->set_rules('ifsc_code',  "IFSC Code",            'required');
                
@@ -568,7 +592,7 @@ class Dmr extends CI_Controller {
                 }
               else{
                      $this->session->set_flashdata('msg','This number is not registered please register first');  
-                       redirect('dmr/sender_registration');
+                       redirect('dmr/sender_registration/'.$this->input->post('mobile'));
                 }
             }
          }
@@ -594,7 +618,7 @@ class Dmr extends CI_Controller {
                 }
               else{
                      $this->session->set_flashdata('msg','This number is not registered please register first');  
-                       redirect('dmr/sender_registration');
+                       redirect('dmr/sender_registration/'.$this->input->post('mobile'));
                 }
             }
          }
@@ -1289,5 +1313,19 @@ class Dmr extends CI_Controller {
         
         $this->load->view('layout/inner_template',$data);
     }
- 
+    public function getbran(){
+        $bnk = $_POST['name'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+       $br = $this->dmr_model->getbranchbank($bnk, $state, $city);
+       echo $br;
+    }
+    public function dearchBranch(){
+        $bnk = $_POST['name'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $br = $_POST['br'];
+       $br = $this->dmr_model->dearchBranch($bnk, $state, $city, $br);
+       echo $br;
+    }
 }

@@ -109,6 +109,19 @@
                 }					
             });
     });
+    // Get city by ajax
+    $('#statea').change(function(){
+        var id =  $('option:selected', this).attr('state_id');//$('#state').val();
+      // alert(id);
+        $.post('<?php echo base_url();?>common/citya',{'state':id},function(response){
+                //alert(response);
+                if(response != ""){
+                        $('#city').html(response);							
+                }else{
+                      $('#city').html("<option value=''>Select</option>");
+                }					
+            });
+    });
      
     
 $(function(){

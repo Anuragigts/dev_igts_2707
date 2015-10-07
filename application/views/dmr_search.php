@@ -197,7 +197,7 @@
                           $("#loading").modal('hide');
                       }else{                         
                           var url = "<?php echo base_url();?>";
-                          $(location).attr('href',url+"dmr/sender_registration");
+                          $(location).attr('href',url+"dmr/sender_registration/"+mo);
                          //window.location= ;
                       }					
                   });

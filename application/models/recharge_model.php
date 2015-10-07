@@ -662,10 +662,16 @@ class Recharge_model extends CI_Model
        
     public function doRecharge( $recharge_type){
        $a = mt_rand(100000,999999); 
+       $b = mt_rand(100000,999999); 
        for ($i = 0; $i<27; $i++) 
         {
             $a .= mt_rand(0,9);
         }
+        for ($i = 0; $i<6; $i++) 
+        {
+            $b .= mt_rand(0,9);
+        }
+        $swami = 'SWAMI'.$b;
         $track_id   = 'SWAMI'.$a;
         $item       = $this->input->post('code');
         $desc       = $this->input->post('oprator_name');
@@ -724,7 +730,7 @@ class Recharge_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </MOBILEBOOKINGDETAILS>
             </soap:Body></soap:Envelope>';
-
+	//echo $curlData;
                 $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -758,13 +764,13 @@ class Recharge_model extends CI_Model
                 $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                $response = simplexml_load_string($final[0]);
-             // print_r($response);die();
+             // print_r($response);
                $this->db->reconnect();
                if($response->Status == 1){
-                   
+                   $mytime=date('Y-m-d H:i:s');
                    $myamt = $this->input->post('amount');
                     $myno = $this->input->post('mobile');
-                    
+                    if($response->TrackId != ''){
                     $data = array(                        
                         'hrm_track'              => "$response->TrackId",
                         'ref_num'                => "$response->RefNo",
@@ -776,9 +782,22 @@ class Recharge_model extends CI_Model
                         'status'                 =>  $response->Status,
                         
                     );
+                    }else{
+                    	 $data = array(                        
+                        'hrm_track'              => "$track_id",
+                        'ref_num'                => "Unknown",
+                        'trans_no'               => "$swami",
+                        'remarks'                => "Success",
+                        'desc'                   => "Unknown",
+                        'hrm_amount'             => "$amt",
+                        'responce_time'          => "$mytime",
+                        'status'                 =>  1,
+                        
+                    );
+                    }
                 $this->db->where('recharge_id',$my_mo_id);
                 $update = $this->db->update('recharge_track',$data);         
-                    
+                   // echo $this->db->last_query();
                    $this->db->reconnect();
                     $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
                  if($query2 && $query2->num_rows()== 1){                        
@@ -807,7 +826,7 @@ class Recharge_model extends CI_Model
                 $my = $this->session->userdata("login_id");
                 $optna  =   strtolower($desc);
                 $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
-               
+              // die();
                  if($this->db->affected_rows() == 1){
                      return 0;
                  }  else {
@@ -1035,7 +1054,7 @@ class Recharge_model extends CI_Model
         $this->db->join('user_type as u' , 'l.user_type = u.user_type_id', 'Inner');
         $this->db->where('r.hrm_track <>', ''); 
         $this->db->order_by('recharge_id', 'desc');
-        $this->db->limit(20);
+        $this->db->limit(30);
         $query = $this->db->get();
         //echo $this->db->last_query();
         if($this->db->affected_rows() > 0){
@@ -1217,7 +1236,7 @@ class Recharge_model extends CI_Model
                           if($query2 && $query2->num_rows()== 1){                        
                               $val2 = $query2->row()->amount;
                               $insfrom   =   array(                      
-                                      "amount"     => ($val2 - $this->input->post('amount'))
+                                      "amount"     => ($val2 - ($this->input->post('amount')+5))
                                   );
                               $this->db->where("user_id",$this->session->userdata('login_id'));
                               $query1 = $this->db->update("current_virtual_amount",$insfrom);
@@ -1227,7 +1246,7 @@ class Recharge_model extends CI_Model
                                 "trans_to"      =>     0,
                                 "cur_amount"      =>    ($val2 - $this->input->post('amount')),
                                 "trans_amt"     =>     floatval($this->input->post('amount')),
-                                "trans_remark"  =>     "Post-paid Recharge $mobile",
+                                "trans_remark"  =>     "Post-paid Recharge $mobile with Rs. 5 service charge.",
                                   "type"  =>     "2",
                                   'trans_date' => date('Y-m-d H:i:s')
                              );

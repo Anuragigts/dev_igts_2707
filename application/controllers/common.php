@@ -32,6 +32,14 @@ class Common extends CI_Controller {
                 }
                 echo $opt;
         }
+        public function citya(){
+                $val    =   $this->common_model->getCities();
+                $opt    =   '<option value="Select City"> Select City </option>';
+                foreach($val as $op){
+                        $opt    .=  '<option value="'.$op->City_name.'">'.$op->City_name.'</option>';
+                }
+                echo $opt;
+        }
 	public function packages(){
                 $pkg    =   $this->common_model->getPackages();
                 $opt    =   '<option value="Select Package"> Select Package </option>';

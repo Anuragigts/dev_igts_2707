@@ -137,7 +137,7 @@
                                
                                 
                                
-                                <div class="col-lg-12">                                     
+                                <div class="col-lg-6">                                     
                                      <div class="checkbox c-checkbox">
                                         <label>
                                             <input type="checkbox" name="verify_ac" id="verify_ac" value="1"> 
@@ -146,17 +146,61 @@
                                         </label>
                                      </div>                                    
                                 </div>
+                                <div class="col-lg-6">                                     
+                                     <div class="b-c">
+                                        <label><br>
+                                            <a href="javascript:void(0);" id="searchIFSC">Search Branch</a>
+                                        </label>
+                                     </div>                                    
+                                </div>
                                 <div class="col-lg-12">                                     
                                     <label class="verify-acc" style="display:none;">
                                         Rs 6 will be deducted from the main account (maintained with us of the Client). and Rs 1 will be transferred to beneficiary account.<font class="red ifsc-imp">*</font>
                                     </label>                          
                                 </div>
-                               
                                 <div class="col-lg-12 text-center">
                                     <br>
                                      <input type="submit" class="btn btn-sm btn-info non_verify" name="add" value="Add Beneficiary" />
                                      <input type="submit" class="btn btn-sm btn-info verify-acc" name="verify" value="Add Beneficiary With Verification" style="display:none;"/>
                                 </div>
+                                <div class="col-lg-12 search-hide" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-lg-12 search-hide"><hr></div>
+                                        <div class="col-lg-12 search-hide"><h4>Search Branch</h4></div>
+                                        <div class="col-lg-3">
+                                            <label for="Mobile" >State</label>
+                                            <select class="form-control mystate" id="statea" name="state">
+                                                <option value="">Select</option>
+                                                <?php foreach($states as $st){?>
+                                                <option value="<?php echo $st->State_name?>" state_id="<?php echo $st->State_id?>" <?php echo set_select('state',$st->State_name, ( !empty($data) && $data == "$st->State_name") ? TRUE : FALSE )?>><?php echo $st->State_name?></option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="Mobile" >City</label>
+                                            <select class="form-control mycity" id="city" name="city" >
+                                                <option value="">Select</option>
+                                                <?php foreach($citys as $ct){?>
+                                                <option value="<?php echo $ct->City_name?>" <?php echo set_select('city',$ct->City_name, ( !empty($data) && $data == "$ct->City_name") ? TRUE : FALSE )?>><?php echo $ct->City_name?></option>
+                                                <?php }?>
+                                            </select>     
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="Mobile" >Branch</label>
+                                             <select class="form-control " id="br" name="city" >
+                                                <option value="">Select</option>
+                                                
+                                            </select>     
+                                        </div>
+                                        <div class="col-lg-3"><br>
+                                            <input type="buttion" class="btn btn-primary" value="Search" id="searchbr">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">&nbsp;<br></div>
+                                <div class="col-lg-12 search-details"></div>
+                               
+                                
                               
 
                             </div>
@@ -171,6 +215,55 @@
  </section>
 
 <script>
+    $("#searchIFSC").click(function(){
+        $('.search-hide').css('display',"inline");
+    });
+    $('.mycity').change(function(){
+        var name = $('#bnk_name').val();
+        var city = $('.mycity').val();
+        var state = $('.mystate').val();
+           
+            $.post('<?php echo base_url();?>dmr/getbran',{'name':name,'state':state,'city':city},function(response){            
+             // alert(response); 
+            if(response !=''){
+                   $('#br').html(response);
+                }else{
+                  return false;
+                }
+            });
+    });
+    $('#searchbr').click(function(){
+         var name = $('#bnk_name').val();
+        var city = $('.mycity').val();
+        var state = $('.mystate').val();
+        var br = $('#br').val();
+           
+            $.post('<?php echo base_url();?>dmr/dearchBranch',{'name':name,'state':state,'city':city,'br':br},function(response){            
+            //alert(response); 
+            if(response !=''){
+                $('.search-details').css('display',"inline");
+                   $('.search-details').html(response);
+                }else{
+                    $('.search-details').css('display',"inline");
+                  $('.search-details').html("No Branch found.");
+                }
+            });
+    });
+    $(document).on('click', '.choose', function(){ 
+        var ifsc = $(this).attr('ifsc');
+        var state = $(this).attr('state');
+        var city = $(this).attr('city');
+        var add = $(this).attr('add');
+        var br = $(this).attr('branch');
+        alert(ifsc);
+        $('#ifsc').val(ifsc);
+        $('#state1').val(state);
+        $('#city1').val(city);
+        $('#add1').val(add);
+        $('#branch1').val(br);
+    });
+    
+    
     $('.ifsc-imp').hide();
     $('.mmid-imp').hide();
     $(".b-c").hide();
@@ -294,6 +387,7 @@
         }
     });
     $('#bnk_name').change(function(){
+        $('.search-details').css('display','none');
         var require = $('option:selected', this).attr('is_require');
         $('.ajaxval').val('');
         var val = $('#b_type').val();
