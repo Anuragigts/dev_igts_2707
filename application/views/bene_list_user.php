@@ -82,7 +82,7 @@
                                     <div class="row"><?php // echo "<pre>"; print_r($dl);?>
                                         <div class="col-lg-2"><br>
                                             <?php if(strlen($dl->IFSCCODE) == 11) {?>
-                                                <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>" checked="checked"> NEFT / IMPS <br>
+                                                <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>" checked="checked"> NEFT  <br>
                                                 <!--<input type="radio" name="typeamt" value="IFSC"  class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IFSC (Tatkal)<br>-->
                                             <?php }if(strlen($dl->IFSCCODE) != 11 && strlen($dl->IFSCCODE) != '') {?>
                                                 <input type="radio" name="typeamt" value="IFSC" checked="checked" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IMPS (Tatkal)<br>

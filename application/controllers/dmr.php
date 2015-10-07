@@ -354,6 +354,7 @@ class Dmr extends CI_Controller {
             if($this->form_validation->run() == TRUE){
                 
                 $result = $this->dmr_model->addVerifyBeneficiary();
+
                 if($result == 0){                    
                     $this->session->set_flashdata('err','Beneficiary registration fail : Server Busy. Please try after some time.');  
                      redirect('dmr/addBeneficiary/'.$card);

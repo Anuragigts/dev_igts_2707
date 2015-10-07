@@ -837,7 +837,7 @@ class Dmr_model extends CI_Model
 			//echo $my_DMR_id; die();
             $url = DMRURL; 
             
-           if($this->input->post('b_type') == 'IFSC'){
+           if($this->input->post('b_type') == 'IFSC' || $this->input->post('b_type') == 'IFSC1'){
                 $curlData = '<?xml version="1.0" encoding="utf-8"?>
                        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
