@@ -41,7 +41,16 @@ class Reports extends CI_Controller {
                             $data["view"]     =   $this->report_model->recharge_reports($gefr,$geto,$val);
                             
                     }
-            }
+            }else{
+				$from   = date('m/d/Y');
+				$ex     =   explode("/",$from);
+				$gefr   =   $ex["2"]."-".$ex["0"]."-".$ex["1"]." 00:00:00";
+				
+				$to   = date('m/d/Y');
+				$exto     =   explode("/",$to);
+				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
+				$data["view"]     =   $this->report_model->recharge_reports($gefr,$geto,$val);
+			}
             
             $this->load->view('layout/inner_template',$data);
     }
@@ -128,7 +137,17 @@ class Reports extends CI_Controller {
                             $data["view"]     =   $this->report_model->offline_reports($gefr,$geto,$val);
                             
                     }
-            }
+            }else{
+				$from   = date('m/d/Y');
+				$ex     =   explode("/",$from);
+				$gefr   =   $ex["2"]."-".$ex["0"]."-".$ex["1"]." 00:00:00";
+				
+				$to   = date('m/d/Y');
+				$exto     =   explode("/",$to);
+				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
+				
+				$data["view"]     =   $this->report_model->offline_reports($gefr,$geto,$val);
+			}
             
             $this->load->view('layout/inner_template',$data);
     }
@@ -169,7 +188,17 @@ class Reports extends CI_Controller {
                             $data["view"]     =   $this->report_model->trasaction_reports($gefr,$geto,$val);
                             
                     }
-            }
+            }else{
+				$from   = date('m/d/Y');
+				$ex     =   explode("/",$from);
+				$gefr   =   $ex["2"]."-".$ex["0"]."-".$ex["1"]." 00:00:00";
+				
+				$to   = date('m/d/Y');
+				$exto     =   explode("/",$to);
+				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
+				
+				$data["view"]     =   $this->report_model->trasaction_reports($gefr,$geto,$val);
+			}
             $this->load->view('layout/inner_template',$data);
     }
     public function refund_req(){

@@ -287,7 +287,7 @@ class Dmr extends CI_Controller {
                      redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
-                    $this->session->set_flashdata('msg','Your Beneficiary registration And verification is successfull Please verify if by using OTP.');  
+                    $this->session->set_flashdata('msg','Your Beneficiary registration And verification is successfull Please verify it by using OTP.');  
                    //redirect('dmr/addBeneficiary');
                      redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                      
@@ -369,7 +369,7 @@ class Dmr extends CI_Controller {
                      redirect('dmr/addBeneficiary/'.$card);
                 }
               else{
-                  $this->session->set_flashdata('err','Beneficary Account Addedd  but not verified Please try again, Please confirm with OTP.');  
+                  $this->session->set_flashdata('err','Beneficary Account Added  but not verified Please try again, Please confirm with OTP.');  
                    redirect('dmr/beneficiaryOTP/'.$result.'/'.$this->input->post('card_no'));
                 }
             }
