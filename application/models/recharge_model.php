@@ -923,7 +923,7 @@ class Recharge_model extends CI_Model
                 return $pg['package_id'];
         }
         public function getmoduleobjectid($desc){
-			echo $desc; die();
+			
 			if($desc == 'bsnl validity'){
 				$desc = 'bsnl';
 			}
