@@ -923,6 +923,20 @@ class Recharge_model extends CI_Model
                 return $pg['package_id'];
         }
         public function getmoduleobjectid($desc){
+			echo $desc; die();
+			if($desc == 'bsnl validity'){
+				$desc = 'bsnl';
+			}
+			if($desc == 'tata docomo special'){
+				$desc = 'tata docomo';
+			}
+			if($desc == 'uninor special'){
+				$desc = 'uninor';
+			}
+			if($desc == 'vidiocon special'){
+				$desc = 'vidiocon';
+			}
+			
                 $qu = $this->db->get_where("modules_object",array("modules_obj_name" => $desc));
 				//echo $this->db->last_query();die();
                 $od = $qu->row_array();
