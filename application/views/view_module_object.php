@@ -37,16 +37,16 @@
                                         $i  =   1;
                                         foreach ($view_module as $view){?>
                                         <tr>
-                                            <th><?= $i++;?></th>
-                                            <th><?= ucfirst($view->module_name);?></th>
-                                            <th><?= ucfirst($view->sub_module_name);?></th>
-                                            <th><?= ucfirst($view->modules_obj_name);?></th>
+                                            <td><?= $i++;?></td>
+                                            <td><?= ucfirst($view->module_name);?></td>
+                                            <td><?= ucfirst($view->sub_module_name);?></td>
+                                            <td><?= ucfirst($view->modules_obj_name);?></td>
                                             <?php if($id == 1){ ?>
-                                            <th>
+                                            <td>
                                                 <a href="<?=base_url();?>module_object/delete_module_project/<?=$view->modules_obj_id;?>" class="red">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
-                                            </th>
+                                            </td>
                                             <?php }?>
                                          </tr>
                                   <?php }?>

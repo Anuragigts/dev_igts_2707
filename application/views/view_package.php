@@ -35,12 +35,12 @@
                                     $i = 1;
                                     foreach ($view_package as $view){?>
                                         <tr>
-                                            <th><?= $i++;?></th>
-                                            <th><?= $view->user_name_type;?></th>
-                                            <th><?= ucfirst($view->package_name);?></th>
-                                            <th><?= ucfirst($view->package_remarks);?></th>
-                                            <th><?= ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);?></th>
-                                            <th>
+                                            <td><?= $i++;?></td>
+                                            <td><?= $view->user_name_type;?></td>
+                                            <td><?= ucfirst($view->package_name);?></td>
+                                            <td><?= ucfirst($view->package_remarks);?></td>
+                                            <td><?= ucfirst($view->first_name." ".$view->middle_name." ".$view->last_name);?></td>
+                                            <td>
                                                 <a href="javascript:void(0);" title="<?php echo ($view->status == 0)? 'Activate':'Deactivate';?>">
                                                     <!--<i class="success fa fa-check-circle-o"></i>-->
                                                     <label class="switch switch-sm">
@@ -51,7 +51,7 @@
                                                 <a href="<?= base_url();?>package/view_package_details/<?= $view->package_id;?>" title="View Complete Details">
                                                     <i class="fa fa-search-plus"></i>
                                                 </a>
-                                            </th>
+                                            </td>
                                          </tr>
                                   <?php }?>
                               </tbody>
