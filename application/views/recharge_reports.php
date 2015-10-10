@@ -72,31 +72,31 @@
           @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
-	td:nth-of-type(1):before { content: "S.No."; }
-	td:nth-of-type(2):before { content: "Operator Name"; }
-	td:nth-of-type(3):before { content: "Number"; }
-	td:nth-of-type(4):before { content: "Amount"; }
-	td:nth-of-type(5):before { content: "Date & Time"; }
-	td:nth-of-type(6):before { content: "Recharge Type"; }
-	td:nth-of-type(7):before { content: "Status"; }
-	td:nth-of-type(8):before { content: "Complaint"; }
+	.td:nth-of-type(1):before { content: "S.No."; }
+	
+	
+	.td:nth-of-type(2):before { content: "Amount"; }
+	.td:nth-of-type(3):before { content: "Date & Time"; }
+	.td:nth-of-type(4):before { content: "Tractarians No"; }
+	.td:nth-of-type(5):before { content: "Recharge Type"; }
+	.td:nth-of-type(6):before { content: "Status"; }
+	.td:nth-of-type(7):before { content: "Complaint"; }
 }
                </style>
         <div class="row">  
            <div class="col-lg-12">
                <div class="panel-body">
-                    <table id="datatable1" class="table table-striped table-hover">
+                    <table id="datatable1" class="table table-striped table-hover" >
                        <thead>
                           <tr>
                              <th>S.No.</th>
-                             <th>Operator Name</th>
-                             <th>Number</th>
-                             <th>Amount</th>
-                             <th>Date & Time</th>
-                             <th>Tractarians No</th>
+                             <th width="17%">Date & Time</th>
+                             <th width="15%">Tractarians No</th>
+                              <th>Amount</th>
                              <th>Details</th>
                              <th>Status</th>
-                             <th>Complaint</th>       
+                              <th width="20%">Complaint</th>   
+                            
                           </tr>
                        </thead>
                        <tbody>
@@ -106,11 +106,9 @@ only screen and (max-width: 760px),
                                 ?>
                                 <tr>
                                     <td><?= $i++;?></td>
-                                    <td><?= $view->op_name;?></td>
-                                    <td><?= $view->number;?></td>
-                                    <td><?= $view->amount;?></td>
                                     <td><?= $view->responce_time;?></td>
-                                    <td><?= $view->trans_no;?></td>
+                                    <td>SCR-0<?= $view->rid;?></td>
+                                    <td><?= $view->amount;?></td>
                                     <td><?= strtolower($view->op_name);?>
                                                 <?php if($view->recharge_type == 1){
                                                     echo "Prepaid , ";
@@ -118,10 +116,11 @@ only screen and (max-width: 760px),
                                                     echo "DTH, ";
                                                 }else if($view->recharge_type == 4){
                                                     echo " ";
-                                                }?><br>
+                                                }?>
                                                <?= $view->number;?></td>
                                     <td><?php if($view->trans_no != ''){echo "Success";}else{echo "Fail";}?></td>
                                     <td>
+                                         <?php if($this->session->userdata('my_type') != 1 && $this->session->userdata('my_type') != 2 ){?>
                                         <?php
                                         if($view->st_re == "0"){ ?>
                                             <a href="#" class="btn btn-primary btn-sm" title="In Processing">In Processing</a>
@@ -132,7 +131,7 @@ only screen and (max-width: 760px),
                                             <a href="#" class="btn btn-warning btn-sm" title="Rejected" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Rejected</a>
                                         <?php } else { ?>
                                             <a href="#" class="btn btn-danger btn-sm refund_req" title="Generate  Complaint" amount="<?= $view->amount;?>"  recharge_id="<?= $view->rid;?>">Generate  Complaint</a>
-                                        <?php } ?>
+                                         <?php } }?>
                                             <a href="#" class="trackmo" trackid="<?php echo $view->track_id;?>">check</a>
                                     </td>
                                 </tr>

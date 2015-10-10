@@ -1,7 +1,7 @@
 <?php
 class Report_model extends CI_Model{
         public function recharge_reports($gefr,$geto,$val){
-                $this->db->select("r.*,r.recharge_id as rid,q.*,q.status as st_re,m.module_name");
+                $this->db->select("r.*,r.recharge_id as rid,r.recharge_id as rid,q.*,q.status as st_re,m.module_name");
                 $this->db->from("recharge_track as r");
                 $this->db->join("module as m","r.recharge_type = m.module_id","inner");
                 $this->db->join("refund_req as q","r.recharge_id = q.recharge_id","left");

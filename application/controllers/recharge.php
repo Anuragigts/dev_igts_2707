@@ -48,7 +48,23 @@ class Recharge extends CI_Controller {
       
         $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
-           $code = strtoupper ($url['1']);
+        $code = strtoupper ($url['1']);
+        if(strlen($url['2']) != 10 &&($code != "AD" && $code != "BT" && $code != "DT" && $code != "TS" && $code != "SD" && $code != "VD")){ 
+                  $number1 = $this->input->get('mobilenumber', TRUE);
+                $ch = curl_init();
+                                                $optArray = array(
+                        CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number1&from=ESYTOP&message=ESY+TOPUP+Incorrect+Mobile+number",
+                        CURLOPT_RETURNTRANSFER => true
+                );
+                curl_setopt_array($ch, $optArray);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                return false;
+        }
+			
+           
            if($code == "AC" ){
                $recharge_type = 1;
                $codeval = "AIRCEL";

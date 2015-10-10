@@ -324,7 +324,7 @@
            </div>
 <?php }?>  
             
-            <?php if($this->session->userdata('my_type') == 2 ){?>
+        <?php if($this->session->userdata('my_type') == 2 ){?>
             <div class="row">
             <div class="col-md-6">
                 <div class="row">

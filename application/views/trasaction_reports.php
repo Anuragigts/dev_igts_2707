@@ -35,6 +35,27 @@
                                             <span class="red"><?= form_error('to');?></span>
                                         </div>
                                     </div>
+                                     <?php if($this->session->userdata("my_type") != "5"){ ?>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>User Type</label>
+                                            <select class="form-control" name="user" id="user_type">
+                                                <option value=""> Select  User type</option>
+                                                <?php foreach($type as $ty) { ?>
+                                                        <option value="<?= $ty->user_type_id;?>" <?= set_select("user",$ty->user_type_id);?> ><?= $ty->user_type;?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <select class="form-control" name="fname" id="fname">
+                                                <option value=""> Select  Name</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
                                     <div class="col-sm-12">
                                         <div class="pull-left">
                                             <input type="submit" class="btn btn-sm btn-info " name="search" value="Search" />
@@ -51,12 +72,12 @@
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 	td:nth-of-type(1):before { content: "S.No."; }
-	td:nth-of-type(2):before { content: "From Name"; }
-	td:nth-of-type(3):before { content: "To Name"; }
-	td:nth-of-type(4):before { content: " Amount"; }
-	td:nth-of-type(5):before { content: " Type"; }
-	td:nth-of-type(6):before { content: "Total Amount"; }
-	td:nth-of-type(7):before { content: "Remarks"; }
+	td:nth-of-type(2):before { content: "Transaction Number"; }
+	
+	td:nth-of-type(3):before { content: " Amount"; }
+	td:nth-of-type(4):before { content: " Type"; }
+	td:nth-of-type(5):before { content: "Balance"; }
+	td:nth-of-type(6):before { content: "Remarks"; }
 }
                </style>
         <div class="row">  
@@ -66,12 +87,12 @@ only screen and (max-width: 760px),
                        <thead>
                           <tr>
                              <th>S.No.</th>
-                            <td> From Name</td>
-                            <td> To Name</td>
+                            <th width="13%"> Track Number</th>
+                            
                              <th>Amount</th>
                              <th>Type</th>
-                             <th>Total Amount</th>
-                             <th>Date & Time</th>
+                             <th>Balance</th>
+                             <th width="15%">Date & Time</th>
                              <th>Remarks</th>       
                           </tr>
                        </thead>
@@ -82,8 +103,8 @@ only screen and (max-width: 760px),
                                 ?>
                                 <tr>
                                     <td><?= $i++;?></td>
-                                    <td><?= $view->frname." ".$view->lrname;?></td>
-                                    <td><?php if($view->tofname != ''){ echo $view->tofname." ".$view->tolname;}else{echo 'N/A';}?></td>
+                                    <td>SCT-0<?= $view->trans_id;?></td>
+                                    
                                     <td><?= $view->trans_amt;?></td>
                                      <td><?php if($view->type == 1){ echo "Credited";}else if($view->type == 2){echo "Debited";}else{echo "N/A";}?></td>
                                     <td><?= $view->cur_amount;?></td>

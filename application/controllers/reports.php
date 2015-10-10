@@ -173,7 +173,15 @@ class Reports extends CI_Controller {
             );
             $data["view"]   =   array();
             $val    =   $this->session->userdata("login_id");
+             if($this->session->userdata("my_type") != "5"){ 
+                    $valo    =   $this->session->userdata("login_id");
+                    $my_type    =   $this->session->userdata("my_type");
+                    $data["type"]   =   $this->report_model->user_type($my_type);
+                    $data['name1']       =  $this->report_model->getNames($valo,$my_type);
+            }
+            
             if($this->input->post("search")){
+                $val    =   ($this->input->post("fname") == '')? $this->session->userdata("login_id"):$this->input->post("fname");
                     $this->form_validation->set_rules("from",  "From Date",  "required");
                     $this->form_validation->set_rules("to",     "To Date",   "required");
                     if( $this->form_validation->run() == TRUE ){

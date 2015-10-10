@@ -40,7 +40,12 @@ and open the template in the editor.
 .bold1{
     font-size: 18px !important;
 }
-
+#datatable1{border:1px solid #000 !important;}
+thead {background-color: #EDD1B2;}
+thead th{ color: #000!important;border:1px solid #000 !important;}
+.even{background-color: #F7EFCE!important; }
+.even td{border:1px solid #000 !important; }
+.odd td{border:1px solid #000 !important; }
 
 @media 
 only screen and (max-width: 760px),

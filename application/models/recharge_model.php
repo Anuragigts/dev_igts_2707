@@ -565,7 +565,7 @@ class Recharge_model extends CI_Model
                     $myupdate = array(
                         "trans_from"    =>   $login_id,
                         "trans_to"      =>     0,
-                        "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "cur_amount"      =>    ($val2 - $amt),
                         "trans_amt"     =>     floatval($amt),
                         "trans_remark"  =>     "Off-Line Recharge $mobile",
                         "type"  =>     "2",
