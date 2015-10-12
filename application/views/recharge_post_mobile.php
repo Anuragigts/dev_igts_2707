@@ -171,10 +171,17 @@
                        </thead>
                        <tbody>
                            <?php $i=1;foreach($details as $dl){?>
+                           <?php 
+                                if($i%2 == 0){
+                                   $cl = "even"; 
+                                }else{
+                                    $cl = "odd"; 
+                                }
+                            ?>
                            <?php if($dl->recharge_type == 4){?>
                            <?php if($this->session->userdata('my_type') == 1){?>
                            
-                                <tr>
+                                <tr class="<?php echo $cl;?>">
                                     <td><?php echo $i; $i++;?></td>
                                     <td><?php echo $dl->number;?></td>
                                     <td><?php echo $dl->amount;?></td>
@@ -192,13 +199,13 @@
                                 </tr>
                            <?php }else if($this->session->userdata('my_type') == 2){?>
                                 <?php if($dl->master_distributor_id == $this->session->userdata('login_id') || $dl->done_by == $this->session->userdata('login_id')){?>
-                                    <tr>
+                                    <tr class="<?php echo $cl;?>">
                                         <td><?php echo $i; $i++;?></td>
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -211,13 +218,13 @@
                                 <?php }?>
                            <?php }else if($this->session->userdata('my_type') == 3){?>
                                 <?php if($dl->super_distributor_id == $this->session->userdata('login_id') || $dl->done_by == $this->session->userdata('login_id')){?>
-                                    <tr>
+                                    <tr class="<?php echo $cl;?>">
                                         <td><?php echo $i; $i++;?></td>
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -230,13 +237,13 @@
                                 <?php }?>
                            <?php }else if($this->session->userdata('my_type') == 4){?>
                                 <?php if($dl->distributor_id == $this->session->userdata('login_id') || $dl->done_by == $this->session->userdata('login_id')){?>
-                                    <tr>
+                                    <tr class="<?php echo $cl;?>">
                                         <td><?php echo $i; $i++;?></td>
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
@@ -249,13 +256,13 @@
                                 <?php }?>
                            <?php }else{?>
                                     <?php if($dl->done_by == $this->session->userdata('login_id')){?>
-                                    <tr>
+                                    <tr class="<?php echo $cl;?>"> 
                                         <td><?php echo $i; $i++;?></td>
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
                                         <td><?php echo $dl->responce_time;?></td>
-                                        <td><?php echo $dl->first_name;?> (<?php echo $dl->u_type;?>)</td>
+                                        <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";

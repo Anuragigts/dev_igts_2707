@@ -186,10 +186,14 @@ class Recharge_model extends CI_Model
                         }else{
                             $str .="<thead> <tr> <th>Amount</th>  <th>Validity</th> <th>Description</th> <th>Get</th> </tr> </thead><tbody>";
                         }
-                        
+                        $i = 1;
                         foreach($res as $d){
-                           
-                            $str .= "<tr> <td>".$d['recharge_amount']."</td>";
+                            if($i%2 == 0){
+                                   $cl = "even"; 
+                                }else{
+                                    $cl = "odd"; 
+                                }
+                            $str .= "<tr class='".$cl."'> <td>".$d['recharge_amount']."</td>";
                             if($val == 'full' || $val == 'top'){
                                 if(array_key_exists('recharge_talktime', $d)){
                                 $str .= "<td>".$d['recharge_talktime']."</td>";

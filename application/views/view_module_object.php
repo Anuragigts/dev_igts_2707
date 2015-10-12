@@ -21,7 +21,7 @@
                            <table id="datatable1" class="table table-striped table-hover">
                               <thead>
                                  <tr>
-                                     <th>S.No.</th>
+                                    <th>S.No.</th>
                                     <th>Module Name</th>
                                     <th>Service Type</th>
                                     <th>Service Name</th>
