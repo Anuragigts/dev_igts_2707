@@ -173,6 +173,7 @@
                                      <label for="Mobile" >Address Proof Type<font class="red n">*</font></label>
                                     <select class="form-control"  name="address_proof_type" >
                                         <option value="">Select</option>
+                                        <option value="AADHAR" <?php echo set_select('address_proof_type','AADHAR', ( !empty($data) && $data == "AADHAR") ? TRUE : FALSE )?>>Aadhar Card</option>
                                         <option value="PASSPORT" <?php echo set_select('address_proof_type','PASSPORT', ( !empty($data) && $data == "PASSPORT") ? TRUE : FALSE )?>>Passport</option>
                                         <option value="VOTER" <?php echo set_select('address_proof_type','VOTER', ( !empty($data) && $data == "VOTER") ? TRUE : FALSE )?>>Voter ID</option>
                                         <option value="DRIVING LICENCE" <?php echo set_select('address_proof_type','DRIVING LICENCE', ( !empty($data) && $data == "DRIVING LICENCE") ? TRUE : FALSE )?>>Driving License</option>
