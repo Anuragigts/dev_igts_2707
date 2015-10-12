@@ -23,56 +23,70 @@
 </head>
 
 <body>
-   <div class="wrapper">
-      <div class="block-center mt-xl wd-xl">
-        <?php   $this->load->view("layout/success_error");?>
-         <!-- START panel-->
-         <div class="panel panel-dark panel-flat">
-            <div class="panel-heading text-center">
-               <a href="<?= base_url();?>">
-                  <img src="<?php echo $this->config->item('assets_url') ?>app/img/logo.png" alt="Image" class="block-center img-rounded">
-               </a>
-            </div>
-            <div class="panel-body">
-               <p class="text-center pv">SIGN IN TO CONTINUE.</p>
-               <form role="form" data-parsley-validate="" novalidate="" class="mb-lg" method="post" action="">
-                  <div class="form-group has-feedback">
-                     <input id="exampleInputEmail1" name="login_email" type="email" placeholder="Email-Id (or) Mobile No." autocomplete="off" required class="form-control email" value="<?= set_value("login_email");?>">
-                     <span class="fa fa-envelope form-control-feedback text-muted"></span>
-                     <span class="red"><?php echo form_error('login_email');?></span>
-                  </div>
-                  <div class="form-group has-feedback">
-                     <input id="exampleInputPassword1" name="login_password" type="password" placeholder="Password" required class="form-control">
-                     <span class="fa fa-lock form-control-feedback text-muted"></span>
-                     <span class="red"><?php echo form_error('login_password');?></span>
-                  </div>
-                  <div class="clearfix">
-<!--                     <div class="checkbox c-checkbox pull-left mt0">
-                        <label>
-                           <input type="checkbox" value="" name="remember">
-                           <span class="fa fa-check"></span>Remember Me</label>
-                     </div>-->
-                     <div class="text-center"><a href="<?= base_url();?>forgot_password" class="text-muted">Forgot your password?</a>
-                     </div>
-                  </div>
-                   <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
-                   <br>
-                   <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
-                   <div class="text-center"><a href="<?php echo base_url()?>register">Register New User</a></div>
-               </form>
-               
-            </div>
-         </div>
-         <!-- END panel-->
-         <div class="p-lg text-center">
-            <span>&copy;</span>
-            <span>2015</span>
-            <span>-</span>
-            <span>Swami Communication</span>
-            <br>
-            <span>Developed by iGravitas TechnoSoft India Pvt. Ltd.</span>
-         </div>
-      </div>
+    
+   <div class="wrapper container">
+       <div class="row" style="padding-top: 6%;">
+           <div class="col-md-7 hidden-xs">
+               <div class="block-center " >
+                   <img src="<?php echo base_url()?>baner/<?php echo $banner->b_name?>" class="img img-rounded img-responsive">
+               </div>
+           </div>
+           <div class="col-md-5">
+               <div class="block-center " >
+                <?php   $this->load->view("layout/success_error");?>
+                 <!-- START panel-->
+                 <div class="panel panel-dark panel-flat">
+                    <div class="panel-heading text-center">
+                       <a href="<?= base_url();?>">
+                          <img src="<?php echo $this->config->item('assets_url') ?>app/img/logo.png" alt="Image" class="block-center img-rounded">
+                       </a>
+                    </div>
+                    <div class="panel-body">
+                       <p class="text-center pv">SIGN IN TO CONTINUE.</p>
+                       <form role="form" data-parsley-validate="" novalidate="" class="mb-lg" method="post" action="">
+                          <div class="form-group has-feedback">
+                             <input id="exampleInputEmail1" name="login_email" type="email" placeholder="Email-Id (or) Mobile No." autocomplete="off" required class="form-control email" value="<?= set_value("login_email");?>">
+                             <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                             <span class="red"><?php echo form_error('login_email');?></span>
+                          </div>
+                          <div class="form-group has-feedback">
+                             <input id="exampleInputPassword1" name="login_password" type="password" placeholder="Password" required class="form-control">
+                             <span class="fa fa-lock form-control-feedback text-muted"></span>
+                             <span class="red"><?php echo form_error('login_password');?></span>
+                          </div>
+                          <div class="clearfix">
+        <!--                     <div class="checkbox c-checkbox pull-left mt0">
+                                <label>
+                                   <input type="checkbox" value="" name="remember">
+                                   <span class="fa fa-check"></span>Remember Me</label>
+                             </div>-->
+                             <div class="text-center"><a href="<?= base_url();?>forgot_password" class="text-muted">Forgot your password?</a>
+                             </div>
+                          </div>
+                           <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
+                           <br>
+                           <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
+                           <div class="text-center"><a href="<?php echo base_url()?>register">Register New User</a></div>
+                       </form>
+
+                    </div>
+                 </div>
+                 <!-- END panel-->
+                
+              </div>
+           </div>
+           <div class="col-md-12"><br><br>
+                    <div class="p-lg text-center">
+                    <span>&copy;</span>
+                    <span>2015</span>
+                    <span>-</span>
+                    <span>Swami Communication</span>
+                    <br>
+                    <span>Developed by iGravitas TechnoSoft India Pvt. Ltd.</span>
+                 </div>
+               </div>
+       </div>
+      
    </div>
    <!-- =============== VENDOR SCRIPTS ===============-->
    <!-- MODERNIZR-->

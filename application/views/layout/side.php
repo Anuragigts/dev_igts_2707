@@ -398,6 +398,11 @@
                               <span>Notice Board</span>
                            </a>
                         </li>
+                        <li class="banner">
+                           <a href="<?= base_url()?>settings/banner" title="banner">
+                              <span>Banner</span>
+                           </a>
+                        </li>
 
                      </ul>
                   </li> 

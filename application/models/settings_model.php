@@ -370,6 +370,7 @@ class Settings_model extends CI_Model
                    return array();
                }
         }
+        
         public function noticeUpdate(){
             $insfrom   =   array(                      
                     "title"     => $this->input->post('title'),
@@ -377,6 +378,29 @@ class Settings_model extends CI_Model
                 );
             $this->db->where("id",1);
             $query1 = $this->db->update("notice",$insfrom);
+                        
+                if($query1){
+                  return 1;
+               }else{
+                   return 0;
+               }
+        }
+       
+        public function getBanner(){
+            $query = $this->db->get_where('banner', array('b_id' => 1));
+            //echo $this->db->last_query();
+                if($query && $query->num_rows()>0){
+                  return $query->row();
+               }else{
+                   return array();
+               }
+        }
+         public function BannerUpdate($idP){
+            $insfrom   =   array(                      
+                    "b_name"     => "$idP"
+                );
+            $this->db->where("b_id",1);
+            $query1 = $this->db->update("banner",$insfrom);
                         
                 if($query1){
                   return 1;

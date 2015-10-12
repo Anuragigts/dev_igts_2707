@@ -6,6 +6,7 @@ class Forgot_password extends CI_Controller {
             $this->load->library('form_validation');
             $this->load->library('email');
             $this->load->model('forgot_model');
+             $this->load->model('settings_model');
             date_default_timezone_set('Asia/Kolkata');  
         }
 	public function index(){
@@ -36,7 +37,7 @@ class Forgot_password extends CI_Controller {
                                     }
                             }
                     }
-                
+                 $data['banner'] = $this->settings_model->getBanner();
                $this->load->view('layout/forgot_password',$data);		
 	}
         public function reset(){

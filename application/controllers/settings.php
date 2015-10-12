@@ -247,9 +247,9 @@ class Settings extends CI_Controller {
          
          public function notes(){
              $data = array(
-                    'title'         => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
-                    'metakeyword'   => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
-                    'metadesc'      => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
+                    'title'         => 'ESY TOPUP :: NOTICE BOARD',
+                    'metakeyword'   => 'ESY TOPUP :: NOTICE BOARD',
+                    'metadesc'      => 'ESY TOPUP :: NOTICE BOARD',
                     'content'       => 'notice'
             );
              if($this->input->post('add')){
@@ -267,6 +267,49 @@ class Settings extends CI_Controller {
                     }
              }
              $data['notice']       =  $this->settings_model->notice();
+             $this->load->view('layout/inner_template',$data);
+         }
+         
+         public function  banner(){
+             $data = array(
+                    'title'         => 'ESY TOPUP :: UPDATE BANNER',
+                    'metakeyword'   => 'ESY TOPUP :: UPDATE BANNER',
+                    'metadesc'      => 'ESY TOPUP :: UPDATE BANNER',
+                    'content'       => 'banner'
+            );
+             if($this->input->post('addBanner')){
+                 
+                 $idP = '';
+                 if($_FILES['banner']['name'] != ''){
+                    $config['upload_path'] = './baner';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $file = $_FILES['banner'];
+                    $uid = date('Y-m-d_i-s');
+                    $uid = 'i'.$uid;
+                    $filename = basename($file['name']); 
+                    $fv=explode(".",$filename);
+                    $idP = $uid.".".$fv['1'];
+                    $name = $config['file_name'] = $idP; //set file name
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    $this->upload->do_upload('banner');
+                    
+                     $update = $this->settings_model->BannerUpdate($idP);
+                        if($update == 1){
+                             $this->session->set_flashdata('msg','Banner Updated.');  
+                           redirect('settings/banner/');
+                        }else{
+                           $this->session->set_flashdata('err','Fail : Server Busy. Please try after some time.');
+                             redirect('settings/banner/');
+                        }
+                }else{
+                     $this->session->set_flashdata('err','Fail : Please Upload a file in JPG, PNG or GIF.');
+                             redirect('settings/banner/');
+                }
+                  
+                
+             }
+             $data['banner'] = $this->settings_model->getBanner();
              $this->load->view('layout/inner_template',$data);
          }
 }

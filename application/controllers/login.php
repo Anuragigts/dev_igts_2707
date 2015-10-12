@@ -6,6 +6,7 @@ class Login extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('login_model');
         $this->load->model('common');
+        $this->load->model('settings_model');
         date_default_timezone_set('Asia/Kolkata');  
     }
     public function index()
@@ -38,6 +39,7 @@ class Login extends CI_Controller {
                             }
                     }
                 }
+                $data['banner'] = $this->settings_model->getBanner();
            $this->load->view('layout/login',$data);		
     }
     public function access()
@@ -66,6 +68,7 @@ class Login extends CI_Controller {
                             }
                     }
                 }
+                $data['banner'] = $this->settings_model->getBanner();
            $this->load->view('layout/login',$data);		
     }
 }
