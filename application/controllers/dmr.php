@@ -1377,4 +1377,14 @@ class Dmr extends CI_Controller {
        $br = $this->dmr_model->dearchBranch($bnk, $state, $city, $br);
        echo $br;
     }
+    public function verifybene(){
+        $type = $_POST['type'];
+        $acc = $_POST['acc'];
+        $mo = $_POST['mo'];
+        $ifsc = $_POST['ifsc'];
+        $branch = $_POST['branch'];
+        $bnk = $_POST['bnk'];
+       $br = $this->dmr_model->verifybene($type, $acc, $mo, $ifsc, $branch, $bnk );
+       echo $br;
+    }
 }

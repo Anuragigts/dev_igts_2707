@@ -1119,6 +1119,149 @@ class Dmr_model extends CI_Model
                     } 
                 }
     }
+    /************** VERIFY ACC ***************/
+    public function verifybene($type, $acc, $mo, $ifsc, $branch, $bnk ){
+        if($mo == 0){
+            $mo = "";
+        }
+        $url = DMRURL;
+        $a = mt_rand(100000,999999); 
+                for ($i = 0; $i<22; $i++) 
+                 {
+                     $a .= mt_rand(0,9);
+                 }
+                 $track_id   = 'SWAMIBEN'.$a;
+                $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                       <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+
+                       <soap:Body>
+                           <TRANSACTION_V2 xmlns="http://tempuri.org/">
+                             <RequestData>
+                                   &lt;TRANSACTION_V2REQUEST&gt;
+                                   &lt;TERMINALID&gt;'.TID.'&lt;/TERMINALID&gt;
+                                   &lt;LOGINKEY&gt;'.LKEY.'&lt;/LOGINKEY&gt;
+                                   &lt;MERCHANTID&gt;'.MID.'&lt;/MERCHANTID&gt;
+                                   &lt;CARDNO&gt;'.$this->session->userdata('dmrcard').'&lt;/CARDNO&gt;
+                                   &lt;TRANSTYPE&gt;'.$type.'&lt;/TRANSTYPE&gt;
+                                   &lt;TRANSTYPEDESC&gt;'.$acc.'&lt;/TRANSTYPEDESC&gt;
+                                   &lt;BENEMOBILE&gt;'.$mo.'&lt;/BENEMOBILE&gt; 
+                                   &lt;IFSCCODE&gt;'.$ifsc.'&lt;/IFSCCODE&gt;
+                                   &lt;OTP&gt;&lt;/OTP&gt; 
+                                   &lt;TRANSAMOUNT&gt;1&lt;/TRANSAMOUNT&gt; 
+                                   &lt;REMARKS&gt;Account Verification&lt;/REMARKS&gt; 
+                                   &lt;MERCHANTTRANSID&gt;'.$track_id.'&lt;/MERCHANTTRANSID&gt;
+                                   &lt;AGENTID&gt;Swamicom'.$this->session->userdata('login_id').'&lt;/AGENTID&gt;
+                                  &lt;BANKNAME&gt;'.$bnk.'&lt;/BANKNAME&gt;
+                                  &lt;BRANCHNAME&gt;'.$branch.'&lt;/BRANCHNAME&gt;
+                                   
+                                    &lt;PARAM1&gt;0.00&lt;/PARAM1&gt;
+                                    &lt;PARAM2&gt;&lt;/PARAM2&gt;
+                                    &lt;PARAM3&gt;&lt;/PARAM3&gt;
+                                    &lt;PARAM4&gt;&lt;/PARAM4&gt;
+                                    &lt;PARAM5&gt;&lt;/PARAM5&gt;
+                                    &lt;/TRANSACTION_V2REQUEST&gt;
+                              </RequestData>
+                            </TRANSACTION_V2>
+                          </soap:Body>
+                        </soap:Envelope>';
+            
+//echo $curlData;
+
+                   $curl = curl_init();
+
+                   curl_setopt ($curl, CURLOPT_URL, $url);
+                   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                   curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+                   curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+                       'SOAPAction:'.DMRACTIUON.'TRANSACTION_V2',
+                       'Content-Type: text/xml; charset=utf-8;',
+                   ));
+
+                    curl_setopt ($curl, CURLOPT_POST, 1);
+
+                   curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+                   $result = curl_exec($curl);                 
+                   curl_close ($curl);
+                  
+                $first_tag = explode('<TRANSACTION_V2Result>', $result);       
+                
+                if(count($first_tag)!= 2 ){
+                    return 0;
+                }else{
+                    $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+                  //  print_r($get_full);die();
+                    $final = explode('</TRANSACTION_V2Result></TRANSACTION_V2Response></soap:Body></soap:Envelope>', $get_full);
+                    
+                    $response = simplexml_load_string($final[0]);
+                  
+                    
+                     if($response->STATUSCODE == 0 ){
+                       
+                  $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                   if($query2 && $query2->num_rows()== 1){ 
+                       $totalcharge =  6.00;
+                       $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                       $val2 = $query2->row()->amount;
+                       $insfrom   =   array(                      
+                               "amount"     => ($val2 - $totalcharge)
+                           );
+                       $this->db->where("user_id",$this->session->userdata('login_id'));
+                       $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                      
+                        $myupdate = array(
+                          "trans_from"    =>   $this->session->userdata('login_id'),
+                          "trans_to"      =>     0,
+                         "cur_amount"      =>    ($val2 - $totalcharge),
+                          "trans_amt"     =>     6.00,
+                          "trans_remark"  =>     "Account verification charge of $name",
+                          "type"  =>     "2",
+                            'trans_date' => date('Y-m-d H:i:s')
+                       );
+                      $query =   $this->db->insert("trans_detail", $myupdate);
+                    }
+                         
+                      return 0;  
+
+                    }else if($response->STATUSCODE == 1){ 
+                        return 3;
+                        
+                    }else if($response->STATUSCODE == 2){
+                        $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                        if($query2 && $query2->num_rows()== 1){ 
+                            $totalcharge =  6.00;
+                            $name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
+                            $val2 = $query2->row()->amount;
+                            $insfrom   =   array(                      
+                                    "amount"     => ($val2 - $totalcharge)
+                                );
+                            $this->db->where("user_id",$this->session->userdata('login_id'));
+                            $query1 = $this->db->update("current_virtual_amount",$insfrom);
+
+                             $myupdate = array(
+                               "trans_from"    =>   $this->session->userdata('login_id'),
+                               "trans_to"      =>     0,
+                              "cur_amount"      =>    ($val2 - $totalcharge),
+                               "trans_amt"     =>     6.00,
+                               "trans_remark"  =>     "Account verification charge of $name",
+                               "type"  =>     "2",
+                                 'trans_date' => date('Y-m-d H:i:s')
+                            );
+                           $query =   $this->db->insert("trans_detail", $myupdate);
+                         }
+                         $this->session->set_flashdata('err','Unknown : please Retry after 90 seconds. Server is busy!');  
+                          redirect('dmr/transRequery/'.$track_id);
+                    }else if($response->STATUSCODE == 3){                        
+                        return 3;
+                    }
+                    else{
+                        return 3;
+                    } 
+                }
+    }
+    /************** END VERIFY ACC ***************/
 
     public function verifyBeneficiary(){
         //$data = $this->beneDetails($ben_id);

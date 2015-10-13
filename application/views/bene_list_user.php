@@ -135,11 +135,15 @@
                                              <input type='submit' name='transneft_top' class='btn btn-warning' value='Transfer From Topup' />
                                          </div>
                                         <?php }?>
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-2">
                                              <a href="<?php echo base_url()?>dmr/removeBeneficary/<?php echo $dl->BENEID;?>" class="btn btn-danger" title="Remove"><i class="fa fa-trash-o "></i> Remove</a>
                                          </div> 
-                                          <div class="col-lg-3">
+                                          <div class="col-lg-2">
                                               <button class="btn btn-danger cancel" >Cancel</button> 
+                                             
+                                         </div> 
+                                          <div class="col-lg-2 status-ver">
+                                              <a href="javascript:void(0);" class="btn btn-warning verify" id="ver_<?php echo $i;?>" mysd="<?php echo $i;?>" bnk="<?php echo $dl->BANKNAME;?>" branch="<?php echo $dl->BRANCHNAME;?>" ifsc="<?php echo $dl->IFSCCODE;?>" mo="<?php echo $dl->MOBILE;?>" acc ="<?php if($dl->IFSCCODE == ''){echo $dl->MMID;}else{echo $dl->ACCOUNTNO;}?>" type="<?php if(strlen($dl->IFSCCODE) == 11) {echo "8";}else if(strlen($dl->IFSCCODE) == '' || strlen($dl->IFSCCODE) == 0) {echo "1";}else{echo "2";}?>" >Verify</a> 
                                              
                                          </div> 
                                      </div>
@@ -156,6 +160,27 @@
     </div>
  </section>
 <script>
+    $('.verify').click(function(){
+        var type = $(this).attr('type');
+        var acc = $(this).attr('acc');
+        var mo = $(this).attr('mo');
+        var ifsc = $(this).attr('ifsc');
+        var branch = $(this).attr('branch');
+        var bnk = $(this).attr('bnk');
+        var mysd = $(this).attr('mysd');
+         $("#loading").modal('show');
+            $.post('<?php echo base_url();?>dmr/verifybene',{'type':type,'acc':acc,'mo':mo,'ifsc':ifsc,'branch':branch,'bnk':bnk},function(response){
+            
+                if(response !=''){                        
+                        
+                        $('#ver_'+mysd).html("<buttion class='btn btn-success'>Verified</buttion>");
+                        $("#loading").modal('hide');
+                    }else{
+                            $('#ver_'+mysd).html("<buttion class='btn btn-danger'>Not Verified</buttion>");
+                            $("#loading").modal('hide');
+                    }					
+                });
+    });
     $('.myamt').val('');
     $('.myamtt').val('');
     $('.cancel').click(function(){
