@@ -135,16 +135,18 @@
                     <div class="col-lg-6 col-sm-6">
                        <!-- START widget-->
                        <div class="panel widget bg-purple">
+                            <a href="<?php echo base_url();?>flight/searchFlight" style="text-decoration: none;color:#fff;">
                           <div class="row row-table">
                              <div class="col-xs-4 text-center bg-purple-dark pv-lg">
                                 <em class="fa fa-send-o fa-3x"></em>
                              </div>
                              <div class="col-xs-8 pv-lg">
-                                <div class="h2 mt0">flight
+                                <div class="h2 mt0">flight 
                                 </div>
                                 <div class="text-uppercase">Booking</div>
                              </div>
                           </div>
+                            </a>
                        </div>
                     </div>
                     <div class="col-lg-6 col-sm-6">

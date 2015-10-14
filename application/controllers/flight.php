@@ -28,13 +28,14 @@ class Flight extends CI_Controller {
              $this->form_validation->set_rules('adult','Adult','required');
              $this->form_validation->set_rules('child','Child','required');
              $this->form_validation->set_rules('class','Class','required');
+             $this->form_validation->set_rules('infant','Infant','required');
               if($this->form_validation->run() == TRUE){
-                
+                $data['pos'] = array('adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'));
                 $data['details'] = $this->flight_model->getFlight();
                
             }
         }
-        
+         $data['logos'] = $this->flight_model->getLogo();
         $this->load->view('layout/inner_template',$data);
     }
      public function flightHistory(){
@@ -46,5 +47,19 @@ class Flight extends CI_Controller {
              );
         
         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function fare(){
+        $airlineId = $_POST['AirlineId'];
+        $flightId = $_POST['FlightId'];
+        $classCode = $_POST['ClassCode'];
+        $track = $_POST['track'];
+        $basicAmount = $_POST['BasicAmount'];
+        $infant = $_POST['infant'];
+        $child = $_POST['child'];
+        $adult = $_POST['adult'];
+        
+        $return = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
+        echo $return;
     }
 }

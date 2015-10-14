@@ -27,7 +27,7 @@
                 <form role="form" action="" method="post">
                     <div class="row">
                         <?php if($this->session->userdata('dmr') == 1){?>
-                         <div class="col-sm-4">
+                         <div class="col-sm-3">
                             <div class="form-group">
                                 <div class="col-sm-1">
                                 <input type="checkbox" <?php echo ($access->dmr == 1)?"checked=checked":"";?> name="dmr" value="1" id="checkAll" class="dmr-v"/>
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <?php }if($this->session->userdata('recharge') == 1){?>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <div class="col-sm-1">
                                 <input type="checkbox" <?php echo ($access->recharge == 1)?"checked=checked":"";?> name="recharge" value="1" id="checkAll_re"/>
@@ -79,6 +79,24 @@
                             </div>
                         </div>-->
                         <?php }?>
+                        
+                         <?php if($this->session->userdata('flight') == 1){?>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="col-sm-1">
+                                    <input type="checkbox" <?php echo ($access->flight == 1)?"checked=checked":"";?> name="flight" value="1" id="fly" />
+                                </div>
+                                <div class="col-sm-9">
+                                    <label>Flight
+                                        <ul class="padding-left-15">
+                                            <li><input type="checkbox" <?php echo ($access->search_flight == 1)?"checked=checked":"";?> name="search" value="1" class="fly search_fly"/> Search Flight</li>
+                                            <li><input type="checkbox" <?php echo ($access->book_flight == 1)?"checked=checked":"";?> name="book" value="1" class="fly book_fly"/> Book Flight</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <?php }?>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
@@ -92,3 +110,20 @@
         </div>
     </div>
  </section>
+<script>
+    $("#fly").change(function () {
+        $(".fly").prop('checked', $(this).prop("checked"));
+    });
+    $(".search_fly").change(function () {
+        var vsh = $(".book_fly").is(":checked");
+        if(vsh == false){
+                $("#fly").prop('checked', $(this).prop("checked"));
+        }
+    });
+    $(".book_fly").change(function () {
+        var vsh = $(".search_fly").is(":checked");
+        if(vsh == false){
+                $("#fly").prop('checked', $(this).prop("checked"));
+        }
+    });
+</script>

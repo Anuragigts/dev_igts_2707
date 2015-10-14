@@ -48,6 +48,30 @@ thead th{ color: #000!important;border:1px solid #000 !important;}
 .even td{border:1px solid #000 !important; }
 .odd td{border:1px solid #000 !important; }
 
+/************* FLIGHT ***********/
+.mypad{
+   padding-top: 15px; 
+   padding-bottom:  15px; 
+   border:1px solid #ccc;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(204,12,NaN,1);
+-moz-box-shadow: inset 0px 0px 5px 0px rgba(204,12,NaN,1);
+box-shadow: inset 0px 0px 5px 0px rgba(204,12,NaN,1);
+cursor: pointer;
+}
+.dull{
+    color: #B2AEAE;
+}
+.dull1{
+    font-size: 14px;
+    color: #B2AEAE;
+}
+.heading-a{
+    font-weight: 900;
+}
+.no{
+    display:none;
+}
+/************* END FLIGHT ***********/
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {

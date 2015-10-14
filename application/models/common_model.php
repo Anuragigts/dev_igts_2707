@@ -340,7 +340,10 @@ class Common_model extends CI_Model
                         "gas"                   =>      $gas,
                         "dmr"                   =>      $dmr,
                         "add_beneficiary"       =>      $add_beneficiary,
-                        "money_transfer"        =>      $money_transfer
+                        "money_transfer"        =>      $money_transfer,
+                        "flight"                =>      $this->input->post("flight"),     
+                        "search_flight"         =>      $this->input->post("search"),     
+                        "book_flight"            =>      $this->input->post("book")     
                 );
 //                print_r($data);exit;
                 $this->db->where('login_id',$valu);

@@ -243,23 +243,19 @@
                         <li class="sidebar-subnav-header">Flight</li>
 
                         <li class="searchFlight ">
-                           <!--<a href="<?php //echo base_url();?>flight/searchFlight" title="Search Flight">-->
+                           <a href="<?php echo base_url();?>flight/searchFlight" title="Search Flight">
                            <a href="#" title="Search Flight">
                               <span>Search Flight</span>
                            </a>
                         </li>
                         <li class="flightHistory ">
-                           <!--<a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">-->
+                           <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
                            <a href="#" title="Flight History">
                               <span>Flight History</span>
                            </a>
                         </li>
                        
-<!--                        <li class="dmrAgents">
-                           <a href="<?php //echo base_url();?>dmr/dmrAgents" title="DMR Agents">
-                              <span>DMR Agents</span>
-                           </a>
-                        </li>-->
+
                      </ul>
                   </li>
                     <?php }?>

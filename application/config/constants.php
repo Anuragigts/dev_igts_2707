@@ -60,6 +60,8 @@ define('DMRACTIUON', 'http://tempuri.org/');
 // Flight rechage
 define('FLIGHTURL', 'http://115.248.39.80/hermesapi/inthermesair.asmx');
 define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
+define('FLIGHTID', 'Swamicom');
+define('FLIGHTPASS', 'Swamicom123');
 
 
 
