@@ -52,8 +52,8 @@
                                        <label for="code" >Beneficiary Type<font class="red">*</font></label>
                                         <select class="form-control"  name="b_type" id='b_type' >
 <!--                                            <option value="">Select</option>-->
-                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IMPS(Tatkal Transfer)</option>
-                                            <option value="IFSC1" <?php echo set_select('b_type','IFSC1', ( !empty($data) && $data == "IFSC1") ? TRUE : FALSE )?>>NEFT Transfer</option>
+                                            <option value="IFSC" <?php echo set_select('b_type','IFSC', ( !empty($data) && $data == "IFSC") ? TRUE : FALSE )?>>IMPS (Tatkal Transfer)</option>
+                                            <option value="IFSC1" <?php echo set_select('b_type','IFSC1', ( !empty($data) && $data == "IFSC1") ? TRUE : FALSE )?>>NEFT / IMPS Transfer</option>
                                             <option value="MMID" <?php echo set_select('b_type','MMID', ( !empty($data) && $data == "MMID") ? TRUE : FALSE )?>>MMID Transfer</option>
                                             
                                         </select> 
@@ -138,13 +138,13 @@
                                 
                                
                                 <div class="col-lg-6">                                     
-                                     <div class="checkbox c-checkbox">
+                                     <!--div class="checkbox c-checkbox">
                                         <label>
                                             <input type="checkbox" name="verify_ac" id="verify_ac" value="1"> 
                                             <span class="fa fa-check"></span>
                                             <b>Verify This account</b>
                                         </label>
-                                     </div>                                    
+                                     </div-->                                    
                                 </div>
                                 <div class="col-lg-6">                                     
                                      <div class="b-c">

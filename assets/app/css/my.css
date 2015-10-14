@@ -68,6 +68,10 @@ cursor: pointer;
 .heading-a{
     font-weight: 900;
 }
+.he1{
+    font-size: 18px;
+    font-weight: 900;
+}
 .no{
     display:none;
 }

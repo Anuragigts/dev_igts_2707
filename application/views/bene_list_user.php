@@ -59,7 +59,7 @@
                   <?php $i=1;foreach($ben_details->ITEM as $dl){?> 
                     <div id="" class="panel panel-default panel-demo">
                          <div class="panel-heading panel-heading-collapsed">
-                             <b>Beneficiary : </b> <?php echo $dl->BENENAME;?>&nbsp;( <?php echo $dl->BENEID;?>) ,&nbsp;&nbsp;&nbsp;&nbsp;
+                             <b>Beneficiary : </b> <?php echo $dl->BENENAME;?>&nbsp;( <?php echo $dl->BENEID;?>) - <?php echo $dl->BANKNAME;?> ,&nbsp;&nbsp;&nbsp;&nbsp;
                              <b>Type : </b> <?php if($dl->IFSCCODE == ''){echo "MMID";}else{echo "IFSC";}?> - <?php if($dl->ACCOUNTNO != ''){ echo $dl->ACCOUNTNO; }else{ echo $dl->MMID; }?>
                              <?php if($dl->MOBILE != '0'){?>
                              ,&nbsp;&nbsp;&nbsp;&nbsp;<b>Mobile : </b> <?php echo $dl->MOBILE;?>
@@ -83,7 +83,7 @@
                                         <div class="col-lg-2"><br>
                                             <?php if(strlen($dl->IFSCCODE) == 11) {?>
                                                 <input type="radio" name="typeamt" value="NEFT" class="nefradio" ifcod="<?php echo $i;?>" checked="checked"> NEFT  <br>
-                                                <!--<input type="radio" name="typeamt" value="IFSC"  class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IFSC (Tatkal)<br>-->
+                                                <input type="radio" name="typeamt" value="IFSC" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IMPS (Tatkal)<br>
                                             <?php }if(strlen($dl->IFSCCODE) != 11 && strlen($dl->IFSCCODE) != '') {?>
                                                 <input type="radio" name="typeamt" value="IFSC" checked="checked" class="ifradio" ifcod="<?php echo $i;?>" totalifsc="<?php echo $dl->IFSCCODE;?>"> IMPS (Tatkal)<br>
                                             <?php }if(strlen($dl->IFSCCODE) == '') {?>

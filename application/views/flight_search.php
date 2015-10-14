@@ -168,7 +168,7 @@
                 $me=0;foreach($details->FlightDetails as $di){
                     foreach($di->AirlineSegment as $st){
                     foreach($st->ITEM as $it){
-                    foreach($it->AirlineDetails as $al){$me++;?>
+                    foreach($it->AirlineDetails as $al){$me++; $logo1 = '';?>
                         <?php //echo "<pre>"; print_r($al);?>
                         <!-- START panel-->
                         <div class="col-md-12 panel mypad">
@@ -179,11 +179,13 @@
                                               
                                              <?php $cc = 0; foreach($logos as $logo){
                                                 if($al->CarrierCode == $logo->cc){ $cc = 1;
+                                                    $logo1 =  base_url()."assets/logo/".$logo->logo;
                                                     echo "<center><img src='".  base_url()."assets/logo/".$logo->logo."' class='img img-responsive center' /></center>";
                                                     echo $logo->name."<br>";
                                                     echo "<span class='dull1'>".$al->CarrierCode.'-'.$al->FlightNo."</span>";
                                                 }
                                             }if($cc == 0){
+                                                $logo = base_url()."assets/logo/plane4.png";
                                                 echo "<center><img src='".  base_url()."assets/logo/plane4.png' class='img img-responsive center' /></center>";
                                                 echo "<span class='dull1'>".$al->CarrierCode.'-'.$al->FlightNo."</span>";
                                             }?>
@@ -208,7 +210,11 @@
                                             </span>
                                         </div>
                                         <div class="col-md-2 text-center"><?php echo $al->GrossAmount;?>
-                                            <i class="icon-list fa-2x dull"></i><br>
+                                            <center>
+                                             <span class="btn-label">
+                                                <i class="fa fa-send-o "></i>
+                                            </span><br>
+                                            </center>
                                             <span class='dull1'>No Service</span>
                                         </div>
                                         <div class="col-md-2 text-center">
@@ -217,12 +223,30 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 text-center">
-                                    <button  class="btn btn-labeled btn-success" type="button">
-                                        <span class="btn-label">
-                                            <i class="fa fa-send-o "></i>
-                                        </span>
-                                        Book Ticket
-                                    </button>
+                                   
+                                    <form method="post" action="<?php echo base_url();?>flight/book">
+                                        <input type="hidden" name="AirlineId" value="<?php echo $al->CarrierCode;?>">
+                                        <input type="hidden" name="FlightId" value="<?php echo $al->FlightId;?>">
+                                        <input type="hidden" name="ClassCode" value="<?php echo $al->SegmentDetails->item->ClassCode;?>">
+                                        <input type="hidden" name="Track" value="<?php echo $track;?>">
+                                        <input type="hidden" name="BasicAmount" value="<?php echo $al->SegmentDetails->item->GrossAmount?>">
+                                        <input type="hidden" name="Adult" value="<?php echo $pos['adult'];?>">
+                                        <input type="hidden" name="Child" value="<?php echo $pos['child'];?>">
+                                        <input type="hidden" name="Infrunt" value="<?php echo $pos['infant'];?>">
+                                        
+                                        <input type="hidden" name="logo" value="<?php echo $logo1;?>">
+                                        <input type="hidden" name="name" value="<?php echo $al->CarrierCode.'-'.$al->FlightNo;?>">
+                                        <input type="hidden" name="dep" value="<?php echo $al->DepartureDateTime;?>">
+                                        <input type="hidden" name="source" value="<?php echo $al->Source;?>">
+                                        <input type="hidden" name="arr" value="<?php echo $al->ArrivalDateTime;?>">
+                                        <input type="hidden" name="dest" value="<?php echo $al->Destination;?>">
+                                        <input type="hidden" name="dur" value="<?php echo $al->Duration;?>">
+                                        <input type="hidden" name="stop" value="<?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>">
+                                        
+                                        
+                                        <input type="submit" name="book" class="btn  btn-success" value="Book Ticker" />
+                                       
+                                    </form>
                                     <br><br>
                                     <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
                                     <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $al->CarrierCode;?>" FlightId="<?php echo $al->FlightId;?>" ClassCode="<?php echo $al->SegmentDetails->item->ClassCode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>">+ Show Fare Details</a>
