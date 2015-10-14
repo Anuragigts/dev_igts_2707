@@ -224,8 +224,10 @@
                                         Book Ticket
                                     </button>
                                     <br><br>
+                                    <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
                                     <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $al->CarrierCode;?>" FlightId="<?php echo $al->FlightId;?>" ClassCode="<?php echo $al->SegmentDetails->item->ClassCode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>">+ Show Fare Details</a>
                                     <a href="javascript:void(0);" class="hidefare no" id="hide_<?php echo $me;?>" fatch="<?php echo $me;?>">- Hide Fare Details</a>
+                                    <?php }?>
                                 </div>
                             </div>
                             
