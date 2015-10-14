@@ -304,63 +304,65 @@ class Flight_model extends CI_Model
                    $sr = (($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount));
                    $pr = (($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission));
                    $style= "style='border-bottom:1px solid #ccc;'";
-                   $style1= "style='border-bottom:1px solid #ccc;background-color:#ccc;'";
+                   $style1= "style='border-bottom:1px solid #000;background-color:#ccc;'";
+                   $th= "style='padding:5px;font-weight:boald;'";
+                   $td= "style='padding-left:5px;padding-right:5px;'";
                    $table= "style='border:1px solid #000;'";
                    $val = '';
                    $val .= "<h4>FARE DETAILS</h4>";
                    $val .= "<table  width='100%' ".$table.">";
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>".$adult." Adult</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">".$adult." Adult</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$s_adult = ($adult * $response->FlightDetails->Item->Adult->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>".$child." Child</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">".$child." Child</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$s_child = ($child * $response->FlightDetails->Item->Child->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>".$infant." Infant</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">".$infant." Infant</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($infant * $response->FlightDetails->Item->Infant->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style1.">";
-                   $val .= "<th>Total</th>";
-                   $val .= '<th class="pull-right">';
+                   $val .= "<th ".$th.">Total</th>";
+                   $val .= '<th class="pull-right" '.$th.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant);
                    $val .= '</th></tr>';
                    /*************************/
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>Tax</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">Tax</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$tax;
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>Transaction Charge</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">Transaction Charge</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$tr;
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>Service Charge</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">Service Charge</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$sr;
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
-                   $val .= "<td>Processing Fee</td>";
-                   $val .= '<td class="pull-right">';
+                   $val .= "<td ".$td.">Processing Fee</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.$pr;
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style1.">";
-                   $val .= "<th>Grand Total</th>";
-                   $val .= '<th class="pull-right">';
+                   $val .= "<th ".$th.">Grand Total</th>";
+                   $val .= '<th class="pull-right" '.$th.'>';
                    $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant + $tr + $sr + $pr + $tax);
                    $val .= '</th></tr>';
                    $val .= '</table>';

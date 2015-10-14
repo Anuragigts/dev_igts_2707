@@ -286,8 +286,12 @@
         var adult = $(this).attr('adult');
           $("#loading").modal('show');
             $.post('<?php echo base_url();?>flight/fare',{'infant':infant,'child':child,'adult':adult,'AirlineId':AirlineId,'FlightId':FlightId,'ClassCode':ClassCode,'track':track,'BasicAmount':BasicAmount},function(response){
-                alert(response);
-                if(response !=''){                        
+               // alert(response);
+                if(response !=''){   
+                        $('#yes_'+fatch).css('display','inline');
+                        $('#hide_'+fatch).css('display','inline');
+                        $('#show_'+fatch).css('display','none');
+                        
                         $('#detail_'+fatch).html(response);
                         $("#loading").modal('hide');
                     }else{
@@ -295,8 +299,6 @@
                         $("#loading").modal('hide');
                     }					
                 });
-        $('#yes_'+fatch).css('display','inline');
-        $('#hide_'+fatch).css('display','inline');
-        $('#show_'+fatch).css('display','none');
+        
     });
  </script>
