@@ -676,7 +676,7 @@ class Dmr_model extends CI_Model
                                    &lt;TRANSACTIONID&gt;'.$track_id.'&lt;/TRANSACTIONID&gt;
                                    &lt;BENENAME&gt;'.$this->input->post('b_name').'&lt;/BENENAME&gt;
                                    &lt;MMID&gt;&lt;/MMID&gt;
-                                   &lt;BENEMOBILE&gt;&lt;/BENEMOBILE&gt;
+                                   &lt;BENEMOBILE&gt;'.$mobile.'&lt;/BENEMOBILE&gt;
                                    &lt;BANKNAME&gt;'.$bank_name.'&lt;/BANKNAME&gt;
                                    &lt;BRANCHNAME&gt;'.$branch_name.'&lt;/BRANCHNAME&gt;
                                    &lt;CITY&gt;'.$city.'&lt;/CITY&gt;
@@ -2149,7 +2149,7 @@ class Dmr_model extends CI_Model
              $final = explode('</TRANSACTION_V3Result></TRANSACTION_V3Response></soap:Body></soap:Envelope>', $get_full);
 
              $response = simplexml_load_string($final[0]);
-            // print_r($response);die();
+            //print_r($response);die();
              if($response->STATUSCODE == 0){
                  
 		if($iscomm == 1){

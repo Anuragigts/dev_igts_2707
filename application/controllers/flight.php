@@ -30,7 +30,8 @@ class Flight extends CI_Controller {
              $this->form_validation->set_rules('class','Class','required');
              $this->form_validation->set_rules('infant','Infant','required');
               if($this->form_validation->run() == TRUE){
-                $data['pos'] = array('adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'));
+                  
+                $data['pos'] = array('adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'), 'type' => $this->input->post('type'));
                 $data['details'] = $this->flight_model->getFlight();
                
             }
@@ -52,6 +53,7 @@ class Flight extends CI_Controller {
         $this->session->unset_userdata('dest');
         $this->session->unset_userdata('dur');
         $this->session->unset_userdata('stop');
+        $this->session->unset_userdata('type');
             
          $data['logos'] = $this->flight_model->getLogo();
         $this->load->view('layout/inner_template',$data);
@@ -88,7 +90,7 @@ class Flight extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'flight_book'
              );
-        $airlineId = '';
+        $airlineId = ''; 
         if($this->input->post('AirlineId') != ''){
             $airlineId      = $this->input->post('AirlineId');
             $flightId       = $this->input->post('FlightId');
@@ -107,6 +109,7 @@ class Flight extends CI_Controller {
             $dest           = $this->input->post('dest');
             $dur            = $this->input->post('dur');
             $stop           = $this->input->post('stop');
+            $type           = $this->input->post('type');
         }
         if($airlineId != '' &&  $airlineId != 0){
             $this->session->set_userdata('AirlineId',   "$airlineId");
@@ -126,6 +129,7 @@ class Flight extends CI_Controller {
             $this->session->set_userdata('dest',        "$dest");
             $this->session->set_userdata('dur',         "$dur");
             $this->session->set_userdata('stop',        "$stop");
+            $this->session->set_userdata('type',        "$type");
         }
         $data['flight'] = array('logo' => $this->session->userdata('logo'),
                         'name'  => $this->session->userdata('name1'),
@@ -146,6 +150,7 @@ class Flight extends CI_Controller {
         $adult      = $this->session->userdata('Adult');
         //echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
         $data['get_details'] = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
+        $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         
         
         

@@ -880,7 +880,7 @@ class Dmr extends CI_Controller {
                                   }else if( $result == 5){ 
                                       $this->session->set_flashdata('err','Unknown : Server Busy. Please try after some time.');  
                                      redirect('dmr/beneficiaryList/'.$card.'/'.$mo);                  
-                                  }else if( $result == 4){                    
+                                  }else if( $result == 4){                 
                                       $this->session->set_flashdata('err','Transaction failed : due to internal validation.');  
                                        redirect('dmr/beneficiaryList/'.$card.'/'.$mo);
                                   }else{
@@ -911,7 +911,7 @@ class Dmr extends CI_Controller {
                                 $result = $this->dmr_model->doTopup($this->session->userdata('dmrkey'),$amountpost);
                                 if($result !=0){ 
 									$iscomm = 1;								
-                                     $result = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval,$iscomm);
+                                     $result1 = $this->dmr_model->dotransferAmt($key,$card,$mo,$type=8,$cardval,$iscomm);
 
                                     //echo $result;die();
                                       if($result1 == 1){                    

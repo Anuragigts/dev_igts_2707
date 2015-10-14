@@ -242,6 +242,7 @@
                                         <input type="hidden" name="dest" value="<?php echo $al->Destination;?>">
                                         <input type="hidden" name="dur" value="<?php echo $al->Duration;?>">
                                         <input type="hidden" name="stop" value="<?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>">
+                                        <input type="hidden" name="type" value="<?php echo $pos['type'];?>">
                                         
                                         
                                         <input type="submit" name="book" class="btn  btn-success" value="Book Ticker" />

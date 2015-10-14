@@ -44,7 +44,8 @@
                         <?php echo $flight['stop'];?>
                         </span>
                     </div>
-                   
+                </div>
+               
                    <div class="row">
                        <div class="panel panel-default">
                             <div class="panel-body">
@@ -52,16 +53,67 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>First Name<span class="red">*</span></label>
-                                                <input type="text" placeholder="First Name" class="form-control" name="first_name" value="<?= set_value('first_name');?>" onkeypress="return onlyAlpha(event);" maxlength="50">
-                                                <span class="red"><?= form_error('first_name');?></span>
+                                                <label>Title<span class="red">*</span></label>
+                                                <select name="title" class="form-control">
+                                                    <option value="">Select</option>
+                                                    <option value="Mr" <?php echo set_select('title','Mr', ( !empty($data) && $data == "Mr") ? TRUE : FALSE )?>>Mr.</option>
+                                                    <option value="Mrs" <?php echo set_select('title','Mrs', ( !empty($data) && $data == "Mrs") ? TRUE : FALSE )?>>Mrs.</option>
+                                                                                           
+                                                </select>
+                                                <span class="red"><?=  form_error('to');?></span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Last Name<span class="red">*</span></label>
-                                                <input type="text" placeholder="Last Name" class="form-control" name="last_name" value="<?= set_value('last_name');?>" onkeypress="return onlyAlpha(event);" maxlength="50">
-                                                <span class="red"><?= form_error('last_name');?></span>
+                                                <label>Mobile No<span class="red">*</span></label>
+                                                <input type="text" placeholder="Mobile No." class="form-control" name="mobile_no" value="<?= set_value('mobile_no');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                                <span class="red"><?= form_error('mobile_no');?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Name<span class="red">*</span></label>
+                                                <input type="hidden" class="form-control" name="city" value="<?php echo $flight['dep'];?>">
+                                                <input type="text" placeholder="Name" class="form-control" name="name" value="<?= set_value('first_name');?>" >
+                                                <span class="red"><?= form_error('name');?></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Email Id<span class="red">*</span></label>
+                                                <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= set_value('login_email');?>" maxlength="200">
+                                                <span class="red"><?= form_error('login_email');?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                <label>ZIP Code<span class="red">*</span></label>
+                                                <input type="text" placeholder="ZIP Code" class="form-control" name="zip" value="<?= set_value('zip');?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="6">
+                                                <span class="red"><?= form_error('zip');?></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" name="adult" value="<?php echo $this->session->userdata('Infrunt');?>">
+                                                <input type="hidden" class="form-control" name="child" value="<?php echo $this->session->userdata('Child');?>">
+                                                <input type="hidden" class="form-control" name="infrount" value="<?php echo $this->session->userdata('Infrunt');?>">
+                                                <input type="hidden" class="form-control" name="type" value="<?php echo $this->session->userdata('type');?>">
+                                                <input type="hidden" class="form-control" name="amt" value="<?php echo $getTotal;?>">
+                                                <?php 
+                                                $exp = explode('-', $flight['name']);?>
+                                                <input type="hidden" class="form-control" name="code" value="<?php echo $exp['0'];?>">
+                                                
+                                                <label>Email Id<span class="red">*</span></label>
+                                                <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= set_value('login_email');?>" maxlength="200">
+                                                <span class="red"><?= form_error('login_email');?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -69,8 +121,6 @@
                             </div>
                        </div>
                    </div>
-                    
-                </div>
            </div>
            <div class="col-md-4 top-5">
                <?php echo $get_details;?>
