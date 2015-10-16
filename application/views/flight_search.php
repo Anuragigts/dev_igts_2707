@@ -215,7 +215,8 @@
                                                 <i class="fa fa-send-o "></i>
                                             </span><br>
                                             </center>
-                                            <span class='dull1'>No Service</span>
+                                            <span class='dull1'>No Service<br>
+                                            <?php echo  $al->FlightId;?></span>
                                         </div>
                                         <div class="col-md-2 text-center">
                                             <span class="heading-a" style="font-size: 20px;"><b> <?php if($al->SegmentDetails->item->GrossAmount != ''){echo '<em class="fa fa-rupee"></em> '.$al->SegmentDetails->item->GrossAmount;}else{echo "N/A";}?></b></span>
@@ -244,6 +245,7 @@
                                         <input type="hidden" name="stop" value="<?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>">
                                         <input type="hidden" name="type" value="<?php echo $pos['type'];?>">
                                         <input type="hidden" name="class" value="<?php echo $pos['class'];?>">
+                                        <input type="hidden" name="flight_i" value="<?php echo  $al->FlightId;?>">
                                         
                                         <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
                                         <input type="submit" name="book" class="btn  btn-success" value="Book Ticker" />

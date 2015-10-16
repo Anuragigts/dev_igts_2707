@@ -289,7 +289,7 @@ class Flight_model extends CI_Model
 
                     $response = simplexml_load_string($final[0]);
                     
-                  // return print_r($response);
+                 // echo "<pre>";  print_r($response); die();
                    $tax = 0.00;
                    foreach($response->FlightDetails->Item->Adult->Tax->Item as $cnt){
                       $tax = $tax + ($adult * $cnt->TaxAmt); 

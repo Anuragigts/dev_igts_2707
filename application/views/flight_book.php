@@ -118,7 +118,7 @@
                                                 <?php 
                                                 $exp = explode('-', $flight['name']);?>
                                                 <input type="hidden" class="form-control" name="code" value="<?php echo $exp['0'];?>">
-                                                <input type="hidden" class="form-control" name="f_Id" value="<?php echo $exp['1'];?>">
+                                                <input type="hidden" class="form-control" name="f_Id" value="<?php echo $this->session->userdata('flight_i');?>">
                                                 
                                                 <label>Date Of Birth<span class="red">*</span></label>
                                                  <input name="dob" id="" placeholder="mm/dd/yyyy" class="form-control datepicker " type="text" value="<?= set_value("dob"); ?>" >

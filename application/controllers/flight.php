@@ -55,6 +55,7 @@ class Flight extends CI_Controller {
         $this->session->unset_userdata('stop');
         $this->session->unset_userdata('type');
         $this->session->unset_userdata('class');
+        $this->session->unset_userdata('flight_i');
             
          $data['logos'] = $this->flight_model->getLogo();
         $this->load->view('layout/inner_template',$data);
@@ -112,8 +113,9 @@ class Flight extends CI_Controller {
             $stop           = $this->input->post('stop');
             $type           = $this->input->post('type');
             $class           = $this->input->post('class');
+            $flight_i           = $this->input->post('flight_i');
         }
-        if($airlineId != '' &&  $airlineId != 0){
+        if($airlineId != '' ){
             $this->session->set_userdata('AirlineId',   "$airlineId");
             $this->session->set_userdata('FlightId',    "$flightId");
             $this->session->set_userdata('ClassCode',   "$classCode");
@@ -133,6 +135,7 @@ class Flight extends CI_Controller {
             $this->session->set_userdata('stop',        "$stop");
             $this->session->set_userdata('type',        "$type");
             $this->session->set_userdata('class',       "$class");
+            $this->session->set_userdata('flight_i',       "$flight_i");
         }
         $data['flight'] = array('logo' => $this->session->userdata('logo'),
                         'name'  => $this->session->userdata('name1'),
@@ -151,7 +154,7 @@ class Flight extends CI_Controller {
         $infant     = $this->session->userdata('Infrunt');
         $child      = $this->session->userdata('Child');
         $adult      = $this->session->userdata('Adult');
-        //echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
+       // echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
         $data['get_details'] = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         

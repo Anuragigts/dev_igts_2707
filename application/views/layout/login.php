@@ -26,12 +26,15 @@
     
    <div class="wrapper container">
        <div class="row" style="padding-top: 6%;">
-           <div class="col-md-7 hidden-xs">
+           <div class="row">
+           <div class="col-md-1"></div>
+           <div class="col-md-10">
+           <div class="col-md-8 hidden-xs">
                <div class="block-center " >
                    <img src="<?php echo base_url()?>baner/<?php echo $banner->b_name?>" class="img img-rounded img-responsive">
                </div>
            </div>
-           <div class="col-md-5">
+           <div class="col-md-4">
                <div class="block-center " >
                 <?php   $this->load->view("layout/success_error");?>
                  <!-- START panel-->
@@ -64,7 +67,7 @@
                              </div>
                           </div>
                            <input type="submit" class="btn btn-block btn-primary mt-lg" value="Login" name="login">
-                           <br>
+                           
                            <p class="pt-lg text-center"><a href="http://esytopup.com/">Home !</a></p>
                            <div class="text-center"><a href="<?php echo base_url()?>register">Register New User</a></div>
                        </form>
@@ -85,6 +88,10 @@
                     <span>Developed by iGravitas TechnoSoft India Pvt. Ltd.</span>
                  </div>
                </div>
+           
+       </div>
+       <div class="col-md-1"></div>
+        </div>
        </div>
       
    </div>
