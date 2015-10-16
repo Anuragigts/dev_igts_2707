@@ -5,7 +5,7 @@
           <th>Name</th>
           <th width="20%">Mobile No.</th>
           <th width="35%">Email</th>
-          <th>Package Name</th>
+          <!-- <th>Package Name</th> -->
        </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
                   <th><?= $supername;?></th>
                   <th><?= $super->mobile;?></th>
                   <th><?= ucfirst($super->login_email);?></th>
-                  <th><?= ucfirst($super->package_name);?></th>
+                  <!-- <th><?= ucfirst($super->package_name);?></th> -->
                </tr>
           <?php }?>
     </tbody>

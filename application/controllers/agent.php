@@ -29,7 +29,7 @@ class Agent extends CI_Controller {
                         $this->form_validation->set_rules("master",             "Master Distributor",   "callback_select_master");
                         $this->form_validation->set_rules("super",              "Super Distributor",    "callback_select_super");
                         $this->form_validation->set_rules("distributor",        "Distributor",          "callback_select_distributor");
-                        $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
+                       // $this->form_validation->set_rules("package",            "Package",              "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",              "required");
                         if($this->form_validation->run() == TRUE){
                              $idP = '';$addp='';
@@ -61,15 +61,40 @@ class Agent extends CI_Controller {
                             $this->upload->initialize($config);
                             $this->upload->do_upload('addproof');
                         }
-                                $get    =   $this->agent_model->insert_agent($idP,$addp);
-                                if($get == 1){
-                                        $this->session->set_flashdata("msg","Agent has been created successfully");
-                                        redirect("agent/create_agent");
-                                }
-                                else{
-                                        $this->session->set_flashdata("err","Server Busy. Please try after some time.");
-                                        redirect("agent/create_agent");
-                                }
+                            $first_name         =   $this->input->post("first_name");
+                            $last_name          =   $this->input->post("last_name");
+                            $country            =   $this->input->post("country");
+                            $state              =   $this->input->post("state");
+                            $city               =   $this->input->post("city");
+                            $address            =   $this->input->post("address");
+                            $login_email        =   $this->input->post("login_email");
+                            $master             =   $this->input->post("master");
+                            $super              =   $this->input->post("super");
+                            $dis              =   $this->input->post("distributor");
+                            $mobile_no          =   $this->input->post("mobile_no");
+                            $password           =   $this->input->post("password");
+                            $data   =   array(
+                                    "login_email"           =>     $login_email,
+                                    "login_mobile"          =>     $mobile_no,
+                                    "login_password"        =>     md5($password),
+                                    "first_name"            =>     $first_name,
+                                    "last_name"             =>     $last_name,
+                                    "country"               =>     101,
+                                    "state"                 =>     $state,
+                                    "city"                  =>     $city,
+                                    "address"               =>     $address,
+                                    "id_proof"              =>     "$idP",
+                                    "add_proof"             =>     "$addp",
+                                    "type_user"             =>      5,
+                                    "master"                =>      $master,
+                                    "super"                 =>      $super,
+                                    "distributor"           =>      $dis
+                           );
+                            //echo md5($password);
+                            $this->session->set_userdata($data);
+                            //print_r($data);
+                            //exit;
+                            redirect("package/create_commission");
                         }
                 }
                 $id1    =   5;
@@ -321,5 +346,9 @@ class Agent extends CI_Controller {
         public function module_access_agent(){
                 $this->load->library('../controllers/common');
                 $this->common->update_access();		
+	}
+        public function update_commission_agent(){
+                $this->load->library('../controllers/common');
+                $this->common->update_commission();		
 	}
 }

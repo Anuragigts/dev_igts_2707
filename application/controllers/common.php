@@ -9,6 +9,7 @@ class Common extends CI_Controller {
         public function __construct(){
             parent::__construct();
             $this->load->model('common_model');
+            $this->load->model('package_model');
             date_default_timezone_set('Asia/Kolkata');  
             if( $this->session->userdata('login_id') == ''){redirect('login');}
         }
@@ -147,6 +148,40 @@ class Common extends CI_Controller {
                                 }
                 }
                 $data['access']   =  $this->common_model->access_details($valu);
+                $this->load->view('layout/inner_template',$data);
+        }
+        public function update_commission(){
+                $data = array(
+                        'title'         => ' ESY TOPUP :: COMMISSION',
+                        'metakeyword'   => ' ESY TOPUP :: COMMISSION',
+                        'metadesc'      => ' ESY TOPUP :: COMMISSION',
+                        'content'       => 'update_comission'
+                );
+                $uri    =   $this->uri->segment(3);
+                $vri    =   $this->uri->segment(2);
+                $v    =   $this->uri->segment(1);
+                $data["viw"]        =   $this->common_model->get_commission($uri);
+                if($this->input->post("save")){
+                        $val = $this->common_model->update_commission($uri);
+                        $this->session->set_flashdata("msg","Commission updated successfully");
+                        redirect($v."/".$vri."/".$uri);
+                }
+                $this->load->view('layout/inner_template',$data);
+        }
+        public function my_commission(){
+                $data = array(
+                        'title'         => ' ESY TOPUP :: COMMISSION',
+                        'metakeyword'   => ' ESY TOPUP :: COMMISSION',
+                        'metadesc'      => ' ESY TOPUP :: COMMISSION',
+                        'content'       => 'my_comission'
+                );
+                $uri    =   $this->session->userdata("login_id");
+                $data["viw"]        =   $this->common_model->get_commission($uri);
+                 if($this->input->post("save")){
+                        $val = $this->common_model->update_commission($uri);
+                        $this->session->set_flashdata("msg","Commission updated successfully");
+                        redirect("common/my_commission");
+                }
                 $this->load->view('layout/inner_template',$data);
         }
 }

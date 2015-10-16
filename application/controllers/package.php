@@ -5,6 +5,10 @@ class Package extends CI_Controller {
             parent::__construct();
             $this->load->library('form_validation');
             $this->load->model('package_model');
+            $this->load->model('master_distributor_model');
+            $this->load->model('super_distributor_model');
+            $this->load->model('distributor_model');
+            $this->load->model('agent_model');
             date_default_timezone_set('Asia/Kolkata');  
             if( $this->session->userdata('login_id') == ''){redirect('login');}
             if( $this->session->userdata('my_type') == 5){redirect('dashboard');}
@@ -77,15 +81,60 @@ class Package extends CI_Controller {
                 if($this->input->post('save')){
                         $val     =  $this->package_model->insert_package_object();
                         if($val == 1){
-                             $this->session->unset_userdata('user_type_pac');
-                             $this->session->unset_userdata('package_name');
-                             $this->session->unset_userdata('package_remarks');
-                                $this->session->set_flashdata("msg","Package has been created successfully");
-                                redirect("package/create_package");
+                            if($this->session->userdata('type_user') == 2 ){
+                                    $get    =   $this->master_distributor_model->insert_master_distributor();
+                                    if($get == 1){
+                                            $this->session->set_flashdata("msg","Master Distributor has been created successfully");
+                                            redirect("master_distributor/create_master_distributor");
+                                    }
+                                    else{
+                                            $this->session->set_flashdata("err","Server Busy. Please try after some time.");
+                                            redirect("master_distributor/create_master_distributor");
+                                    } 
+                            }
+                            if($this->session->userdata('type_user') == 3 ){
+                                    $get    =   $this->super_distributor_model->insert_super_distributor();
+                                    if($get == 1){
+                                            $this->session->set_flashdata("msg","Super Distributor has been created successfully");
+                                            redirect("super_distributor/create_super_distributor");
+                                    }
+                                    else{
+                                            $this->session->set_flashdata("err","Server Busy. Please try after some time.");
+                                            redirect("super_distributor/create_super_distributor");
+                                    }
+                            }
+                            if($this->session->userdata('type_user') == 4 ){
+                                    $get    =   $this->distributor_model->insert_distributor();
+                                    if($get == 1){
+                                            $this->session->set_flashdata("msg","Distributor has been created successfully");
+                                            redirect("distributor/create_distributor");
+                                    }
+                                    else{
+                                            $this->session->set_flashdata("err","Server Busy. Please try after some time.");
+                                            redirect("distributor/create_distributor");
+                                    }
+                            }
+                            if($this->session->userdata('type_user') == 5 ){
+                                            $get    =   $this->agent_model->insert_agent();
+                                            if($get == 1){
+                                                    $this->session->set_flashdata("msg","Agent has been created successfully");
+                                                    redirect("agent/create_agent");
+                                            }
+                                            else{
+                                                    $this->session->set_flashdata("err","Server Busy. Please try after some time.");
+                                                    redirect("agent/create_agent");
+                                            }
+                            }
+                            
+//                             $this->session->unset_userdata('user_type_pac');
+//                             $this->session->unset_userdata('package_name');
+//                             $this->session->unset_userdata('package_remarks');
+//                                $this->session->set_flashdata("msg","Package has been created successfully");
+//                                redirect("package/create_package");
                         }
                         else{
-                                $this->session->set_flashdata("err","Package has been not created");
-                                redirect("package/create_package");
+                                $this->session->set_flashdata("err","Server Busy. Please try after some time.");
+                                redirect("master_distributor/create_master_distributor");
                         }
                 }
                 $this->load->view('layout/inner_template',$data);		

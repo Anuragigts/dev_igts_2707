@@ -46,7 +46,7 @@
                      <span data-localize="sidebar.heading.COMPONENTS">Users</span>
                   </li>
                   <?php if($this->session->userdata('my_type') == 1 ){?>
-                  <li class="master_distributor create_master_distributor view_master_distributor edit_master_distributor master_distributor_details module_access">
+                  <li class="master_distributor create_master_distributor view_master_distributor update_commission edit_master_distributor master_distributor_details module_access">
                      <a href="#master" title="Master Distributor" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Master Distributor</span>
@@ -58,7 +58,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_master_distributor edit_master_distributor master_distributor_details module_access">
+                        <li class="view_master_distributor edit_master_distributor master_distributor_details module_access update_commission">
                            <a href="<?=base_url();?>master_distributor/view_master_distributor" title="View Master Distributor">
                               <span>View</span>
                            </a>
@@ -68,7 +68,7 @@
                   <?php }?>
                   
                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2){?>
-                  <li class="super_distributor view_super_distributor super_distributor_details create_super_distributor edit_super_distributor module_access_super">
+                  <li class="super_distributor view_super_distributor super_distributor_details create_super_distributor update_commission_super edit_super_distributor module_access_super">
                      <a href="#super" title="Super Distributor" data-toggle="collapse">
                         <em class="fa fa-user"></em>
                         <span>Super Distributor</span>
@@ -80,7 +80,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_super_distributor edit_super_distributor super_distributor_details module_access_super">
+                        <li class="view_super_distributor edit_super_distributor super_distributor_details module_access_super update_commission_super">
                            <a href="<?= base_url();?>super_distributor/view_super_distributor" title="View Super Distributor">
                               <span>View</span>
                            </a>
@@ -89,7 +89,7 @@
                   </li>
                   <?php }?>
                    <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3){?>
-                  <li class="distributor create_distributor view_distributor edit_distributor distributor_details module_access_dis">
+                  <li class="distributor create_distributor view_distributor edit_distributor distributor_details module_access_dis update_commission_dis">
                      <a href="#dist" title="Distributor" data-toggle="collapse">
                         <em class="fa fa-male"></em>
                         <span>Distributor</span>
@@ -101,7 +101,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_distributor  edit_distributor distributor_details module_access_dis">
+                        <li class="view_distributor  edit_distributor distributor_details module_access_dis update_commission_dis">
                            <a href="<?= base_url();?>distributor/view_distributor" title="View Distributor">
                               <span>View</span>
                            </a>
@@ -110,7 +110,7 @@
                   </li>
                    <?php }?>
                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3 ||  $this->session->userdata('my_type') == 4){?>
-                  <li class="agent create_agent view_agent  edit_agent module_access_agent">
+                  <li class="agent create_agent view_agent  edit_agent module_access_agent update_commission_agent">
                      <a href="#agent" title="Agent" data-toggle="collapse">
                         <em class="fa fa-child"></em>
                         <span>Agent</span>
@@ -122,7 +122,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_agent edit_agent module_access_agent">
+                        <li class="view_agent edit_agent module_access_agent update_commission_agent">
                            <a href="<?= base_url();?>agent/view_agent" title="View Agent">
                               <span>View</span>
                            </a>
@@ -260,8 +260,9 @@
                     <?php }?>
                   <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">
-                     <span data-localize="sidebar.heading.COMPONENTS">Package & Commission</span>
+                     <span data-localize="sidebar.heading.COMPONENTS">Services & Reports</span>
                   </li>
+                  <!-- 
                    <li class="package create_package view_package view_package_details">
                      <a href="#pack" title="Package" data-toggle="collapse">
                         <em class="fa fa-database"></em>
@@ -280,7 +281,7 @@
                            </a>
                         </li>
                      </ul>
-                  </li>
+                  </li> -->
                    <?php if($this->session->userdata('my_type') == 1 ){ ?>
                    <li class="module_object create_module_object view_module_object">
                      <a href="#services" title="Services Type" data-toggle="collapse">
@@ -346,6 +347,12 @@
                   <li class="nav-heading ">
                      <span data-localize="sidebar.heading.COMPONENTS">Settings</span>
                   </li>
+                  <li class="my_commission">
+                     <a href="<?= base_url()?>common/my_commission" title="My Commission">
+                         <em class="fa fa-money"></em>                        
+                        <span data-localize="sidebar.nav.DASHBOARD">My Commission</span>
+                     </a>                    
+                  </li> 
                     <li class="funds">
                         <a href="#funds" title="Fund Request" data-toggle="collapse">
                            <em class="fa fa-list"></em>

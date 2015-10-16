@@ -27,7 +27,6 @@ class Master_distributor extends CI_Controller {
                         $this->form_validation->set_rules("country",            "Country",          "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",            "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",             "callback_select_city");
-                        $this->form_validation->set_rules("package",            "Package",          "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",          "required");
                         if($this->form_validation->run() == TRUE){
                             $idP = '';$addp='';
@@ -59,7 +58,35 @@ class Master_distributor extends CI_Controller {
                             $this->upload->initialize($config);
                             $this->upload->do_upload('addproof');
                         }
-                                $get    =   $this->master_distributor_model->insert_master_distributor($idP,$addp);
+                        $first_name         =   $this->input->post("first_name");
+                        $last_name          =   $this->input->post("last_name");
+                        $country            =   $this->input->post("country");
+                        $state              =   $this->input->post("state");
+                        $city               =   $this->input->post("city");
+                        $address            =   $this->input->post("address");
+                        $login_email        =   $this->input->post("login_email");
+                        $mobile_no          =   $this->input->post("mobile_no");
+                        $password           =   $this->input->post("password");
+                        $data   =   array(
+                                "login_email"           =>     $login_email,
+                                "login_mobile"          =>     $mobile_no,
+                                "login_password"        =>     md5($password),
+                                "first_name"            =>     $first_name,
+                                "last_name"             =>     $last_name,
+                                "country"               =>     101,
+                                "state"                 =>     $state,
+                                "city"                  =>     $city,
+                                "address"               =>     $address,
+                                "id_proof"              =>     "$idP",
+                                "add_proof"             =>     "$addp",
+                                "type_user"             =>      2
+                       );
+                        //echo md5($password);
+                        $this->session->set_userdata($data);
+                        //print_r($data);
+                        //exit;
+                        redirect("package/create_commission");
+                        /* $get    =   $this->master_distributor_model->insert_master_distributor($idP,$addp);
                                 if($get == 1){
                                         $this->session->set_flashdata("msg","Master Distributor has been created successfully");
                                         redirect("master_distributor/create_master_distributor");
@@ -67,8 +94,8 @@ class Master_distributor extends CI_Controller {
                                 else{
                                         $this->session->set_flashdata("err","Server Busy. Please try after some time.");
                                         redirect("master_distributor/create_master_distributor");
-                                }
-                        }
+                                } */
+                        } 
                 }
                 $data['pkg']   =  $this->packages();
                 $data['state']      =  $this->states();
@@ -110,15 +137,15 @@ class Master_distributor extends CI_Controller {
                     return true;
                 }
         }
-        public function select_package($val){
-                if($val == "Select Package"){
-                        $this->form_validation->set_message("select_package", "Please Select Package.");
-                        return false;
-                }
-                else{
-                    return true;
-                }
-        }
+//        public function select_package($val){
+//                if($val == "Select Package"){
+//                        $this->form_validation->set_message("select_package", "Please Select Package.");
+//                        return false;
+//                }
+//                else{
+//                    return true;
+//                }
+//        }
         public function view_master_distributor(){
             if($this->session->userdata('my_type') != 1 ){redirect('dashboard');}
                 $data = array(
@@ -170,7 +197,7 @@ class Master_distributor extends CI_Controller {
                         $this->form_validation->set_rules("country",            "Country",          "callback_select_country");
                         $this->form_validation->set_rules("state",              "State",            "callback_select_state");
                         $this->form_validation->set_rules("city",               "City",             "callback_select_city");
-                        $this->form_validation->set_rules("package",            "Package",          "callback_select_package");
+                        //$this->form_validation->set_rules("package",            "Package",          "callback_select_package");
                         $this->form_validation->set_rules("address",            "Address",          "required");
                         $this->form_validation->set_rules("mobile_no",          "Mobile No.",       "required|min_length[10]".$is_unie);
                         $this->form_validation->set_rules("login_email",        "Email Id",         "required". $is_unique);
@@ -259,4 +286,8 @@ class Master_distributor extends CI_Controller {
                 $this->load->library('../controllers/common');
                 $this->common->update_access();		
 	}
+        public function update_commission(){
+                 $this->load->library('../controllers/common');
+                $this->common->update_commission();	
+        } 
 }

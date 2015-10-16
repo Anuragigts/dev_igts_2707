@@ -68,6 +68,7 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <!--
                                 <div class="col-sm-4">
                                     <div class="col-sm-12">
                                         <div class="col-sm-6">
@@ -75,7 +76,7 @@
                                         </div>
                                         <div class="col-sm-6"><?= ucfirst($view->package_name);?></div>
                                     </div>                                  
-                                </div>
+                                </div> -->
                                 <div class="col-sm-4">
                                     <img src="<?php echo base_url()?>doc/<?php echo $view->id_proof;?>" class="img img-responsive img-thumbnail" Alt="N/A" style="height: 100px; width: 250px;">
                                 </div>

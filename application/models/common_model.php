@@ -357,4 +357,53 @@ class Common_model extends CI_Model
                     return array();
                 } 
         }
+        public function get_commission($uri){
+                $this->db->select('c.*,o.*,d.login_id,m.module_id,m.module_name,s.sub_module_name');
+                $this->db->from('commission_details as c');
+                $this->db->join('commission as d',"d.package_id = c.package_id",'inner');
+                $this->db->from('modules_object as o','o.modules_obj_id = c.modules_object_id','inner');
+                $this->db->join('module as m','m.module_id = o.module_id','inner');
+                $this->db->join('sub_module as s','s.sub_module_id = o.sub_module_id','inner');
+                $this->db->where('c.modules_object_id = o.modules_obj_id');
+               // $this->db->where('m.module_name','recharge');
+                $this->db->where('d.login_id',$uri);
+                $query = $this->db->get();
+                //echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->result();
+                }
+                else{
+                    return array();
+                }
+        }
+        public function getmodules($uri){
+                $this->db->select('c_detail_id');
+                $this->db->from('commission_details as c');
+                $this->db->join('commission as d',"d.package_id = c.package_id",'inner');
+                $this->db->from('modules_object as o','o.modules_obj_id = c.modules_object_id','inner');
+                $this->db->join('module as m','m.module_id = o.module_id','inner');
+                $this->db->join('sub_module as s','s.sub_module_id = o.sub_module_id','inner');
+                $this->db->where('c.modules_object_id = o.modules_obj_id');
+               // $this->db->where('m.module_name','recharge');
+                $this->db->where('d.login_id',$uri);
+                $query = $this->db->get();
+                //echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                        return $query->result();
+                }
+                else{
+                        return array();
+                } 
+        }
+        public function update_commission($uri){
+                $val1   = $this->getmodules($uri); 
+                foreach($val1 as $v1){
+                        $vamt = $this->input->post("commission-".$v1->c_detail_id);
+                        $comm   =   array(
+                                'commission_amt'        =>  $vamt
+                        );
+                        $this->db->update('commission_details',$comm,array("c_detail_id" => $v1->c_detail_id));
+                }
+                //exit
+        }
 }

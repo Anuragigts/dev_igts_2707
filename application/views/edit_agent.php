@@ -154,6 +154,7 @@
                                 <span class="red"><?= form_error('distributor');?></span>
                              </div>
                         </div>
+                        <!--
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Package Name <span class="red">*</span></label>
@@ -172,11 +173,8 @@
                                 </select>
                                 <span class="red"><?= form_error('package');?></span>
                              </div> 
-                        </div>
-                        
-                    </div>
+                        </div>-->
                     <?php if($this->session->userdata("my_type") == 1){ ?>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
@@ -184,6 +182,8 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
@@ -191,9 +191,7 @@
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
                         </div>
-                    </div>
                     <?php } else{ ?>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
@@ -201,6 +199,8 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
@@ -208,9 +208,7 @@
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
                         </div>
-                    </div>
                     <?php }?>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>

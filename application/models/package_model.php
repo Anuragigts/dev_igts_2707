@@ -113,9 +113,9 @@ class Package_model extends CI_Model
         }
         public function insert_package_object(){
                 $val              =     $this->session->userdata('login_id');
-                $usertype         =     $this->session->userdata('user_type_pac');
-                $package_name     =     $this->session->userdata('package_name');
-                $package_remarks  =     $this->session->userdata('package_remarks');
+                $usertype         =     $this->session->userdata('type_user');
+                $package_name     =     "Package Name";
+                $package_remarks  =     "Package Remarks";
                 $val1   = $this->getmodules();    
                 $data   =   array(
                             'user_type'         => $usertype,
@@ -125,6 +125,7 @@ class Package_model extends CI_Model
                     );
                 $this->db->insert('package',$data);
                 $ins_id     =   $this->db->insert_id();
+                $this->session->set_userdata("ur_pkg_id",$ins_id);
                 if($this->db->affected_rows() > 0){
                         foreach($val1 as $id){
                             if($this->input->post('commission-'.$id->modules_obj_id)){

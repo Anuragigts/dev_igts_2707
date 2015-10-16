@@ -75,6 +75,9 @@ only screen and (max-width: 760px),
                                                 <a href="<?= base_url();?>distributor/module_access_dis/<?= $view->login_id;?>" title="Module Access">
                                                     <i class="fa fa-paw"></i>
                                                 </a>
+                                                <a href="<?= base_url();?>distributor/update_commission_dis/<?= $view->login_id;?>" title="Update Comission">
+                                                    <i class="fa fa-money"></i>
+                                                </a>
                                             </td>
                                          </tr>
                                   <?php }?>

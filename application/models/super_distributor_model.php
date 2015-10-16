@@ -6,23 +6,25 @@
  * and open the template in the editor.
  */
 class Super_distributor_model extends CI_Model{ 
-        public function insert_super_distributor($idp,$addp){
+        public function insert_super_distributor(){
                 $ses_id             =   $this->session->userdata("login_id");
-                $first_name         =   $this->input->post("first_name");
-                $last_name          =   $this->input->post("last_name");
-                $country            =   $this->input->post("country");
-                $state              =   $this->input->post("state");
-                $city               =   $this->input->post("city");
-                $address            =   $this->input->post("address");
-                $login_email        =   $this->input->post("login_email");
-                $mobile_no          =   $this->input->post("mobile_no");
-                $password           =   $this->input->post("password");
-                $master_id          =   $this->input->post("master");
-                $pkg_id             =   $this->input->post("package");
+                $first_name         =   $this->session->userdata("first_name");
+                $last_name          =   $this->session->userdata("last_name");
+                $country            =   $this->session->userdata("country");
+                $state              =   $this->session->userdata("state");
+                $city               =   $this->session->userdata("city");
+                $address            =   $this->session->userdata("address");
+                $login_email        =   $this->session->userdata("login_email");
+                $mobile_no          =   $this->session->userdata("login_mobile");
+                $password           =   $this->session->userdata("login_password");
+                $pkg_id             =   $this->session->userdata("ur_pkg_id");
+                $idP                =   $this->session->userdata("id_proof");
+                $addp               =   $this->session->userdata("add_proof");
+                $master_id          =   $this->session->userdata("master");
                 $data   =   array(
                         "login_email"           =>     $login_email,
                         "login_mobile"          =>     $mobile_no,
-                        "login_password"        =>     md5($password),
+                        "login_password"        =>     $password,
                         "is_confirm"            =>     "confirm",
                         "user_type"             =>     3,
                         "status"                =>     1
@@ -160,7 +162,7 @@ class Super_distributor_model extends CI_Model{
                         );
                         $this->db->where("login_id",$valu);
                         $this->db->update("login",$lo);
-                        
+                        /*
                         $abc = $this->uri->segment(3);
                           $querya = $this->db->query("SELECT * FROM commission WHERE login_id = $abc");                
 		            if($querya && $querya->num_rows()== 1){
@@ -179,8 +181,8 @@ class Super_distributor_model extends CI_Model{
 		                       
 		                        $this->db->insert("commission",$ins_comm);
 		               }
-                        $var2  =   $this->db->affected_rows();
-                        if($var1 == 1 && ( $var2 == 0 || $var2 == 1)){
+                        $var2  =   $this->db->affected_rows(); */
+                        if($var1 == 1 ){
                                 return 1;
                         }
                         else{

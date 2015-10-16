@@ -76,6 +76,7 @@
                         </div>
                     </div>
                     <div class="row">
+                        <!-- 
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Package Name<span class="red">*</span></label>
@@ -92,7 +93,7 @@
                                </select>
                                <span class="red"><?= form_error('package');?></span>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Mobile No<span class="red">*</span></label>
@@ -100,16 +101,15 @@
                                 <span class="red"><?= form_error('mobile_no');?></span>
                             </div>
                         </div>
-                        
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email Id<span class="red">*</span></label>
                                 <input type="email" placeholder="Email Id" class="form-control email" name="login_email" value="<?= $view->login_email;?>" maxlength="200">
                                 <span class="red"><?= form_error('login_email');?></span>
                             </div>
-                        </div>
+                        </div>                        
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                <label>Address<span class="red">*</span></label>
@@ -117,14 +117,14 @@
                                <span class="red"><?= form_error('address');?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>ID Proof</label>
                                  <input id="" name="idproof" type="file"  autocomplete="off"  >                                
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Address Proof</label>

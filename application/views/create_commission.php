@@ -92,7 +92,7 @@
                             
                                 <div class="row">
                                     <div class="col-sm-2 col-xs-4 text-center">
-                                        <input type="submit" class="form-control" value="Save" name="save"/>
+                                        <br/><input type="submit" class="form-control" value="Save" name="save"/>
                                     </div>
                                 </div>
                             </form>

@@ -72,9 +72,13 @@ only screen and (max-width: 760px),
                                                 <a href="<?= base_url();?>agent/edit_agent/<?= $view->login_id;?>" title="Edit Details">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                 <a href="<?= base_url();?>agent/module_access_agent/<?= $view->login_id;?>" title="Module Access">
+                                                <a href="<?= base_url();?>agent/module_access_agent/<?= $view->login_id;?>" title="Module Access">
                                                     <i class="fa fa-paw"></i>
                                                 </a>
+                                                <a href="<?= base_url();?>agent/update_commission_agent/<?= $view->login_id;?>" title="Update Comission">
+                                                    <i class="fa fa-money"></i>
+                                                </a>
+                                                
                                             </td>
                                          </tr>
                                   <?php }?>
