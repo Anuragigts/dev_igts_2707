@@ -31,7 +31,7 @@ class Flight extends CI_Controller {
              $this->form_validation->set_rules('infant','Infant','required');
               if($this->form_validation->run() == TRUE){
                   
-                $data['pos'] = array('adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'), 'type' => $this->input->post('type'));
+                $data['pos'] = array('class' => $this->input->post('class'),'adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'), 'type' => $this->input->post('type'));
                 $data['details'] = $this->flight_model->getFlight();
                
             }
@@ -54,6 +54,7 @@ class Flight extends CI_Controller {
         $this->session->unset_userdata('dur');
         $this->session->unset_userdata('stop');
         $this->session->unset_userdata('type');
+        $this->session->unset_userdata('class');
             
          $data['logos'] = $this->flight_model->getLogo();
         $this->load->view('layout/inner_template',$data);
@@ -110,6 +111,7 @@ class Flight extends CI_Controller {
             $dur            = $this->input->post('dur');
             $stop           = $this->input->post('stop');
             $type           = $this->input->post('type');
+            $class           = $this->input->post('class');
         }
         if($airlineId != '' &&  $airlineId != 0){
             $this->session->set_userdata('AirlineId',   "$airlineId");
@@ -130,6 +132,7 @@ class Flight extends CI_Controller {
             $this->session->set_userdata('dur',         "$dur");
             $this->session->set_userdata('stop',        "$stop");
             $this->session->set_userdata('type',        "$type");
+            $this->session->set_userdata('class',       "$class");
         }
         $data['flight'] = array('logo' => $this->session->userdata('logo'),
                         'name'  => $this->session->userdata('name1'),
@@ -152,7 +155,22 @@ class Flight extends CI_Controller {
         $data['get_details'] = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         
-        
+        if($this->input->post('book_ticket')){
+            $this->form_validation->set_rules('first_name', 'First Name',   'required');
+            $this->form_validation->set_rules('last_name',  'Last Name',    'required');
+            $this->form_validation->set_rules('mobile_no',  'Mobile Number','required');
+            $this->form_validation->set_rules('login_email','Email',        'required');
+            $this->form_validation->set_rules('zip',        'ZIP',          'required');
+            $this->form_validation->set_rules('pp',        'Passport No',          'required');
+            $this->form_validation->set_rules('expiry',     'Passport Expiry Date',          'required');
+            $this->form_validation->set_rules('dob',        'Date Of Birth','required');
+            $this->form_validation->set_rules('add',        'address','required');
+              if($this->form_validation->run() == TRUE){
+                  
+                $booking_details = $this->flight_model->bookTicket();
+               
+            }
+        }
         
         
         $this->load->view('layout/inner_template',$data);

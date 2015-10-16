@@ -193,7 +193,7 @@ class Recharge extends CI_Controller {
         if($codeval == "AIRTEL1"){
             $result = $this->recharge_model->doairteloff($url['2'],$url['3'],$req,$codeval); 
         }else{
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,$url['2'],$url['3'],$req);
+        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,trim($url['2']),$url['3'],$req);
         }
       }
     }

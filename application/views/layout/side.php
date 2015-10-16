@@ -244,13 +244,11 @@
 
                         <li class="searchFlight ">
                            <a href="<?php echo base_url();?>flight/searchFlight" title="Search Flight">
-                           <a href="#" title="Search Flight">
                               <span>Search Flight</span>
                            </a>
                         </li>
                         <li class="flightHistory ">
                            <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
-                           <a href="#" title="Flight History">
                               <span>Flight History</span>
                            </a>
                         </li>

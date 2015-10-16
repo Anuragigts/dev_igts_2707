@@ -243,10 +243,11 @@
                                         <input type="hidden" name="dur" value="<?php echo $al->Duration;?>">
                                         <input type="hidden" name="stop" value="<?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>">
                                         <input type="hidden" name="type" value="<?php echo $pos['type'];?>">
+                                        <input type="hidden" name="class" value="<?php echo $pos['class'];?>">
                                         
-                                        
+                                        <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
                                         <input type="submit" name="book" class="btn  btn-success" value="Book Ticker" />
-                                       
+                                        <?php }?>
                                     </form>
                                     <br><br>
                                     <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
