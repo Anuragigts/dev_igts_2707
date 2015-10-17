@@ -106,6 +106,7 @@ class Common extends CI_Controller {
                 $this->load->view('agents',$view);    
         }
         public function update_access(){
+                if($this->session->userdata('my_type') == ""){redirect('/');}
                 $data = array(
                         'title'         => 'SC :: ACCESS MASTER DISTRIBUTOR',
                         'metakeyword'   => 'SC :: ACCESS MASTER DISTRIBUTOR',
@@ -151,6 +152,7 @@ class Common extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);
         }
         public function update_commission(){
+                if($this->session->userdata('my_type') == ""){redirect('/');}
                 $data = array(
                         'title'         => ' ESY TOPUP :: COMMISSION',
                         'metakeyword'   => ' ESY TOPUP :: COMMISSION',
@@ -169,6 +171,7 @@ class Common extends CI_Controller {
                 $this->load->view('layout/inner_template',$data);
         }
         public function my_commission(){
+                if($this->session->userdata('my_type') == ""){redirect('/');}
                 $data = array(
                         'title'         => ' ESY TOPUP :: COMMISSION',
                         'metakeyword'   => ' ESY TOPUP :: COMMISSION',

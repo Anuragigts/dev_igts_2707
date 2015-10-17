@@ -8,6 +8,7 @@ class Funds extends CI_Controller {
             date_default_timezone_set('Asia/Kolkata');  
     }
     public function  send_request(){
+            if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
                     'title'         => 'ESY TOPUP :: Send Request',
                     'metakeyword'   => 'ESY TOPUP :: Send Request',
@@ -37,6 +38,7 @@ class Funds extends CI_Controller {
             $this->load->view('layout/inner_template',$data);
     }
     public function  view_request_details(){
+            if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
                     'title'         => 'ESY TOPUP :: View Send Requests',
                     'metakeyword'   => 'ESY TOPUP :: View Send Requests',
@@ -51,6 +53,7 @@ class Funds extends CI_Controller {
             echo $val;
     }
     public function refund_request(){
+            if($this->session->userdata('my_type') == ""){redirect('/');}
             $data = array(
                     'title'         => 'ESY TOPUP :: View Send Requests',
                     'metakeyword'   => 'ESY TOPUP :: View Send Requests',

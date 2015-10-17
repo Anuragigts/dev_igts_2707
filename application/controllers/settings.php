@@ -130,6 +130,7 @@ class Settings extends CI_Controller {
         }
         
         public function virtualAmt(){
+            if($this->session->userdata('my_type') == ""){redirect('/');}
              $data = array(
                     'title'         => 'ESY TOPUP :: VIRTUAL AMOUNT',
                     'metakeyword'   => 'ESY TOPUP :: VIRTUAL AMOUNT',
@@ -163,7 +164,8 @@ class Settings extends CI_Controller {
                     'metadesc'      => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'content'       => 'edit_virtualAmt'
             );
-             if($this->input->post('add')){
+           if($this->session->userdata('my_type') == ""){redirect('/');}
+           if($this->input->post('add')){
                      
             $this->form_validation->set_rules('amount','Virtual Amount','required');
             
@@ -189,7 +191,8 @@ class Settings extends CI_Controller {
          }
          
          public function moneyTransfer(){
-              $data = array(
+            if($this->session->userdata('my_type') == ""){redirect('/');}
+            $data = array(
                     'title'         => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'metakeyword'   => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'metadesc'      => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
@@ -199,20 +202,23 @@ class Settings extends CI_Controller {
                   $this->form_validation->set_rules('amount',' Amount','required');
                   $this->form_validation->set_rules('remarks','Remarks','required');
                   $this->form_validation->set_rules('credit','Credit or Rollback ','required');
-            
+                  $cred = $this->input->post("credit");
                     if($this->form_validation->run() == TRUE){
-                        if($this->input->post("credit") == 2){
+                        if($cred == 2){
                             $from     = $this->session->userdata('login_id');
                             $to   = $this->uri->segment(3);
-                            $result = $this->settings_model->transferVamt($to,$from);
+                            $result = $this->settings_model->transferVamt($to,$from,$cred);
                         }
                         else{
                             $from = $this->session->userdata('login_id');
                             $to = $this->uri->segment(3);
-                            $result = $this->settings_model->transferVamt($from,$to);
+                            $result = $this->settings_model->transferVamt($from,$to,$cred);
                         }
                        if($result == 1){                    
-                           $this->session->set_flashdata('msg','Amount Transfered Successfully.');  
+                           $this->session->set_flashdata('msg','Amount Transferred Successfully.');  
+                           redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                       }else if($result == 3){                    
+                           $this->session->set_flashdata('err','Amount that to be Transferred cross the limit of your actual amount.');  
                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
                        }else{
                             $this->session->set_flashdata('err',' fail : Server Busy. Please try after some time.');  
@@ -234,7 +240,8 @@ class Settings extends CI_Controller {
          }
          
          public function viewTrandDetail(){
-             $data = array(
+            if($this->session->userdata('my_type') == ""){redirect('/');}
+            $data = array(
                     'title'         => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
                     'metakeyword'   => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
                     'metadesc'      => 'ESY TOPUP :: VIEW TRANSFER DETAIL',
@@ -246,7 +253,8 @@ class Settings extends CI_Controller {
          }
          
          public function notes(){
-             $data = array(
+            if($this->session->userdata('my_type') == ""){redirect('/');}
+            $data = array(
                     'title'         => 'ESY TOPUP :: NOTICE BOARD',
                     'metakeyword'   => 'ESY TOPUP :: NOTICE BOARD',
                     'metadesc'      => 'ESY TOPUP :: NOTICE BOARD',
@@ -271,7 +279,8 @@ class Settings extends CI_Controller {
          }
          
          public function  banner(){
-             $data = array(
+            if($this->session->userdata('my_type') == ""){redirect('/');}
+            $data = array(
                     'title'         => 'ESY TOPUP :: UPDATE BANNER',
                     'metakeyword'   => 'ESY TOPUP :: UPDATE BANNER',
                     'metadesc'      => 'ESY TOPUP :: UPDATE BANNER',

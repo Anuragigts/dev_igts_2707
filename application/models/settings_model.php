@@ -181,32 +181,56 @@ class Settings_model extends CI_Model
                    return array();
                }
         }
-        public function transferVamt($from,$to){
+        public function transferVamt($from,$to,$cred){
             $from_m =$this->getprofile($from);
             $from_t =$this->getprofile($to);
             $from_mo = $from_m->mobile;
             $from_to = $from_t->mobile;
             $myamt = $this->input->post('amount');
-            
+            //echo $cred;exit;
             $query = $this->db->get_where('current_virtual_amount', array('user_id' => $to));           
             if($query && $query->num_rows()== 1){
                   $val = $query->row()->amount;
                    $insto   =   array(                      
                         "amount"     => ($val + $this->input->post('amount'))
                     );
-                $this->db->where("user_id",$to);
-                $query1 = $this->db->update("current_virtual_amount",$insto);
-                
                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $from));           
                     if($query2 && $query2->num_rows()== 1){                        
                         $val2 = $query2->row()->amount;
-                        $cur = $val2 - $this->input->post('amount');
-                        $insfrom   =   array(                      
-                                "amount"     => ($val2 - $this->input->post('amount'))
-                            );
-                        $this->db->where("user_id",$from);
-                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                        
+                        if($this->session->userdata("my_type") > 1){
+                            if($cred == 1){
+                                if($val2 >= $myamt){
+                                        $cur = $val2 - $this->input->post('amount');
+                                        $insfrom   =   array(                      
+                                                "amount"     => ($val2 - $this->input->post('amount'))
+                                            );
+                                        $this->db->where("user_id",$from);
+                                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                        $this->db->where("user_id",$to);
+                                        $query1 = $this->db->update("current_virtual_amount",$insto);
+                                }else{
+                                        return 3;
+                                }                            
+                            }else{
+                                        $cur = $val2 - $this->input->post('amount');
+                                        $insfrom   =   array(                      
+                                                "amount"     => ($val2 - $this->input->post('amount'))
+                                            );
+                                        $this->db->where("user_id",$from);
+                                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                        $this->db->where("user_id",$to);
+                                        $query1 = $this->db->update("current_virtual_amount",$insto);
+                                }
+                        }else{
+                                $cur = $val2 - $this->input->post('amount');
+                                $insfrom   =   array(                      
+                                        "amount"     => ($val2 - $this->input->post('amount'))
+                                    );
+                                $this->db->where("user_id",$from);
+                                $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                $this->db->where("user_id",$to);
+                                $query1 = $this->db->update("current_virtual_amount",$insto);
+                        }
                         $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account+Now+current+balance+is+Rs.+$cur.",
@@ -219,10 +243,10 @@ class Settings_model extends CI_Model
                         curl_close($ch);
                     }
                     else{
-                        $cur = 0 - $this->input->post('amount');
+                        $cur = 0;// - $this->input->post('amount');
                         $insfrom   =   array(
                                 "user_id"    =>     $from,
-                                "amount"     => (0 - $this->input->post('amount'))
+                                "amount"     => $cur
                             );
                         
                         $query =   $this->db->insert("current_virtual_amount", $insfrom);
@@ -237,6 +261,7 @@ class Settings_model extends CI_Model
                         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                         $result = curl_exec($ch);
                         curl_close($ch);
+                        return 3;
                     } 
                     
                      $myupdate = array(
@@ -261,22 +286,44 @@ class Settings_model extends CI_Model
                     return 1;
                     
                }else{
-                  $ins   =   array(
+                $ins   =   array(
                         "user_id"    =>     $to,
                         "amount"     =>     $this->input->post('amount')
                 );
-              $query =   $this->db->insert("current_virtual_amount", $ins);
-
                 $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $from));           
                     if($query2 && $query2->num_rows()== 1){                        
                         $val2 = $query2->row()->amount;
-                        $curr = $val2 - $this->input->post('amount');
-                        $insfrom   =   array(                      
-                                "amount"     => ($val2 - $this->input->post('amount'))
-                            );
-                        $this->db->where("user_id",$from);
-                        $query1 = $this->db->update("current_virtual_amount",$insfrom);
-                        
+                        if($this->session->userdata("my_type") > 1){
+                            if($cred == 1){
+                                if($val2 >= $myamt){
+                                    $curr = $val2 - $this->input->post('amount');
+                                    $insfrom   =   array(                      
+                                            "amount"     => ($val2 - $this->input->post('amount'))
+                                        );
+                                    $this->db->where("user_id",$from);
+                                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                    $query =   $this->db->insert("current_virtual_amount", $ins);
+                                }else{
+                                        return 3;
+                                }                            
+                            }else{
+                                    $curr = $val2 - $this->input->post('amount');
+                                    $insfrom   =   array(                      
+                                            "amount"     => ($val2 - $this->input->post('amount'))
+                                        );
+                                    $this->db->where("user_id",$from);
+                                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                    $query =   $this->db->insert("current_virtual_amount", $ins);
+                            }
+                        }else{
+                                $curr = $val2 - $this->input->post('amount');
+                                $insfrom   =   array(                      
+                                        "amount"     => ($val2 - $this->input->post('amount'))
+                                    );
+                                $this->db->where("user_id",$from);
+                                $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                                $query =   $this->db->insert("current_virtual_amount", $ins);
+                        }
                         $ch = curl_init();
                         $optArray = array(
 			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_mo&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+debited+from+your+Esy+Topup+account,+your+current+balance+is+$curr.",
