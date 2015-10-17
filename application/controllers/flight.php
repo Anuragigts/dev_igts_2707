@@ -159,23 +159,43 @@ class Flight extends CI_Controller {
         $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
         
         if($this->input->post('book_ticket')){
-            $this->form_validation->set_rules('first_name', 'First Name',   'required');
-            $this->form_validation->set_rules('last_name',  'Last Name',    'required');
+            $this->form_validation->set_rules('first_name[]', 'First Name',   'required');
+            $this->form_validation->set_rules('last_name[]',  'Last Name',    'required');
             $this->form_validation->set_rules('mobile_no',  'Mobile Number','required');
             $this->form_validation->set_rules('login_email','Email',        'required');
             $this->form_validation->set_rules('zip',        'ZIP',          'required');
-            $this->form_validation->set_rules('pp',        'Passport No',          'required');
-            $this->form_validation->set_rules('expiry',     'Passport Expiry Date',          'required');
-            $this->form_validation->set_rules('dob',        'Date Of Birth','required');
+            $this->form_validation->set_rules('pp[]',        'Passport No',          'required');
+            $this->form_validation->set_rules('expiry[]',     'Passport Expiry Date',          'required');
+            $this->form_validation->set_rules('dob[]',        'Date Of Birth','required');
             $this->form_validation->set_rules('add',        'address','required');
               if($this->form_validation->run() == TRUE){
                   
                 $booking_details = $this->flight_model->bookTicket();
+               // echo $booking_details;die();
+                if($booking_details == 1){
+                    $this->session->set_flashdata('msg','Ticket Booked Successfully.');  
+                    redirect('flight/Status/'.$this->session->userdata('Track'));
+                }else{
+                    $this->session->set_flashdata('err',"$booking_details");  
+                    redirect('flight/book');
+                }
                
             }
         }
         
         
         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function Status(){
+         $data = array(
+              'title'         => 'SC :: FLIGHT Book',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'flight_status'
+             );
+         $track = $this->uri->segment(3);
+         
+         $this->load->view('layout/inner_template',$data);
     }
 }

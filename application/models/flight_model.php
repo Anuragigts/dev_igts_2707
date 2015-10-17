@@ -475,27 +475,60 @@ class Flight_model extends CI_Model
      ****************************/
     
     public function bookTicket(){ 
-        $url = FLIGHTURL;
-        $ptype = '';
-       if($this->input->post('adult') != 0){
-           $ptype .= '1';
-       }
-       if($this->input->post('child') != 0){
-           $ptype .= ' 2';
-       }
-       if($this->input->post('infrount') != 0){
-           $ptype .= ' 3';
-       }
-       if($this->input->post('title') == 'Mr'){
-           $gen = 'M';
-       }else{
-          $gen = 'F'; 
-       }
+        $url = FLIGHTURL;       
+      
        if($this->input->post('class') == 'Economy'){
            $cl = 'E';
        }else{
           $cl = 'B'; 
+       }       
+       
+       $cat   = $this->input->post('cat');
+       $title   = $this->input->post('title');
+       $first_n = $this->input->post('first_name');
+       $last_n  = $this->input->post('last_name');
+       $dob     = $this->input->post('dob');
+       $pp      = $this->input->post('pp');
+       $expiry  = $this->input->post('expiry');
+       
+       $my_name = $first_n['0'].' '.$last_n['0'];
+       
+       $dynamic = '';
+       for($i=0; $i< count($this->input->post('first_name')); $i++){
+            if($title[$i] == 'Mr'){
+                $gen = 'M';
+            }else{
+               $gen = 'F'; 
+            }
+            
+            $dynamic .= '&lt;item&gt;  
+                            &lt;PassengerType&gt;'.$cat[$i].'&lt;/PassengerType&gt;                            
+                            &lt;Title&gt;'.$title[$i].'&lt;/Title&gt;                            
+                            &lt;FirstName&gt;'.$first_n[$i].'&lt;/FirstName&gt;                            
+                            &lt;LastName&gt;'.$last_n[$i].'&lt;/LastName&gt;
+                            &lt;PassportNo&gt;'.$pp[$i].'&lt;/PassportNo&gt;
+                            &lt;Gender&gt;'.$gen.'&lt;/Gender&gt;
+                            &lt;PassportExpirtyDate&gt;'.$expiry[$i].'&lt;/PassportExpirtyDate&gt;
+                            &lt;PassportIssuingCountry&gt;India3&lt;/PassportIssuingCountry&gt;
+                            &lt;Nationality&gt;India4353&lt;/Nationality&gt;
+                            &lt;DateofBirth&gt;'.$dob[$i].'&lt;/DateofBirth&gt;
+                            &lt;Segment&gt;
+                                &lt;item&gt;
+                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
+                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
+                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
+                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
+                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
+                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
+                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
+                                &lt;/item&gt;
+                            &lt;/Segment&gt;
+                          &lt;/item&gt; 
+                        ';
+            
        }
+       //echo  $dynamic;
+       //echo die();
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -520,8 +553,8 @@ class Flight_model extends CI_Model
                                 &lt;UserTrackId&gt;'.$this->input->post('track').'&lt;/UserTrackId&gt; 
                                 &lt;CustomerDetails&gt;       
                                     &lt;PhoneNumber&gt;'.$this->input->post('mobile_no').'&lt;/PhoneNumber&gt;                            
-                                    &lt;CustomerTitle&gt;'.$this->input->post('title').'&lt;/CustomerTitle&gt;
-                                    &lt;BookedByCusomter&gt;'.$this->input->post('first_name').' '.$this->input->post('last_name').'&lt;/BookedByCusomter&gt;
+                                    &lt;CustomerTitle&gt;'.$title['0'].'&lt;/CustomerTitle&gt;
+                                    &lt;BookedByCusomter&gt;'.$my_name.'&lt;/BookedByCusomter&gt;
                                     &lt;CustomerAddr&gt;'.$this->input->post('add').'&lt;/CustomerAddr&gt;
                                     &lt;CustomerCity&gt;'.$this->input->post('city').'&lt;/CustomerCity&gt;
                                     &lt;CustomerCountryId&gt;99&lt;/CustomerCountryId&gt;
@@ -569,29 +602,9 @@ class Flight_model extends CI_Model
                                     &lt;/Payment&gt;
                                     &lt;TourCode&gt;&lt;/TourCode&gt;
                                     &lt;PassengerDetail&gt;
-                                        &lt;item&gt;                            
-                                            &lt;PassengerType&gt;'.$ptype.'&lt;/PassengerType&gt;                            
-                                            &lt;Title&gt;'.$this->input->post('title').'&lt;/Title&gt;                            
-                                            &lt;FirstName&gt;'.$this->input->post('first_name').'&lt;/FirstName&gt;                            
-                                            &lt;LastName&gt;'.$this->input->post('last_name').'&lt;/LastName&gt;
-                                            &lt;PassportNo&gt;'.$this->input->post('pp').'&lt;/PassportNo&gt;
-                                            &lt;Gender&gt;'.$gen.'&lt;/Gender&gt;
-                                            &lt;PassportExpirtyDate&gt;'.$this->input->post('expiry').'&lt;/PassportExpirtyDate&gt;
-                                            &lt;PassportIssuingCountry&gt;India3&lt;/PassportIssuingCountry&gt;
-                                            &lt;Nationality&gt;India4353&lt;/Nationality&gt;
-                                            &lt;DateofBirth&gt;'.$this->input->post('dob').'&lt;/DateofBirth&gt;
-                                            &lt;Segment&gt;
-                                                &lt;item&gt;
-                                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
-                                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
-                                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
-                                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
-                                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
-                                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
-                                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
-                                                &lt;/item&gt;
-                                            &lt;/Segment&gt;
-                                        &lt;/item&gt;
+                                                                   
+                                            '.$dynamic.'
+                                       
                                     &lt;/PassengerDetail&gt;
                                &lt;/Bookingdetails&gt;
                             &lt;/AIRBOOKING&gt;
@@ -599,7 +612,7 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </IntFlightBookingV1>
             </soap:Body></soap:Envelope>';
-        echo $curlData;
+       
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -618,7 +631,7 @@ class Flight_model extends CI_Model
                  $result = curl_exec($curl); 
 
                 curl_close ($curl);
- print_r($result);die();
+
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){
                     return 0;
@@ -632,8 +645,113 @@ class Flight_model extends CI_Model
                      $final = explode('</PstrFinalOutPut><pstrError /></IntFlightBookingV1Response>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                    
-                    print_r($response);die();
+                   //echo "<pre>"; 
+                  //  print_r($response);
+                    //echo "<br>";
+                    //echo $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
+                    if($response->Resultcode == 1){
+                        $userTrackId        =  $response->Item->UserTrackId;
+                        $hermesPNR          =  $response->Item->TicketDetails->HermesPNR;
+                        $transactionid      =  $response->Item->TicketDetails->Transactionid;
+                        $phoneNumber        =  $response->Item->TicketDetails->CusomterDetails->PhoneNumber;
+                        $bookedByCusomter   =  $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
+                        $airlineCode        =  $response->Item->TicketDetails->AirLineDetails->Item->AirlineCode;
+                        $airlinePNR         =  $response->Item->TicketDetails->AirLineDetails->Item->AirlinePNR;
+                        $airlineName        =  $response->Item->TicketDetails->AirLineDetails->Item->AirlineName;
+                        $airlineAddr1       =  $response->Item->TicketDetails->AirLineDetails->Item->AirlineAddr1;
+                        $airlineCity        =  $response->Item->TicketDetails->AirLineDetails->Item->AirlineCity;
+                        $airPhoneNumber     =  $response->Item->TicketDetails->AirLineDetails->Item->PhoneNumber;
+                        $MailId             =  $response->Item->TicketDetails->AirLineDetails->Item->MailId;
+                        $disclaimerId       =  $response->Item->TicketDetails->DisclaimerId;
+                        $totalAmount        =  $response->Item->TicketDetails->TotalAmount;
+                        $adults             =  $response->Item->TicketDetails->Adults;
+                        $child              =  $response->Item->TicketDetails->Child;
+                        $infants            =  $response->Item->TicketDetails->Infants;
+                        $bookingType        =  $response->Item->TicketDetails->BookingType;
+                        $travelType         =  $response->Item->TicketDetails->TravelType;
+                        $issueDate          =  $response->Item->TicketDetails->IssueDate;
+                        $baseOrigin         =  $response->Item->TicketDetails->BaseOrigin;
+                        $baseDestination    =  $response->Item->TicketDetails->BaseDestination;
+                        $backup = array(
+                            'UserTrackId'       => "$userTrackId",
+                            'HermesPNR'         => "$hermesPNR",
+                            'Transactionid'     => "$transactionid",
+                            'PhoneNumber'       => "$phoneNumber",
+                            'BookedByCusomter'  => "$bookedByCusomter",
+                            'AirlineCode'       => "$airlineCode",
+                            'AirlinePNR'        => "$airlinePNR",
+                            'AirlineName'       => "$airlineName",
+                            'AirlineAddr1'      => "$airlineAddr1",
+                            'AirlineCity'       => "$airlineCity",
+                            'AirPhoneNumber'    => "$airPhoneNumber",
+                            'MailId'            => "$MailId",
+                            'DisclaimerId'      => "$disclaimerId",
+                            'TotalAmount'       => "$totalAmount",
+                            'Adults'            => "$adults",
+                            'Child'             => "$child",
+                            'Infants'           => "$infants",
+                            'BookingType'       => "$bookingType",
+                            'TravelType'        => "$travelType",
+                            'IssueDate'         => "$issueDate",
+                            'BaseOrigin'        => "$baseOrigin",
+                            'BaseDestination'   => "$baseDestination",
+                            'DoneBy'            => $this->session->userdata('login_id')
+                       ); 
+                       $insert = $this->db->insert('flight_track',$backup);
+                      
+                        if($this->db->affected_rows() == 1){
+                            $inserted = $this->db->insert_id();
+                            foreach($response->Item->TicketDetails->PassengerDetails->Item as $item){
+                                $flightNumber       = $item->SegmentDetails->Item->FlightNumber;
+                                $airCraftType       = $item->SegmentDetails->Item->AirCraftType;
+                                $origin             = $item->SegmentDetails->Item->Origin;
+                                $originAirport      = $item->SegmentDetails->Item->OriginAirport;
+                                $departuredatetime  = $item->SegmentDetails->Item->Departuredatetime;
+                                $destination        = $item->SegmentDetails->Item->Destination;
+                                $arrivaldatetime    = $item->SegmentDetails->Item->Arrivaldatetime;
+                                $carrierAirLineCode = $item->SegmentDetails->Item->CarrierAirLineCode;
+                                $classCode          = $item->SegmentDetails->Item->ClassCode;
+                                $classCodeDesc      = $item->SegmentDetails->Item->ClassCodeDesc;
+                                $baggageAllowed     = $item->SegmentDetails->Item->BaggageAllowed;
+                                
+                                $ticket = array(
+                                    'FTrackID'              => $inserted,
+                                    'TicketNo'              => "$item->TicketNo",
+                                    'TransmissionControlNo' => "$item->TransmissionControlNo",
+                                    'TYPE'                  => "$item->TYPE",
+                                    'Title'                 => "$item->Title",
+                                    'FirstName'             => "$item->FirstName",
+                                    'Lastname'              => "$item->Lastname",
+                                    'Age'                   => "$item->Age",
+                                    'IdentityProofId'       => "$item->IdentityProofId",
+                                    'IdentityProofNumber'   => "$item->IdentityProofNumber",
+                                    'FlightNumber'          => "$flightNumber",
+                                    'AirCraftType'          => "$airCraftType",
+                                    'Origin'                => "$origin",
+                                    'OriginAirport'         => "$originAirport",
+                                    'Departuredatetime'     => "$departuredatetime",
+                                    'Destination'           => "$destination",
+                                    'Arrivaldatetime'       => "$arrivaldatetime",
+                                    'CarrierAirLineCode'    => "$carrierAirLineCode",
+                                    'ClassCode'             => "$classCode",
+                                    'ClassCodeDesc'         => "$classCodeDesc",
+                                    'BaggageAllowed'        => "$baggageAllowed",
+                                );
+                                $insert_tick = $this->db->insert('flight_passenger',$ticket);
+                            }
+                            // echo $this->db->last_query()."<br>";
+                            if($this->db->affected_rows() > 0){
+                                return 1;
+                            }else{
+                                return "Please try after some time.";
+                            }
+                        }                        
+                    }else{
+                       //echo  $response->ResultCode->Error->Remarks;
+                        return $response->ResultCode->Error->Remarks;
+                    }
+                   
                 }
+              
     }
 }

@@ -248,7 +248,7 @@
                                         <input type="hidden" name="flight_i" value="<?php echo  $al->FlightId;?>">
                                         
                                         <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
-                                        <input type="submit" name="book" class="btn  btn-success" value="Book Ticker" />
+                                        <input type="submit" name="book" class="btn  btn-success" value="Book Ticket" />
                                         <?php }?>
                                     </form>
                                     <br><br>
