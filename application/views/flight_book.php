@@ -1,3 +1,4 @@
+<?php if($flight['dest'] == ''){redirect('flight/searchFlight'); }?>
 <section>
          <!-- Page content-->
     <div class="content-wrapper">
@@ -39,7 +40,7 @@
                    </p>
                  </div>
                  </br>
-             <?php }?>       
+             <?php }?>      
            <div class="col-md-8"><br>
                <div class="row panel mypad">
                     <div class="col-md-3 text-center">
@@ -120,6 +121,7 @@
                                                 <select name="title[]" class="form-control">                                                   
                                                     <option value="Mr" <?php echo set_select('title','Mr', ( !empty($data) && $data == "Mr") ? TRUE : FALSE )?>>Mr.</option>
                                                     <option value="Mrs" <?php echo set_select('title','Mrs', ( !empty($data) && $data == "Mrs") ? TRUE : FALSE )?>>Mrs.</option>
+                                                    <option value="Ms" <?php echo set_select('title','Ms', ( !empty($data) && $data == "Ms") ? TRUE : FALSE )?>>Ms.</option>
                                                                                            
                                                 </select>
                                                 
@@ -187,7 +189,7 @@
                                                 <select name="title[]" class="form-control">                                                   
                                                     <option value="Mr" <?php echo set_select('title','Mr', ( !empty($data) && $data == "Mr") ? TRUE : FALSE )?>>Mr.</option>
                                                     <option value="Mrs" <?php echo set_select('title','Mrs', ( !empty($data) && $data == "Mrs") ? TRUE : FALSE )?>>Mrs.</option>
-                                                                                           
+                                                     <option value="Ms" <?php echo set_select('title','Ms', ( !empty($data) && $data == "Ms") ? TRUE : FALSE )?>>Ms.</option>                                      
                                                 </select>
                                                 
                                             </div>
@@ -255,7 +257,7 @@
                                                 <select name="title[]" class="form-control">                                                   
                                                     <option value="Mr" <?php echo set_select('title','Mr', ( !empty($data) && $data == "Mr") ? TRUE : FALSE )?>>Mr.</option>
                                                     <option value="Mrs" <?php echo set_select('title','Mrs', ( !empty($data) && $data == "Mrs") ? TRUE : FALSE )?>>Mrs.</option>
-                                                                                           
+                                                     <option value="Ms" <?php echo set_select('title','Ms', ( !empty($data) && $data == "Ms") ? TRUE : FALSE )?>>Ms.</option>                                      
                                                 </select>
                                                 
                                             </div>

@@ -88,17 +88,17 @@
                                                      <?php foreach($all_operator as $op){?>
                                                      <option value="<?php echo $op->op_name;?>" op_code="<?php echo $op->code;?>" <?php echo set_select('oprator_name',$op->op_name);?>><?php echo $op->op_name;?></option>
                                                      <?php }?>
-													 <!--option value="ID">IDEA</option>
-													 <option value="AR">Airtel</option>
-													 <option value="MT">MTS</option>
-													 <option value="AC">Aircel</option>
-													 <option value="RC">Reliance CDMA</option>
-													 <option value="RG">Reliance GSM</option>
-													 <option value="TD">Tata Docomo</option>
-													 <option value="TI">Tata Indicom</option>
-													 <option value="UN">Uninor</option>
-													 <option value="VO">Vodafone</option>
-													 <option value="BT">BSNL TOP UP</option-->
+                                                                                        <!--option value="ID">IDEA</option>
+                                                                                        <option value="AR">Airtel</option>
+                                                                                        <option value="MT">MTS</option>
+                                                                                        <option value="AC">Aircel</option>
+                                                                                        <option value="RC">Reliance CDMA</option>
+                                                                                        <option value="RG">Reliance GSM</option>
+                                                                                        <option value="TD">Tata Docomo</option>
+                                                                                        <option value="TI">Tata Indicom</option>
+                                                                                        <option value="UN">Uninor</option>
+                                                                                        <option value="VO">Vodafone</option>
+                                                                                        <option value="BT">BSNL TOP UP</option-->
                                                  </select>
                                                  <span class="red"><?=  form_error('oprator_name');?></span>
                                                  <input type="hidden" name="code" id="code" />

@@ -634,7 +634,7 @@ class Flight_model extends CI_Model
 
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){
-                    return 0;
+                    return "Please try after some time.";
                 }else{
                      
                      $first_tag = explode('</IntFlightBookingV1Result><PstrFinalOutPut>', $keep_array[1]);       
@@ -645,8 +645,8 @@ class Flight_model extends CI_Model
                      $final = explode('</PstrFinalOutPut><pstrError /></IntFlightBookingV1Response>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                   //echo "<pre>"; 
-                  //  print_r($response);
+                  // echo "<pre>"; 
+                   // print_r($response);//die();
                     //echo "<br>";
                     //echo $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
                     if($response->Resultcode == 1){
@@ -672,6 +672,7 @@ class Flight_model extends CI_Model
                         $issueDate          =  $response->Item->TicketDetails->IssueDate;
                         $baseOrigin         =  $response->Item->TicketDetails->BaseOrigin;
                         $baseDestination    =  $response->Item->TicketDetails->BaseDestination;
+                        $date = date('Y-m-d');
                         $backup = array(
                             'UserTrackId'       => "$userTrackId",
                             'HermesPNR'         => "$hermesPNR",
@@ -695,7 +696,8 @@ class Flight_model extends CI_Model
                             'IssueDate'         => "$issueDate",
                             'BaseOrigin'        => "$baseOrigin",
                             'BaseDestination'   => "$baseDestination",
-                            'DoneBy'            => $this->session->userdata('login_id')
+                            'DoneBy'            => $this->session->userdata('login_id'),
+                            'DoneDate'          => "$date"
                        ); 
                        $insert = $this->db->insert('flight_track',$backup);
                       
@@ -746,6 +748,11 @@ class Flight_model extends CI_Model
                                 return "Please try after some time.";
                             }
                         }                        
+                    }else if($response->Resultcode == 2){
+                        return 2;
+                    }else if($response->Resultcode == 0){
+                        //return 0;
+                         return $response->ResultCode->Error->Remarks;
                     }else{
                        //echo  $response->ResultCode->Error->Remarks;
                         return $response->ResultCode->Error->Remarks;
@@ -753,5 +760,115 @@ class Flight_model extends CI_Model
                    
                 }
               
+    }
+    /*
+     * Check ticket booking status
+     */
+    public function checkStatus($track){
+        $url = FLIGHTURL;
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                    <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/WsHermes/Service1">
+                          <ns1:WebProviderLoginId>'.FLIGHTID.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.FLIGHTPASS.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                 <CheckTransactionStatus xmlns="http://tempuri.org/HERMESAPI/IntHermesAir">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.FLIGHTID.'</WebProviderLoginId>
+                        <WebProviderPassword>'.FLIGHTPASS.'</WebProviderPassword>
+                        <IsAgent>false</IsAgent>   
+                    </pobjSecurity>
+                    <PstrInput>
+                            &lt;CheckTransReq&gt;
+                                &lt;TrackId&gt;'.$track.'&lt;/TrackId&gt;
+                            &lt;/CheckTransReq&gt;
+                    </PstrInput>
+                    <PstrFinalOutPut /><pstrError/>
+                </CheckTransactionStatus>
+            </soap:Body></soap:Envelope>';
+       // echo $curlData;
+        $curl = curl_init();
+
+           curl_setopt ($curl, CURLOPT_URL, $url);
+           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+           curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+           curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+               'SOAPAction:"'.FLIGHTACTION.'CheckTransactionStatus"',
+               'Content-Type: text/xml; charset=utf-8;',
+           ));
+
+            curl_setopt ($curl, CURLOPT_POST, 1);
+
+           curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl); 
+
+           curl_close ($curl);
+          
+            $keep_array = explode('true', $result);
+                if(count($keep_array)!= 1 ){
+                    return 0;
+                }else{
+                     
+                    $first_tag = explode('<CheckTransactionStatusResponse xmlns="http://tempuri.org/HERMESAPI/IntHermesAir"><PstrFinalOutPut>', $keep_array[0]);       
+
+                    $get_less =  str_replace("&lt;","<",$first_tag['1']);
+                    $get_full =  str_replace("&gt;",">",$get_less);
+
+                    $final = explode('</PstrFinalOutPut><pstrError /></CheckTransactionStatusResponse></soap:Body>', $get_full);
+
+                   $response = simplexml_load_string($final['0']);
+                   $ref = array('Refrence' => "$response->Remarks",'stat' => "$response->StatusCode");
+                   $this->db->where('UserTrackId',"$track");
+                   $update = $this->db->update('flight_track',$ref);  
+                    return $response->StatusCode;
+          }
+    }
+    
+    /*
+     * Get ticket details
+     */
+    public function getTicketDetails($track){
+        $query = $this->db->get_where('flight_track', array('UserTrackId' => $track));
+        if($query && $query->num_rows()== 1){
+              return $query->row();
+           }else{
+               return array();
+           }
+    }
+     /*
+      * Get the tickets
+      */
+    public function getTicket($trackId){
+        $query = $this->db->get_where('flight_passenger', array('FTrackID' => $trackId));
+        if($query && $query->num_rows()> 0){
+              return $query->result();
+           }else{
+               return array();
+           }
+    }
+    
+    /**
+     * Flight report 
+     */
+    public function flight_reports($gefr,$geto,$val){
+         $this->db->select("r.*");
+        $this->db->from("flight_track as r");
+        $this->db->where("DoneBy",$val);
+        $this->db->where("DoneDate >=",$gefr);
+        $this->db->where("DoneDate <=",$geto);
+        $this->db->order_by('r.F_ID', 'desc');
+        $qu     =   $this->db->get();
+       // echo $this->db->last_query();exit;
+        return $qu->result();
     }
 }

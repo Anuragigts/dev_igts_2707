@@ -247,12 +247,6 @@
                               <span>Search Flight</span>
                            </a>
                         </li>
-                        <li class="flightHistory ">
-                           <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
-                              <span>Flight History</span>
-                           </a>
-                        </li>
-                       
 
                      </ul>
                   </li>
@@ -322,16 +316,7 @@
                               <span>Recharge Report</span>
                            </a>
                         </li>
-<!--                        <li class="commission_reports">
-                           <a href="<?= base_url()?>reports/commission_reports" title="Commission Reports">
-                              <span>Commission Report</span>
-                           </a>
-                        </li>-->
-<!--                        <li class="dmr_reports">
-                           <a href="<?= base_url()?>reports/dmr_reports" title="DMR Reports">
-                              <span>DMR Report</span>
-                           </a>
-                        </li>-->
+
                         <li class="offline_reports">
                            <a href="<?= base_url()?>reports/offline_reports" title="Offline Reports">
                               <span>Offline SMS Report</span>
@@ -342,6 +327,13 @@
                               <span>Transaction Report</span>
                            </a>
                         </li>
+                        <?php if($this->session->userdata('flight') == 1){?>
+                        <li class="flightHistory ">
+                           <a href="<?php echo base_url();?>flight/flightHistory" title="Flight History">
+                              <span>Flight History</span>
+                           </a>
+                        </li>
+                    <?php }?>
                      </ul>
                   </li> 
                   <li class="nav-heading ">
