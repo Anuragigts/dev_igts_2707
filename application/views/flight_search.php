@@ -44,8 +44,44 @@
            <div class=" col-lg-12">
                   <form method="post">
                     <div class="row">
-                       <div class="panel panel-default">                            
+                        <div class="panel panel-default" style="border-bottom: 1px solid #000;">                            
                            <div class="panel-body">
+                               <div class="row">
+                                   <div class="col-lg-3">
+                                     <div class="form-group">
+                                         <label for="Mobile"><br><br/><br/></label>
+                                         <label class="radio-inline c-radio">
+                                            <input  type="radio"  name="fType" value="D" <?php if($ttype['fType'] == 'D'){echo 'checked="checked"';}?>>
+                                            <span class="fa fa-circle"></span>
+                                           Domestic
+                                        </label>
+                                         <label class="radio-inline c-radio">
+                                            <input  type="radio" name="fType" value="I" <?php if($ttype['fType'] == 'I'){echo 'checked="checked"';}?>>
+                                            <span class="fa fa-circle"></span>
+                                           International
+                                        </label>
+                                        
+                                         <span class="red"><?=  form_error('type');?></span>
+                                     </div>
+                                 </div>
+                                   <div class="col-lg-3">
+                                     <div class="form-group">
+                                         <label for="Mobile"><br><br/><br/></label>
+                                         <label class="radio-inline c-radio">
+                                            <input id="inlineradio1" type="radio"  name="type" value="O" <?php if($ttype['type'] == 'O'){echo 'checked="checked"';}?>>
+                                            <span class="fa fa-circle"></span>
+                                           One Way
+                                        </label>
+                                         <label class="radio-inline c-radio">
+                                            <input id="inlineradio2" type="radio" name="type" value="R" <?php if($ttype['type'] == 'R'){echo 'checked="checked"';}?>>
+                                            <span class="fa fa-circle"></span>
+                                           Round Trip
+                                        </label>
+                                        
+                                         <span class="red"><?=  form_error('type');?></span>
+                                     </div>
+                                 </div>
+                               </div>
                                <div class="row">
                                <div class="col-lg-3">
                                    <div class="form-group">
@@ -87,7 +123,7 @@
                                </div>
                            </div>
                             <div class="row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                      <div class="form-group">
                                          <label for="Mobile">Adult (12+ Year)<font class="red">*</font></label>
                                             <select name="adult" class="form-control">  
@@ -98,7 +134,7 @@
                                             <span class="red"><?=  form_error('adult');?></span>
                                      </div>
                                  </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                      <div class="form-group">
                                          <label for="Mobile">Child (2-11Year)</label>
                                             <select name="child" class="form-control">  
@@ -109,7 +145,7 @@
                                             <span class="red"><?=  form_error('child');?></span>
                                      </div>
                                  </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                      <div class="form-group">
                                          <label for="Mobile">Infant (0-2- Year)</label>
                                             <select name="infant" class="form-control">  
@@ -130,23 +166,7 @@
                                             <span class="red"><?=  form_error('class');?></span>
                                      </div>
                                  </div>
-                                <div class="col-lg-3">
-                                     <div class="form-group">
-                                         <label for="Mobile"><br><br/><br/></label>
-                                         <label class="radio-inline c-radio">
-                                            <input id="inlineradio1" type="radio"  name="type" value="O">
-                                            <span class="fa fa-circle"></span>
-                                           One Way
-                                        </label>
-                                         <label class="radio-inline c-radio">
-                                            <input id="inlineradio2" type="radio" name="type" value="R" checked="checked">
-                                            <span class="fa fa-circle"></span>
-                                           Round Trip
-                                        </label>
-                                        
-                                         <span class="red"><?=  form_error('type');?></span>
-                                     </div>
-                                 </div>
+                                
                             </div>
                                <div class="col-lg-10 ">
                                   

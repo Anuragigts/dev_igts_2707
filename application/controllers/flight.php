@@ -21,7 +21,9 @@ class Flight extends CI_Controller {
               'content'       => 'flight_search'
              );
          $data['details'] = array();
+         $data['ttype'] = array('type'=>'O','fType'=>'I');
         if($this->input->post('search')){
+             $this->form_validation->set_rules('fType','Booking Type','required');
              $this->form_validation->set_rules('departure','Departure Date','required');
              $this->form_validation->set_rules('type','Type','required');
              if($this->input->post('type')=='R'){
@@ -39,6 +41,7 @@ class Flight extends CI_Controller {
                 $data['details'] = $this->flight_model->getFlight();
                
             }
+            $data['ttype'] = array('type'=>$this->input->post('type'),'fType'=>$this->input->post('fType'));
         }
         $this->session->unset_userdata('AirlineId');
         $this->session->unset_userdata('FlightId');
