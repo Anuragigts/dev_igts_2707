@@ -328,12 +328,13 @@ class Recharge_model extends CI_Model
                                 $query =   $this->db->insert("trans_detail", $myupdate);
                              } 
 
+                             $ad = $this->session->userdata("admin_id");
                              $md = $this->session->userdata("master_distributor_id");
                             $sd = $this->session->userdata("super_distributor_id");
                             $d = $this->session->userdata("distributor_id");
                             $my = $this->session->userdata("login_id");
                             $optna  =   strtolower($desc);
-                            $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                            $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
                         return 0;
                     }
                 }else{
@@ -393,12 +394,13 @@ class Recharge_model extends CI_Model
                                         $query =   $this->db->insert("trans_detail", $myupdate);
                                      } 
 
+                                     $ad = $this->session->userdata("admin_id");
                                      $md = $this->session->userdata("master_distributor_id");
                                     $sd = $this->session->userdata("super_distributor_id");
                                     $d = $this->session->userdata("distributor_id");
                                     $my = $this->session->userdata("login_id");
                                     $optna  =   strtolower($desc);
-                                    $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                                    $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
                                     
                                     $this->updateOff($req,"ESY TOPUP Recharge successfull on $mobile Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
 
@@ -589,13 +591,14 @@ class Recharge_model extends CI_Model
                     curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
                     $result = curl_exec($ch);
                     curl_close($ch);
+                     $ad = $queryq->row()->admin_id;
                      $md = $queryq->row()->master_distributor_id;
                     $sd = $queryq->row()->super_distributor_id;
                     $d = $queryq->row()->distributor_id;
                     $my = $queryq->row()->login_id;
                     $optna  =   strtolower($desc);
                    
-                    $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                    $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
                     $this->db->reconnect();
                         $data = array(                        
                                 'hrm_track'              => "$response->TrackId",
@@ -824,12 +827,13 @@ class Recharge_model extends CI_Model
                     $query =   $this->db->insert("trans_detail", $myupdate);
                  } 
                 $this->db->reconnect(); 
+                $ad = $this->session->userdata("admin_id");
                 $md = $this->session->userdata("master_distributor_id");
                 $sd = $this->session->userdata("super_distributor_id");
                 $d = $this->session->userdata("distributor_id");
                 $my = $this->session->userdata("login_id");
                 $optna  =   strtolower($desc);
-                $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
               // die();
                  if($this->db->affected_rows() == 1){
                      return 0;
@@ -845,13 +849,19 @@ class Recharge_model extends CI_Model
             return 3;
         }
     }
-        public function trans_commission($md,$sd,$d,$my,$desc,$amt){
+        public function trans_commission($ad,$md,$sd,$d,$my,$desc,$amt){
+                $cammadt     =   0;
                 $cammmt     =   0;
                 $cammst     =   0;
                 $cammdt     =   0;
                 $cammat     =   0;
                 $mobjid  =   $this->getmoduleobjectid($desc);
 				//echo $mobjid;die();
+                if($ad != 0){
+                        $adp     =   $this->getpackage($ad);
+                        $coad    =   $this->getcomdet($adp,$mobjid);
+                        $cammadt  =   $this->getcamt($ad);
+                }
                 if($md != 0){
                             $mdp     =   $this->getpackage($md);
                             $comd    =   $this->getcomdet($mdp,$mobjid);
@@ -877,6 +887,7 @@ class Recharge_model extends CI_Model
                 $amdt      =   number_format((($amt*($cod['commission_amt']))/100),2);
                 $amst      =   number_format((($amt*($cosd['commission_amt']))/100),2);
                 $ammt      =   number_format((($amt*($comd['commission_amt']))/100),2);
+                $admin      =   number_format((($amt*($coad['commission_amt']))/100),2);
                 
                 $deta       =   $amyt;
                 $detd       =   $amdt-$deta;
@@ -886,12 +897,17 @@ class Recharge_model extends CI_Model
                     $dets       =   $amst-$amyt;
                 }
                 $detm       =   $ammt-$amst;
+                $detadmin   =   $admin-$ammt;
+                $cammadt1     =      $cammadt+$detadmin;
                 
                 $cammmt1     =   $cammmt+$detm;
                 $cammst1     =   $cammst+$dets;
                 $cammdt1     =   $cammdt+$detd;
                 $cammat1     =   $cammat+$deta;
-                //echo $deta; die();
+                
+               
+                
+                $this->updatecvamt($ad,$cammadt1);
                 $this->updatecvamt($md,$cammmt1);
                 $this->updatecvamt($sd,$cammst1);
                 $this->updatecvamt($d,$cammdt1);
@@ -902,11 +918,13 @@ class Recharge_model extends CI_Model
 						$this->insertdeamt($sd,$d,$cammdt1,$cammdt,$detd);
 						$this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
 						$this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+						$this->insertdeamt("0","1",$cammadt1,$cammadt,$detadmin);
 				}
 				if($d == 0 && $sd != 0 && $md != 0){
 						$this->insertdeamt($sd,$my,$cammat1,$cammat,$deta);
 						$this->insertdeamt($md,$sd,$cammst1,$cammst,$dets);
 						$this->insertdeamt("1",$md,$cammmt1,$cammmt,$detm);
+                                                $this->insertdeamt("0","1",$cammadt1,$cammadt,$detadmin);
 				}
 				/*
 				if($d == 0 && $sd = 0 && $md != 0){
@@ -1285,12 +1303,13 @@ class Recharge_model extends CI_Model
                     $this->db->where('recharge_id',$my_mo_id);
                     $update = $this->db->update('recharge_track',$data);    
                     
+                        $ad = $this->session->userdata("admin_id");
                         $md = $this->session->userdata("master_distributor_id");
                         $sd = $this->session->userdata("super_distributor_id");
                         $d = $this->session->userdata("distributor_id");
                         $my = $this->session->userdata("login_id");
                         $optna  =   strtolower($desc);
-                        $this->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                        $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
 
                      if($this->db->affected_rows() == 1){
                          return 0;

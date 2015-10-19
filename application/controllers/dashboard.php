@@ -5,6 +5,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->load->library('form_validation');   
         $this->load->model('dashboard_model');
+        $this->load->model('settings_model');
         if( $this->session->userdata('login_id') == ''){redirect('login');}
     }
     //index funs
@@ -35,7 +36,9 @@ class Dashboard extends CI_Controller {
        $data['sdamt'] = $this->dashboard_model->sdamt();
        $data['saamt'] = $this->dashboard_model->saamt();
        
-       
+        $data['get']       =  $this->settings_model->getVirtual();
+        $data['tcom']       =  $this->dashboard_model->tcom();
+        $data['pcom']       =  $this->dashboard_model->pcom();
         $this->load->view('layout/inner_template',$data);        
     }
     public function logout(){

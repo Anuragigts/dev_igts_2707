@@ -170,4 +170,28 @@ class Dashboard_model extends CI_Model
                }
         }
     
+        public function tcom(){
+                $id = $this->session->userdata("login_id");
+                $aid = $this->session->userdata("admin_id");
+                $this->db->select("sum(trans_amt) as amt");
+                $query = $this->db->get_where("trans_detail",array("trans_from" => $aid,"trans_to" => $id,"trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => 2))->row_array();
+                //echo $this->db->last_query();exit;
+                if($query){
+                        return number_format($query['amt'],2);
+                }else{
+                        return "0.00";
+                }    
+        }
+        public function pcom(){
+                $id = $this->session->userdata("login_id");
+                $aid = $this->session->userdata("admin_id");
+                $this->db->select("sum(trans_amt) as pmt");
+                $query = $this->db->get_where("trans_detail",array("trans_from" => $id,"trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => "2"))->row_array();
+                //echo $this->db->last_query();exit;
+                if($query){
+                        return number_format($query['pmt'],2);
+                }else{
+                        return "0";
+                }    
+        }
 }

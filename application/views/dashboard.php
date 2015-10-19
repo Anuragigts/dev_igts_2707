@@ -316,7 +316,39 @@
                        </a>
                   </div>
                </div>
-                
+                 <div class="col-sm-12 col-lg-3 col-md-6">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-4">
+                                <div class="ph">
+                                    <em class="fa fa-inr fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Total Amount &nbsp; <br/><span style="font-family:rupee;font-size:16px">R</span> <?php echo $get;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                    </div>
+                 <div class="col-sm-12 col-lg-3 col-md-6">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-3">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Commission Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $tcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+                 <div class="col-sm-12 col-lg-3 col-md-6">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-2">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
                 
             </div>
                
