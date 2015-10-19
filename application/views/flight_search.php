@@ -255,6 +255,8 @@
                                         <input type="hidden" name="Child" value="<?php echo $pos['child'];?>">
                                         <input type="hidden" name="Infrunt" value="<?php echo $pos['infant'];?>">
                                         
+                                        <input type="hidden" name="tourType" value="<?php echo $ttype['type'];?>">
+                                        
                                         <input type="hidden" name="logo" value="<?php echo $logo1;?>">
                                         <input type="hidden" name="name" value="<?php echo $al->CarrierCode.'-'.$al->FlightNo;?>">
                                         <input type="hidden" name="dep" value="<?php echo $al->DepartureDateTime;?>">
@@ -273,7 +275,7 @@
                                     </form>
                                     <br><br>
                                     <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
-                                    <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $al->CarrierCode;?>" FlightId="<?php echo $al->FlightId;?>" ClassCode="<?php echo $al->SegmentDetails->item->ClassCode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>">+ Show Fare Details</a>
+                                    <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $al->CarrierCode;?>" FlightId="<?php echo $al->FlightId;?>" ClassCode="<?php echo $al->SegmentDetails->item->ClassCode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>" tourType="<?php echo $ttype['type'];?>">+ Show Fare Details</a>
                                     <a href="javascript:void(0);" class="hidefare no" id="hide_<?php echo $me;?>" fatch="<?php echo $me;?>">- Hide Fare Details</a>
                                     <?php }?>
                                 </div>
@@ -334,8 +336,9 @@
         var infant = $(this).attr('infant');
         var child = $(this).attr('child');
         var adult = $(this).attr('adult');
+        var tourType = $(this).attr('tourType');
           $("#loading").modal('show');
-            $.post('<?php echo base_url();?>flight/fare',{'infant':infant,'child':child,'adult':adult,'AirlineId':AirlineId,'FlightId':FlightId,'ClassCode':ClassCode,'track':track,'BasicAmount':BasicAmount},function(response){
+            $.post('<?php echo base_url();?>flight/fare',{'tourType':tourType,'infant':infant,'child':child,'adult':adult,'AirlineId':AirlineId,'FlightId':FlightId,'ClassCode':ClassCode,'track':track,'BasicAmount':BasicAmount},function(response){
                // alert(response);
                 if(response !=''){   
                         $('#yes_'+fatch).css('display','inline');

@@ -247,6 +247,11 @@
                               <span>Search Flight</span>
                            </a>
                         </li>
+                        <li class="cancellation ">
+                           <a href="<?php echo base_url();?>flight/cancellation" title="Cancel Flight">
+                              <span>Cancel Flight</span>
+                           </a>
+                        </li>
 
                      </ul>
                   </li>

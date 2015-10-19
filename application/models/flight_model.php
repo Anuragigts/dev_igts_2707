@@ -215,9 +215,13 @@ class Flight_model extends CI_Model
                   return $response->FareRules;
                 }
     } 
-    public function getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult){
+    public function getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType){
         $url = FLIGHTURL;
-       
+       if($tourType == 'R'){
+           $inc = 2;
+       }else{
+           $inc = 1;
+       }
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -292,17 +296,17 @@ class Flight_model extends CI_Model
                  // echo "<pre>";  print_r($response); die();
                    $tax = 0.00;
                    foreach($response->FlightDetails->Item->Adult->Tax->Item as $cnt){
-                      $tax = $tax + ($adult * $cnt->TaxAmt); 
+                      $tax =  ($tax + ($adult * $cnt->TaxAmt)); 
                    }
                    foreach($response->FlightDetails->Item->Child->Tax->Item as $cnt1){
-                      $tax = $tax + ($child * $cnt1->TaxAmt); 
+                      $tax = ($tax + ($child * $cnt1->TaxAmt)); 
                    }
                    foreach($response->FlightDetails->Item->Infant->Tax->Item as $cnt2){
-                      $tax = $tax + ($infant * $cnt2->TaxAmt); 
+                      $tax = ($tax + ($infant * $cnt2->TaxAmt)); 
                    }
-                   $tr = (($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount));
-                   $sr = (($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount));
-                   $pr = (($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission));
+                   $tr = ($inc * ((($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount))));
+                   $sr =  ($inc * ((($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount))));
+                   $pr =  ($inc * ((($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission))));
                    $style= "style='border-bottom:1px solid #ccc;'";
                    $style1= "style='border-bottom:1px solid #000;background-color:#ccc;'";
                    $th= "style='padding:5px;font-weight:boald;'";
@@ -315,19 +319,19 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$adult." Adult</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_adult = ($adult * $response->FlightDetails->Item->Adult->BasicAmt);
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_adult = ($inc * ($adult * $response->FlightDetails->Item->Adult->BasicAmt));
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$child." Child</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_child = ($child * $response->FlightDetails->Item->Child->BasicAmt);
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_child = ($inc * ($child * $response->FlightDetails->Item->Child->BasicAmt));
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$infant." Infant</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($infant * $response->FlightDetails->Item->Infant->BasicAmt);
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($inc * ($infant * $response->FlightDetails->Item->Infant->BasicAmt));
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style1.">";
@@ -339,7 +343,7 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">Tax</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$tax;
+                   $val .= '<em class="fa fa-rupee"></em>'.($inc *$tax);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
@@ -363,7 +367,7 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style1.">";
                    $val .= "<th ".$th.">Grand Total</th>";
                    $val .= '<th class="pull-right" '.$th.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant + $tr + $sr + $pr + $tax);
+                   $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant + $tr + $sr + $pr + ($inc * $tax));
                    $val .= '</th></tr>';
                    $val .= '</table>';
                    
@@ -371,9 +375,13 @@ class Flight_model extends CI_Model
                 }
     }
     
-    public function getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult){
+    public function getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType){
         $url = FLIGHTURL;
-       
+       if($tourType == 'R'){
+           $inc = 2;
+       }else{
+           $inc = 1;
+       }
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -456,14 +464,14 @@ class Flight_model extends CI_Model
                    foreach($response->FlightDetails->Item->Infant->Tax->Item as $cnt2){
                       $tax = $tax + ($infant * $cnt2->TaxAmt); 
                    }
-                   $tr = (($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount));
-                   $sr = (($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount));
-                   $pr = (($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission));
+                   $tr = ($inc *(($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount)));
+                   $sr = ($inc *(($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount)));
+                   $pr = ($inc *(($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission)));
                    
-                   $s_adult = ($adult * $response->FlightDetails->Item->Adult->BasicAmt);
-                   $s_child = ($child * $response->FlightDetails->Item->Child->BasicAmt);
-                   $s_infant = ($infant * $response->FlightDetails->Item->Infant->BasicAmt);
-                   $total = ($s_adult + $s_child + $s_infant + $tr + $sr + $pr + $tax);
+                   $s_adult = ($inc *($adult * $response->FlightDetails->Item->Adult->BasicAmt));
+                   $s_child = ($inc *($child * $response->FlightDetails->Item->Child->BasicAmt));
+                   $s_infant = ($inc *($infant * $response->FlightDetails->Item->Infant->BasicAmt));
+                   $total = ($s_adult + $s_child + $s_infant + $tr + $sr + $pr + ($inc *$tax));
                   
                    
                   return $total;
@@ -612,7 +620,7 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </IntFlightBookingV1>
             </soap:Body></soap:Envelope>';
-       
+   //    echo $curlData;
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -646,7 +654,7 @@ class Flight_model extends CI_Model
 
                     $response = simplexml_load_string($final[0]);
                   // echo "<pre>"; 
-                   // print_r($response);//die();
+                  //  print_r($response);die();
                     //echo "<br>";
                     //echo $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
                     if($response->Resultcode == 1){
@@ -870,5 +878,195 @@ class Flight_model extends CI_Model
         $qu     =   $this->db->get();
        // echo $this->db->last_query();exit;
         return $qu->result();
+    }
+    /*
+     * cancellation of ticket
+     */
+    public function cancellation(){
+        $hrm = $this->input->post('esyPNR');
+        $air = $this->input->post('airPNR');
+        $typ = $this->input->post('cancType');
+        
+        $url = FLIGHTURL;
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                    <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/WsHermes/Service1">
+                          <ns1:WebProviderLoginId>'.FLIGHTID.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.FLIGHTPASS.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                 <Cancellation xmlns="http://tempuri.org/HERMESAPI/IntHermesAir">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.FLIGHTID.'</WebProviderLoginId>
+                        <WebProviderPassword>'.FLIGHTPASS.'</WebProviderPassword>
+                        <IsAgent>false</IsAgent>   
+                    </pobjSecurity>
+                    <PstrInput>
+                            &lt;cancellation&gt;
+                                &lt;HermesPNR&gt;'.$hrm.'&lt;/HermesPNR&gt;
+                                &lt;AirlinePNR&gt;'.$air.'&lt;/AirlinePNR&gt;
+                                &lt;CancelStatus&gt;'.$typ.'&lt;/CancelStatus&gt;
+                            &lt;/cancellation&gt;
+                    </PstrInput>
+                    <PstrFinalOutPut /><pstrError/>
+                </Cancellation>
+            </soap:Body></soap:Envelope>';
+       // echo $curlData;
+        $curl = curl_init();
+
+           curl_setopt ($curl, CURLOPT_URL, $url);
+           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+           curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+           curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+               'SOAPAction:"'.FLIGHTACTION.'Cancellation"',
+               'Content-Type: text/xml; charset=utf-8;',
+           ));
+
+            curl_setopt ($curl, CURLOPT_POST, 1);
+
+           curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl); 
+
+           curl_close ($curl);
+         
+           $keep_array = explode('true', $result);
+                if(count($keep_array)!= 2 ){
+                    return "Please try after some time.";
+                }else{
+                     
+                     $first_tag = explode('</CancellationResult><PstrFinalOutPut>', $keep_array[1]);       
+                    
+                     $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                     $get_full =  str_replace("&gt;",">",$get_less);
+
+                     $final = explode('</PstrFinalOutPut><pstrError /></CancellationResponse>', $get_full);
+
+                    $response = simplexml_load_string($final[0]);
+//                    echo "<pre>";
+//                    print_r($response);
+//                    die();
+                    if($response->Status == 1){
+                        if($typ == 0){
+                            return $response;
+                        }else{
+                             $myq=$this->db->query("SELECT F_ID FROM flight_track WHERE HermesPNR = '$hrm'");
+                             $idval = $myq->row()->F_ID;
+                             $ref = array('Status' => "2");
+                            $this->db->where('FTrackID',$idval);
+                            $update = $this->db->update('flight_passenger',$ref); 
+                            return '';
+                        }
+                    } else{
+                    return $response->Error->Remarks;
+                }
+               
+                
+          }
+    }
+    
+    /*
+     * Cancle it ticket
+     */
+    public function cancleIt(){
+         $url = FLIGHTURL;
+       
+        $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+                    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                    <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/WsHermes/Service1">
+                          <ns1:WebProviderLoginId>'.FLIGHTID.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.FLIGHTPASS.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                 <CancelSubmit xmlns="http://tempuri.org/HERMESAPI/IntHermesAir">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.FLIGHTID.'</WebProviderLoginId>
+                        <WebProviderPassword>'.FLIGHTPASS.'</WebProviderPassword>
+                        <IsAgent>false</IsAgent>   
+                    </pobjSecurity>
+                    <PstrInput>
+                            &lt;CancelSubmit&gt;
+                                &lt;HermesPNR&gt;'.$this->input->post('HermesPNR').'&lt;/HermesPNR&gt;
+                                &lt;AirlinePNR&gt;'.$this->input->post('AirlinePNR').'&lt;/AirlinePNR&gt;
+                                &lt;CRSPNR&gt;&lt;/CRSPNR&gt;
+                                &lt;PassengerDetails&gt;
+                                    &lt;item&gt;
+                                        &lt;PaxNo&gt;'.$this->input->post('PaxNo').'&lt;/PaxNo&gt;
+                                        &lt;TicketDetails&gt;
+                                            &lt;item&gt;
+                                                &lt;TicketNo&gt;'.$this->input->post('TicketNo').'&lt;/TicketNo&gt;
+                                                &lt;SegmentId&gt;'.$this->input->post('SegmentId').'&lt;/SegmentId&gt;
+                                                &lt;FlightNo&gt;'.$this->input->post('FlightNo').'&lt;/FlightNo&gt;
+                                                &lt;Source&gt;'.$this->input->post('Source').'&lt;/Source&gt;
+                                                &lt;Destiantion&gt;'.$this->input->post('Destiantion').'&lt;/Destiantion&gt;
+                                            &lt;/item&gt;
+                                        &lt;/TicketDetails&gt;
+                                    &lt;/item&gt;
+                                &lt;/PassengerDetails&gt;                               
+                            &lt;/CancelSubmit&gt;
+                    </PstrInput>
+                    <PstrFinalOutPut /><pstrError/>
+                </CancelSubmit>
+            </soap:Body></soap:Envelope>';
+        //echo $curlData;
+        $curl = curl_init();
+
+           curl_setopt ($curl, CURLOPT_URL, $url);
+           curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+           curl_setopt($curl,CURLOPT_TIMEOUT,120);
+
+           curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+               'SOAPAction:"'.FLIGHTACTION.'CancelSubmit"',
+               'Content-Type: text/xml; charset=utf-8;',
+           ));
+
+            curl_setopt ($curl, CURLOPT_POST, 1);
+
+           curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+
+            $result = curl_exec($curl); 
+
+           curl_close ($curl);
+         
+           $keep_array = explode('true', $result);
+                if(count($keep_array)!= 2 ){
+                    return "Please try after some time.";
+                }else{
+                     
+                     $first_tag = explode('</CancelSubmitResult><PstrFinalOutPut>', $keep_array[1]);       
+                    
+                     $get_less =  str_replace("&lt;","<",$first_tag[1]);
+                     $get_full =  str_replace("&gt;",">",$get_less);
+
+                     $final = explode('</PstrFinalOutPut><pstrError /></CancelSubmitResponse>', $get_full);
+
+                    $response = simplexml_load_string($final[0]);
+//                   echo "<pre>";
+//                   print_r($response);
+//                  die();
+                   if($response->Status == 1){
+                        $ref = array('Status' => "2");
+                        $this->db->where('TicketNo',$this->input->post('TicketNo'));
+                        $update = $this->db->update('flight_passenger',$ref);  
+                         return 1;
+                   }else{
+                       return $response->Error->Remarks;
+                   }
+                   //die();
+          }
     }
 }

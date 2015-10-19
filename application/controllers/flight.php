@@ -130,8 +130,9 @@ class Flight extends CI_Controller {
         $infant = $_POST['infant'];
         $child = $_POST['child'];
         $adult = $_POST['adult'];
+        $tourType = $_POST['tourType'];
         
-        $return = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
+        $return = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType);
         echo $return;
     }
     
@@ -168,6 +169,7 @@ class Flight extends CI_Controller {
                $type           = $this->input->post('type');
                $class           = $this->input->post('class');
                $flight_i           = $this->input->post('flight_i');
+               $tourType           = $this->input->post('tourType');
            }
            if($airlineId != '' ){
                $this->session->set_userdata('AirlineId',   "$airlineId");
@@ -190,6 +192,7 @@ class Flight extends CI_Controller {
                $this->session->set_userdata('type',        "$type");
                $this->session->set_userdata('class',       "$class");
                $this->session->set_userdata('flight_i',       "$flight_i");
+               $this->session->set_userdata('tourType',       "$tourType");
            }
            $data['flight'] = array('logo' => $this->session->userdata('logo'),
                            'name'  => $this->session->userdata('name1'),
@@ -208,13 +211,14 @@ class Flight extends CI_Controller {
            $infant     = $this->session->userdata('Infrunt');
            $child      = $this->session->userdata('Child');
            $adult      = $this->session->userdata('Adult');
+           $tourType      = $this->session->userdata('tourType');
           // echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
            if($this->session->userdata('AirlineId') == '')
             {
               redirect('flight/searchFlight');  
             }
-           $data['get_details'] = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
-           $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult);
+           $data['get_details'] = $this->flight_model->getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType);
+           $data['getTotal'] = $this->flight_model->getFareTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType);
 
            if($this->input->post('book_ticket')){
                $this->form_validation->set_rules('first_name[]', 'First Name',   'required');
@@ -292,5 +296,45 @@ class Flight extends CI_Controller {
         $this->session->unset_userdata('flight_i');
         
         $this->load->view('layout/inner_template',$data);
+    }
+    
+    public function cancellation(){
+        $data = array(
+              'title'         => 'SC :: FLIGHT Book',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'flight_cancellation'
+             );
+        $data['forcncl'] = array();
+             if($this->input->post('cancel')){
+                $this->form_validation->set_rules('esyPNR',        'EsyTopup PNR',      'required');
+                $this->form_validation->set_rules('airPNR',        'Airline PNR',       'required');
+                $this->form_validation->set_rules('cancType',      'Cancellation Type', 'required');
+                if($this->form_validation->run() == TRUE){
+                  $data1 =  $this->flight_model->cancellation();
+                 // print_r($data1);die();
+                  if($data1->Status == 1){
+                      $data['forcncl'] = $data1;
+                  }else if($data1 == ''){
+                      $this->session->set_flashdata('msg','Your cancellation request is queued on our server. The request will be processed with in 4 hours of time.');  
+                      redirect('flight/cancellation');
+                  }else{
+                      $myerr = $data1['0'];
+                      $this->session->set_flashdata('err',"$myerr");  
+                       redirect('flight/cancellation');
+                  }
+                }
+             }
+             if($this->input->post('cancle-it')){
+                 $cancleit =  $this->flight_model->cancleIt();
+                 if($cancleit == 1){
+                     $this->session->set_flashdata('msg','Your cancellation request is queued on our server. The request will be processed with in 4 hours of time.');  
+                       redirect('flight/cancellation');
+                 }else{
+                     $this->session->set_flashdata('err',"Error: $cancleit");  
+                       redirect('flight/cancellation');
+                 }
+             }
+         $this->load->view('layout/inner_template',$data);
     }
 }

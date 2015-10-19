@@ -9,6 +9,8 @@
              </li>                  
               <li><a href="<?php echo base_url();?>flight/searchFlight">Search Flight</a>
              </li>               
+              <li><a href="<?php echo base_url();?>flight/flightHistory">Flight History</a>
+             </li>               
              <li class="active">Booking Status</li>                 
           </ol>Booking Status
           <!-- Small text for title-->
@@ -118,6 +120,53 @@
              .none{display: none;}
            </style>
            <?php if(count($ticket) > 0){?>
+           <style>
+                            @media 
+                  only screen and (max-width: 760px),
+                  (min-device-width: 768px) and (max-device-width: 1024px)  {
+                          .td:nth-of-type(1):before { content: "S.No."; }
+                          .td:nth-of-type(2):before { content: "Airline ID"; }
+                          .td:nth-of-type(3):before { content: "EsyTopup PNR"; }
+                          .td:nth-of-type(4):before { content: "Ticket No"; }
+                          .td:nth-of-type(5):before { content: "Name"; }
+                          .td:nth-of-type(6):before { content: "Passenger Type"; }
+                          .td:nth-of-type(7):before { content: "Status"; }
+                          .td:nth-of-type(8):before { content: "Action"; }
+                  }
+               </style>
+            <div class="row">  
+               <div class="col-lg-12">
+                   <div class="panel-body">
+                        <table id="datatable1" class="table table-striped table-hover" >
+                           <thead>
+                              <tr >
+                                    <th>Ticket No.</th>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Flight</th>
+                                    <th>Departs</th>
+                                    <th>Arrives</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                           <tbody>
+                                <?php $i =1; foreach ($ticket as $tkt){?>
+                                
+                                <tr>
+                                    <td><?php echo $tkt->TicketNo;?></td>
+                                    <td><?php if($tkt->TYPE == 1){echo "Adult";}else if($tkt->TYPE == 2){echo "Child";}else{echo "Infant";}?></td>
+                                    <td><?php echo $tkt->FirstName.' '.$tkt->Lastname;?></td>
+                                    <td><?php echo $tkt->CarrierAirLineCode;?> &nbsp;&nbsp; <?php echo $tkt->FlightNumber;?></td>
+                                    <td><?php echo $tkt->Departuredatetime;?></td>
+                                    <td><?php echo $tkt->Arrivaldatetime;?></td>
+                                    <th><b><?php if($tkt->Status == 1){echo "Booked";}else if($tkt->Status == 2){echo "canceled";}else{echo "N/A";}?></b></th>
+                                </tr>
+                                <?php  }?>
+                           </tbody>
+                        </table>
+                        </div>
+                    </div>
+           
          <div class="row" id="dvContainer">        
             <div class="col-md-12 none">        
                 <div >
@@ -152,6 +201,7 @@
                                     <th>Arrives</th>
                                 </tr>
                                 <?php $i =1; foreach ($ticket as $tkt){?>
+                                <?php if($tkt->Status == 1){?>
                                 <tr>
                                     <td><?php echo $tkt->TicketNo;?></td>
                                     <td><?php if($tkt->TYPE == 1){echo "Adult";}else if($tkt->TYPE == 2){echo "Child";}else{echo "Infant";}?></td>
@@ -161,7 +211,9 @@
                                     <td><?php echo $tkt->Arrivaldatetime;?></td>
                                     
                                 </tr>
-                               <?php  }?>
+                                <?php }else{
+                                    echo "<tr><td colspan='6'>Ticket cancled for ". $tkt->FirstName.' '.$tkt->Lastname."</td></tr>";
+                                } }?>
                             </table>
                             
                              <div style="padding-top:10px;">
