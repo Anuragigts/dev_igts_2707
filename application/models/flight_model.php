@@ -77,7 +77,11 @@ class Flight_model extends CI_Model
                                     &lt;Destination&gt;'.$this->input->post('to').'&lt;/Destination&gt;
                                     &lt;Date&gt;'.$this->input->post('departure').'&lt;/Date&gt;
                                 &lt;/Item&gt;
-                               
+                                &lt;Item&gt;
+                                    &lt;Source&gt;'.$this->input->post('to').'&lt;/Source&gt;
+                                    &lt;Destination&gt;'.$this->input->post('from').'&lt;/Destination&gt;
+                                    &lt;Date&gt;'.$this->input->post('return').'&lt;/Date&gt;
+                                &lt;/Item&gt;                               
                             &lt;/Details&gt;
                             &lt;ClassTypeId&gt;'.$this->input->post('class').'&lt;/ClassTypeId&gt;
                             &lt;AIRLINES&gt;&lt;/AIRLINES&gt;
@@ -304,9 +308,9 @@ class Flight_model extends CI_Model
                    foreach($response->FlightDetails->Item->Infant->Tax->Item as $cnt2){
                       $tax = ($tax + ($infant * $cnt2->TaxAmt)); 
                    }
-                   $tr = ($inc * ((($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount))));
-                   $sr =  ($inc * ((($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount))));
-                   $pr =  ($inc * ((($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission))));
+                   $tr = ((($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount)));
+                   $sr =  ((($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount)));
+                   $pr =  ((($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission)));
                    $style= "style='border-bottom:1px solid #ccc;'";
                    $style1= "style='border-bottom:1px solid #000;background-color:#ccc;'";
                    $th= "style='padding:5px;font-weight:boald;'";
@@ -319,19 +323,19 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$adult." Adult</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_adult = ($inc * ($adult * $response->FlightDetails->Item->Adult->BasicAmt));
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_adult =  ($adult * $response->FlightDetails->Item->Adult->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$child." Child</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_child = ($inc * ($child * $response->FlightDetails->Item->Child->BasicAmt));
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_child =  ($child * $response->FlightDetails->Item->Child->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">".$infant." Infant</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($inc * ($infant * $response->FlightDetails->Item->Infant->BasicAmt));
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($infant * $response->FlightDetails->Item->Infant->BasicAmt);
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style1.">";
@@ -343,7 +347,7 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style.">";
                    $val .= "<td ".$td.">Tax</td>";
                    $val .= '<td class="pull-right" '.$td.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.($inc *$tax);
+                   $val .= '<em class="fa fa-rupee"></em>'.$tax;
                    $val .= '</td></tr>';
                    
                    $val .= "<tr ".$style.">";
@@ -367,7 +371,7 @@ class Flight_model extends CI_Model
                    $val .= "<tr ".$style1.">";
                    $val .= "<th ".$th.">Grand Total</th>";
                    $val .= '<th class="pull-right" '.$th.'>';
-                   $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant + $tr + $sr + $pr + ($inc * $tax));
+                   $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant + $tr + $sr + $pr + $tax);
                    $val .= '</th></tr>';
                    $val .= '</table>';
                    
@@ -464,14 +468,14 @@ class Flight_model extends CI_Model
                    foreach($response->FlightDetails->Item->Infant->Tax->Item as $cnt2){
                       $tax = $tax + ($infant * $cnt2->TaxAmt); 
                    }
-                   $tr = ($inc *(($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount)));
-                   $sr = ($inc *(($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount)));
-                   $pr = ($inc *(($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission)));
+                   $tr = (($adult * $response->FlightDetails->Item->Adult->TransactionAmount) + ( $child * $response->FlightDetails->Item->Child->TransactionAmount) + ($infant * $response->FlightDetails->Item->Infant->TransactionAmount));
+                   $sr = (($adult * $response->FlightDetails->Item->Adult->ServiceAmount) + ( $child * $response->FlightDetails->Item->Child->ServiceAmount) + ($infant * $response->FlightDetails->Item->Infant->ServiceAmount));
+                   $pr = (($adult * $response->FlightDetails->Item->Adult->Commission) + ( $child * $response->FlightDetails->Item->Child->Commission) + ($infant * $response->FlightDetails->Item->Infant->Commission));
                    
-                   $s_adult = ($inc *($adult * $response->FlightDetails->Item->Adult->BasicAmt));
-                   $s_child = ($inc *($child * $response->FlightDetails->Item->Child->BasicAmt));
-                   $s_infant = ($inc *($infant * $response->FlightDetails->Item->Infant->BasicAmt));
-                   $total = ($s_adult + $s_child + $s_infant + $tr + $sr + $pr + ($inc *$tax));
+                   $s_adult = ($adult * $response->FlightDetails->Item->Adult->BasicAmt);
+                   $s_child = ($child * $response->FlightDetails->Item->Child->BasicAmt);
+                   $s_infant = ($infant * $response->FlightDetails->Item->Infant->BasicAmt);
+                   $total = ($s_adult + $s_child + $s_infant + $tr + $sr + $pr + $tax);
                   
                    
                   return $total;
@@ -482,7 +486,7 @@ class Flight_model extends CI_Model
      ****** Book Ticket **********
      ****************************/
     
-    public function bookTicket(){ 
+    public function bookTicket($tourType = 'O'){ 
         $url = FLIGHTURL;       
       
        if($this->input->post('class') == 'Economy'){
@@ -508,8 +512,8 @@ class Flight_model extends CI_Model
             }else{
                $gen = 'F'; 
             }
-            
-            $dynamic .= '&lt;item&gt;  
+            if($tourType == 'O'){
+                $dynamic .= '&lt;item&gt;  
                             &lt;PassengerType&gt;'.$cat[$i].'&lt;/PassengerType&gt;                            
                             &lt;Title&gt;'.$title[$i].'&lt;/Title&gt;                            
                             &lt;FirstName&gt;'.$first_n[$i].'&lt;/FirstName&gt;                            
@@ -533,6 +537,42 @@ class Flight_model extends CI_Model
                             &lt;/Segment&gt;
                           &lt;/item&gt; 
                         ';
+            }else{
+                $dynamic .= '&lt;item&gt;  
+                            &lt;PassengerType&gt;'.$cat[$i].'&lt;/PassengerType&gt;                            
+                            &lt;Title&gt;'.$title[$i].'&lt;/Title&gt;                            
+                            &lt;FirstName&gt;'.$first_n[$i].'&lt;/FirstName&gt;                            
+                            &lt;LastName&gt;'.$last_n[$i].'&lt;/LastName&gt;
+                            &lt;PassportNo&gt;'.$pp[$i].'&lt;/PassportNo&gt;
+                            &lt;Gender&gt;'.$gen.'&lt;/Gender&gt;
+                            &lt;PassportExpirtyDate&gt;'.$expiry[$i].'&lt;/PassportExpirtyDate&gt;
+                            &lt;PassportIssuingCountry&gt;India3&lt;/PassportIssuingCountry&gt;
+                            &lt;Nationality&gt;India4353&lt;/Nationality&gt;
+                            &lt;DateofBirth&gt;'.$dob[$i].'&lt;/DateofBirth&gt;
+                            &lt;Segment&gt;
+                                &lt;item&gt;
+                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
+                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
+                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
+                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
+                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
+                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
+                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
+                                &lt;/item&gt;
+                                &lt;item&gt;
+                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
+                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
+                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
+                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
+                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
+                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
+                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
+                                &lt;/item&gt;
+                            &lt;/Segment&gt;
+                          &lt;/item&gt; 
+                        ';
+            }
+            
             
        }
        //echo  $dynamic;
@@ -620,7 +660,7 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </IntFlightBookingV1>
             </soap:Body></soap:Envelope>';
-   //    echo $curlData;
+     // echo $curlData;
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -654,7 +694,7 @@ class Flight_model extends CI_Model
 
                     $response = simplexml_load_string($final[0]);
                   // echo "<pre>"; 
-                  //  print_r($response);die();
+                    //print_r($response);die();
                     //echo "<br>";
                     //echo $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
                     if($response->Resultcode == 1){

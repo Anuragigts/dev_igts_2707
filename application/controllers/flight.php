@@ -211,7 +211,7 @@ class Flight extends CI_Controller {
            $infant     = $this->session->userdata('Infrunt');
            $child      = $this->session->userdata('Child');
            $adult      = $this->session->userdata('Adult');
-           $tourType      = $this->session->userdata('tourType');
+           $tourType   = $this->session->userdata('tourType');
           // echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
            if($this->session->userdata('AirlineId') == '')
             {
@@ -232,7 +232,7 @@ class Flight extends CI_Controller {
                $this->form_validation->set_rules('add',        'address','required');
                  if($this->form_validation->run() == TRUE){
 
-                   $booking_details = $this->flight_model->bookTicket();
+                   $booking_details = $this->flight_model->bookTicket($tourType);
                  echo $booking_details;
                    if($booking_details == "1"){
                        $this->session->set_flashdata('msg','Ticket Booked Successfully.');  
