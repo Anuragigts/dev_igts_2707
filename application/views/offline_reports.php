@@ -107,7 +107,7 @@ only screen and (max-width: 760px),
                                         ?>
                                     </td>
                                     <td><?= $view->descp;?></td>
-                                    <td><?php if($view->respons != ''){echo  $view->respons;}else{echo "Wrong recharge mobile";}?></td>
+                                    <td><?php if($view->respons != ''){echo  $view->respons;}else{echo "Recharge fail, Please Try again";}?></td>
                                 </tr>
                                <?php 
                                 }

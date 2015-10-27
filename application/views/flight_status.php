@@ -146,6 +146,7 @@
                                     <th>Flight</th>
                                     <th>Departs</th>
                                     <th>Arrives</th>
+                                    <th>Trip</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -159,6 +160,7 @@
                                     <td><?php echo $tkt->CarrierAirLineCode;?> &nbsp;&nbsp; <?php echo $tkt->FlightNumber;?></td>
                                     <td><?php echo $tkt->Departuredatetime;?></td>
                                     <td><?php echo $tkt->Arrivaldatetime;?></td>
+                                    <td><?php if( $ticket_details->BookingType == 'O'){echo "Oneway";}else{echo "Roundtrip";}?></td>
                                     <th><b><?php if($tkt->Status == 1){echo "Booked";}else if($tkt->Status == 2){echo "canceled";}else{echo "N/A";}?></b></th>
                                 </tr>
                                 <?php  }?>
@@ -175,7 +177,7 @@
                       td{padding-left:5px;}  
                     </style>
                     <center><img src="<?php echo base_url();?>assets/app/img/logoa.png">
-                        <h3><u>Flight Ticket</u></h3>
+                        <h3><u>Flight Ticket</u> </h3>
                      </center>
                     
                         <div style="margin:20px; border:1px solid #ccc; padding: 10px;">
@@ -189,7 +191,7 @@
                                 </tr>
                             </table>
                             <div style="padding-top:10px;">
-                                <b><?php echo $ticket_details->AirlineName;?>  Flight(s):</b>
+                                <b><?php echo $ticket_details->AirlineName;?>  Flight(s):   <?php if( $ticket_details->BookingType == 'O'){echo "Oneway";}else{echo "Roundtrip";}?></b>
                             </div>
                             <table width="100%" border="1">
                                 <tr style="background-color: #E6E6E6;">

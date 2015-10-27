@@ -106,7 +106,7 @@ only screen and (max-width: 760px),
                                 ?>
                                 <tr>
                                     <td><?= $i++;?></td>
-                                    <td><?= $view->responce_time;?></td>
+                                    <td><?= $view->cur_time;?></td>
                                     <td>SCR-0<?= $view->rid;?></td>
                                     <td><?= $view->amount;?></td>
                                     <td><?= strtolower($view->op_name);?>

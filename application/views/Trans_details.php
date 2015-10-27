@@ -16,7 +16,25 @@
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
-       
+        <div class="row">
+        <div class="col-md-12">
+        <div class="dmr-menu">
+            <b>Name :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> </span>, &nbsp;
+            <b>Mobile :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrmo');?></span>, &nbsp;
+            <b>Card :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrcard');?></span>, 
+             
+            <b>KYC :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrkyc');?></span>
+            <span class="pull-right">
+                <span style="color:#DF0101;"><i class="fa fa-hand-o-right fa-lg"></i></span>&nbsp;&nbsp;
+		<?php  if($this->session->userdata('dmrkyc') =="KYC  Processing" || $this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
+				<?php } ?>
+			  &nbsp;
+                    <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> 
+            </span>
+        </div>
+        </div>
+        </div>
        <div class="row">           
                 <?php if($this->session->flashdata('err') != ''){?>
                  <div class="alert alert-block alert-danger fade in">

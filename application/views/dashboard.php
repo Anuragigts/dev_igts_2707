@@ -152,15 +152,17 @@
                     <div class="col-lg-6 col-sm-6">
                        <!-- START widget-->
                        <div class="panel widget bg-green">
-                          <div class="row row-table">
-                             <div class="col-xs-4 text-center bg-green-dark pv-lg">
-                                <em class="fa fa-building fa-3x"></em>
-                             </div>
-                             <div class="col-xs-8 pv-lg">
-                                <div class="h2 mt0">hotel</div>
-                                <div class="text-uppercase">Booking</div>
-                             </div>
-                          </div>
+                           <a href="<?php echo base_url();?>hotel/searchHotel" style="text-decoration: none;color:#fff;">
+                            <div class="row row-table">
+                               <div class="col-xs-4 text-center bg-green-dark pv-lg">
+                                  <em class="fa fa-building fa-3x"></em>
+                               </div>
+                               <div class="col-xs-8 pv-lg">
+                                  <div class="h2 mt0">hotel</div>
+                                  <div class="text-uppercase">Booking</div>
+                               </div>
+                            </div>
+                           </a>
                        </div>
                     </div>
                     </div>

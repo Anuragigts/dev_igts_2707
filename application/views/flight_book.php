@@ -43,31 +43,43 @@
              <?php }?>      
            <div class="col-md-8"><br>
                <div class="row panel mypad">
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center">
                         <center><img src="<?php echo $flight['logo'];?>" class='img img-responsive center' /></center>
-                         <?php echo "<span class='dull1'>".$flight['name']."</span>";?>
+                       
                     </div>
-                    <div class="col-md-3 text-center">
-                        <span class="he1">Source</span><br>
-                        <span class=""><b><?php echo $flight['dep'];?></b></span>
-                        <br>
-                        <span class='dull1'><?php echo $flight['source'];?></span>
+                   <div class="col-md-10">
+                       <?php for($i = 0; $i < count($flight['name']); $i++){?>                      
+                       <div class="row">
+                        <div class="col-md-3 text-center">
+                            <span class="he1">Name</span><br>
+                            <span class=""><b><?php echo $flight['name'][$i];?></b></span>
+                            
 
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <span class="he1">Destination</span><br>
-                        <span class=""><b><?php echo $flight['arr'];?></b></span>
-                        <br>
-                        <span class='dull1'><?php echo $flight['dest'];?></span>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="he1">Source</span><br>
+                            <span class=""><b><?php echo $flight['dep'][$i];?></b></span>
+                            <br>
+                            <span class='dull1'><?php echo $flight['source'][$i];?></span>
 
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <span class="he1">Duration</span><br>
-                        <span class=""><b><?php echo $flight['dur'];?></b></span><br>
-                        <span class='dull1'>
-                        <?php echo $flight['stop'];?>
-                        </span>
-                    </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="he1">Destination</span><br>
+                            <span class=""><b><?php echo $flight['arr'][$i];?></b></span>
+                            <br>
+                            <span class='dull1'><?php echo $flight['dest'][$i];?></span>
+
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <span class="he1">Duration</span><br>
+                            <span class=""><b><?php echo $flight['dur'][$i];?></b></span><br>
+                            <span class='dull1'>
+                            <?php echo $flight['stop'][$i];?>
+                            </span>
+                        </div>
+                   </div>
+                       <?php }?>
+                   </div>
                 </div>
                
                    <div class="row">
@@ -314,19 +326,24 @@
                                     
                                     <div class="row">
                                         <div class="col-sm-12 text-center"><br>
-                                            <input type="hidden" class="form-control" name="city" value="<?php echo $flight['source'];?>">
+                                           
                                              <input type="hidden" class="form-control" name="adult" value="<?php echo $this->session->userdata('Adult');?>">
                                             <input type="hidden" class="form-control" name="child" value="<?php echo $this->session->userdata('Child');?>">
                                             <input type="hidden" class="form-control" name="infrount" value="<?php echo $this->session->userdata('Infrunt');?>">
                                             <input type="hidden" class="form-control" name="type" value="<?php echo $this->session->userdata('type');?>">
                                             <input type="hidden" class="form-control" name="amt" value="<?php echo $getTotal;?>">
                                             <input type="hidden" class="form-control" name="track" value="<?php echo $this->session->userdata('Track');?>">
-                                            <input type="hidden" class="form-control" name="class" value="<?php echo $this->session->userdata('class');?>">
-                                            <?php 
-                                            $exp = explode('-', $flight['name']);?>
-                                            <input type="hidden" class="form-control" name="code" value="<?php echo $exp['0'];?>">
-                                            <input type="hidden" class="form-control" name="f_Id" value="<?php echo $this->session->userdata('flight_i');?>">
-                                                
+                                             <input type="hidden" class="form-control" name="class" value="<?php echo $flight['class'];?>">  
+                                           
+                                              <?php for($i = 0; $i < count($flight['name']); $i++){?>  
+                                                <?php 
+                                             $exp = explode('-', $flight['name'][$i]);?>
+                                               <input type="hidden" class="form-control" name="classCode[]" value="<?php echo $flight['classCode'][$i];?>">  
+                                            <input type="hidden" class="form-control" name="code[]" value="<?php echo $exp['0'];?>">
+                                            <input type="hidden" class="form-control" name="f_Id[]" value="<?php echo $flight['flight_i'][$i];?>">
+                                            
+                                            <input type="hidden" class="form-control" name="city[]" value="<?php echo $flight['source'][$i];?>">
+                                              <?php }?>
                                             <input type="submit" name="book_ticket" value="Confirm & Book ticket" class="btn btn-success">
                                         </div>
                                     </div>

@@ -454,11 +454,10 @@ class Recharge_model extends CI_Model
       $this->db->reconnect();
         $sender_n = $this->input->get('mobilenumber', TRUE);
         $sender_no = substr($sender_n, -10);
-        //$sender_no = $this->input->get('mobilenumber', TRUE);
+       
             $queryq = $this->db->query("SELECT l.*,p.* FROM login l "
                     . "INNER JOIN profile p ON p.login_id = l.login_id WHERE l.login_mobile = $sender_no" );
-           // $queryq = $this->db->get_where('login', array('login_mobile' => $sender_no));
-           // echo $this->db->last_query();die();
+           
         if($queryq && $queryq->num_rows()> 0){
            $login_id =   $queryq->row()->login_id;
             $current_amt = $this->db->get_where('current_virtual_amount', array('user_id' => $login_id));

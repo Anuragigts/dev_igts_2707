@@ -186,7 +186,7 @@
                                     <td><?php echo $dl->number;?></td>
                                     <td><?php echo $dl->amount;?></td>
                                     <td><?php echo $dl->op_name;?></td>
-                                    <td><?php echo $dl->responce_time;?></td>
+                                    <td><?php echo $dl->cur_time;?></td>
                                     <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                     <td>
                                         <?php if($dl->status == 1){
@@ -204,7 +204,7 @@
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
-                                        <td><?php echo $dl->responce_time;?></td>
+                                        <td><?php echo $dl->cur_time;?></td>
                                         <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
@@ -223,7 +223,7 @@
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
-                                        <td><?php echo $dl->responce_time;?></td>
+                                        <td><?php echo $dl->cur_time;?></td>
                                         <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
@@ -242,7 +242,7 @@
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
-                                        <td><?php echo $dl->responce_time;?></td>
+                                        <td><?php echo $dl->cur_time;?></td>
                                         <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){
@@ -261,7 +261,7 @@
                                         <td><?php echo $dl->number;?></td>
                                         <td><?php echo $dl->amount;?></td>
                                         <td><?php echo $dl->op_name;?></td>
-                                        <td><?php echo $dl->responce_time;?></td>
+                                        <td><?php echo $dl->cur_time;?></td>
                                         <!--<td><?php // echo $dl->first_name;?> (<?php // echo $dl->u_type;?>)</td>-->
                                         <td>
                                             <?php if($dl->status == 1){

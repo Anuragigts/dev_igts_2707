@@ -7,6 +7,7 @@ class Dmr extends CI_Controller {
         $this->load->model('dmr_model');
         $this->load->model('common');
          $this->load->model('settings_model');
+          date_default_timezone_set('Asia/Kolkata');
         if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('dmr') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.');redirect('dashboard');}
     }

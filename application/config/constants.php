@@ -63,6 +63,13 @@ define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
 define('FLIGHTID', 'Swamicom');
 define('FLIGHTPASS', 'Swamicom123');
 
+// hotel rechage
+define('HOTELURL', 'http://115.248.39.72/hotelapiIntlservice/hotelws.asmx');
+define('HOTELACTION', 'http://tempuri.org/');
+define('HOTELBTB', 'SW01');
+define('HOTELID', 'swami');
+define('HOTELPASS', 'swami123$');
+
 
 
 

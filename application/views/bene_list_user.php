@@ -11,18 +11,28 @@
                               
           </ol>View Beneficiary 
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">(Name: <?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> ) 
-              <b>Mobile:</b> <?php echo $this->session->userdata('dmrmo');?>, 
-              <b>card:</b> <?php echo $this->session->userdata('dmrcard');?>, 
-             
-				<?php if($this->session->userdata('dmrkyc') !="KYC  Processing"){?>
-				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
-				<?php }/*if($this->session->userdata('dmrkyc') =="KYC Processing"){echo "KYC Processing";}*/ ?>
-			  &nbsp;
-              <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> 
-          </span>
+                 
           <!-- Breadcrumb below title-->
        </h3>
+        <div class="row">
+        <div class="col-md-12">
+        <div class="dmr-menu">
+            <b>Name :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> </span>, &nbsp;
+            <b>Mobile :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrmo');?></span>, &nbsp;
+            <b>Card :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrcard');?></span>, 
+             
+            <b>KYC :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrkyc');?></span>
+            <span class="pull-right">
+                <span style="color:#DF0101;"><i class="fa fa-hand-o-right fa-lg"></i></span>&nbsp;&nbsp;
+		<?php  if($this->session->userdata('dmrkyc') =="KYC  Processing" || $this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
+				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
+				<?php } ?>
+			  &nbsp;
+                    <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> 
+            </span>
+        </div>
+        </div>
+        </div>
        <!-- START widgets box-->
        <?php //echo $this->session->userdata('dmrkyc');?>
        <div class="row">

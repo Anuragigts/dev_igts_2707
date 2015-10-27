@@ -219,6 +219,9 @@ class Flight_model extends CI_Model
                   return $response->FareRules;
                 }
     } 
+   public  function _remove_empty_internal($value) {
+        return !empty($value) || $value === 0;
+}
     public function getFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType){
         $url = FLIGHTURL;
        if($tourType == 'R'){
@@ -226,6 +229,36 @@ class Flight_model extends CI_Model
        }else{
            $inc = 1;
        }
+       $array = explode(",", $flightId);    
+      $arrval = array_map('trim', $array);
+       $arrayair = explode(",", $airlineId);    
+      $arrvalair = array_map('trim', $arrayair);
+      $str = '';
+      $p = 0;
+      $cnt = count($arrval);
+      foreach($arrval as $arr){
+          if($arr !=''){
+          $str .= '
+                     &lt;Item&gt;                            
+                        &lt;FlightId&gt;'.$arr.'&lt;/FlightId&gt;                            
+                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
+                        &lt;AirlineId&gt;'.$arrvalair[$p].'&lt;/AirlineId&gt;
+                        &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;';
+          if($cnt == ($p+2) ){
+              $str .= ' 
+                      &lt;BasicAmt&gt;'.$basicAmount.'&lt;/BasicAmt&gt;
+                    &lt;/Item&gt;
+                  ';
+          }else{
+               $str .=  '
+                   &lt;BasicAmt&gt;&lt;/BasicAmt&gt;
+                    &lt;/Item&gt;
+                  ';
+          }
+                       
+          $p++;
+          }
+      }
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -248,22 +281,16 @@ class Flight_model extends CI_Model
                     <PstrInput>
                             &lt;TAXREQUEST&gt;
                                 &lt;UserTrackId&gt;'.$track.'&lt;/UserTrackId&gt;                            
-                                &lt;AirlineId&gt;'.$airlineId.'&lt;/AirlineId&gt;                            
+                                &lt;AirlineId&gt;'.$arrvalair['0'].'&lt;/AirlineId&gt;                            
                                 &lt;FlightDetails&gt;                            
-                                    &lt;Item&gt;                            
-                                        &lt;FlightId&gt;'.$flightId.'&lt;/FlightId&gt;                            
-                                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
-                                        &lt;AirlineId&gt;'.$airlineId.'&lt;/AirlineId&gt;
-                                        &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;
-                                        &lt;BasicAmt&gt;'.$basicAmount.'&lt;/BasicAmt&gt;
-                                    &lt;/Item&gt;
+                                   '. $str.'
                                &lt;/FlightDetails&gt;
                             &lt;/TAXREQUEST&gt;
                     </PstrInput>
                     <PstrFinalOutPut /><pstrError/>
                 </FlightTax>
             </soap:Body></soap:Envelope>';
-        //echo $curlData;
+      // return  $curlData;
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -297,7 +324,7 @@ class Flight_model extends CI_Model
 
                     $response = simplexml_load_string($final[0]);
                     
-                 // echo "<pre>";  print_r($response); die();
+                //  echo "<pre>";  print_r($response); die();
                    $tax = 0.00;
                    foreach($response->FlightDetails->Item->Adult->Tax->Item as $cnt){
                       $tax =  ($tax + ($adult * $cnt->TaxAmt)); 
@@ -386,6 +413,42 @@ class Flight_model extends CI_Model
        }else{
            $inc = 1;
        }
+        $url = FLIGHTURL;
+       if($tourType == 'R'){
+           $inc = 2;
+       }else{
+           $inc = 1;
+       }
+       $array = explode(",", $flightId);    
+      $arrval = array_map('trim', $array);
+       $arrayair = explode(",", $airlineId);    
+      $arrvalair = array_map('trim', $arrayair);
+      $str = '';
+      $p = 0;
+      $cnt = count($arrval);
+      foreach($arrval as $arr){
+          if($arr !=''){
+          $str .= '
+                     &lt;Item&gt;                            
+                        &lt;FlightId&gt;'.$arr.'&lt;/FlightId&gt;                            
+                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
+                        &lt;AirlineId&gt;'.$arrvalair[$p].'&lt;/AirlineId&gt;
+                        &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;';
+          if($cnt == ($p+2) ){
+              $str .= ' 
+                      &lt;BasicAmt&gt;'.$basicAmount.'&lt;/BasicAmt&gt;
+                    &lt;/Item&gt;
+                  ';
+          }else{
+               $str .=  '
+                   &lt;BasicAmt&gt;&lt;/BasicAmt&gt;
+                    &lt;/Item&gt;
+                  ';
+          }
+                       
+          $p++;
+          }
+      }
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -408,22 +471,15 @@ class Flight_model extends CI_Model
                     <PstrInput>
                             &lt;TAXREQUEST&gt;
                                 &lt;UserTrackId&gt;'.$track.'&lt;/UserTrackId&gt;                            
-                                &lt;AirlineId&gt;'.$airlineId.'&lt;/AirlineId&gt;                            
+                                &lt;AirlineId&gt;'.$arrvalair['0'].'&lt;/AirlineId&gt;                            
                                 &lt;FlightDetails&gt;                            
-                                    &lt;Item&gt;                            
-                                        &lt;FlightId&gt;'.$flightId.'&lt;/FlightId&gt;                            
-                                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
-                                        &lt;AirlineId&gt;'.$airlineId.'&lt;/AirlineId&gt;
-                                        &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;
-                                        &lt;BasicAmt&gt;'.$basicAmount.'&lt;/BasicAmt&gt;
-                                    &lt;/Item&gt;
+                                   '. $str.'
                                &lt;/FlightDetails&gt;
                             &lt;/TAXREQUEST&gt;
                     </PstrInput>
                     <PstrFinalOutPut /><pstrError/>
                 </FlightTax>
             </soap:Body></soap:Envelope>';
-        //echo $curlData;
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -488,12 +544,11 @@ class Flight_model extends CI_Model
     
     public function bookTicket($tourType = 'O'){ 
         $url = FLIGHTURL;       
-      
-       if($this->input->post('class') == 'Economy'){
-           $cl = 'E';
-       }else{
-          $cl = 'B'; 
-       }       
+     
+      $city = $this->input->post('city');
+      $code = $this->input->post('code');
+      $cc = $this->input->post('classCode');
+       $inc = 0;
        
        $cat   = $this->input->post('cat');
        $title   = $this->input->post('title');
@@ -502,9 +557,9 @@ class Flight_model extends CI_Model
        $dob     = $this->input->post('dob');
        $pp      = $this->input->post('pp');
        $expiry  = $this->input->post('expiry');
-       
+       $myf = $this->input->post('f_Id');
        $my_name = $first_n['0'].' '.$last_n['0'];
-       
+      
        $dynamic = '';
        for($i=0; $i< count($this->input->post('first_name')); $i++){
             if($title[$i] == 'Mr'){
@@ -512,6 +567,12 @@ class Flight_model extends CI_Model
             }else{
                $gen = 'F'; 
             }
+            //$adob = explode("/", $dob[$i]);
+            //$mydob = $adob['1'].'/'.$adob['0'].'/'.$adob['2'];
+            $mydob = $dob[$i];
+            
+            $apa = explode("/", $expiry[$i]);
+            $mypa = $apa['1'].'/'.$apa['0'].'/'.$apa['2'];
             if($tourType == 'O'){
                 $dynamic .= '&lt;item&gt;  
                             &lt;PassengerType&gt;'.$cat[$i].'&lt;/PassengerType&gt;                            
@@ -520,21 +581,28 @@ class Flight_model extends CI_Model
                             &lt;LastName&gt;'.$last_n[$i].'&lt;/LastName&gt;
                             &lt;PassportNo&gt;'.$pp[$i].'&lt;/PassportNo&gt;
                             &lt;Gender&gt;'.$gen.'&lt;/Gender&gt;
-                            &lt;PassportExpirtyDate&gt;'.$expiry[$i].'&lt;/PassportExpirtyDate&gt;
+                            &lt;PassportExpirtyDate&gt;'.$mypa.'&lt;/PassportExpirtyDate&gt;
                             &lt;PassportIssuingCountry&gt;India3&lt;/PassportIssuingCountry&gt;
                             &lt;Nationality&gt;India4353&lt;/Nationality&gt;
-                            &lt;DateofBirth&gt;'.$dob[$i].'&lt;/DateofBirth&gt;
+                            &lt;DateofBirth&gt;'.$mydob.'&lt;/DateofBirth&gt;
                             &lt;Segment&gt;
-                                &lt;item&gt;
-                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
-                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
-                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
-                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
-                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
-                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
-                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
-                                &lt;/item&gt;
-                            &lt;/Segment&gt;
+                            ';
+                            foreach($this->input->post('f_Id') as $f_id){
+                               
+                                $dynamic .= '&lt;item&gt;
+                                                &lt;FlightId&gt;'.$f_id.'&lt;/FlightId&gt;
+                                                &lt;ClassCode&gt;'.$cc['0'].'&lt;/ClassCode&gt;
+                                                &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
+                                                &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
+                                                &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
+                                                &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
+                                                &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
+                                            &lt;/item&gt;';
+                                $inc++;
+                            }
+                                
+                         $dynamic .= '
+                             &lt;/Segment&gt;
                           &lt;/item&gt; 
                         ';
             }else{
@@ -545,38 +613,35 @@ class Flight_model extends CI_Model
                             &lt;LastName&gt;'.$last_n[$i].'&lt;/LastName&gt;
                             &lt;PassportNo&gt;'.$pp[$i].'&lt;/PassportNo&gt;
                             &lt;Gender&gt;'.$gen.'&lt;/Gender&gt;
-                            &lt;PassportExpirtyDate&gt;'.$expiry[$i].'&lt;/PassportExpirtyDate&gt;
+                            &lt;PassportExpirtyDate&gt;'.$mypa.'&lt;/PassportExpirtyDate&gt;
                             &lt;PassportIssuingCountry&gt;India3&lt;/PassportIssuingCountry&gt;
                             &lt;Nationality&gt;India4353&lt;/Nationality&gt;
-                            &lt;DateofBirth&gt;'.$dob[$i].'&lt;/DateofBirth&gt;
+                            &lt;DateofBirth&gt;'.$mydob.'&lt;/DateofBirth&gt;
                             &lt;Segment&gt;
-                                &lt;item&gt;
-                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
-                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
-                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
-                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
-                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
-                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
-                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
-                                &lt;/item&gt;
-                                &lt;item&gt;
-                                    &lt;FlightId&gt;'.$this->input->post('f_Id').'&lt;/FlightId&gt;
-                                    &lt;ClassCode&gt;'.$cl.'&lt;/ClassCode&gt;
-                                    &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
-                                    &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
-                                    &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
-                                    &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
-                                    &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
-                                &lt;/item&gt;
-                            &lt;/Segment&gt;
+                            ';
+                            foreach($this->input->post('f_Id') as $f_id){
+                               
+                                $dynamic .= '&lt;item&gt;
+                                                &lt;FlightId&gt;'.$f_id.'&lt;/FlightId&gt;
+                                                &lt;ClassCode&gt;'.$cc[$inc].'&lt;/ClassCode&gt;
+                                                &lt;SpRequestId&gt;&lt;/SpRequestId&gt;
+                                                &lt;FrequentFlyerId&gt;&lt;/FrequentFlyerId&gt;
+                                                &lt;FrequentFlyerNumber&gt;&lt;/FrequentFlyerNumber&gt;
+                                                &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
+                                                &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
+                                            &lt;/item&gt;';
+                                $inc++;
+                            }
+                                
+                         $dynamic .= '
+                             &lt;/Segment&gt;
                           &lt;/item&gt; 
                         ';
             }
             
             
        }
-       //echo  $dynamic;
-       //echo die();
+      
         $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -604,7 +669,7 @@ class Flight_model extends CI_Model
                                     &lt;CustomerTitle&gt;'.$title['0'].'&lt;/CustomerTitle&gt;
                                     &lt;BookedByCusomter&gt;'.$my_name.'&lt;/BookedByCusomter&gt;
                                     &lt;CustomerAddr&gt;'.$this->input->post('add').'&lt;/CustomerAddr&gt;
-                                    &lt;CustomerCity&gt;'.$this->input->post('city').'&lt;/CustomerCity&gt;
+                                    &lt;CustomerCity&gt;'.$city['0'].'&lt;/CustomerCity&gt;
                                     &lt;CustomerCountryId&gt;99&lt;/CustomerCountryId&gt;
                                     &lt;CustomerEmail&gt;'.$this->input->post('login_email').'&lt;/CustomerEmail&gt;
                                     &lt;PinCode&gt;'.$this->input->post('zip').'&lt;/PinCode&gt;
@@ -643,7 +708,7 @@ class Flight_model extends CI_Model
                                     &lt;/item&gt;
                                &lt;/MEALREQUEST&gt;
                                &lt;Bookingdetails&gt; 
-                                    &lt;AirLinesId&gt;'.$this->input->post('code').'&lt;/AirLinesId&gt;
+                                    &lt;AirLinesId&gt;'.$code['0'].'&lt;/AirLinesId&gt;
                                     &lt;Payment&gt;
                                         &lt;CurrencyCode&gt;INR&lt;/CurrencyCode&gt;
                                         &lt;Amount&gt;'.$this->input->post('amt').'&lt;/Amount&gt;
@@ -660,7 +725,8 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </IntFlightBookingV1>
             </soap:Body></soap:Envelope>';
-     // echo $curlData;
+      //echo $curlData."<br><br>";
+              
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -679,7 +745,8 @@ class Flight_model extends CI_Model
                  $result = curl_exec($curl); 
 
                 curl_close ($curl);
-
+               // print_r($result);
+               //  echo "<br>";
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){
                     return "Please try after some time.";
@@ -693,10 +760,10 @@ class Flight_model extends CI_Model
                      $final = explode('</PstrFinalOutPut><pstrError /></IntFlightBookingV1Response>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                  // echo "<pre>"; 
-                    //print_r($response);die();
-                    //echo "<br>";
-                    //echo $response->Item->TicketDetails->CusomterDetails->BookedByCusomter;
+                   //echo "<pre>"; 
+                    //print_r($response);
+                    
+                    
                     if($response->Resultcode == 1){
                         $userTrackId        =  $response->Item->UserTrackId;
                         $hermesPNR          =  $response->Item->TicketDetails->HermesPNR;
@@ -789,7 +856,7 @@ class Flight_model extends CI_Model
                                 );
                                 $insert_tick = $this->db->insert('flight_passenger',$ticket);
                             }
-                            // echo $this->db->last_query()."<br>";
+                           
                             if($this->db->affected_rows() > 0){
                                 return 1;
                             }else{
@@ -799,14 +866,14 @@ class Flight_model extends CI_Model
                     }else if($response->Resultcode == 2){
                         return 2;
                     }else if($response->Resultcode == 0){
-                        //return 0;
+                         return $response->ResultCode->Error->Remarks;
+                    }else if($response->Resultcode->Status == 0){
                          return $response->ResultCode->Error->Remarks;
                     }else{
-                       //echo  $response->ResultCode->Error->Remarks;
                         return $response->ResultCode->Error->Remarks;
                     }
                    
-                }
+                }//die();
               
     }
     /*

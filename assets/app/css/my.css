@@ -48,6 +48,22 @@ thead th{ color: #000!important;border:1px solid #000 !important;}
 .even td{border:1px solid #000 !important; }
 .odd td{border:1px solid #000 !important; }
 
+.ligcol{
+    color: #8A0808;
+}
+.dmr-menu{
+    border:1px solid #ccc;
+    padding: 8px;
+    background-color: #fcfcfc;
+    border-radius:  5px;
+    margin-bottom: 5px;
+    background-color: #F2FBEF;
+}
+.dmr-menu:hover{
+    background-color: #F8E0E6;
+}
+
+
 /************* FLIGHT ***********/
 .mypad{
    padding-top: 15px; 
@@ -57,6 +73,9 @@ thead th{ color: #000!important;border:1px solid #000 !important;}
 -moz-box-shadow: inset 0px 0px 5px 0px rgba(204,12,NaN,1);
 box-shadow: inset 0px 0px 5px 0px rgba(204,12,NaN,1);
 cursor: pointer;
+}
+.mypad:hover{
+    background-color: #ECF6FB;
 }
 .dull{
     color: #B2AEAE;

@@ -256,6 +256,29 @@
                      </ul>
                   </li>
                     <?php }?>
+                  <?php //if($this->session->userdata('flight') == 1){?>
+                  <li class="hotel">
+                     <a href="#hotel" title="Hotel" data-toggle="collapse">
+                        <em class="fa fa-building"></em>
+                        <span>Hotel</span>
+                     </a>
+                     <ul id="hotel" class="nav sidebar-subnav collapse">
+                        <li class="sidebar-subnav-header">Hotel</li>
+
+                        <li class="searchHotel ">
+                           <a href="<?php echo base_url();?>hotel/searchHotel" title="Search Hotel">
+                              <span>Search Hotel</span>
+                           </a>
+                        </li>
+                        <li class="cancellation ">
+                           <a href="<?php echo base_url();?>hotel/cancellation" title="Cancel Hotel">
+                              <span>Cancel Hotel</span>
+                           </a>
+                        </li>
+
+                     </ul>
+                  </li>
+                    <?php //}?>
                     <?php }?>
                   <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">
