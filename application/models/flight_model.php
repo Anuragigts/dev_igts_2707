@@ -233,6 +233,10 @@ class Flight_model extends CI_Model
       $arrval = array_map('trim', $array);
        $arrayair = explode(",", $airlineId);    
       $arrvalair = array_map('trim', $arrayair);
+      
+       $ccdarry = explode(",", $classCode);    
+      $cccd = array_map('trim', $ccdarry);
+      
       $str = '';
       $p = 0;
       $cnt = count($arrval);
@@ -241,7 +245,7 @@ class Flight_model extends CI_Model
           $str .= '
                      &lt;Item&gt;                            
                         &lt;FlightId&gt;'.$arr.'&lt;/FlightId&gt;                            
-                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
+                        &lt;ClassCode&gt;'.$cccd[$p].'&lt;/ClassCode&gt;
                         &lt;AirlineId&gt;'.$arrvalair[$p].'&lt;/AirlineId&gt;
                         &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;';
           if($cnt == ($p+2) ){
@@ -290,7 +294,7 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </FlightTax>
             </soap:Body></soap:Envelope>';
-      // return  $curlData;
+    
              $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -324,7 +328,7 @@ class Flight_model extends CI_Model
 
                     $response = simplexml_load_string($final[0]);
                     
-                //  echo "<pre>";  print_r($response); die();
+               //echo "<pre>";  print_r($response); die();
                    $tax = 0.00;
                    foreach($response->FlightDetails->Item->Adult->Tax->Item as $cnt){
                       $tax =  ($tax + ($adult * $cnt->TaxAmt)); 
@@ -423,6 +427,9 @@ class Flight_model extends CI_Model
       $arrval = array_map('trim', $array);
        $arrayair = explode(",", $airlineId);    
       $arrvalair = array_map('trim', $arrayair);
+      
+      $ccdarry = explode(",", $classCode);    
+      $cccd = array_map('trim', $ccdarry);
       $str = '';
       $p = 0;
       $cnt = count($arrval);
@@ -431,7 +438,7 @@ class Flight_model extends CI_Model
           $str .= '
                      &lt;Item&gt;                            
                         &lt;FlightId&gt;'.$arr.'&lt;/FlightId&gt;                            
-                        &lt;ClassCode&gt;'.$classCode.'&lt;/ClassCode&gt;
+                        &lt;ClassCode&gt;'.$cccd[$p].'&lt;/ClassCode&gt;
                         &lt;AirlineId&gt;'.$arrvalair[$p].'&lt;/AirlineId&gt;
                         &lt;EticketFlag&gt;1&lt;/EticketFlag&gt;';
           if($cnt == ($p+2) ){
@@ -548,7 +555,7 @@ class Flight_model extends CI_Model
       $city = $this->input->post('city');
       $code = $this->input->post('code');
       $cc = $this->input->post('classCode');
-       $inc = 0;
+      
        
        $cat   = $this->input->post('cat');
        $title   = $this->input->post('title');
@@ -562,6 +569,7 @@ class Flight_model extends CI_Model
       
        $dynamic = '';
        for($i=0; $i< count($this->input->post('first_name')); $i++){
+            $inc = 0;
             if($title[$i] == 'Mr'){
                 $gen = 'M';
             }else{
@@ -599,8 +607,8 @@ class Flight_model extends CI_Model
                                                 &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
                                             &lt;/item&gt;';
                                
-                            } 
-                                $inc++;
+                            } //$inc++;
+                                
                          $dynamic .= '
                              &lt;/Segment&gt;
                           &lt;/item&gt; 
@@ -631,6 +639,7 @@ class Flight_model extends CI_Model
                                                 &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
                                             &lt;/item&gt;';
                                 $inc++;
+                                
                             }
                                 
                          $dynamic .= '
@@ -725,7 +734,7 @@ class Flight_model extends CI_Model
                     <PstrFinalOutPut /><pstrError/>
                 </IntFlightBookingV1>
             </soap:Body></soap:Envelope>';
-      //echo $curlData."<br><br>";
+     // echo $curlData."<br><br>";
               
              $curl = curl_init();
 
@@ -745,8 +754,8 @@ class Flight_model extends CI_Model
                  $result = curl_exec($curl); 
 
                 curl_close ($curl);
-               // print_r($result);
-               //  echo "<br>";
+             //   print_r($result);
+             //    echo "<br>";
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){
                     return "Please try after some time.";
@@ -760,8 +769,8 @@ class Flight_model extends CI_Model
                      $final = explode('</PstrFinalOutPut><pstrError /></IntFlightBookingV1Response>', $get_full);
 
                     $response = simplexml_load_string($final[0]);
-                   //echo "<pre>"; 
-                    //print_r($response);
+                  // echo "<pre>"; 
+                  // print_r($response);
                     
                     
                     if($response->Resultcode == 1){
@@ -858,7 +867,7 @@ class Flight_model extends CI_Model
                             }
                            
                             if($this->db->affected_rows() > 0){
-                                return 1;
+                               return 1;
                             }else{
                                 return "Please try after some time.";
                             }
@@ -866,7 +875,7 @@ class Flight_model extends CI_Model
                     }else if($response->Resultcode == 2){
                         return 2;
                     }else if($response->Resultcode == 0){
-                         return $response->ResultCode->Error->Remarks;
+                        return $response->ResultCode->Error->Remarks;
                     }else if($response->Resultcode->Status == 0){
                          return $response->ResultCode->Error->Remarks;
                     }else{

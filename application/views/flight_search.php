@@ -370,9 +370,10 @@
                                      <div class="col-md-2 text-center">
                                    <form method="post" action="<?php echo base_url();?>flight/book">
                                       
-                                       <?php $ffid='';$alid=''; foreach($it->AirlineDetails as $al){
+                                       <?php $ffid='';$alid='';$cccode=''; foreach($it->AirlineDetails as $al){
                                            $ffid .= $al->FlightId.',';
                                            $alid .= $al->CarrierCode.',';
+                                           $cccode .= $al->SegmentDetails->item->ClassCode.',';
                                            
                                            ?>
                                         <input type="hidden" name="AirlineId[]" value="<?php echo $al->CarrierCode;?>">
@@ -405,7 +406,7 @@
                                         <?php if($al->SegmentDetails->item->GrossAmount != ''){?>
                                         <input type="submit" name="book" class="btn  btn-success" value="Book Ticket" />
                                             <br><br>
-                                            <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $alid;?>" FlightId="<?php echo $ffid;?>" ClassCode="<?php echo $al->SegmentDetails->item->ClassCode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>" tourType="<?php echo $ttype['type'];?>">+ Show Fare Details</a>
+                                            <a href="javascript:void(0);" class="getfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $alid;?>" FlightId="<?php echo $ffid;?>" ClassCode="<?php echo $cccode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $al->SegmentDetails->item->GrossAmount;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>" tourType="<?php echo $ttype['type'];?>">+ Show Fare Details</a>
                                             <a href="javascript:void(0);" class="hidefare no" id="hide_<?php echo $me;?>" fatch="<?php echo $me;?>">- Hide Fare Details</a>
                                     
                                         <?php }?>

@@ -243,12 +243,56 @@ class Flight extends CI_Controller {
           // echo $airlineId.','. $flightId.',' .$classCode.','. $track.','. $basicAmount.','. $infant.','. $child.','. $adult;
             
             $amt = $this->settings_model->checkVirtual();
-            if($amt >= $this->input->post('amt')){    
-                if(count($this->session->userdata('AirlineId')) == 0)
+            if($amt >= $this->input->post('amt')){
+                
+                if($this->input->post('type') && $this->input->post('type') != ''){
+                    if($this->input->post('book_ticket')){
+                        $this->form_validation->set_rules('first_name[]', 'First Name',   'required');
+                        $this->form_validation->set_rules('last_name[]',  'Last Name',    'required');
+                        $this->form_validation->set_rules('mobile_no',  'Mobile Number','required');
+                        $this->form_validation->set_rules('login_email','Email',        'required');
+                        $this->form_validation->set_rules('zip',        'ZIP',          'required');
+                        $this->form_validation->set_rules('pp[]',        'Passport No',          'required');
+                        $this->form_validation->set_rules('expiry[]',     'Passport Expiry Date',          'required');
+                        $this->form_validation->set_rules('dob[]',        'Date Of Birth','required');
+                        $this->form_validation->set_rules('add',        'address','required');
+                        $this->form_validation->set_rules('type',        'Type','required');
+                          if($this->form_validation->run() == TRUE){
+
+                            $booking_details = $this->flight_model->bookTicket($tourType);
+                         // echo $booking_details;die();
+                            if($booking_details == "1"){
+                                $this->session->set_flashdata('msg','Ticket Booked Successfully.');  
+                                redirect('flight/Status/'.$this->session->userdata('Track'));
+                            }else if($booking_details == "2"){
+                                $this->session->set_flashdata('msg','Ticket Status is Pending, Please refresh this page.');  
+                                redirect('flight/Status/'.$this->session->userdata('Track'));
+                            }else if($booking_details == "0"){
+                                $this->session->set_flashdata('msg','Ticket Status is Pending, Please refresh this page.');  
+                                redirect('flight/Status/'.$this->session->userdata('Track'));
+                            }else{
+                               echo   $this->session->set_flashdata('err',"Error: $booking_details");  
+                                redirect('flight/book');
+                            }
+
+                        }
+                     }
+                 }else{
+                     $this->session->set_flashdata('err','Booking fail : You are not having sufficient balance amount for recharge.');  
+                     redirect('flight/searchFlight');  
+                 }
+                 
+                 
+            }else{
+                $this->session->set_flashdata('err','Booking fail : Please Search again.');  
+                redirect('flight/searchFlight');  
+            }
+             if(count($this->session->userdata('AirlineId')) == 0)
                  {
+                    $this->session->set_flashdata('err','Booking fail : Please Search again.');
                    redirect('flight/searchFlight');  
                  }
-                 $aids = '';$fids='';
+                 $aids = '';$fids='';$ccd='';
              //print_r($airlineId);
                  foreach($airlineId as $aid){
                    $aids .= $aid.','; 
@@ -256,46 +300,14 @@ class Flight extends CI_Controller {
                  foreach($flightId as $fid){
                    $fids .= $fid.','; 
                  }
+                 foreach($classCode as $cd){
+                   $ccd .= $cd.','; 
+                 }
 
                 // print_r($classCode);
-                $data['get_details'] = $this->flight_model->getFareTax($aids, $fids , end($classCode), $track, $basicAmount, $infant, $child, $adult,$tourType);
-                $data['getTotal'] = $this->flight_model->getFareTotal($aids, $fids , end($classCode), $track, $basicAmount, $infant, $child, $adult,$tourType);
+                $data['get_details'] = $this->flight_model->getFareTax($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
+                $data['getTotal'] = $this->flight_model->getFareTotal($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
            
-          
-                if($this->input->post('book_ticket')){
-                    $this->form_validation->set_rules('first_name[]', 'First Name',   'required');
-                    $this->form_validation->set_rules('last_name[]',  'Last Name',    'required');
-                    $this->form_validation->set_rules('mobile_no',  'Mobile Number','required');
-                    $this->form_validation->set_rules('login_email','Email',        'required');
-                    $this->form_validation->set_rules('zip',        'ZIP',          'required');
-                    $this->form_validation->set_rules('pp[]',        'Passport No',          'required');
-                    $this->form_validation->set_rules('expiry[]',     'Passport Expiry Date',          'required');
-                    $this->form_validation->set_rules('dob[]',        'Date Of Birth','required');
-                    $this->form_validation->set_rules('add',        'address','required');
-                      if($this->form_validation->run() == TRUE){
-
-                        $booking_details = $this->flight_model->bookTicket($tourType);
-                     // echo $booking_details;die();
-                        if($booking_details == "1"){
-                            $this->session->set_flashdata('msg','Ticket Booked Successfully.');  
-                            redirect('flight/Status/'.$this->session->userdata('Track'));
-                        }else if($booking_details == "2"){
-                            $this->session->set_flashdata('msg','Ticket Status is Pending, Please refresh this page.');  
-                            redirect('flight/Status/'.$this->session->userdata('Track'));
-                        }else if($booking_details == "0"){
-                            $this->session->set_flashdata('msg','Ticket Status is Pending, Please refresh this page.');  
-                            redirect('flight/Status/'.$this->session->userdata('Track'));
-                        }else{
-                           echo   $this->session->set_flashdata('err',"Error: $booking_details");  
-                            redirect('flight/book');
-                        }
-
-                    }
-                 }
-             }else{
-                 $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
-                 redirect('flight/searchFlight');  
-             }
             $this->load->view('layout/inner_template',$data);
        
     }
