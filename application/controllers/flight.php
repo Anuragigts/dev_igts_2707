@@ -45,6 +45,27 @@ class Flight extends CI_Controller {
             }
             $data['ttype'] = array('type'=>$this->input->post('type'),'fType'=>$this->input->post('fType'));
         }
+        if($this->input->post('d-search')){
+             $this->form_validation->set_rules('fType','Booking Type','required');
+             $this->form_validation->set_rules('departure','Departure Date','required');
+             $this->form_validation->set_rules('type','Type','required');
+             if($this->input->post('type')=='R'){
+                $this->form_validation->set_rules('return','Return Date','required');
+             }
+             $this->form_validation->set_rules('from','From Location','required');
+             $this->form_validation->set_rules('to','To Location','required');
+             $this->form_validation->set_rules('adult','Adult','required');
+             $this->form_validation->set_rules('child','Child','required');
+             $this->form_validation->set_rules('class','Class','required');
+             $this->form_validation->set_rules('infant','Infant','required');
+              if($this->form_validation->run() == TRUE){
+                  
+                $data['pos'] = array('class' => $this->input->post('class'),'adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'), 'type' => $this->input->post('type'));
+              //  $data['details'] = $this->flight_model->domesticGetFlight();
+               
+            }
+            $data['ttype'] = array('type'=>$this->input->post('type'),'fType'=>$this->input->post('fType'));
+        }
         $this->session->unset_userdata('AirlineId');
         $this->session->unset_userdata('FlightId');
         $this->session->unset_userdata('ClassCode');

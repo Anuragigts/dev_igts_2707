@@ -62,6 +62,10 @@ define('FLIGHTURL', 'http://115.248.39.80/hermesapi/inthermesair.asmx');
 define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
 define('FLIGHTID', 'Swamicom');
 define('FLIGHTPASS', 'Swamicom123');
+define('FLIGHTURLDOM', 'http://115.248.39.80/HermesDomAir/DomesticAir.svc');
+define('FLIGHTACTIONDOM', 'http://115.248.39.80/HermesDomAir/DomesticAir.svc/');
+define('FLIGHTIDDOM', 'Swamicom');
+define('FLIGHTPASSDOM', 'Swamicom123');
 
 // hotel rechage
 define('HOTELURL', 'http://115.248.39.72/hotelapiIntlservice/hotelws.asmx');

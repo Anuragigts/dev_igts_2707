@@ -51,12 +51,12 @@
                                      <div class="form-group">
                                          <label for="Mobile"><br><br/><br/></label>
                                          <label class="radio-inline c-radio">
-                                            <input  type="radio"  name="fType" value="D" <?php if($ttype['fType'] == 'D'){echo 'checked="checked"';}?>>
+                                            <input  type="radio"  class="fType" name="fType" value="D" <?php if($ttype['fType'] == 'D'){echo 'checked="checked"';}?>>
                                             <span class="fa fa-circle"></span>
                                            Domestic
                                         </label>
                                          <label class="radio-inline c-radio">
-                                            <input  type="radio" name="fType" value="I" <?php if($ttype['fType'] == 'I'){echo 'checked="checked"';}?>>
+                                            <input  type="radio" class="fType" name="fType" value="I" <?php if($ttype['fType'] == 'I'){echo 'checked="checked"';}?>>
                                             <span class="fa fa-circle"></span>
                                            International
                                         </label>
@@ -101,11 +101,11 @@
                                    <label for="Mobile">From Location<font class="red">*</font> </label>
                                    <select name="from" class="form-control">
                                        <option value="">Select</option>
-                                       <option value="BOM" <?php echo set_select('from','BOM', ( !empty($data) && $data == "BOM") ? TRUE : FALSE )?>>BOM</option>
-                                       <option value="DXB" <?php echo set_select('from','DXB', ( !empty($data) && $data == "DXB") ? TRUE : FALSE )?>>DXB</option>
-                                       <option value="MAA" <?php echo set_select('from','MAA', ( !empty($data) && $data == "MAA") ? TRUE : FALSE )?>>MAA</option>
-                                       <option value="CMB" <?php echo set_select('from','CMB', ( !empty($data) && $data == "CMB") ? TRUE : FALSE )?>>CMB</option>
-                                       <option value="MLE" <?php echo set_select('from','MLE', ( !empty($data) && $data == "MLE") ? TRUE : FALSE )?>>MLE</option>
+                                       <option value="BOM"  <?php echo set_select('from','BOM', ( !empty($data) && $data == "BOM") ? TRUE : FALSE )?>>MUMBAI(BOM)</option>
+                                       <option value="DXB" class="i" <?php echo set_select('from','DXB', ( !empty($data) && $data == "DXB") ? TRUE : FALSE )?>>DXB</option>
+                                       <option value="MAA" <?php echo set_select('from','MAA', ( !empty($data) && $data == "MAA") ? TRUE : FALSE )?>>CHENNAI(MAA)</option>
+                                       <option value="CMB" class="i" <?php echo set_select('from','CMB', ( !empty($data) && $data == "CMB") ? TRUE : FALSE )?>>CMB</option>
+                                       <option value="MLE" class="i" <?php echo set_select('from','MLE', ( !empty($data) && $data == "MLE") ? TRUE : FALSE )?>>MLE</option>
                                    </select>
                                    <span class="red"><?=  form_error('from');?></span>
                                </div>
@@ -113,11 +113,13 @@
                                     <label for="Mobile">To Location<font class="red">*</font> </label>
                                    <select name="to" class="form-control">
                                        <option value="">Select</option>
-                                       <option value="BOM" <?php echo set_select('to','BOM', ( !empty($data) && $data == "BOM") ? TRUE : FALSE )?>>BOM</option>
-                                       <option value="DXB" <?php echo set_select('to','DXB', ( !empty($data) && $data == "DXB") ? TRUE : FALSE )?>>DXB</option>
-                                       <option value="MAA" <?php echo set_select('to','MAA', ( !empty($data) && $data == "MAA") ? TRUE : FALSE )?>>MAA</option>
-                                       <option value="CMB" <?php echo set_select('to','CMB', ( !empty($data) && $data == "CMB") ? TRUE : FALSE )?>>CMB</option>
-                                       <option value="MLE" <?php echo set_select('to','MLE', ( !empty($data) && $data == "MLE") ? TRUE : FALSE )?>>MLE</option>                                       
+                                       <option value="BOM" <?php echo set_select('to','BOM', ( !empty($data) && $data == "BOM") ? TRUE : FALSE )?>>MUMBAI(BOM)</option>
+                                       <option value="DXB" class="i" <?php echo set_select('to','DXB', ( !empty($data) && $data == "DXB") ? TRUE : FALSE )?>>DXB</option>
+                                       <option value="MAA" <?php echo set_select('to','MAA', ( !empty($data) && $data == "MAA") ? TRUE : FALSE )?>>CHENNAI(MAA)</option>
+                                       <option value="CMB" class="i" <?php echo set_select('to','CMB', ( !empty($data) && $data == "CMB") ? TRUE : FALSE )?>>CMB</option>
+                                       <option value="MLE" class="i" <?php echo set_select('to','MLE', ( !empty($data) && $data == "MLE") ? TRUE : FALSE )?>>MLE</option>                                       
+                                       <option value="BLR" class="d" <?php echo set_select('to','BLR', ( !empty($data) && $data == "BLR") ? TRUE : FALSE )?>>BANGALORE(BLR)</option>                                       
+                                       <option value="DEL" class="d" <?php echo set_select('to','DEL', ( !empty($data) && $data == "DEL") ? TRUE : FALSE )?>>DELHI(DEL)</option>                                       
                                    </select>
                                    <span class="red"><?=  form_error('to');?></span>
                                </div>
@@ -172,7 +174,8 @@
                                   
                                </div>
                                <div class="col-lg-2 text-right">
-                                   <input type="submit" id="searchload" name="search" value="Search" class="btn btn-info" />
+                                   <input type="submit" id="searchload" name="search" value="International Search" class="btn btn-info i" />
+                                   <input type="submit" id="searchload" name="d-search" value="Doemstic Search" class="btn btn-info d" />
                                </div>
                            </div>
                        </div>
@@ -438,6 +441,28 @@
     </div>
  </section>
 <script>
+    $(function(){
+      var typ =  $('input:radio[name=fType]:checked').val(); 
+      if(typ == 'I'){
+          $('.i').show();
+          $('.d').hide();
+      }else{
+          $('.i').hide();
+          $('.d').show();
+      }
+    });
+    
+    $('.fType').click(function(){
+        var typ =  $('input:radio[name=fType]:checked').val();
+        if(typ == 'I'){
+          $('.i').show();
+          $('.d').hide();
+      }else{
+          $('.i').hide();
+          $('.d').show();
+      }
+    });
+    
     $('#inlineradio1').click(function(){
         $('.round').hide();
         $('.roundtext').val('');
