@@ -107,14 +107,14 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Circle Area<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <select class=" form-control circle1"  name="circle" >
+                                                 <select class=" form-control circle1 circle3"  name="circle" >
                                                      <option value="">Select</option> 
                                                      <?php foreach($circle as $c){?>
                                                         <option value="<?php echo $c->name;?>"><?php echo $c->name;?></option> 
                                                       <?php }?>
                                                      
                                                  </select>
-                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control circle2" value="<?= set_value("circle"); ?>" value="<?php echo  set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
+                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control circle2 circle3" value="<?= set_value("circle"); ?>" value="<?php echo  set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                                  <span class="red"><?= form_error('circle');?></span>
                                              </div>
                                           </div>

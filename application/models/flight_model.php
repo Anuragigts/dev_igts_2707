@@ -573,7 +573,7 @@ class Flight_model extends CI_Model
             
             $apa = explode("/", $expiry[$i]);
             $mypa = $apa['1'].'/'.$apa['0'].'/'.$apa['2'];
-            if($tourType == 'O'){
+            if($this->input->post('type') == 'O'){
                 $dynamic .= '&lt;item&gt;  
                             &lt;PassengerType&gt;'.$cat[$i].'&lt;/PassengerType&gt;                            
                             &lt;Title&gt;'.$title[$i].'&lt;/Title&gt;                            
@@ -598,9 +598,9 @@ class Flight_model extends CI_Model
                                                 &lt;MealsPrefId&gt;&lt;/MealsPrefId&gt;
                                                 &lt;SeatPrefId&gt;&lt;/SeatPrefId&gt;
                                             &lt;/item&gt;';
+                               
+                            } 
                                 $inc++;
-                            }
-                                
                          $dynamic .= '
                              &lt;/Segment&gt;
                           &lt;/item&gt; 

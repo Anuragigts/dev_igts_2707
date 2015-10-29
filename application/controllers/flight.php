@@ -193,7 +193,7 @@ class Flight extends CI_Controller {
                $type           = $this->input->post('type');
                $class           = $this->input->post('class');
                $flight_i           = $this->input->post('flight_i');
-               $tourType           = $this->input->post('tourType');
+               $tourType           = $this->input->post('type');
            }
            
            if($adult != '' ){

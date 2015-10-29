@@ -353,8 +353,10 @@ class Recharge extends CI_Controller {
     
     public function getAjaxOperator(){
         $number = $_POST['number'];
-        $details =  $this->recharge_model->getOperator($number);
+        //$details =  $this->recharge_model->getOperator($number);
+        $details =  $this->recharge_model->getOperatorHRMS($number);
         echo $details;
+        //print_r($details);
     }
     
     public function getAjaxPlans(){

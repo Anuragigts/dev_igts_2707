@@ -34,22 +34,22 @@
         if(num.length < 4){
              $('.rec-data').html('');
         }
-        if(num.length == 10){
-            $("#loading").modal('show');
+        if(num.length == 5){
+           // $("#loading").modal('show');
             $.post('<?php echo base_url();?>recharge/getAjaxOperator',{'number':num},function(response){
-            //alert(response);
+           // alert(response);
             if(response !=''){
                
                var res = response.split("@@");
-               //alert( $( res ).size());
-               if($( res ).size() > 2){
+              // alert( $( res ).size());
+               if($( res ).size() > 1){
                     $('.select-oprator').html(res[0]);   
                     $('#code').val(res[1]);  						
-                    $('#circle').val(res[2]); 
+                    //$('#circle').val(res[2]); 
                     $("#loading").modal('hide');
-                    $("#amount").focus();
-                     $('.circle1').hide();
-                    $('.circle2').show();
+                    // $("#amount").focus();
+                    // $('.circle1').hide();
+                   // $('.circle2').show();
                 }else{
                    $("#loading").modal('hide');
                     return false; 
@@ -64,14 +64,16 @@
     // Get tariff plans - anurag
    $('#get-plans').click(function(){
         var operator = $('.select-oprator').val();
-        var circle = $('#circle').val();
+        //alert(operator);
+        //var circle = $('#circle').val();
+        var circle = $('.circle3').val();
         if(operator == '' || circle== ''){
             $('.alert-er').show();
         }else{
             $('.alert-er').hide();
              $("#loading").modal('show');
             $.post('<?php echo base_url();?>recharge/getAjaxPlans',{'operator':operator,'circle':circle},function(response){
-               // alert(response);
+                alert(response);
                 if(response !=''){                        
                         var res = response.split("@@@@");
                         $('#pln-full').html(res[0]);

@@ -119,7 +119,11 @@ class Recharge_model extends CI_Model
 		return (string)$xml->errorcode;
 		*/
 	}
-       
+    /**
+     *  For mash APP
+     * @param type $number
+     * @return type
+     */   
     public function getOperator($number){       
         $val = "";
         $code="";
@@ -149,6 +153,92 @@ class Recharge_model extends CI_Model
         }
       
         return $val.$code.$state;
+    }
+    /**
+     *  for hearms
+     * @param type $number
+     * @return type
+     */
+    public function getOperatorHRMS($number){       
+        $val = "";
+        $code="";
+        $state = "";
+       
+        ////////////////////////////////////////////
+         $url = RECHARGEURL;  
+        
+        $curlData = '<?xml version="1.0" encoding="utf-8"?>
+                    <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                      <soap:Header>
+                        <ns1:clsSecurity soap:mustUnderstand="false"
+                    xmlns:ns1="http://tempuri.org/HERMESAPI/HermesMobile">
+                           <ns1:WebProviderLoginId>'.USER.'</ns1:WebProviderLoginId>
+                          <ns1:WebProviderPassword>'.PASSW.'</ns1:WebProviderPassword>
+                          <ns1:IsAgent>false</ns1:IsAgent>
+                        </ns1:clsSecurity>
+                      </soap:Header>
+            <soap:Body>
+                <GetOperatorByMobileNumber xmlns="http://tempuri.org/HERMESAPI/HermesMobile/">
+                    <pobjSecurity>
+                        <WebProviderLoginId>'.USER.'</WebProviderLoginId>
+                        <WebProviderPassword>'.PASSW.'</WebProviderPassword>
+                            <IsAgent>false</IsAgent>
+                          </pobjSecurity>
+                          <MobileNumber>'.$number.'</MobileNumber>
+                            <OperatorCode></OperatorCode>
+                            <OperatorDescription></OperatorDescription>
+                            <pstrError></pstrError>
+                        </GetOperatorByMobileNumber>
+                      </soap:Body>
+                    </soap:Envelope>';
+        
+        $curl = curl_init();
+
+        curl_setopt ($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl,CURLOPT_TIMEOUT,120);
+        
+        curl_setopt($curl,CURLOPT_HTTPHEADER,array (           
+            'SOAPAction:"'.RECHARGEACTION.'GetOperatorByMobileNumber"',
+            'Content-Type: text/xml; charset=utf-8;',
+        ));
+
+         curl_setopt ($curl, CURLOPT_POST, 1);
+        
+        curl_setopt ($curl, CURLOPT_POSTFIELDS, $curlData);
+       
+        $result = curl_exec($curl); 
+        curl_close ($curl);
+        //return $result;
+       
+          $xml = $result;
+        // SimpleXML seems to have problems with the colon ":" in the <xxx:yyy> response tags, so take them out
+        $xml = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $xml);
+        $xml = simplexml_load_string($xml);
+        $json = json_encode($xml);
+        $responseArray = json_decode($json,true);
+        
+        $op = $responseArray['soapBody']['GetOperatorByMobileNumberResponse']['OperatorDescription'];
+      
+        //////////////////////////////////////////
+        $operator_type = 1;
+        $oper_list = $this->getAllOperator($operator_type);
+         $val .="<option value=''>Select</option>";
+        foreach($oper_list as $lis){
+            if(strtolower($lis->op_name) == strtolower($op)){               
+                $val .= "<option value='".$lis->op_name."' op_code='".$lis->code."' selected = 'selected'>".$lis->op_name."</option>";
+                $code = "@@".$lis->code;
+               // $state = "@@".$responce['Telecom circle'];
+            }else{
+                 $val .= "<option value='".$lis->op_name."' op_code='".$lis->code."'>".$lis->op_name."</option>";
+            }
+            
+        }
+      
+        return $val.$code.$state;
+    
     }
     
     public function getAllOperator($operator_type){
