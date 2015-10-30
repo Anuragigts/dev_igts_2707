@@ -172,9 +172,21 @@ class Dashboard_model extends CI_Model
     
         public function tcom(){
                 $id = $this->session->userdata("login_id");
-                $aid = $this->session->userdata("admin_id");
+                $uty = $this->session->userdata("my_type");
+                if($uty == 1 || $uty == 2){
+                        $aid = $this->session->userdata("admin_id");
+                }
+                if($uty == 3){
+                        $aid = $this->session->userdata("master_distributor_id");
+                }
+                if($uty == 4){
+                        $aid = $this->session->userdata("super_distributor_id");
+                }
+                if($uty == 5){
+                        $aid = $this->session->userdata("distributor_id");
+                }
                 $this->db->select("sum(trans_amt) as amt");
-                $query = $this->db->get_where("trans_detail",array("trans_from" => $aid,"trans_to" => $id,"trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => 2))->row_array();
+                $query = $this->db->get_where("trans_detail",array("trans_from" => $aid,"trans_to" => $id,"trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => 2 ))->row_array();
                 //echo $this->db->last_query();exit;
                 if($query){
                         return number_format($query['amt'],2);
@@ -182,14 +194,46 @@ class Dashboard_model extends CI_Model
                         return "0.00";
                 }    
         }
-        public function pcom(){
+        public function pcom(){               
+                //$this->db->select("sum(trans_amt) as pmt");
+                //$query = $this->db->get_where("trans_detail",array("trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => "1"))->row_array();
                 $id = $this->session->userdata("login_id");
-                $aid = $this->session->userdata("admin_id");
-                $this->db->select("sum(trans_amt) as pmt");
-                $query = $this->db->get_where("trans_detail",array("trans_from" => $id,"trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => "2"))->row_array();
-                //echo $this->db->last_query();exit;
+                $uty = $this->session->userdata("my_type");
+                $this->db->select("s.*,l.*");
+                $this->db->from("trans_detail as s");
+                $this->db->join("profile as l","l.login_id = s.trans_from","inner");
+                $this->db->where("s.`trans_date` >= '2015-10-29 00:00:00' AND s.`trans_date` <= '2015-10-29 23:59:59' AND s.`trans_status` = '1' and s.type <> 0");
+                $query = $this->db->get()->result();
+                $va = 0;
+                foreach($query as $qu){
+                        if($uty == 1){
+                                $va = $va+$qu->trans_amt;
+                        }
+                        if($uty == 2){
+                                if($qu->master_distributor_id == $id){
+                                        $va = $va+$qu->trans_amt;
+                                }
+                        }
+                        if($uty == 3){
+                                if($qu->super_distributor_id == $id){
+                                        $va = $va+$qu->trans_amt;
+                                }
+                        }
+                        if($uty == 4){
+                                if($qu->distributor_id == $id){
+                                        $va = $va+$qu->trans_amt;
+                                }
+                        }
+                        if($uty == 5){
+                                if($qu->login_id == $id){
+                                        $va = $va+$qu->trans_amt;
+                                }
+                        }
+                }
+               // echo $va;
+                // echo $this->db->last_query();exit;
                 if($query){
-                        return number_format($query['pmt'],2);
+                        return number_format( $va ,2);
                 }else{
                         return "0";
                 }    

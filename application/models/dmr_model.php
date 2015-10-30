@@ -2153,13 +2153,14 @@ class Dmr_model extends CI_Model
              if($response->STATUSCODE == 0){
                  
 		if($iscomm == 1){
+                    $ad = $this->session->userdata("admin_id");
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
 				   }
                  
                  $up = array(
@@ -2187,13 +2188,14 @@ class Dmr_model extends CI_Model
              }else if($response->STATUSCODE == 2){
                  
 		if($iscomm == 1){
+                    $ad = $this->session->userdata("admin_id");
                     $md = $this->session->userdata("master_distributor_id");
                     $sd = $this->session->userdata("super_distributor_id");
                     $d = $this->session->userdata("distributor_id");
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($md,$sd,$d,$my,$optna,$amt);
+                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
 					}					
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),

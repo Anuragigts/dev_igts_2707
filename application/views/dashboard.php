@@ -37,6 +37,30 @@
              <?php }?>           
              <br>
              <?php if($this->session->userdata('my_type') == 4 || $this->session->userdata('my_type') == 5 ){?>
+             <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-3">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Commission Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $tcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+                 <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-2">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+             </div>
             <!-- START widgets box-->
            <div class="row">
                <div class="col-md-6 ">
@@ -199,10 +223,11 @@
                        </div>
                     </div>
                        <!-- END date widget    -->
-                    </div>
 
                  </div>
-           
+                    
+                    </div>
+                       
            
              </div>
                <div class="col-md-6 ">
@@ -361,6 +386,7 @@
 <?php }?>  
             
         <?php if($this->session->userdata('my_type') == 2 ){?>
+             
             <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -428,26 +454,49 @@
                        </div>
                          <div class="col-lg-6 col-md-6 col-sm-12">
                        <!-- START date widget-->
+                            <div class="panel widget">
+                                <div class="row row-table">
+                                   <div class="col-xs-4 text-center bg-green pv-lg">                          
+                                      <div data-now="" data-format="MMMM" class="text-sm"></div>
+                                      <br>
+                                      <div data-now="" data-format="D" class="h2 mt0"></div>
+                                   </div>
+                                   <div class="col-xs-8 pv-lg" style="background-color: #B7D0BC">
+                                      <div data-now="" data-format="dddd" class="text-uppercase"></div>
+                                      <br>
+                                      <div data-now="" data-format="h:mm" class="h2 mt0"></div>
+                                      <div data-now="" data-format="a" class="text-muted text-sm"></div>
+                                   </div>
+                                </div>
+                             </div>
+                            <!-- END date widget    -->
+                         </div>
+
+
+                    </div><div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
                        <div class="panel widget">
-                       <div class="row row-table">
-                          <div class="col-xs-4 text-center bg-green pv-lg">                          
-                             <div data-now="" data-format="MMMM" class="text-sm"></div>
-                             <br>
-                             <div data-now="" data-format="D" class="h2 mt0"></div>
-                          </div>
-                          <div class="col-xs-8 pv-lg" style="background-color: #B7D0BC">
-                             <div data-now="" data-format="dddd" class="text-uppercase"></div>
-                             <br>
-                             <div data-now="" data-format="h:mm" class="h2 mt0"></div>
-                             <div data-now="" data-format="a" class="text-muted text-sm"></div>
-                          </div>
+                             <div class="col-xs-12 pv-lg  bg-l-3">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Commission Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $tcom;?></div>
+                                 </div>
+                             </div>
                        </div>
-                    </div>
-                       <!-- END date widget    -->
-                    </div>
-
-
-                    </div>
+                </div>
+                 <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-2">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+             </div>
                </div>
                    <div class="col-md-6 ">
                    <div class="row">
@@ -519,7 +568,33 @@
                              </div>
                                </a>
                           </div>
+                       </div> </div>
+                    
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-3">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Commission Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $tcom;?></div>
+                                 </div>
+                             </div>
                        </div>
+                </div>
+                 <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-2">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+             </div>
+                <div class="row">
                          <div class="col-lg-6 col-sm-12 ">
                                <!-- START widget-->
                                <div class="panel widget">
@@ -555,9 +630,9 @@
                     </div>
 
 
-                    </div>
+                </div>
                </div>
-                   <div class="col-md-6 ">
+                <div class="col-md-6 ">
                    <div class="row">
                         <div class="col-md-12 text-center">
                             <h2> Notice Board </h2>
