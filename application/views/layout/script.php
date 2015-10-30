@@ -28,28 +28,28 @@
         var code = $('option:selected', this).attr('op_code');
         $('#code').val(code);
     });
-    // get operator - anurag
+   // get operator - anurag
     $('#mobile-ope-find').on('keyup  change', function() {
             var num = $('#mobile-ope-find').val();
         if(num.length < 4){
              $('.rec-data').html('');
         }
-        if(num.length == 5){
-           // $("#loading").modal('show');
+        if(num.length == 10){
+            $("#loading").modal('show');
             $.post('<?php echo base_url();?>recharge/getAjaxOperator',{'number':num},function(response){
-           // alert(response);
+            //alert(response);
             if(response !=''){
                
                var res = response.split("@@");
-              // alert( $( res ).size());
-               if($( res ).size() > 1){
+               //alert( $( res ).size());
+               if($( res ).size() > 2){
                     $('.select-oprator').html(res[0]);   
                     $('#code').val(res[1]);  						
-                    //$('#circle').val(res[2]); 
+                    $('#circle').val(res[2]); 
                     $("#loading").modal('hide');
-                    // $("#amount").focus();
-                    // $('.circle1').hide();
-                   // $('.circle2').show();
+                    $("#amount").focus();
+                     $('.circle1').hide();
+                    $('.circle2').show();
                 }else{
                    $("#loading").modal('hide');
                     return false; 
@@ -64,9 +64,7 @@
     // Get tariff plans - anurag
    $('#get-plans').click(function(){
         var operator = $('.select-oprator').val();
-        //alert(operator);
-        //var circle = $('#circle').val();
-        var circle = $('.circle3').val();
+        var circle = $('#circle').val();
         if(operator == '' || circle== ''){
             $('.alert-er').show();
         }else{

@@ -88,17 +88,17 @@
                                                      <?php foreach($all_operator as $op){?>
                                                      <option value="<?php echo $op->op_name;?>" op_code="<?php echo $op->code;?>" <?php echo set_select('oprator_name',$op->op_name);?>><?php echo $op->op_name;?></option>
                                                      <?php }?>
-                                                                                        <!--option value="ID">IDEA</option>
-                                                                                        <option value="AR">Airtel</option>
-                                                                                        <option value="MT">MTS</option>
-                                                                                        <option value="AC">Aircel</option>
-                                                                                        <option value="RC">Reliance CDMA</option>
-                                                                                        <option value="RG">Reliance GSM</option>
-                                                                                        <option value="TD">Tata Docomo</option>
-                                                                                        <option value="TI">Tata Indicom</option>
-                                                                                        <option value="UN">Uninor</option>
-                                                                                        <option value="VO">Vodafone</option>
-                                                                                        <option value="BT">BSNL TOP UP</option-->
+													 <!--option value="ID">IDEA</option>
+													 <option value="AR">Airtel</option>
+													 <option value="MT">MTS</option>
+													 <option value="AC">Aircel</option>
+													 <option value="RC">Reliance CDMA</option>
+													 <option value="RG">Reliance GSM</option>
+													 <option value="TD">Tata Docomo</option>
+													 <option value="TI">Tata Indicom</option>
+													 <option value="UN">Uninor</option>
+													 <option value="VO">Vodafone</option>
+													 <option value="BT">BSNL TOP UP</option-->
                                                  </select>
                                                  <span class="red"><?=  form_error('oprator_name');?></span>
                                                  <input type="hidden" name="code" id="code" />
@@ -107,14 +107,14 @@
                                           <div class="form-group">
                                              <label class="col-lg-3 control-label">Circle Area<font class="red">*</font></label>
                                              <div class="col-lg-9">
-                                                 <select class=" form-control circle1 circle3"  name="circle" >
+                                                 <select class=" form-control circle1"  name="circle" >
                                                      <option value="">Select</option> 
                                                      <?php foreach($circle as $c){?>
                                                         <option value="<?php echo $c->name;?>"><?php echo $c->name;?></option> 
                                                       <?php }?>
                                                      
                                                  </select>
-                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control circle2 circle3" value="<?= set_value("circle"); ?>" value="<?php echo  set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
+                                                 <input type="text"  placeholder="Circle Area" id="circle" name="circle" class="form-control circle2" value="<?= set_value("circle"); ?>" value="<?php echo  set_value("mobile"); ?>" class="form-control" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                                  <span class="red"><?= form_error('circle');?></span>
                                              </div>
                                           </div>
