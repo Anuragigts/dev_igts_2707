@@ -273,4 +273,46 @@ class Dashboard_model extends CI_Model
                         return "0";
                 }    
         }
+        public function pcomChart(){               
+                $id = $this->session->userdata("login_id");
+               
+                $this->db->select("s.*,l.*");
+                $this->db->from("trans_detail as s");
+                $this->db->join("profile as l","l.login_id = s.trans_from","inner");
+                $this->db->where("s.`trans_date` >= '".date("Y-m-1 00:00:00")."' AND s.`trans_date` <= '".date("Y-m-d 23:59:59")."' AND s.`trans_status` = '1' and s.type <> 0");
+                $query = $this->db->get()->result();
+                $return = array();
+               
+                
+                $day = date('d-m-Y');
+                $month =explode('-', $day);
+                $d=cal_days_in_month(CAL_GREGORIAN,$month['1'],$month['2']);
+                $our = date('Y-m-01');
+                for($i = 1; $i<=$month['0']; $i++){
+                    $amt =0;
+                    $k='no';
+                    foreach($query as $qu){                       
+                       $day = explode(' ', $qu->trans_date);
+                        //echo $our.' / '.$day['0']. " @@ " ;
+                         if($our == $day['0']){
+                           $amt = $amt+$qu->trans_amt;
+                           $k = 'yes';
+                        }
+                    }
+                    if($k == 'no'){
+                         array_push($return, "0.00");
+                        $our = date('Y-m-d',date(strtotime("+1 day", strtotime("$our"))));
+                    }else{
+                        $val = number_format($amt/100, 2);
+                        array_push($return, "$val");
+                        $our = date('Y-m-d',date(strtotime("+1 day", strtotime("$our"))));
+                    }
+                 }	
+                
+               
+               // echo $va;
+                // echo $this->db->last_query();exit;
+                //print_r($return);
+                 return $return; 
+        }
 }

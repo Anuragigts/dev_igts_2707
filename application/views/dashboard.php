@@ -665,9 +665,56 @@
             
            </div>
 <?php }?>  
+            <script type="text/javascript" src="<?php echo base_url();?>assets/chart/canvasjs.min.js"></script>
             
-            
+            <div class="sticky-header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <div class="panel-body" style="padding-bottom: 3px;" >
+                                <div id="chartContainer" style="height: 300px; width: 100%;">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </div>
             <!-- END Widgets-->
          </div>
       </section>
+
+<script type="text/javascript">
+    <?php 
+    $day = date('d-m-Y');
+    $month =explode('-', $day);
+        $d=cal_days_in_month(CAL_GREGORIAN,$month['1'],$month['2']);
+        $cc = '';
+        $k =0;
+        for($i = 1; $i<=$month['0']; $i++){
+            $cc .= '{ label: "'.$i.'",  y: '.$pcomchart[$k].'  },';
+            $k++;
+         }	
+    ?>
+	window.onload = function () {
+            
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "theme1",//theme1
+		title:{
+			text: "Monthly Chart"              
+		},
+		animationEnabled: true,   // change to true
+		data: [              
+		{
+		
+			type: "column",
+			dataPoints: [
+				
+				<?php echo $cc;?>
+			
+			]
+		}
+		]
+	});
+	chart.render();
+}
+</script>
