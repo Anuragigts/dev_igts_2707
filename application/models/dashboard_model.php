@@ -202,7 +202,7 @@ class Dashboard_model extends CI_Model
                 $this->db->select("s.*,l.*");
                 $this->db->from("trans_detail as s");
                 $this->db->join("profile as l","l.login_id = s.trans_from","inner");
-                $this->db->where("s.`trans_date` >= '2015-10-29 00:00:00' AND s.`trans_date` <= '2015-10-29 23:59:59' AND s.`trans_status` = '1' and s.type <> 0");
+                $this->db->where("s.`trans_date` >= '".date("Y-m-d 00:00:00")."' AND s.`trans_date` <= '".date("Y-m-d 23:59:59")."' AND s.`trans_status` = '1' and s.type <> 0");
                 $query = $this->db->get()->result();
                 $va = 0;
                 foreach($query as $qu){
