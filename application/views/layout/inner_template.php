@@ -228,6 +228,38 @@ $(".pr_m").change(function () {
     }
 });
 
+
+$("#hotel").change(function () {
+    $(".hotel").prop('checked', $(this).prop("checked"));
+});
+$(".search_hotel").change(function () {
+    var h1 = $(".book_hotel").is(":checked");
+    if(h1 == false){
+            $("#hotel").prop('checked', $(this).prop("checked"));
+    }
+});
+$(".book_hotel").change(function () {
+    var h1 = $(".search_hotel").is(":checked");
+    if(h1 == false){
+            $("#hotel").prop('checked', $(this).prop("checked"));
+    }
+});
+
+$("#bus").change(function () {
+    $(".bus").prop('checked', $(this).prop("checked"));
+});
+$(".search_bus").change(function () {
+    var hvbus1 = $(".book_bus").is(":checked");
+    if(hvbus1 == false){
+            $("#bus").prop('checked', $(this).prop("checked"));
+    }
+});
+$(".book_bus").change(function () {
+    var hbus1 = $(".search_bus").is(":checked");
+    if(hbus1 == false){
+            $("#bus").prop('checked', $(this).prop("checked"));
+    }
+});
 //$(window).load(function() {
 //
 //  if ($(this).width() < 500) {

@@ -43,7 +43,8 @@
                                 </div>
                             </div>
                         </div>
-                        <?php }if($this->session->userdata('recharge') == 1){?>
+                        <?php }
+                        if($this->session->userdata('recharge') == 1){?>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <div class="col-sm-1">
@@ -80,7 +81,7 @@
                         </div>-->
                         <?php }?>
                         
-                         <?php if($this->session->userdata('flight') == 1){?>
+                        <?php if($this->session->userdata('flight') == 1){?>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <div class="col-sm-1">
@@ -91,6 +92,42 @@
                                         <ul class="padding-left-15">
                                             <li><input type="checkbox" <?php echo ($access->search_flight == 1)?"checked=checked":"";?> name="search" value="1" class="fly search_fly"/> Search Flight</li>
                                             <li><input type="checkbox" <?php echo ($access->book_flight == 1)?"checked=checked":"";?> name="book" value="1" class="fly book_fly"/> Book Flight</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <?php }?>
+                        <?php if($this->session->userdata('hotel') == 1){?>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="col-sm-1">
+                                    <input type="checkbox" <?php echo ($access->hotel == 1)?"checked=checked":"";?> name="hotel" value="1" id="hotel" />
+                                </div>
+                                <div class="col-sm-9">
+                                    <label>Hotel
+                                        <ul class="padding-left-15">
+                                            <li><input type="checkbox" <?php echo ($access->search_hotel == 1)?"checked=checked":"";?> name="search_hotel" value="1" class="hotel search_hotel"/> Search Hotel</li>
+                                            <li><input type="checkbox" <?php echo ($access->book_hotel == 1)?"checked=checked":"";?> name="book_hotel" value="1" class="hotel book_hotel"/> Book Hotel</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <?php }?>
+                    </div>
+                    <div class="row">
+                        <?php if($this->session->userdata('bus') == 1){?>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="col-sm-1">
+                                    <input type="checkbox" <?php echo ($access->bus == 1)?"checked=checked":"";?> name="bus" value="1" id="bus" />
+                                </div>
+                                <div class="col-sm-9">
+                                    <label>Bus
+                                        <ul class="padding-left-15">
+                                            <li><input type="checkbox" <?php echo ($access->search_bus == 1)?"checked=checked":"";?> name="search_bus" value="1" class="bus search_bus"/> Search Bus</li>
+                                            <li><input type="checkbox" <?php echo ($access->book_bus== 1)?"checked=checked":"";?> name="book_bus" value="1" class="bus book_bus"/> Book Bus</li>
                                         </ul>
                                     </label>
                                 </div>

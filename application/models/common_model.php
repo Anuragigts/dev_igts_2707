@@ -343,7 +343,13 @@ class Common_model extends CI_Model
                         "money_transfer"        =>      $money_transfer,
                         "flight"                =>      $this->input->post("flight"),     
                         "search_flight"         =>      $this->input->post("search"),     
-                        "book_flight"            =>      $this->input->post("book")     
+                        "book_flight"           =>      $this->input->post("book"),
+                        "hotel"                 =>      $this->input->post("hotel"),
+                        "search_hotel"          =>      $this->input->post("search_hotel"),
+                        "book_hotel"            =>      $this->input->post("book_hotel"),
+                        "bus"                   =>      $this->input->post("bus"),
+                        "search_bus"            =>      $this->input->post("search_bus"),
+                        "book_bus"              =>      $this->input->post("book_bus"),
                 );
 //                print_r($data);exit;
                 $this->db->where('login_id',$valu);
@@ -368,7 +374,7 @@ class Common_model extends CI_Model
                // $this->db->where('m.module_name','recharge');
                 $this->db->where('d.login_id',$uri);
                 $query = $this->db->get();
-                //echo $this->db->last_query();exit;
+//               /echo $this->db->last_query();exit;
                 if($this->db->affected_rows() > 0){
                     return $query->result();
                 }

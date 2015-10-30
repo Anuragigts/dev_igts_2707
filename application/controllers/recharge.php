@@ -266,7 +266,7 @@ class Recharge extends CI_Controller {
               'content'       => 'recharge_post_mobile'
              );
        if($this->input->post('amount')){
-           //echo "hiii"; die();
+           //echo $this->input->post("oprator_name"); die();
            $this->form_validation->set_rules('mobile','Mobile','required|min_length[10]|numeric');
             $this->form_validation->set_rules('code','Operator Code','required');
             $this->form_validation->set_rules('oprator_name','Operator Name','required');

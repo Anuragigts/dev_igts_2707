@@ -1397,7 +1397,8 @@ class Recharge_model extends CI_Model
                         $sd = $this->session->userdata("super_distributor_id");
                         $d = $this->session->userdata("distributor_id");
                         $my = $this->session->userdata("login_id");
-                        $optna  =   strtolower($desc);
+                        $optna  =   "all post paid mobile";
+                        //echo $optna;
                         $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
 
                      if($this->db->affected_rows() == 1){

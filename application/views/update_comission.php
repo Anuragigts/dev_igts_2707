@@ -98,6 +98,72 @@
                                         }
                                     ?>
                                 </div>
+                                <?php 
+                                    if($i == 0){
+                                            echo "<h3>Flight</h3>";
+                                       }
+                                ?>
+                                <div>
+                                    <?php
+                                       foreach($viw as $re){
+                                            if($re->module_id == 4){ ?>
+                                                <div class="row padding-3">
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->modules_obj_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->sub_module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3">
+                                                        <input type="text" class="form-control val_comm" name="commission-<?= $re->c_detail_id;?>"  value="<?= $re->commission_amt;?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
+                                                    </div>
+                                                </div> 
+                                                <?php 
+                                            }
+                                        }
+                                    ?>
+                                </div>
+                                <?php 
+                                    if($i == 0){
+                                            echo "<h3>Hotel</h3>";
+                                       }
+                                ?>
+                                <div>
+                                    <?php
+                                       foreach($viw as $re){
+                                            if($re->module_id == 5){ ?>
+                                                <div class="row padding-3">
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->modules_obj_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->sub_module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3">
+                                                        <input type="text" class="form-control val_comm" name="commission-<?= $re->c_detail_id;?>"  value="<?= $re->commission_amt;?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
+                                                    </div>
+                                                </div> 
+                                                <?php 
+                                            }
+                                        }
+                                    ?>
+                                </div>
+                                <?php 
+                                    if($i == 0){
+                                            echo "<h3>Bus</h3>";
+                                       }
+                                ?>
+                                <div>
+                                    <?php
+                                       foreach($viw as $re){
+                                            if($re->module_id == 6){ ?>
+                                                <div class="row padding-3">
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->modules_obj_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3"><?= ucfirst($re->sub_module_name);?></div>
+                                                    <div class="col-sm-3 col-xs-3">
+                                                        <input type="text" class="form-control val_comm" name="commission-<?= $re->c_detail_id;?>"  value="<?= $re->commission_amt;?>"  onkeyup="validateR(this, '')" ruleset="[^0-9.]" maxlength="20" placeholder="Commission Amount"/>
+                                                    </div>
+                                                </div> 
+                                                <?php 
+                                            }
+                                        }
+                                    ?>
+                                </div>
                             </div>    
                             <div class="row">
                                 <div class="col-sm-2 col-xs-4 text-center">
