@@ -275,7 +275,7 @@ class Dashboard_model extends CI_Model
         }
         public function pcomChart(){               
                 $id = $this->session->userdata("login_id");
-               
+               $uty = $this->session->userdata("my_type");
                 $this->db->select("s.*,l.*");
                 $this->db->from("trans_detail as s");
                 $this->db->join("profile as l","l.login_id = s.trans_from","inner");
@@ -291,12 +291,49 @@ class Dashboard_model extends CI_Model
                 for($i = 1; $i<=$month['0']; $i++){
                     $amt =0;
                     $k='no';
-                    foreach($query as $qu){                       
-                       $day = explode(' ', $qu->trans_date);
-                        //echo $our.' / '.$day['0']. " @@ " ;
-                         if($our == $day['0']){
-                           $amt = $amt+$qu->trans_amt;
-                           $k = 'yes';
+                    foreach($query as $qu){
+                        if($uty == 1){
+                            $day = explode(' ', $qu->trans_date);
+                              if($our == $day['0']){
+                                $amt = $amt+$qu->trans_amt;
+                                $k = 'yes';
+                             }
+                        }
+                         if($uty == 2){
+                                if($qu->master_distributor_id == $id){
+                                    $day = explode(' ', $qu->trans_date);
+                                    if($our == $day['0']){
+                                      $amt = $amt+$qu->trans_amt;
+                                      $k = 'yes';
+                                   }
+                                }
+                        }
+                        if($uty == 3){
+                                if($qu->super_distributor_id == $id){
+                                    $day = explode(' ', $qu->trans_date);
+                                    if($our == $day['0']){
+                                      $amt = $amt+$qu->trans_amt;
+                                      $k = 'yes';
+                                   }
+                                }
+                        }
+                        if($uty == 4){
+                                if($qu->distributor_id == $id){
+                                    $day = explode(' ', $qu->trans_date);
+                                    if($our == $day['0']){
+                                      $amt = $amt+$qu->trans_amt;
+                                      $k = 'yes';
+                                   }
+                                }
+                        }
+                        if($uty == 5){
+                                if($qu->login_id == $id){
+                                    $day = explode(' ', $qu->trans_date);
+                                    if($our == $day['0']){
+                                      $amt = $amt+$qu->trans_amt;
+                                      $k = 'yes';
+                                   }
+                                }
                         }
                     }
                     if($k == 'no'){
