@@ -21,6 +21,9 @@ class Dashboard extends CI_Controller {
              );
        $data['master'] = $this->dashboard_model->masterCnt();
        $data['super'] = $this->dashboard_model->superCnt();
+       $data['msuper'] = $this->dashboard_model->msuperCnt();
+       $data['mdis'] = $this->dashboard_model->mdisCnt();
+       $data['magt'] = $this->dashboard_model->magtCnt();       
        $data['dis'] = $this->dashboard_model->disCnt();
        $data['ag'] = $this->dashboard_model->agCnt();
        $data['mamt'] = $this->dashboard_model->mamt();
@@ -32,6 +35,8 @@ class Dashboard extends CI_Controller {
        $data['msamt'] = $this->dashboard_model->msamt();
        $data['mdamt'] = $this->dashboard_model->mdamt();
        $data['maamt'] = $this->dashboard_model->maamt();
+       $data['sdis'] = $this->dashboard_model->sdisCnt();
+       $data['sagt'] = $this->dashboard_model->sagtCnt();
        
        $data['sdamt'] = $this->dashboard_model->sdamt();
        $data['saamt'] = $this->dashboard_model->saamt();

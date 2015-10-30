@@ -73,7 +73,7 @@
             $('.alert-er').hide();
              $("#loading").modal('show');
             $.post('<?php echo base_url();?>recharge/getAjaxPlans',{'operator':operator,'circle':circle},function(response){
-                alert(response);
+               // alert(response);
                 if(response !=''){                        
                         var res = response.split("@@@@");
                         $('#pln-full').html(res[0]);

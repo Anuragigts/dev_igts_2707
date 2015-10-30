@@ -61,7 +61,7 @@ class Flight extends CI_Controller {
               if($this->form_validation->run() == TRUE){
                   
                 $data['pos'] = array('class' => $this->input->post('class'),'adult' => $this->input->post('adult'), 'child' => $this->input->post('child'), 'infant' => $this->input->post('infant'), 'type' => $this->input->post('type'));
-              //  $data['details'] = $this->flight_model->domesticGetFlight();
+               $data['details'] = $this->flight_model->domesticGetFlight();
                
             }
             $data['ttype'] = array('type'=>$this->input->post('type'),'fType'=>$this->input->post('fType'));

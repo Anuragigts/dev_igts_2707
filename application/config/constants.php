@@ -63,7 +63,7 @@ define('FLIGHTACTION', 'http://tempuri.org/HERMESAPI/IntHermesAir/');
 define('FLIGHTID', 'Swamicom');
 define('FLIGHTPASS', 'Swamicom123');
 define('FLIGHTURLDOM', 'http://115.248.39.80/HermesDomAir/DomesticAir.svc');
-define('FLIGHTACTIONDOM', 'http://115.248.39.80/HermesDomAir/DomesticAir.svc/');
+define('FLIGHTACTIONDOM', 'http://115.248.39.80/HermesDomAir/DomesticAir.svc/SOAPService/');
 define('FLIGHTIDDOM', 'Swamicom');
 define('FLIGHTPASSDOM', 'Swamicom123');
 

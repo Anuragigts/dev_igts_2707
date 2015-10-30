@@ -1218,7 +1218,7 @@ class Flight_model extends CI_Model
                                     <ChildCount>'.$this->input->post('child').'</ChildCount>
                                     <InfantCount>'.$this->input->post('infant').'</InfantCount>
                                     <ResidentofIndia>1</ResidentofIndia>
-                                    <Optional1>0</Optional1>
+                                    <Optional1>1</Optional1>
                                     <Optional2>0</Optional2>
                                     <Optional3>0</Optional3>
                                 </AvailabilityInput>
@@ -1226,12 +1226,9 @@ class Flight_model extends CI_Model
                         </GetAvailability>
                     </s:Body>
                 </s:Envelope>';
-
-
-                  
                 
     }else{
-        $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
+      /*  $curlData = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope
                     xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -1277,9 +1274,9 @@ class Flight_model extends CI_Model
                     </PstrInput>
                     <PstrFinalOutPut /><pstrError/>
                 </Availablity>
-            </soap:Body></soap:Envelope>';
+            </soap:Body></soap:Envelope>';*/
     }
-//echo $curlData;
+echo $curlData;
                 $curl = curl_init();
 
                 curl_setopt ($curl, CURLOPT_URL, $url);
@@ -1298,8 +1295,8 @@ class Flight_model extends CI_Model
                  $result = curl_exec($curl); 
 
                 curl_close ($curl);
-               // print_r($result);
-                
+                print_r($result);
+                die();
                
                 $keep_array = explode('true', $result);
                 if(count($keep_array)!= 2 ){

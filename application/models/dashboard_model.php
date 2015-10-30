@@ -9,6 +9,41 @@ class Dashboard_model extends CI_Model
         $query = $this->db->query("SELECT COUNT(login_id)cnt FROM login WHERE user_type = 3");
         return $query->row()->cnt;
     }
+     public function msuperCnt(){
+         $id= $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT COUNT(l.login_id)cnt FROM login l "
+                . " INNER JOIN profile p ON p.login_id = l.login_id "
+                . " WHERE l.user_type = 3 AND p.master_distributor_id = $id");
+        return $query->row()->cnt;
+    }
+     public function mdisCnt(){
+         $id= $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT COUNT(l.login_id)cnt FROM login l "
+                . " INNER JOIN profile p ON p.login_id = l.login_id "
+                . " WHERE l.user_type = 4 AND p.master_distributor_id = $id");      
+        return $query->row()->cnt;
+    }
+     public function magtCnt(){
+         $id= $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT COUNT(l.login_id)cnt FROM login l "
+                . " INNER JOIN profile p ON p.login_id = l.login_id "
+                . " WHERE l.user_type = 5 AND p.master_distributor_id = $id");      
+        return $query->row()->cnt;
+    }
+     public function sdisCnt(){
+         $id= $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT COUNT(l.login_id)cnt FROM login l "
+                . " INNER JOIN profile p ON p.login_id = l.login_id "
+                . " WHERE l.user_type = 4 AND p.super_distributor_id = $id");      
+        return $query->row()->cnt;
+    }
+     public function sagtCnt(){
+         $id= $this->session->userdata('login_id');
+        $query = $this->db->query("SELECT COUNT(l.login_id)cnt FROM login l "
+                . " INNER JOIN profile p ON p.login_id = l.login_id "
+                . " WHERE l.user_type = 5 AND p.super_distributor_id = $id");      
+        return $query->row()->cnt;
+    }
      public function disCnt(){
         $query = $this->db->query("SELECT COUNT(login_id)cnt FROM login WHERE user_type = 4");
         return $query->row()->cnt;

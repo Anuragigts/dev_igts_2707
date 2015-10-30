@@ -415,7 +415,7 @@
                               <a href="<?php echo base_url();?>super_distributor/view_super_distributor" style="text-decoration: none;color:#fff;">
                              <div class="ph">
                                 <em class="fa fa-user fa-lg pull-right"></em>
-                                <div class="h2 mt0"><?php echo $super;?>
+                                <div class="h2 mt0"><?php echo $msuper;?>
                                    <span class="text-sm text-white">Super Distributors</span>
                                 </div>
                                 <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $msamt;?></div>
@@ -430,7 +430,7 @@
                               <a href="<?php echo base_url();?>distributor/view_distributor" style="text-decoration: none;color:#fff;">
                              <div class="ph">
                                 <em class="fa fa-male fa-lg pull-right"></em>
-                                <div class="h2 mt0"><?php echo $dis;?>
+                                <div class="h2 mt0"><?php echo $mdis;?>
                                    <span class="text-sm text-white">Distributors</span>
                                 </div>
                                 <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $mdamt;?></div>
@@ -444,7 +444,7 @@
                                <a href="<?php echo base_url();?>agent/view_agent" style="text-decoration: none;color:#fff;">
                              <div class="ph">
                                 <em class="fa fa-child fa-lg pull-right"></em>
-                                <div class="h2 mt0"><?php echo $ag;?>
+                                <div class="h2 mt0"><?php echo $magt;?>
                                    <span class="text-sm text-white">Agents</span>
                                 </div>
                                 <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $maamt;?></div>
@@ -547,7 +547,7 @@
                               <a href="<?php echo base_url();?>distributor/view_distributor" style="text-decoration: none;color:#fff;">
                              <div class="ph">
                                 <em class="fa fa-male fa-lg pull-right"></em>
-                                <div class="h2 mt0"><?php echo $dis;?>
+                                <div class="h2 mt0"><?php echo $sdis;?>
                                    <span class="text-sm text-white">Distributors</span>
                                 </div>
                                 <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $sdamt;?></div>
@@ -561,7 +561,7 @@
                                <a href="<?php echo base_url();?>agent/view_agent" style="text-decoration: none;color:#fff;">
                              <div class="ph">
                                 <em class="fa fa-child fa-lg pull-right"></em>
-                                <div class="h2 mt0"><?php echo $ag;?>
+                                <div class="h2 mt0"><?php echo $sagt;?>
                                    <span class="text-sm text-white">Agents</span>
                                 </div>
                                 <div class="text-uppercase">Total Amount &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $saamt;?></div>
