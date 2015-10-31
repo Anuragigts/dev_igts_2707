@@ -49,17 +49,45 @@
                              </div>
                        </div>
                 </div>
-                 <div class="col-lg-6 col-md-6 col-sm-12">
+                 
+                <?php if($this->session->userdata('my_type') == 4 ) { ?>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                       <!-- START widget-->
+                       <div class="panel widget">
+                             <div class="col-xs-12 pv-lg  bg-l-4">
+                                <div class="ph">
+                                    <em class="fa fa-money fa-lg pull-right"></em>
+                                    <div class="text-uppercase">Today's My Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcomo;?></div>
+                                 </div>
+                             </div>
+                       </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
                        <!-- START widget-->
                        <div class="panel widget">
                              <div class="col-xs-12 pv-lg  bg-l-2">
                                 <div class="ph">
                                     <em class="fa fa-money fa-lg pull-right"></em>
-                                    <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                    <div class="text-uppercase">Agent's Today Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
                                  </div>
                              </div>
                        </div>
                 </div>
+                <?php } else { ?>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- START widget-->
+                        <div class="panel widget">
+                              <div class="col-xs-12 pv-lg  bg-l-2">
+                                 <div class="ph">
+                                     <em class="fa fa-money fa-lg pull-right"></em>
+                                     <div class="text-uppercase">Today's My Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $pcom;?></div>
+                                  </div>
+                              </div>
+                        </div>
+                </div>
+                 <?php    
+                }
+?> 
              </div>
             <!-- START widgets box-->
            <div class="row">

@@ -11,7 +11,7 @@ class Report_model extends CI_Model{
                 $this->db->where("cur_time <=",$geto);
                 $this->db->order_by('r.recharge_id', 'desc');
                 $qu     =   $this->db->get();
-               // echo $this->db->last_query();exit;
+                //echo $this->db->last_query();exit;
                 return $qu->result();
         }
         public function user_type($my_type){
@@ -60,10 +60,10 @@ class Report_model extends CI_Model{
                 $this->db->join('profile as p','t.trans_from = p.login_id','inner');
                 $this->db->join('profile as po','t.trans_to = po.login_id','left');
                 $this->db->where("( t.trans_from = ".$val." or t.trans_to = ".$val." )");
-                $this->db->where("( t.trans_date >= '".$gefr."' and t.trans_date <= '".$geto."' )");
-                 $this->db->order_by('t.trans_id', 'desc');
+                $this->db->where("( t.trans_date >= '".$gefr."' and t.trans_date <= '".$geto."' ) and ( t.module_type != 1 ) and t.trans_amt > 0");
+                $this->db->order_by('t.trans_id', 'desc');
                 $qu     =   $this->db->get();
-               // echo $this->db->last_query();exit;
+                //echo $this->db->last_query();exit;
                 return $qu->result();
         }
         public function  offline_reports($gefr,$geto,$val){

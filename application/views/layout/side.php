@@ -305,7 +305,7 @@
                     <?php }?>
                   <?php if($this->session->userdata('my_type') != 5){?>
                   <li class="nav-heading ">
-                     <span data-localize="sidebar.heading.COMPONENTS">Services & Reports</span>
+                     <span data-localize="sidebar.heading.COMPONENTS">Reports</span>
                   </li>
                   <!-- 
                    <li class="package create_package view_package view_package_details">

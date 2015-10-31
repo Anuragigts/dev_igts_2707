@@ -2160,8 +2160,8 @@ class Dmr_model extends CI_Model
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
-				   }
+                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"2","0","0");
+		}
                  
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),
@@ -2195,7 +2195,7 @@ class Dmr_model extends CI_Model
                     $my = $this->session->userdata("login_id");
                     $optna  =   strtolower('dmr');
                     $amt = $this->input->post('tr_amt');
-                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt);
+                    $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"2","0","0");
 					}					
                  $up = array(
                      'login_id' => $this->session->userdata('login_id'),

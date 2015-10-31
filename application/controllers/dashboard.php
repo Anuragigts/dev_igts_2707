@@ -44,7 +44,11 @@ class Dashboard extends CI_Controller {
         $data['get']       =  $this->settings_model->getVirtual();
         $data['tcom']       =  $this->dashboard_model->tcom();
         $data['pcom']       =  $this->dashboard_model->pcom();
+
+        $data['pcomo']       =  $this->dashboard_model->pcomo();
+
         $data['pcomchart']       =  $this->dashboard_model->pcomChart();
+
         $this->load->view('layout/inner_template',$data);        
     }
     public function logout(){

@@ -271,6 +271,21 @@ class Dashboard_model extends CI_Model
                         return "0";
                 }    
         }
+
+        public function pcomo(){
+                $id = $this->session->userdata("login_id");
+                $this->db->select("sum(trans_amt) as trans");
+                $this->db->from("trans_detail as s");
+                $this->db->join("profile as l","l.login_id = s.trans_from","inner");
+                $this->db->where("s.`trans_date` >= '".date("Y-m-d 00:00:00")."' AND s.`trans_date` <= '".date("Y-m-d 23:59:59")."' AND s.`trans_status` = '1' and s.type <> 0 and s.trans_from= $id");
+                $query = $this->db->get()->row_array();
+                if($query){
+                        return number_format( $query["trans"] ,2);
+                }else{
+                        return "0";
+                }
+        }
+
         public function pcomChart(){               
                 $id = $this->session->userdata("login_id");
                $uty = $this->session->userdata("my_type");
@@ -346,4 +361,5 @@ class Dashboard_model extends CI_Model
               
                  return $return; 
         }
+
 }
