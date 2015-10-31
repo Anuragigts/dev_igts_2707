@@ -230,9 +230,7 @@ class Dashboard_model extends CI_Model
                 }    
         }
         public function pcom(){               
-                //$this->db->select("sum(trans_amt) as pmt");
-                //$query = $this->db->get_where("trans_detail",array("trans_date >=" => date("Y-m-d 00:00:00"),"trans_date <=" => date("Y-m-d 23:59:59"),"trans_status" => "1"))->row_array();
-                $id = $this->session->userdata("login_id");
+                 $id = $this->session->userdata("login_id");
                 $uty = $this->session->userdata("my_type");
                 $this->db->select("s.*,l.*");
                 $this->db->from("trans_detail as s");
@@ -344,12 +342,8 @@ class Dashboard_model extends CI_Model
                         array_push($return, "$val");
                         $our = date('Y-m-d',date(strtotime("+1 day", strtotime("$our"))));
                     }
-                 }	
-                
-               
-               // echo $va;
-                // echo $this->db->last_query();exit;
-                //print_r($return);
+                 }
+              
                  return $return; 
         }
 }
