@@ -46,6 +46,7 @@ class Dashboard extends CI_Controller {
         $data['pcom']       =  $this->dashboard_model->pcom();
 
         $data['pcomo']       =  $this->dashboard_model->pcomo();
+        $data['vp']       =  $this->dashboard_model->vpcomo();
 
         $data['pcomchart']       =  $this->dashboard_model->pcomChart();
 

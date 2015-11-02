@@ -80,7 +80,7 @@
                               <div class="col-xs-12 pv-lg  bg-l-2">
                                  <div class="ph">
                                      <em class="fa fa-money fa-lg pull-right"></em>
-                                     <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php $vp = $pcom+$pcomo;echo $vp;?></div>
+                                     <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php echo $vp;?></div>
                                   </div>
                               </div>
                         </div>
