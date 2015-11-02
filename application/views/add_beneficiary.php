@@ -37,6 +37,7 @@
        <div class="row">
                <?php $this->load->view("layout/success_error");?>          
              <br>
+             <div class="msg"></div>
             
             <div class="col-lg-12">
                 <form method="post" role="form">
@@ -97,17 +98,17 @@
                                 </div>
                                  <div class="col-lg-4 b-c">
                                      <label for="Mobile" >Account No<font class="red ifsc-imp">*</font></label>
-                                    <input name="ac_no" class="form-control " type="text" value="<?= set_value("ac_no"); ?>" placeholder="Account No" onkeyup="validateR(this, '')" ruleset="[^0-9]">
+                                     <input name="ac_no" class="form-control " id="acc" type="text" value="<?= set_value("ac_no"); ?>" placeholder="Account No" onkeyup="validateR(this, '')" ruleset="[^0-9]">
                                     <span class="red"><?=  form_error('ac_no');?></span>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="Mobile" >Beneficiary Name<font class="red">*</font></label>
-                                    <input name="b_name" class="form-control" type="text" value="<?= set_value("b_name"); ?>" placeholder="Beneficiary Name" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
+                                    <input name="b_name" class="form-control" id="ben_nam" type="text" value="<?= set_value("b_name"); ?>" placeholder="Beneficiary Name" onkeyup="validateR(this, '')" ruleset="[^A-Z a-z]">
                                     <span class="red"><?=  form_error('b_name');?></span>
                                 </div>
                                  <div class="col-lg-4 ">
                                     <label for="Mobile" >Mobile<font class="red ">*</font></label>
-                                    <input name="mobile" class="form-control " placeholder="Mobile" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
+                                    <input name="mobile" class="form-control " placeholder="Mobile" id="mo" type="text" value="<?= set_value("mobile"); ?>" onkeyup="validateR(this, '')" ruleset="[^0-9]" maxlength="10">
                                     <span class="red"><?=  form_error('mobile');?></span>
                                 </div>
                                 <div class="col-lg-4 b-c">
@@ -148,13 +149,13 @@
                                 
                                
                                 <div class="col-lg-6">                                     
-                                     <!--div class="checkbox c-checkbox">
+                                     <div class="checkbox c-checkbox">
                                         <label>
                                             <input type="checkbox" name="verify_ac" id="verify_ac" value="1"> 
                                             <span class="fa fa-check"></span>
                                             <b>Verify This account</b>
                                         </label>
-                                     </div-->                                    
+                                     </div>                                    
                                 </div>
                                 <div class="col-lg-6">                                     
                                      <div class="b-c">
@@ -170,8 +171,8 @@
                                 </div>
                                 <div class="col-lg-12 text-center">
                                     <br>
-                                     <input type="submit" class="btn btn-sm btn-info non_verify" name="add" value="Add Beneficiary" />
-                                     <input type="submit" class="btn btn-sm btn-info verify-acc" name="verify" value="Add Beneficiary With Verification" style="display:none;"/>
+                                        <input type="buttion" id="doverifyacc" class="btn btn-sm btn-success verify-acc" name="verify" value="Account Verification" style="display:none;"/>
+                                        <input type="submit" class="btn btn-sm btn-info non_verify" name="add" value="Add Beneficiary" />
                                 </div>
                                 <div class="col-lg-12 search-hide" style="display: none;">
                                     <div class="row">
@@ -221,6 +222,44 @@
  </section>
 
 <script>
+    $('#doverifyacc').click(function(){
+        var code = $('#ifsc').val();
+        var type = 0;
+        if(code.length == 11){
+            type = 8;
+        }else if(code.length == 0){
+            type = 1;
+        }else{
+             type = 2;
+        }
+        var acc = $('#acc').val();
+        var mo = $('#mo').val();
+        var ifsc = $('#ifsc').val();
+        var branch = $('#branch1').val();
+        var bnk = $('#bnk_name').val();
+       
+         $("#loading").modal('show');
+            $.post('<?php echo base_url();?>dmr/verifyaccount',{'type':type,'acc':acc,'mo':mo,'ifsc':ifsc,'branch':branch,'bnk':bnk},function(response){
+            //alert(response);
+                if(response == '1'){ 
+                        $('#ben_nam').css('background-color', '#F9D0B5');
+                        $('.msg').html('<div class="alert alert-block alert-danger fade in"><button data-dismiss="alert" class="close" type="button">×</button><p>Account Number not verified</p></div>'); 
+                        $("#loading").modal('hide');
+                    }else if(response == '3'){ 
+                        $('#ben_nam').css('background-color', '#F9D0B5');
+                        $('.msg').html('<div class="alert alert-block alert-danger fade in"><button data-dismiss="alert" class="close" type="button">×</button><p>Account Number not verified Due to Internal Error</p></div>'); 
+                        $("#loading").modal('hide');
+                    }else{
+                         $('#ben_nam').css('background-color', '#CFF9B5');
+                         if(response!=''){
+                             $('#ben_nam').val(response);
+                         }
+                        $('.msg').html('<div class="alert alert-block alert-info fade in"><button data-dismiss="alert" class="close" type="button">×</button><p>Account Number is verified : '+response+'</p></div>');                       
+                        $("#loading").modal('hide');
+                    }					
+                });
+    });
+    ////////////
     $("#searchIFSC").click(function(){
         $('.search-hide').css('display',"inline");
     });
@@ -389,7 +428,7 @@
     $('#verify_ac').click(function(){
         
         if( $("#verify_ac").is(':checked')){            
-            $('.non_verify').hide();
+          //  $('.non_verify').hide();
             $('.verify-acc').css('display','inline');
             $('.verify-acc').show();
         }else{
@@ -402,7 +441,7 @@
           var check = $('#verify_ac').val();
          
         if($("#verify_ac").is(':checked')){            
-            $('.non_verify').hide();
+            //$('.non_verify').hide();
             $('.verify-acc').css('display','inline');
             $('.verify-acc').show();
         }else{

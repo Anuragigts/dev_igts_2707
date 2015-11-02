@@ -181,12 +181,16 @@
          $("#loading").modal('show');
             $.post('<?php echo base_url();?>dmr/verifybene',{'type':type,'acc':acc,'mo':mo,'ifsc':ifsc,'branch':branch,'bnk':bnk},function(response){
             
-                if(response !=''){                        
+                if(response =='0'){                        
                         
                         $('#ver_'+mysd).html("<buttion class='btn btn-success'>Verified</buttion>");
                         $("#loading").modal('hide');
+                    }else if(response =='1'){                        
+                        
+                        $('#ver_'+mysd).html("<buttion class='btn btn-success'>Failure</buttion>");
+                        $("#loading").modal('hide');
                     }else{
-                            $('#ver_'+mysd).html("<buttion class='btn btn-danger'>Not Verified</buttion>");
+                            $('#ver_'+mysd).html("<buttion class='btn btn-danger'>validation Error</buttion>");
                             $("#loading").modal('hide');
                     }					
                 });

@@ -1388,4 +1388,15 @@ class Dmr extends CI_Controller {
        $br = $this->dmr_model->verifybene($type, $acc, $mo, $ifsc, $branch, $bnk );
        echo $br;
     }
+    public function verifyaccount(){
+        $type = $_POST['type'];
+        $acc = $_POST['acc'];
+        $mo = $_POST['mo'];
+        $ifsc = $_POST['ifsc'];
+        $branch = $_POST['branch'];
+        $bnk = $_POST['bnk'];
+       $br = $this->dmr_model->verifyaccount($type, $acc, $mo, $ifsc, $branch, $bnk );
+       print_r($br);
+       //echo $br;
+    }
 }
