@@ -56,9 +56,10 @@
                                 </div> 
                                 <?php 
                                 if($i == 0){
-                                        echo "<h3>Utitlity</h3>";
+                                       //echo "<h3>Utitlity</h3>";
                                    }
                                 ?>
+                                    <!--
                                 <div>
                                     <?php
                                        foreach($viw as $re){
@@ -75,7 +76,7 @@
                                             }
                                         }
                                     ?>
-                                </div>   
+                                </div>   --> 
                                 <?php 
                                     if($i == 0){
                                             echo "<h3>DMR</h3>";

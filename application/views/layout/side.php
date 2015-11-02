@@ -89,7 +89,7 @@
                   </li>
                   <?php }?>
                    <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3){?>
-                  <li class="distributor create_distributor view_distributor edit_distributor distributor_details module_access_dis update_commission_dis">
+                  <li class="distributor create_distributor view_distributor  edit_distributor distributor_details update_plug_dis module_access_dis update_commission_dis">
                      <a href="#dist" title="Distributor" data-toggle="collapse">
                         <em class="fa fa-male"></em>
                         <span>Distributor</span>
@@ -101,7 +101,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_distributor  edit_distributor distributor_details module_access_dis update_commission_dis">
+                        <li class="view_distributor  edit_distributor distributor_details module_access_dis update_commission_dis update_plug_dis">
                            <a href="<?= base_url();?>distributor/view_distributor" title="View Distributor">
                               <span>View</span>
                            </a>
@@ -110,7 +110,7 @@
                   </li>
                    <?php }?>
                   <?php if($this->session->userdata('my_type') == 1 || $this->session->userdata('my_type') == 2 ||  $this->session->userdata('my_type') == 3 ||  $this->session->userdata('my_type') == 4){?>
-                  <li class="agent create_agent view_agent  edit_agent module_access_agent update_commission_agent">
+                  <li class="agent create_agent view_agent  edit_agent module_access_agent update_commission_agent update_plug_agent">
                      <a href="#agent" title="Agent" data-toggle="collapse">
                         <em class="fa fa-child"></em>
                         <span>Agent</span>
@@ -122,7 +122,7 @@
                               <span>Create</span>
                            </a>
                         </li>
-                        <li class="view_agent edit_agent module_access_agent update_commission_agent">
+                        <li class="view_agent edit_agent module_access_agent update_commission_agent update_plug_agent">
                            <a href="<?= base_url();?>agent/view_agent" title="View Agent">
                               <span>View</span>
                            </a>

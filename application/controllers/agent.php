@@ -351,4 +351,8 @@ class Agent extends CI_Controller {
                 $this->load->library('../controllers/common');
                 $this->common->update_commission();		
 	}
+        public function update_plug_agent(){
+                $this->load->library('../controllers/common');
+                $this->common->update_plug();		
+	}
 }

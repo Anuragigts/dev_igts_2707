@@ -386,7 +386,7 @@ class Common_model extends CI_Model
                 $this->db->select('c_detail_id');
                 $this->db->from('commission_details as c');
                 $this->db->join('commission as d',"d.package_id = c.package_id",'inner');
-                $this->db->from('modules_object as o','o.modules_obj_id = c.modules_object_id','inner');
+                $this->db->join('modules_object as o','o.modules_obj_id = c.modules_object_id','inner');
                 $this->db->join('module as m','m.module_id = o.module_id','inner');
                 $this->db->join('sub_module as s','s.sub_module_id = o.sub_module_id','inner');
                 $this->db->where('c.modules_object_id = o.modules_obj_id');
@@ -411,5 +411,57 @@ class Common_model extends CI_Model
                         $this->db->update('commission_details',$comm,array("c_detail_id" => $v1->c_detail_id));
                 }
                 //exit
+        }
+        public function get_plug($uri){
+                $this->db->select('w.*,c.*,o.*,d.login_id,m.module_id,m.module_name,s.sub_module_name');
+                $this->db->from('commission_details as c');
+                $this->db->join('commission as d',"d.package_id = c.package_id",'inner');
+                $this->db->join('switch_det as w',"w.module_obj_id = c.modules_object_id and w.user_id = d.login_id",'left');
+                $this->db->join('modules_object as o','o.modules_obj_id = c.modules_object_id','inner');
+                $this->db->join('module as m','m.module_id = o.module_id','inner');
+                $this->db->join('sub_module as s','s.sub_module_id = o.sub_module_id','inner');
+                $this->db->where('c.modules_object_id = o.modules_obj_id');
+               // $this->db->where('m.module_name','recharge');
+                $this->db->where('d.login_id',$uri);
+                $query = $this->db->get();
+                //echo $this->db->last_query();exit;
+                if($this->db->affected_rows() > 0){
+                    return $query->result();
+                }
+                else{
+                    return array();
+                }
+        }
+        public function get_api(){
+                $va = $this->db->get("api")->result();
+                return $va;
+        }
+        public function update_plug($uwri){
+                $usdp     = $this->get_plug($uwri);
+                foreach ($usdp as $v1){
+                        if($v1->switch_det_id != ""){
+                                $vamt = $this->input->post($v1->modules_obj_id."_".$v1->switch_det_id."_api_name");
+                                $vstatus = $this->input->post($v1->modules_obj_id."_".$v1->switch_det_id."_api_status");
+                                //  echo $vstatus;
+                                $comm   =   array(
+                                        'api_id'            =>  $vamt,
+                                        "status"            =>  $vstatus
+                                );
+                                $this->db->update('switch_det',$comm,array("switch_det_id" => $v1->switch_det_id));
+                        }
+                        else{
+                                $vamt = $this->input->post($v1->modules_obj_id."__api_name");
+                                $vstatus = $this->input->post($v1->modules_obj_id."__api_status");
+                                // echo $vstatus;
+                                $data = array(
+                                        "user_id"           =>  $uwri,
+                                        "module_id"         =>  $v1->module_id,
+                                        "module_obj_id"     =>  $v1->modules_obj_id,
+                                        "api_id"            =>  $vamt,
+                                        "status"            =>  $vstatus
+                                );
+                                $this->db->insert("switch_det",$data);
+                        }
+                }
         }
 }

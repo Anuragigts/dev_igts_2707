@@ -58,7 +58,11 @@
             $("#strpassword").passStrengthify({ rawEntry: true });
         });
     </script> 
-    
+    <style>
+        #accordion{
+            font-size:14px;
+        }
+    </style>
 </head>
 
 <body>

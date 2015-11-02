@@ -328,4 +328,8 @@ class Distributor extends CI_Controller {
                 $this->load->library('../controllers/common');
                 $this->common->update_commission();		
 	}
+        public function update_plug_dis(){
+                $this->load->library('../controllers/common');
+                $this->common->update_plug();		
+	}
 }

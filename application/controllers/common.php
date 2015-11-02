@@ -187,4 +187,24 @@ class Common extends CI_Controller {
                 }
                 $this->load->view('layout/inner_template',$data);
         }
+        public function update_plug(){
+                if($this->session->userdata('my_type') == ""){redirect('/');}
+                $data = array(
+                      'title'         => ' ESY TOPUP :: COMMISSION',
+                      'metakeyword'   => ' ESY TOPUP :: COMMISSION',
+                      'metadesc'      => ' ESY TOPUP :: COMMISSION',
+                      'content'       => 'update_plug'
+                );
+                $uri    =   $this->uri->segment(3);
+                $vri    =   $this->uri->segment(2);
+                $v      =   $this->uri->segment(1);
+                $data["viw"]        =   $this->common_model->get_plug($uri);
+                $data["api"]        =   $this->common_model->get_api();
+                if($this->input->post("save")){
+                        $this->common_model->update_plug($uri);
+                        $this->session->set_flashdata("msg","API Switcher updated successfully");
+                        redirect($v."/".$vri."/".$uri);
+                }
+                $this->load->view('layout/inner_template',$data);
+        }
 }

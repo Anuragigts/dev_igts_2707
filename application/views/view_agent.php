@@ -78,7 +78,11 @@ only screen and (max-width: 760px),
                                                 <a href="<?= base_url();?>agent/update_commission_agent/<?= $view->login_id;?>" title="Update Comission">
                                                     <i class="fa fa-money"></i>
                                                 </a>
-                                                
+                                                <?php if($this->session->userdata("my_type") == 1){ ?>
+                                                <a href="<?= base_url();?>agent/update_plug_agent/<?= $view->login_id;?>" title="API Switcher">
+                                                    <i class="fa fa-plug"></i>
+                                                </a>
+                                                <?php } ?>
                                             </td>
                                          </tr>
                                   <?php }?>

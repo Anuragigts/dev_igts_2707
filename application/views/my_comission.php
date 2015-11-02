@@ -55,10 +55,10 @@
                                 </div> 
                                 <?php 
                                 if($i == 0){
-                                        echo "<h3>Utitlity</h3>";
+                                        //echo "<h3>Utitlity</h3>";
                                    }
                                 ?>
-                                <div>
+<!--                                <div>
                                     <?php
                                        foreach($viw as $re){
                                             if($re->module_id == 2){ ?>
@@ -74,7 +74,7 @@
                                             }
                                         }
                                     ?>
-                                </div>   
+                                </div>   -->
                                 <?php 
                                     if($i == 0){
                                             echo "<h3>DMR</h3>";
