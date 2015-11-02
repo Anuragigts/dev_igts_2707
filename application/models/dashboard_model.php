@@ -331,7 +331,7 @@ class Dashboard_model extends CI_Model
                                 }
                         }
                         if($uty == 4){
-                                if($qu->distributor_id == $id){
+                                if($qu->distributor_id == $id || $qu->login_id == $id){
                                     $day = explode(' ', $qu->trans_date);
                                     if($our == $day['0']){
                                       $amt = $amt+$qu->trans_amt;

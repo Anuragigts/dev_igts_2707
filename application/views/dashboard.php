@@ -73,6 +73,18 @@
                              </div>
                        </div>
                 </div>
+                 
+                 <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- START widget-->
+                        <div class="panel widget">
+                              <div class="col-xs-12 pv-lg  bg-l-2">
+                                 <div class="ph">
+                                     <em class="fa fa-money fa-lg pull-right"></em>
+                                     <div class="text-uppercase">Today's Total Business &nbsp; <span style="font-family:rupee;font-size:16px">R</span> <?php $vp = $pcom+$pcomo;echo $vp;?></div>
+                                  </div>
+                              </div>
+                        </div>
+                </div>
                 <?php } else { ?>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                         <!-- START widget-->
@@ -719,9 +731,9 @@
         $cc = '';
         $k =0;
         for($i = 1; $i<=$month['0']; $i++){
-            $cc .= '{ label: "'.$i.'",  y: '.$pcomchart[$k].'  },';
-            $k++;
-         }	
+                $cc .= '{ label: "'.$i.'",  y: '.$pcomchart[$k].'  },';
+                $k++;
+        }	
     ?>
 	window.onload = function () {
             
