@@ -193,7 +193,27 @@ class Recharge extends CI_Controller {
         if($codeval == "AIRTEL1"){
             $result = $this->recharge_model->doairteloff($url['2'],$url['3'],$req,$codeval); 
         }else{
-        $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,trim($url['2']),$url['3'],$req);
+                $opr_name = $codeval;
+                $swi = $this->settings_model->getSwitcher($opr_name);
+                if($swi == 0){
+                        $nm = trim($url[2]);
+                        echo  $this->recharge_model->updateOff($req,"Recharge Failed: for $nm Please Contact your Administrator");
+                        //$number = $this->input->get('number', TRUE);
+                        $number = $this->input->get('mobilenumber', TRUE);
+                         $ch = curl_init();
+                                 $optArray = array(
+                                 CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$number&from=ESYTOP&message=ESY+TOPUP+Recharge+Failed:+for+$nm+Please+Contact+your+Administrator",
+                                 CURLOPT_RETURNTRANSFER => true
+                         );
+                                 curl_setopt_array($ch, $optArray);
+                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                         $result = curl_exec($ch);
+                         curl_close($ch);
+                }
+                else{ 
+                    $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,trim($url['2']),$url['3'],$req);
+                }
         }
       }
     }
@@ -218,31 +238,40 @@ class Recharge extends CI_Controller {
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
            // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
-                 $recharge_type = 1;
-                  $amt = $this->settings_model->checkVirtual();	
-                
-                if($amt >= $this->input->post('amount')){ 
-                    if($this->input->post('oprator_name') == 'AIRTEL1'){
-                        $result = $this->recharge_model->doairtel(); 
-                    }else{
-                        $result = $this->recharge_model->doRecharge( $recharge_type);
-                    }
-                                        
-                        if($result == 0){                    
-                            $this->session->set_flashdata('msg','Your Recharge is success full.');  
-                            redirect('recharge/mobile_recharge');
-                        }
-                        else if($result == 2){
-                            $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
-                           redirect('recharge/mobile_recharge');
+                $recharge_type = 1;
+                $amt = $this->settings_model->checkVirtual();	
+                $opr_name = $this->input->post('oprator_name');
+                $swi = $this->settings_model->getSwitcher($opr_name);
+//                echo $swi;
+//                exit;
+                if($swi == 0){
+                        $this->session->set_flashdata('err','Recharge fail : Please Contact Administrator.');  
+                        redirect('recharge/mobile_recharge');
+                }
+                else{
+                        if($amt >= $this->input->post('amount')){ 
+                            if($this->input->post('oprator_name') == 'AIRTEL1'){
+                                $result = $this->recharge_model->doairtel(); 
+                            }else{
+                                $result = $this->recharge_model->doRecharge( $recharge_type);
+                            }
+
+                                if($result == 0){                    
+                                    $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                                    redirect('recharge/mobile_recharge');
+                                }
+                                else if($result == 2){
+                                    $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                                   redirect('recharge/mobile_recharge');
+                                }else{
+                                     $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                                    redirect('recharge/mobile_recharge');
+                                }
+
                         }else{
-                             $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                            $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
                             redirect('recharge/mobile_recharge');
                         }
-                   
-                }else{
-                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
-                    redirect('recharge/mobile_recharge');
                 }
             }
        }
@@ -279,25 +308,36 @@ class Recharge extends CI_Controller {
             }
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
              if($this->form_validation->run() == TRUE){
-                 $recharge_type = 4;
-                 $amt = $this->settings_model->checkVirtual();	
-                if($amt >= $this->input->post('amount')){
-                    $result = $this->recharge_model->doPostRecharge( $recharge_type);
-                    if($result == 0){                    
-                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                 
+                 $opr_name = $this->input->post('oprator_name');
+                $swi = $this->settings_model->getSwitcher($opr_name);
+//                echo $swi;
+//                exit;
+                if($swi == 0){
+                        $this->session->set_flashdata('err','Recharge fail : Please Contact Administrator.');  
                         redirect('recharge/post_recharge');
-                    }
-                    else if($result == 2){
-                        $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
-                       redirect('recharge/post_recharge');
-                    }else{
-                         $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
-                        redirect('recharge/post_recharge');
-                    }
-                }else{
-                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
-                   redirect('recharge/post_recharge');
                 }
+                else{
+                    $recharge_type = 4;
+                    $amt = $this->settings_model->checkVirtual();	
+                   if($amt >= $this->input->post('amount')){
+                       $result = $this->recharge_model->doPostRecharge( $recharge_type);
+                       if($result == 0){                    
+                           $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                           redirect('recharge/post_recharge');
+                       }
+                       else if($result == 2){
+                           $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                          redirect('recharge/post_recharge');
+                       }else{
+                            $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                           redirect('recharge/post_recharge');
+                       }
+                   }else{
+                       $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
+                      redirect('recharge/post_recharge');
+                   }
+               }
             }
        }
        $data['details'] = $this->recharge_model->getrechargeDetails();
@@ -323,24 +363,32 @@ class Recharge extends CI_Controller {
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
            // $this->form_validation->set_rules('circle','Circle','required');
              if($this->form_validation->run() == TRUE){
-                 $recharge_type = 2;
-                 $amt = $this->settings_model->checkVirtual();	
-                if($amt >= $this->input->post('amount')){
-                    $result = $this->recharge_model->doRecharge( $recharge_type);
-                    if($result == 0){                    
-                        $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                $opr_name = $this->input->post('oprator_name');
+                $swi = $this->settings_model->getSwitcher($opr_name);
+                if($swi == 0){
+                        $this->session->set_flashdata('err','Recharge fail : Please Contact Administrator.');  
                         redirect('recharge/dth_recharge');
-                    }
-                    else if($result == 2){
-                        $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                }
+                else{ 
+                    $recharge_type = 2;
+                    $amt = $this->settings_model->checkVirtual();	
+                   if($amt >= $this->input->post('amount')){
+                       $result = $this->recharge_model->doRecharge( $recharge_type);
+                       if($result == 0){                    
+                           $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                           redirect('recharge/dth_recharge');
+                       }
+                       else if($result == 2){
+                           $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                          redirect('recharge/dth_recharge');
+                       }else{
+                            $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
+                           redirect('recharge/dth_recharge');
+                       }
+                   }else{
+                       $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
                        redirect('recharge/dth_recharge');
-                    }else{
-                         $this->session->set_flashdata('err','Recharge fail : Operator Busy. Please try after some time.');  
-                        redirect('recharge/dth_recharge');
-                    }
-                }else{
-                    $this->session->set_flashdata('err','Recharge fail : You are not having sufficient balance amount for recharge.');  
-                    redirect('recharge/dth_recharge');
+                   }
                 }
             }
        }

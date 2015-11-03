@@ -22,6 +22,8 @@ class Dmr extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'dmr_sender_registration'
              );
+        
+         
          if($this->input->post('register')){
             $this->form_validation->set_rules('first_name',     'First Name',       'required');
             
@@ -51,9 +53,15 @@ class Dmr extends CI_Controller {
             }
             
             
-            
+            $opr_name = "dmr";
+            $swi = $this->settings_model->getSwitcher($opr_name);
             if($this->form_validation->run() == TRUE){
-                $mv = $this->dmr_model->mobileverify();
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server down : Please Contact your Administrator.');  
+                        redirect('dmr/sender_registration');
+                }else{
+                    $mv = $this->dmr_model->mobileverify();
+                
 				$idP = '';$addp='';
                         if($_FILES['id_proof_url']['name'] != ''){
                             $config['upload_path'] = './doc';
@@ -103,21 +111,26 @@ class Dmr extends CI_Controller {
                     redirect('dmr/sender_registration');
                 }*/
             }
+            }
         }
         
         if($this->input->post('verify_pin')){
             $this->form_validation->set_rules('otp',     'PIN',       'required');
             if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->setPin();
-                //echo $result;exit;
-                if($result == 0){                    
-                    $this->session->set_flashdata('err','PIN verification fail : Server Busy. Please try after some time.');  
-                     redirect('dmr/sender_registration');
-                } else{
-                    $this->session->set_flashdata('msg','Your PIN verification is successfull.');  
-                    redirect('dmr/sender_registration/');
-                     
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server down : Please Contact your Administrator.');  
+                        redirect('dmr/sender_registration');
+                }else{
+                        $result = $this->dmr_model->setPin();
+                        //echo $result;exit;
+                        if($result == 0){                    
+                            $this->session->set_flashdata('err','PIN verification fail : Server Busy. Please try after some time.');  
+                             redirect('dmr/sender_registration');
+                        } else{
+                            $this->session->set_flashdata('msg','Your PIN verification is successfull.');  
+                            redirect('dmr/sender_registration/');
+
+                        }
                 }
             }
         }
@@ -156,21 +169,26 @@ class Dmr extends CI_Controller {
          if($this->input->post('send')){
             $this->form_validation->set_rules('trans',  'Transaction Id',   'required');
             $this->form_validation->set_rules('otp',    'OTP',              'required');
-            
+             $opr_name = "dmr";
+            $swi = $this->settings_model->getSwitcher($opr_name);
              if($this->form_validation->run() == TRUE){
-                
-                $result = $this->dmr_model->doVerify($transection_id);
-                //echo $result;exit;
-                if($result == 1){                    
-                    $this->session->set_flashdata('msg','Your Verification is successfull .');  
-                   redirect('dmr/dmrUserSearch');
-                }
-               else if( $result == 2){                    
-                    $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
-                      redirect('dmr/otp/'.$transection_id);
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server down : Please Contact your Administrator.');  
+                        redirect('dmr/dmrUserSearch');
                 }else{
-                     $this->session->set_flashdata('err','Verification fail : Server Busy. Please try after some time.');  
-                       redirect('dmr/otp/'.$transection_id);
+                    $result = $this->dmr_model->doVerify($transection_id);
+                    //echo $result;exit;
+                    if($result == 1){                    
+                        $this->session->set_flashdata('msg','Your Verification is successfull .');  
+                       redirect('dmr/dmrUserSearch');
+                    }
+                   else if( $result == 2){                    
+                        $this->session->set_flashdata('err','Verification fail : Invalid OTP.');  
+                          redirect('dmr/otp/'.$transection_id);
+                    }else{
+                         $this->session->set_flashdata('err','Verification fail : Server Busy. Please try after some time.');  
+                           redirect('dmr/otp/'.$transection_id);
+                    }
                 }
             }
          } 
@@ -623,20 +641,30 @@ class Dmr extends CI_Controller {
               'metadesc'      => '',
               'content'       => 'dmr_search'
              );
-         if($this->input->post('send')){
+        $opr_name = "dmr";
+        $swi = $this->settings_model->getSwitcher($opr_name);
+//                echo $swi;
+//                exit;        
+        if($this->input->post('send')){
               $this->form_validation->set_rules('mobile',  'Mobile',   'required|min_length[10]|max_length[10]|numeric');
               $this->form_validation->set_rules('otp',  'OTP',   'required');
               
                if($this->form_validation->run() == TRUE){
                 $mo = $this->input->post('mobile');
-                $result = $this->dmr_model->verifyUser($mo);
-               //print_r($this->session->all_userdata());die();
-                if(count($result) == 1){
-                    redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server Down.Please Contact your Administrator.');  
+                        redirect('dmr/dmrUserSearch');
                 }
-              else{
-                     $this->session->set_flashdata('msg','This number is not registered please register first');  
-                       redirect('dmr/sender_registration/'.$this->input->post('mobile'));
+                else{
+                    $result = $this->dmr_model->verifyUser($mo);
+                   //print_r($this->session->all_userdata());die();
+                    if(count($result) == 1){
+                        redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
+                    }
+                    else{
+                         $this->session->set_flashdata('msg','This number is not registered please register first');  
+                           redirect('dmr/sender_registration/'.$this->input->post('mobile'));
+                    }
                 }
             }
          }
@@ -649,20 +677,25 @@ class Dmr extends CI_Controller {
                  
                 $mo = $this->input->post('mobile');
                 $pin = $this->input->post('pin');
-                $result = $this->dmr_model->dmrLogin1($mo,$pin);
-               //print_r($this->session->all_userdata());die();
-                if(count($result) == 2){
-                    redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
-                }else  if(count($result) == 1){
-                    $this->session->set_flashdata('err','Login Fail Invalid Pin');  
-                       redirect('dmr/dmrUserSearch');
-                }else  if(count($result) == 3){
-                    $this->session->set_flashdata('msg','Login Fail : Please verify account using OTP.');   
-                       redirect('dmr/dmrverify/'.$mo);
-                }
-              else{
-                     $this->session->set_flashdata('msg','This number is not registered please register first');  
-                       redirect('dmr/sender_registration/'.$this->input->post('mobile'));
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server down : Please Contact your Administrator.');  
+                        redirect('dmr/dmrUserSearch');
+                }else{
+                        $result = $this->dmr_model->dmrLogin1($mo,$pin);
+                       //print_r($this->session->all_userdata());die();
+                        if(count($result) == 2){
+                            redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));
+                        }else  if(count($result) == 1){
+                            $this->session->set_flashdata('err','Login Fail Invalid Pin');  
+                               redirect('dmr/dmrUserSearch');
+                        }else  if(count($result) == 3){
+                            $this->session->set_flashdata('msg','Login Fail : Please verify account using OTP.');   
+                               redirect('dmr/dmrverify/'.$mo);
+                        }
+                      else{
+                             $this->session->set_flashdata('msg','This number is not registered please register first');  
+                               redirect('dmr/sender_registration/'.$this->input->post('mobile'));
+                        }
                 }
             }
          }
@@ -671,15 +704,20 @@ class Dmr extends CI_Controller {
               
                if($this->form_validation->run() == TRUE){
                 $mo = $this->input->post('mobile');
-                $result = $this->dmr_model->forgotpin($mo);
-               //print_r($this->session->all_userdata());die();
-                if(count($result) == 1){
-                    $this->session->set_flashdata('msg','Please check your mobile to get the pin');  
-                       redirect('dmr/dmrUserSearch');
-                }
-              else{
-                     $this->session->set_flashdata('msg','Please use registered mobile umber.');  
-                       redirect('dmr/dmrUserSearch');
+                if($swi == 0){
+                        $this->session->set_flashdata('err','DMR server down : Please Contact your Administrator.');  
+                        redirect('dmr/dmrUserSearch');
+                }else{
+                     $result = $this->dmr_model->forgotpin($mo);
+                    //print_r($this->session->all_userdata());die();
+                     if(count($result) == 1){
+                         $this->session->set_flashdata('msg','Please check your mobile to get the pin');  
+                            redirect('dmr/dmrUserSearch');
+                     }
+                     else{
+                          $this->session->set_flashdata('msg','Please use registered mobile umber.');  
+                            redirect('dmr/dmrUserSearch');
+                     }
                 }
             }
          }

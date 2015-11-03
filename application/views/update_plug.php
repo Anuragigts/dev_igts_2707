@@ -56,7 +56,7 @@
                                                         <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <!--<i class="success fa fa-check-circle-o"></i>-->
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -92,7 +92,7 @@
                                                        <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <i class="success fa fa-check-circle-o"></i>
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -130,7 +130,7 @@
                                                         <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <!--<i class="success fa fa-check-circle-o"></i>-->
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -168,7 +168,7 @@
                                                         <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <!--<i class="success fa fa-check-circle-o"></i>-->
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -206,7 +206,7 @@
                                                         <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <!--<i class="success fa fa-check-circle-o"></i>-->
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -244,7 +244,7 @@
                                                         <a href="javascript:void(0);" title="<?php echo ($re->status  == 1)? 'Off':'On';?>">
                                                             <!--<i class="success fa fa-check-circle-o"></i>-->
                                                             <label class="switch switch-sm">
-                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status == 0)?"":"checked=checked";?> class="api-switch <?php echo ($re->status == 1)?'on_st':'off_st';?>">
+                                                                <input type="checkbox" value="1" name="<?= $re->modules_obj_id;?>_<?= $re->switch_det_id;?>_api_status" <?php echo ($re->status  == 1 || $re->status == "")?"checked=checked":"";?> class="api-switch">
                                                                 <span></span>
                                                             </label>
                                                         </a>
@@ -270,9 +270,14 @@
         </div>
     </div>
  </section>
-<!--
-  <script>
-  $(function() {
-    $( "#accordion" ).accordion();
-  });
-  </script>         -->
+ <script>
+
+    $( ".api-switch" ).change(function(){
+        var va = $(this).val();
+        if(va == 1){
+            $(this).attr("value","1");
+        }else{
+            $(this).attr("value","0");
+        }
+    });
+  </script>  

@@ -455,4 +455,20 @@ class Settings_model extends CI_Model
                    return 0;
                }
         }
+        public function getSwitcher($opr_name){
+               $str = strtolower($opr_name);
+               $val = $this->db->get_where("modules_object",array("modules_obj_name" => $str))->row_array();
+               $mob = $val['modules_obj_id'];
+               $id  =   $this->session->userdata("login_id");
+               $this->db->select("*,count(*) as value_cou");
+               $lid = $this->db->get_where("switch_det",array("module_obj_id" => $mob,"user_id" => $id))->row_array();
+               $lob = $lid['value_cou'];     
+               if($lob == 0){
+                        return 0;
+               }
+               else{
+                       $lob = $lid['status']; 
+                       return $lob;
+               }
+        }
 }
