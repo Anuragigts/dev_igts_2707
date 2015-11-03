@@ -27,6 +27,11 @@
                         </div>-->
                         <div class="panel-body">
                             <form method="post" action="">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class='pull-right checkbox-inline'>Check All</span> <input type='checkbox' value='1' checked="checked" class='checkapi checkbox-inline pull-right'/>
+                                    </div>
+                                </div>
                                 <div id="accordion">
                                     <?php 
                                         $j = 0;
@@ -34,7 +39,7 @@
                                         $q = 0;
                                         $p = 0;
                                        if($i == 0){
-                                                echo "<h3>Recharge</h3>";                                           
+                                                echo "<h3>Recharge </h3>";
                                        }
                                     ?>
                                 <div>
@@ -271,7 +276,14 @@
     </div>
  </section>
  <script>
-
+    $(".checkapi").change(function(){
+            var va = $( ".checkapi" ).is(':checked');
+            if(va == false){
+                    $( ".api-switch" ).prop('checked',false);
+            }else{
+                    $( ".api-switch" ).prop('checked',true);
+            }            
+    });
     $( ".api-switch" ).change(function(){
         var va = $(this).val();
         if(va == 1){
