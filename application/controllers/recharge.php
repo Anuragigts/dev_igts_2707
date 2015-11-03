@@ -113,7 +113,7 @@ class Recharge extends CI_Controller {
                $recharge_type = 1;
                $codeval = "TATA DOCOMO";
                $V ="HTAD";
-           }else if($code == "TS"){
+           }else if($code == "TS1"){
                $recharge_type = 1;
                $codeval = "TATA DOCOMO SPECIAL";
                $V ="HTDS";

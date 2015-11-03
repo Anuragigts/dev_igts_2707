@@ -1154,7 +1154,7 @@ class Dmr_model extends CI_Model
                                   &lt;BANKNAME&gt;'.$bnk.'&lt;/BANKNAME&gt;
                                   &lt;BRANCHNAME&gt;'.$branch.'&lt;/BRANCHNAME&gt;
                                    
-                                    &lt;PARAM1&gt;0.00&lt;/PARAM1&gt;
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
                                     &lt;PARAM4&gt;&lt;/PARAM4&gt;
@@ -1296,7 +1296,7 @@ class Dmr_model extends CI_Model
                                   &lt;BANKNAME&gt;'.$bnk.'&lt;/BANKNAME&gt;
                                   &lt;BRANCHNAME&gt;'.$branch.'&lt;/BRANCHNAME&gt;
                                    
-                                    &lt;PARAM1&gt;0.00&lt;/PARAM1&gt;
+                                    &lt;PARAM1&gt;&lt;/PARAM1&gt;
                                     &lt;PARAM2&gt;&lt;/PARAM2&gt;
                                     &lt;PARAM3&gt;&lt;/PARAM3&gt;
                                     &lt;PARAM4&gt;&lt;/PARAM4&gt;

@@ -191,10 +191,7 @@
                                     <td>
                                         <?php if($dl->status == 1){
                                             echo "Success";
-                                        }else{?>
-                                        <button class="btn btn-primary btn-xs" type="button">Complaint</button>
-
-                                        <?php }?>
+                                        }else{ echo "Failure"; }?>
                                     </td>
                                 </tr>
                            <?php }else if($this->session->userdata('my_type') == 2){?>
@@ -209,10 +206,7 @@
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
-                                            }else{?>
-                                            <button class="btn btn-primary btn-xs" type="button">Complaint</button>
-
-                                            <?php }?>
+                                            }else{ echo "Failure"; }?>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -228,10 +222,7 @@
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
-                                            }else{?>
-                                            <button class="btn btn-primary btn-xs" type="button">Complaint</button>
-
-                                            <?php }?>
+                                            }else{ echo "Failure"; }?>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -247,10 +238,7 @@
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
-                                            }else{?>
-                                            <button class="btn btn-primary btn-xs" type="button">Complaint</button>
-
-                                            <?php }?>
+                                            }else{ echo "Failure"; }?>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -266,10 +254,7 @@
                                         <td>
                                             <?php if($dl->status == 1){
                                                 echo "Success";
-                                            }else{?>
-                                            <button class="btn btn-primary btn-xs" type="button">Complaint</button>
-
-                                            <?php }?>
+                                            }else{ echo "Failure"; }?>
                                         </td>
                                     </tr>
                                 <?php }?>

@@ -1201,11 +1201,11 @@ class Recharge_model extends CI_Model
         $this->db->join('profile as p' , 'p.login_id = r.done_by', 'Inner');
         $this->db->join('login as l' , 'l.login_id = p.login_id', 'Inner');
         $this->db->join('user_type as u' , 'l.user_type = u.user_type_id', 'Inner');
-        $this->db->where('r.hrm_track <>', ''); 
+        $this->db->where('r.track_id <>', ''); 
         $this->db->order_by('recharge_id', 'desc');
         $this->db->limit(30);
         $query = $this->db->get();
-        //echo $this->db->last_query();
+     //echo $this->db->last_query();
         if($this->db->affected_rows() > 0){
             return $query->result();
         }

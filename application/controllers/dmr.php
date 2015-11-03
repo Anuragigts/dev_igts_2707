@@ -1396,7 +1396,7 @@ class Dmr extends CI_Controller {
         $branch = $_POST['branch'];
         $bnk = $_POST['bnk'];
        $br = $this->dmr_model->verifyaccount($type, $acc, $mo, $ifsc, $branch, $bnk );
-       print_r($br);
-       //echo $br;
+       //print_r($br);
+       echo $br;
     }
 }
