@@ -280,8 +280,10 @@
             var va = $( ".checkapi" ).is(':checked');
             if(va == false){
                     $( ".api-switch" ).prop('checked',false);
+                    $("#accordion a").attr("title","Off");
             }else{
                     $( ".api-switch" ).prop('checked',true);
+                    $("#accordion a").attr("title","On");
             }            
     });
     $( ".api-switch" ).change(function(){
