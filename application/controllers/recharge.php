@@ -309,7 +309,7 @@ class Recharge extends CI_Controller {
             $this->form_validation->set_rules('amount','amount','required|max_length[4]|numeric');
              if($this->form_validation->run() == TRUE){
                  
-                 $opr_name = $this->input->post('oprator_name');
+                 $opr_name = "all post paid mobile";
                 $swi = $this->settings_model->getSwitcher($opr_name);
 //                echo $swi;
 //                exit;
