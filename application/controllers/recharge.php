@@ -345,7 +345,9 @@ class Recharge extends CI_Controller {
         $data['all_operator'] = $this->recharge_model->getPaymentDetail();
         $this->load->view('layout/inner_template',$data);
     }
-     public function dth_recharge(){
+    
+
+    public function dth_recharge(){
          if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
         if( $this->session->userdata('dth') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
@@ -429,5 +431,17 @@ class Recharge extends CI_Controller {
         $track = $_POST['id'];
         $val = $this->recharge_model->getsatus($track);
         echo $val;
+    }
+    
+    public function postslip(){
+         $data = array(
+              'title'         => 'ESY TOPUP :: POST PAID SLIP',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'postpaid_slip'
+             );
+         
+         $data['detail'] = $this->recharge_model->postDetail($this->uri->segment(3));
+         $this->load->view('layout/inner_template',$data);
     }
 }

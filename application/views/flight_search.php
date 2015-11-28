@@ -439,7 +439,170 @@
                <?php }?>
            </table>
        </div>
-    </div>
+         
+        <!------------------------------- Domestic ------------------------>
+        <div class="row">
+               <?php if(count($details_domestic)>0){
+                   $track = $details_domestic->UserTrackId;
+                   $me=0;
+                   foreach($details_domestic->AvailabilityOutput->AvailableFlights->OngoingFlights as $dome){
+                       $logo1 = '';
+                       if(count($dome->AvailSegments) == 1){
+                ?>
+                    <div class="col-md-12 panel mypad">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                       
+                                              
+                                        <?php foreach($dome->AvailSegments as $al){
+                                            
+                                            $me++; ?>
+                                        
+                                        <div class="col-md-1 text-center">
+                                              
+                                             <?php $cc = 0; foreach($logos as $logo){
+                                                if($al->AirlineCode == $logo->cc){ $cc = 1;
+                                                    $logo1 =  base_url()."assets/logo/".$logo->logo;
+                                                    echo "<center><img src='".  base_url()."assets/logo/".$logo->logo."' class='img img-responsive center' /></center>";
+                                                    echo $logo->name."<br>";
+                                                   // echo "<span class='dull1'>".$al->CarrierCode.'-'.$al->FlightNo."</span>";
+                                                }
+                                            }if($cc == 0){
+                                                $logo = base_url()."assets/logo/plane4.png";
+                                                echo "<center><img src='".  base_url()."assets/logo/plane4.png' class='img img-responsive center' /></center>";
+                                                //echo "<span class='dull1'>".$it['0']->CarrierCode.'-'.$it['0']->FlightNo."</span>";
+                                            }?>
+                                                <?php echo $al->FlightNumber;?>
+                                        </div>
+                                        <div class="col-md-7 text-center">
+                                             
+                                            <div class="row">
+                                                 <div class="col-md-3 text-center">
+                                                        <center>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="btn-label">
+                                                            <i class="fa fa-send-o "></i>
+                                                        </span><br>
+                                                        </center>
+                                                        Flight ID<br>
+                                                        <span class='dull1'><?php echo  $al->AirlineCode.'-'.$al->FlightId;?></span>
+                                                    </div>
+                                                    <div class="col-md-3 text-center">
+                                                        <span class="heading-a"><b><?php echo $al->DepartureDateTime;?></b></span>
+                                                        <br>
+                                                        <span class='dull1'><?php echo $al->Origin;?></span>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-3 text-center">
+                                                        <span class="heading-a"><b><?php echo $al->ArrivalDateTime;?></b></span>
+                                                        <br>
+                                                        <span class='dull1'><?php echo $al->Destination;?></span>
+
+                                                    </div>
+                                                    <div class="col-md-3 text-center">
+                                                        <span class="heading-a"><b><?php echo $al->Duration;?></b></span>
+                                                        <br>
+                                                        <span class='dull1'><?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>
+                                                        <?php if($al->NumberofStops != 0){echo ",<br>Via: ".$al->Via;}?>
+                                                        </span>
+                                                    </div>
+                                            </div>   
+                                            </div>
+                                            <div class="col-md-4 text-center">
+                                                <div class="row">
+                                                    
+                                                <?php foreach($al->AvailPaxFareDetails as $pric){
+                                                            $pp = 0;
+                                                            ?>
+                                                            <?php 
+                                                            if(count($pric->Adult)>0){
+                                                               $pp = $pp + $pric->Adult->GrossAmount;
+                                                            }
+                                                            if(count($pric->Child)>0){
+                                                                $pp = $pp + $pric->Child->GrossAmount;
+                                                            }
+                                                            if(count($pric->Infant)>0){
+                                                                $pp = $pp + $pric->Infant->GrossAmount;
+                                                            }
+                                                            
+                                                            ?>
+                                                    <div class="col-md-6">
+                                                            <?php if( $pp ==0){
+                                                                echo "N/A<br><br><br><br>";
+                                                            }else{?>
+                                                                <p> <span class="heading-a" style="font-size: 20px;"><b> <em class="fa fa-rupee"></em><?php echo $pp;?></b></span></p>
+                                                    </div>
+                                                    <div class="col-md-6 text-center">
+                                                        <?php $ffid='';$alid='';$cccode='';
+                                                         $ffid .= $al->FlightId.',';
+                                                           $alid .= $al->AirlineCode.',';
+                                                            $cccode .= $pric->ClassCode.',';
+                                                           ?>
+                                                        <form method="post" action="<?php echo base_url();?>flight/domBbook">
+                                                            <input type="hidden" name="AirlineId[]" value="<?php echo $al->AirlineCode;?>">
+                                                            <input type="hidden" name="FlightId[]" value="<?php echo $al->FlightId;?>">
+                                                            <input type="hidden" name="ClassCode[]" value="<?php echo $pric->ClassCode;?>">
+
+
+                                                            <input type="hidden" name="name[]" value="<?php echo  $al->AirlineCode.'-'.$al->FlightId;?>">
+                                                            <input type="hidden" name="dep[]" value="<?php echo $al->DepartureDateTime;?>">
+                                                            <input type="hidden" name="source[]" value="<?php echo $al->Origin;?>">
+                                                            <input type="hidden" name="arr[]" value="<?php echo $al->ArrivalDateTime;?>">
+                                                            <input type="hidden" name="dest[]" value="<?php echo $al->Destination;?>">
+                                                            <input type="hidden" name="dur[]" value="<?php echo $al->Duration;?>">
+                                                            <input type="hidden" name="stop[]" value="<?php if($al->NumberofStops == 0){echo "Non Stop";}else{ echo $al->NumberofStops." Stop";}?>">
+
+
+                                                            <input type="hidden" name="flight_i[]" value="<?php echo  $al->FlightId;?>">
+                                                            <?php if($pp != ''){?>
+                                                                <input type="hidden" name="BasicAmount" value="<?php echo $pp?>">
+                                                                <input type="hidden" name="Adult" value="<?php echo $pos['adult'];?>">
+                                                                <input type="hidden" name="Child" value="<?php echo $pos['child'];?>">
+                                                                <input type="hidden" name="Infrunt" value="<?php echo $pos['infant'];?>">
+                                                                <input type="hidden" name="tourType" value="<?php echo $ttype['type'];?>">
+                                                                <input type="hidden" name="logo" value="<?php echo $logo1;?>">
+                                                                 <input type="hidden" name="type" value="<?php echo $pos['type'];?>">
+                                                                 <input type="hidden" name="Track" value="<?php echo $track;?>">
+                                                                 <input type="hidden" name="class" value="<?php echo $pos['class'];?>">
+                                                             <?php }?>
+                                                            <input type="submit" name="dombook" class="btn  btn-success" value="Book Ticket" />
+                                                            <br>
+                                                            <a href="javascript:void(0);" class="domgetfare"     id="show_<?php echo $me;?>" fatch="<?php echo $me;?>" AirlineId="<?php echo $alid;?>" FlightId="<?php echo $ffid;?>" ClassCode="<?php echo $cccode;?>" track="<?php echo $track;?>" BasicAmount="<?php echo $pp;?>" adult="<?php echo $pos['adult'];?>" child="<?php echo $pos['child'];?>" infant="<?php echo $pos['infant'];?>" tourType="<?php echo $ttype['type'];?>"> Show Fare Details +</a>
+                                                            <a href="javascript:void(0);" class="hidefare no" id="hide_<?php echo $me;?>" fatch="<?php echo $me;?>">Hide Fare Details -</a>
+                                                        </form>
+                                                    </div>
+                                                <?php }}?>
+                                                    
+                                                    
+                                                </div>
+                                                </div>
+                   <?php }?>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                
+                                <div class="col-md-12 no" id="yes_<?php echo $me;?>">
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-5" id="detail_<?php echo $me;?>">
+
+                                        </div>
+                                        <div class="col-md-7" id="rule_<?php echo $me;?>">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                 
+                        </div>
+               <?php 
+                   }}
+                   }?>
+           </div>
+        <!------------------------------- End Domestic ------------------------>
+    
  </section>
 <script>
     $(function(){
@@ -501,6 +664,35 @@
           $("#loading").modal('show');
             $.post('<?php echo base_url();?>flight/fare',{'tourType':tourType,'infant':infant,'child':child,'adult':adult,'AirlineId':AirlineId,'FlightId':FlightId,'ClassCode':ClassCode,'track':track,'BasicAmount':BasicAmount},function(response){
                // alert(response);
+                if(response !=''){   
+                        $('#yes_'+fatch).css('display','inline');
+                        $('#hide_'+fatch).css('display','inline');
+                        $('#show_'+fatch).css('display','none');
+                        
+                        $('#detail_'+fatch).html(response);
+                        $("#loading").modal('hide');
+                    }else{
+                        
+                        $("#loading").modal('hide');
+                    }					
+                });
+        
+    });
+    $('.domgetfare').click(function(){
+        var fatch = $(this).attr('fatch');
+        var AirlineId = $(this).attr('AirlineId');
+        var FlightId = $(this).attr('FlightId');
+        var ClassCode = $(this).attr('ClassCode');
+        var track = $(this).attr('track');
+        var BasicAmount = $(this).attr('BasicAmount');
+        var infant = $(this).attr('infant');
+        var child = $(this).attr('child');
+        var adult = $(this).attr('adult');
+        var tourType = $(this).attr('tourType');
+        //alert(BasicAmount);return false;
+          $("#loading").modal('show');
+            $.post('<?php echo base_url();?>flight/domFare',{'tourType':tourType,'infant':infant,'child':child,'adult':adult,'AirlineId':AirlineId,'FlightId':FlightId,'ClassCode':ClassCode,'track':track,'BasicAmount':BasicAmount},function(response){
+                //alert(response);
                 if(response !=''){   
                         $('#yes_'+fatch).css('display','inline');
                         $('#hide_'+fatch).css('display','inline');

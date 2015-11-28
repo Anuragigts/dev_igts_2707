@@ -113,7 +113,7 @@ only screen and (max-width: 760px),
                                     <td><?php echo $view->HermesPNR ;?></td>
                                     <td><?php echo $view->AirlineName ;?></td>
                                     <td><?php echo ($view->Adults + $view->Child + $view->Infants) ;?></td>
-                                    <td><?php if($view->TravelType == 'I'){echo "Economy";}else{echo "Business";} ?></td>
+                                    <td><?php if($view->TravelType == 'I'){echo "International";}else{echo "Domestic";} ?></td>
                                     <td><?php echo $view->TotalAmount ;?></td>
                                     <td>
                                         <a href="<?php echo base_url()?>flight/Status/<?php echo $view->UserTrackId;?>"  class="btn btn-sm btn-info" >Get detail & Print</a>

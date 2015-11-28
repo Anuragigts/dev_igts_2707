@@ -271,10 +271,10 @@ class Settings_model extends CI_Model
                         "trans_remark"     =>     $this->input->post('remarks')
                      );
                     $query =   $this->db->insert("trans_detail", $myupdate);
-                    
+                   $cramt = $val + $this->input->post('amount');
                      $ch = curl_init();
                         $optArray = array(
-			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+credited+from+in+Esy+Topup+account.",
+			CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$from_to&from=ESYTOP&message=ESY+TOPUP+Rs.+$myamt+credited+in+your+Esy+Topup+account+Now+current+balance+is+Rs.+$cramt.",
                                 CURLOPT_RETURNTRANSFER => true
                         );
                         curl_setopt_array($ch, $optArray);
@@ -462,6 +462,7 @@ class Settings_model extends CI_Model
                $id  =   $this->session->userdata("login_id");
                $this->db->select("*,count(*) as value_cou");
                $lid = $this->db->get_where("switch_det",array("module_obj_id" => $mob,"user_id" => $id))->row_array();
+              // echo $this->db->last_query(); die();
                $lob = $lid['value_cou'];     
                if($lob == 0){
                         return 0;

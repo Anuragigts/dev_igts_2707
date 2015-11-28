@@ -6,36 +6,19 @@
           <!-- Breadcrumb right aligned-->
           <ol class="breadcrumb pull-right">
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
-             </li> 
-             <li><a href="<?php echo base_url();?>dmr/dmrUserSearch">Transfer Money</a>
-             </li>  
-                              
-             <li class="active">Transaction details</li>                 
-          </ol>Print Transaction 
+             </li>                  
+             <li class="active">Post paid </li>                 
+          </ol>Post Paid Bill payment
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">print the transaction details</span>
+          
+          <span class="text-sm hidden-xs">For Post Paid Bill payment</span>
+           <?php if($this->session->userdata('my_type') == 1 ){?>
+		   Recharge Amount : <?php echo $amt->REMAININGAMOUNT;?>
+           <?php }?>
           <!-- Breadcrumb below title-->
        </h3>
        <!-- START widgets box-->
-        <div class="row">
-        <div class="col-md-12">
-        <div class="dmr-menu">
-            <b>Name :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrname');?> <?php echo $this->session->userdata('dmrlastname');?> </span>, &nbsp;
-            <b>Mobile :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrmo');?></span>, &nbsp;
-            <b>Card :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrcard');?></span>, 
-             
-            <b>KYC :</b> <span class="ligcol"><?php echo $this->session->userdata('dmrkyc');?></span>
-            <span class="pull-right">
-                <span style="color:#DF0101;"><i class="fa fa-hand-o-right fa-lg"></i></span>&nbsp;&nbsp;
-		<?php  if($this->session->userdata('dmrkyc') =="KYC  Processing" || $this->session->userdata('dmrkyc') =="KYC Not Collected"){?>
-				<a href="<?php echo base_url()?>dmr/doKyc"><b>Do KYC</b></a>&nbsp; | 
-				<?php } ?>
-			  &nbsp;
-                    <a href="<?php echo base_url()?>dmr/dmrLogout"><b>DMR Logout</b></a> 
-            </span>
-        </div>
-        </div>
-        </div>
+       
        <div class="row">           
                 <?php if($this->session->flashdata('err') != ''){?>
                  <div class="alert alert-block alert-danger fade in">
@@ -71,52 +54,45 @@
                            <!-- START table responsive-->
                            <div class="list-group mb0">
                                <div class="panel panel-default">
-                                   <div class="panel-heading"><h4> Transaction detail of   <?php echo $detail->RECEIVERNAME;?> : <?php echo date('d/m/Y');?></h4></div>
+                                   <div class="panel-heading"><h4> Payment detail of   <?php echo $detail->number;?> : <?php echo $detail->cur_time;?></h4></div>
                                     <div class="panel-body">   
                                         <table class="table">
                                             <tr>
-                                                <th><b>Sender Name</b></th>
+                                                <th><b>Mobile Number</b></th>
                                                   <td>
-                                                      : <?php echo $detail->SENDERNAME;?>
+                                                      : <?php echo $detail->number;?>
                                                   </td>
                                              </tr>
                                             <tr>
-                                                <th><b>Sender Mobile</b></th>
+                                                <th><b>Amount</b></th>
                                                   <td>
-                                                      : <?php echo $detail->SENDERMOBILE;?>
+                                                      : <?php echo $detail->amount;?>
                                                   </td>
                                              </tr>
                                             <tr>
-                                                <th><b>Receiver Name</b></th>
+                                                <th><b>Operator name</b></th>
                                                   <td>
-                                                      : <?php echo $detail->RECEIVERNAME;?>
+                                                      : <?php echo $detail->op_name;?>
                                                   </td>
                                              </tr>
-                                             <?php if($detail->RECEIVERBANKNAME != ''){?>
+                                           
                                             <tr>
-                                                <th><b>Receiver Bank</b></th>
+                                                <th><b>Transaction number</b></th>
                                                   <td>
-                                                      : <?php echo $detail->RECEIVERBANKNAME;?>
-                                                  </td>
-                                             </tr>
-                                             <?php }?>
-                                            <tr>
-                                                <th><b>Receiver Account</b></th>
-                                                  <td>
-                                                      : <?php echo $detail->RECEIVERACCOUNTNO;?>
+                                                      : <?php echo $detail->trans_no;?>
                                                   </td>
                                              </tr>
                                         
                                         <tr>
-                                           <th><b>Amount</b></th>
+                                           <th><b>Agent Name</b></th>
                                              <td>
-                                                : <?php echo $detail->TRANSFERAMOUNT;?>
+                                                : <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>
                                              </td>
                                         </tr>
                                         <tr>
-                                           <th><b>Transaction ID</b></th>
+                                           <th><b>Tracking ID</b></th>
                                              <td>
-                                                : <?php echo $detail->TRANSID;?>
+                                                : <?php echo $detail->hrm_track;?>
                                              </td>
                                         </tr>
                                         
@@ -125,7 +101,7 @@
                                              <td>
                                                  <input type='button' class='btn btn-sm btn-info tkt_print' id="btnPrint"   name='print' value='Print' />
                                                 <!--<button type="button" onclick="window.print();" class="btn btn-info pull-left">Print</button>-->
-                                                &nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>dmr/beneficiaryList" class="btn  btn-default">Do Another Transaction</a>
+                                                &nbsp;&nbsp;&nbsp;<a href="<?php echo base_url();?>recharge/post_recharge" class="btn  btn-default">Do Another Recharge</a>
                                              </td>
                                         </tr>
                                         </table>
@@ -158,54 +134,47 @@
                      </center>
                     
                         <div style="margin:20px; border:1px solid #ccc; padding: 10px;">
-                            <h4><h4> Transaction detail of  <?php echo $detail->RECEIVERNAME;?> : <?php echo date('d/m/Y');?></h4></h4>
+                            <h4><h4> Transaction detail of  <?php echo $detail->number;?> : <?php echo date('d/m/Y');?></h4></h4>
                             
                             
                             <div class="panel-body">   
                                         <table class="table">
                                             <tr>
-                                                <th><b>Sender Name</b></th>
+                                                <th><b>Mobile Number</b></th>
                                                   <td>
-                                                      : <?php echo $detail->SENDERNAME;?>
+                                                      : <?php echo $detail->number;?>
                                                   </td>
                                              </tr>
                                             <tr>
-                                                <th><b>Sender Mobile</b></th>
+                                                <th><b>Amount</b></th>
                                                   <td>
-                                                      : <?php echo $detail->SENDERMOBILE;?>
+                                                      : <?php echo $detail->amount;?>
                                                   </td>
                                              </tr>
                                             <tr>
-                                                <th><b>Receiver Name</b></th>
+                                                <th><b>Operator name</b></th>
                                                   <td>
-                                                      : <?php echo $detail->RECEIVERNAME;?>
+                                                      : <?php echo $detail->op_name;?>
                                                   </td>
                                              </tr>
-                                             <?php if($detail->RECEIVERBANKNAME != ''){?>
+                                             
                                             <tr>
-                                                <th><b>Receiver Bank</b></th>
+                                                <th><b>Transaction number</b></th>
                                                   <td>
-                                                      : <?php echo $detail->RECEIVERBANKNAME;?>
-                                                  </td>
-                                             </tr>
-                                             <?php }?>
-                                            <tr>
-                                                <th><b>Receiver Account</b></th>
-                                                  <td>
-                                                      : <?php echo $detail->RECEIVERACCOUNTNO;?>
+                                                      : <?php echo $detail->trans_no;?>
                                                   </td>
                                              </tr>
                                         
                                         <tr>
-                                           <th><b>Amount</b></th>
+                                           <th><b>Agent Name</b></th>
                                              <td>
-                                                : <?php echo $detail->TRANSFERAMOUNT;?>
+                                                : <?php echo $this->session->userdata('first_name') ;?> <?php echo $this->session->userdata('middle_name') ;?> <?php echo $this->session->userdata('last_name') ;?>
                                              </td>
                                         </tr>
                                         <tr>
-                                           <th><b>Transaction ID</b></th>
+                                           <th><b>Tracking ID</b></th>
                                              <td>
-                                                : <?php echo $detail->TRANSID;?>
+                                                : <?php echo $detail->hrm_track;?>
                                              </td>
                                         </tr>
                                         
@@ -219,7 +188,7 @@
                                  <table width="100%" >
                                     <tr >
                                         <th style="float:left;">esytopup.com</th>
-                                        <th style="float:right;">Powered By ICC </th>
+                                        <th style="float:right;"> </th>
                                     </tr>
                                     <tr>
                                        

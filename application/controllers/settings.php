@@ -198,33 +198,70 @@ class Settings extends CI_Controller {
                     'metadesc'      => 'ESY TOPUP :: EDIT VIRTUAL AMOUNT',
                     'content'       => 'recharge_transfer'
             );
-              if($this->input->post('transfer')){
-                  $this->form_validation->set_rules('amount',' Amount','required');
-                  $this->form_validation->set_rules('remarks','Remarks','required');
-                  $this->form_validation->set_rules('credit','Credit or Rollback ','required');
-                  $cred = $this->input->post("credit");
-                    if($this->form_validation->run() == TRUE){
-                        if($cred == 2){
-                            $from     = $this->session->userdata('login_id');
-                            $to   = $this->uri->segment(3);
-                            $result = $this->settings_model->transferVamt($to,$from,$cred);
-                        }
-                        else{
-                            $from = $this->session->userdata('login_id');
-                            $to = $this->uri->segment(3);
-                            $result = $this->settings_model->transferVamt($from,$to,$cred);
-                        }
-                       if($result == 1){                    
-                           $this->session->set_flashdata('msg','Amount Transferred Successfully.');  
-                           redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
-                       }else if($result == 3){                    
-                           $this->session->set_flashdata('err','Amount that to be Transferred cross the limit of your actual amount.');  
-                           redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
-                       }else{
-                            $this->session->set_flashdata('err',' fail : Server Busy. Please try after some time.');  
-                            redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
-                       }
-                   }
+            $amt = $this->settings_model->checkVirtual();
+            if( $this->session->userdata('my_type') == 1 ){
+                if($this->input->post('transfer')){
+                    $this->form_validation->set_rules('amount',' Amount','required');
+                    $this->form_validation->set_rules('remarks','Remarks','required');
+                    $this->form_validation->set_rules('credit','Credit or Rollback ','required');
+                    $cred = $this->input->post("credit");
+                      if($this->form_validation->run() == TRUE){
+                          if($cred == 2){
+                              $from     = $this->session->userdata('login_id');
+                              $to   = $this->uri->segment(3);
+                              $result = $this->settings_model->transferVamt($to,$from,$cred);
+                          }
+                          else{
+                              $from = $this->session->userdata('login_id');
+                              $to = $this->uri->segment(3);
+                              $result = $this->settings_model->transferVamt($from,$to,$cred);
+                          }
+                         if($result == 1){                    
+                             $this->session->set_flashdata('msg','Amount Transferred Successfully.');  
+                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }else if($result == 3){                    
+                             $this->session->set_flashdata('err','Amount that to be Transferred cross the limit of your actual amount.');  
+                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }else{
+                              $this->session->set_flashdata('err',' fail : Server Busy. Please try after some time.');  
+                              redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }
+                     }
+              }
+            }else{
+                if($this->input->post('transfer')){
+                    $this->form_validation->set_rules('amount',' Amount','required');
+                    $this->form_validation->set_rules('remarks','Remarks','required');
+                    $this->form_validation->set_rules('credit','Credit or Rollback ','required');
+                    $cred = $this->input->post("credit");
+                      if($this->form_validation->run() == TRUE){
+                       // if($amt > $this->input->post('amount')){   
+                            if($cred == 2){
+                                $from     = $this->session->userdata('login_id');
+                                $to   = $this->uri->segment(3);
+                                $result = $this->settings_model->transferVamt($to,$from,$cred);
+                            }
+                            else{
+                                $from = $this->session->userdata('login_id');
+                                $to = $this->uri->segment(3);
+                                $result = $this->settings_model->transferVamt($from,$to,$cred);
+                            }
+//                        }else{
+//                             $this->session->set_flashdata('err','You are not having sufficient balance.');  
+//                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+//                        }
+                         if($result == 1){                    
+                             $this->session->set_flashdata('msg','Amount Transferred Successfully.');  
+                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }else if($result == 3){                    
+                             $this->session->set_flashdata('err','Amount that to be Transferred cross the limit of your actual amount.');  
+                             redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }else{
+                              $this->session->set_flashdata('err',' fail : Server Busy. Please try after some time.');  
+                              redirect('settings/moneyTransfer/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+                         }
+                     }
+                }
             }
             $val = "<table class='table table-striped'><tr><td>User Type </td><td>Name</td><td>Amount</td></tr>";
             $data['get']      =  $this->settings_model->getVirtualgetter($this->uri->segment(3)); 

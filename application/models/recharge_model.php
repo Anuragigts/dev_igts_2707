@@ -1433,9 +1433,11 @@ class Recharge_model extends CI_Model
                         $update = $this->db->update('recharge_track',array("margin" => $mrgin)); 
                       // die();
                      if($this->db->affected_rows() == 1){
+                         $this->session->set_flashdata('msg','Your Recharge is success full.');  
+                           redirect('recharge/postslip/'.$my_mo_id);
                          return 0;
                      }  else {
-                         return 2;
+                         return 0;
                      }
                  }else{
                      return 2;
@@ -1446,6 +1448,8 @@ class Recharge_model extends CI_Model
             return 3;
         }
     }
+    
+
     public function circle(){
         $query = $this->db->get('circle');
         if($query){
@@ -1520,5 +1524,15 @@ class Recharge_model extends CI_Model
                      
                  }
                 }
+    }
+    
+    public function postDetail($id){
+        $query = $this->db->query("SELECT * FROM recharge_track WHERE recharge_id = $id AND recharge_type = 4");
+         if($query && $query->num_rows()== 1){
+            return $query->row();
+        }else{
+            $this->session->set_flashdata('err','Invalid Postpaid details.');  
+            redirect('recharge/post_recharge');
+        }
     }
 }
