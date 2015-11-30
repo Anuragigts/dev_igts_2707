@@ -797,6 +797,7 @@ class Recharge_model extends CI_Model
             );
          
         $insert = $this->db->insert('recharge_track',$data_insert);
+        
         if($this->db->affected_rows() == 1){
             $my_mo_id = $this->db->insert_id();
             
@@ -870,6 +871,9 @@ class Recharge_model extends CI_Model
 
                $response = simplexml_load_string($final[0]);
              // print_r($response);
+               /********** Bachmark ***********/
+               $this->benchmark->mark('code_start');
+               
                $this->db->reconnect();
                if($response->Status == 1){
                    $mytime=date('Y-m-d H:i:s');
@@ -949,11 +953,78 @@ class Recharge_model extends CI_Model
                  if($this->db->affected_rows() == 1){
                      return 0;
                  }  else {
-                     return 2;
+                     return 0;
                  }
                }else{
                    return 1;
                }
+               $this->benchmark->mark('code_end');
+            //******* Execute Benchmark ************
+               if($this->benchmark->elapsed_time('code_start', 'code_end') > 3.0000){
+                    $data = array(                        
+                        'hrm_track'              => "$track_id",
+                        'ref_num'                => "Unknown",
+                        'trans_no'               => "$swami",
+                        'remarks'                => "Success",
+                        'desc'                   => "Unknown",
+                        'hrm_amount'             => "$amt",
+                        'responce_time'          => "$mytime",
+                        'status'                 =>  1,
+                        
+                    );
+                    $this->db->where('recharge_id',$my_mo_id);
+                $update = $this->db->update('recharge_track',$data);         
+                   // echo $this->db->last_query();
+                $this->db->reconnect();
+                $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $this->session->userdata('login_id')));           
+                if($query2 && $query2->num_rows()== 1){                        
+                     $val2 = $query2->row()->amount;
+                     $insfrom   =   array(                      
+                             "amount"     => ($val2 - $this->input->post('amount'))
+                         );
+                     $this->db->where("user_id",$this->session->userdata('login_id'));
+                     $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                     if($recharge_type == 2){
+                            $vaty = "DTH";
+                     }
+                     if($recharge_type == 1){
+                            $vaty = "Prepaid";
+                     }
+                     $this->db->reconnect();
+                      $myupdate = array(
+                        "trans_from"    =>   $this->session->userdata('login_id'),
+                        "trans_to"      =>     0,
+                        "cur_amount"      =>    ($val2 - $this->input->post('amount')),
+                        "trans_amt"     =>     floatval($this->input->post('amount')),
+                        "trans_remark"  =>     "$vaty Recharge $mobile for amount of Rs.$amt",
+                        "type"  =>     "2",
+                        'trans_date' => date('Y-m-d H:i:s')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                    $vau = $this->db->insert_id();
+                } 
+                $this->db->reconnect(); 
+                $ad = $this->session->userdata("admin_id");
+                $md = $this->session->userdata("master_distributor_id");
+                $sd = $this->session->userdata("super_distributor_id");
+                $d = $this->session->userdata("distributor_id");
+                $my = $this->session->userdata("login_id");
+                $optna  =   strtolower($desc);
+                $mrgin = $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"1","0","1");
+                
+                $this->db->where('trans_id',$vau);
+                $updat2 = $this->db->update('trans_detail',array("trans_amt" => floatval($this->input->post('amount') - $mrgin ) , "cur_amount" => (($val2 - $this->input->post('amount'))+ $mrgin))); 
+                
+                $this->db->where('recharge_id',$my_mo_id);
+                $update = $this->db->update('recharge_track',array("margin" => $mrgin)); 
+              
+                 if($this->db->affected_rows() == 1){
+                     return 0;
+                 }  else {
+                     return 0;
+                 }
+               }
+              /******** End Banchmark ******************/
             }
                 
         }else{

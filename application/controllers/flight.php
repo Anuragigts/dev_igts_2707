@@ -411,7 +411,7 @@ class Flight extends CI_Controller {
         $tourType = $_POST['tourType'];
         
         $return = $this->flight_model->getDomFareTax($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType);
-        //echo "<pre>";
+        echo "<pre>";
         print_r($return) ;
     }
     
@@ -424,7 +424,7 @@ class Flight extends CI_Controller {
                  'content'       => 'flight_dombook'
                 );
            $airlineId = ''; 
-           $adult = ''; 
+           $adult = '';  $pr = 0;
            if($this->input->post('Adult') != ''){
                $airlineId      = $this->input->post('AirlineId');
                $flightId       = $this->input->post('FlightId');
@@ -447,14 +447,24 @@ class Flight extends CI_Controller {
                $class           = $this->input->post('class');
                $flight_i           = $this->input->post('flight_i');
                $tourType           = $this->input->post('type');
-           }
+               
+               $pr = $basicAmount;
+                $bamt = explode(",", $basicAmount);
+
+                if(count($bamt)>=2){
+                    foreach($bamt as $am){
+                         $pr = $pr +  $am; 
+                    }
+                }  
+           }                      
            
            if($adult != '' ){
                $this->session->set_userdata('AirlineId',   $airlineId);
                $this->session->set_userdata('FlightId',    $flightId);
                $this->session->set_userdata('classCode',   $classCode);
                $this->session->set_userdata('Track',       "$track");
-               $this->session->set_userdata('BasicAmount', "$basicAmount");
+               $this->session->set_userdata('BasicAmount', "$pr");
+               $this->session->set_userdata('BasicAmount1', "$basicAmount");
                $this->session->set_userdata('Adult',       "$adult");
                $this->session->set_userdata('Child',       "$child");
                $this->session->set_userdata('Infrunt',     "$infrunt");
@@ -489,6 +499,7 @@ class Flight extends CI_Controller {
            $classCode  = $this->session->userdata('classCode');
            $track      = $this->session->userdata('Track');
            $basicAmount = $this->session->userdata('BasicAmount');
+           $basicAmount1 = $this->session->userdata('BasicAmount1');
            $infant     = $this->session->userdata('Infrunt');
            $child      = $this->session->userdata('Child');
            $adult      = $this->session->userdata('Adult');
@@ -512,7 +523,7 @@ class Flight extends CI_Controller {
                         $this->form_validation->set_rules('type',        'Type','required');
                           if($this->form_validation->run() == TRUE){
 
-                            $booking_details = $this->flight_model->bookDomTicket($tourType);
+                            $booking_details = $this->flight_model->bookDomTicket($tourType,$basicAmount1);
                          // echo $booking_details;die();
                             if($booking_details == "1"){
                                 $this->session->set_flashdata('msg','Ticket Booked Successfully.');  
@@ -559,9 +570,9 @@ class Flight extends CI_Controller {
 
                 // print_r($classCode);
                 //$data['get_details'] = $this->flight_model->getFareTax($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
-                $data['get_details'] = $this->flight_model->getDomFareTax($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
+                $data['get_details'] = $this->flight_model->getDomFareTax($aids, $fids , $ccd, $track, "$basicAmount1", $infant, $child, $adult,$tourType);
                 //$data['getTotal'] = $this->flight_model->getFareTotal($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
-                $data['getTotal'] = $this->flight_model->getFareDomTotal($aids, $fids , $ccd, $track, $basicAmount, $infant, $child, $adult,$tourType);
+                $data['getTotal'] = $this->flight_model->getFareDomTotal($aids, $fids , $ccd, $track, "$basicAmount1", $infant, $child, $adult,$tourType);
            
             $this->load->view('layout/inner_template',$data);
        

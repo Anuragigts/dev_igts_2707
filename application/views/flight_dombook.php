@@ -281,9 +281,10 @@
                                              <input type="hidden" class="form-control" name="class" value="<?php echo $flight['class'];?>">  
                                            
                                               <?php for($i = 0; $i < count($flight['name']); $i++){?>  
-                                                <?php 
+                                                <?php $cc = $flight['classCode']['0'];
+                                                $classc = explode(',', $cc);
                                              $exp = explode('-', $flight['name'][$i]);?>
-                                               <input type="hidden" class="form-control" name="classCode[]" value="<?php echo $flight['classCode'][$i];?>">  
+                                               <input type="hidden" class="form-control" name="classCode[]" value="<?php echo $classc[$i];?>">  
                                             <input type="hidden" class="form-control" name="code[]" value="<?php echo $exp['0'];?>">
                                             <input type="hidden" class="form-control" name="f_Id[]" value="<?php echo $flight['flight_i'][$i];?>">
                                             

@@ -218,7 +218,8 @@ class Recharge extends CI_Controller {
       }
     }
    
-    public function mobile_recharge(){ 
+    public function mobile_recharge(){
+      
         if( $this->session->userdata('login_id') == ''){redirect('login');}
         if( $this->session->userdata('recharge') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.');redirect('dashboard');}
         if( $this->session->userdata('prepaid_mobile') != '1'){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}

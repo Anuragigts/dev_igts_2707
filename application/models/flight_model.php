@@ -1246,7 +1246,7 @@ class Flight_model extends CI_Model
                     }';
 
         }                                                                         
-         //  echo $curlData;                                                                                                          
+                                                                                                                 
         $ch = curl_init(FLIGHTACTIONDOM.'GetAvailability');                                                                      
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curlData);                                                                  
@@ -1258,8 +1258,8 @@ class Flight_model extends CI_Model
 
         $result = curl_exec($ch);
         $array = json_decode($result);
-       // echo "<pre>";
-       // print_r($array);die();
+//        echo "<pre>";
+//        print_r($array);die();
        if($array->ResponseStatus == '1'){
            return $array;
        }else{
@@ -1274,17 +1274,20 @@ class Flight_model extends CI_Model
        }else{
            $inc = 1;
        }
+      
        $array = explode(",", $flightId);    
       $arrval = array_map('trim', $array);
        $arrayair = explode(",", $airlineId);    
       $arrvalair = array_map('trim', $arrayair);
-      
-       $ccdarry = explode(",", $classCode);    
+          
+      $ccdarry = explode(",", $classCode);    
       $cccd = array_map('trim', $ccdarry);
       
       $str = '';
       $p = 0;
       $cnt = count($arrval);
+      
+    if($inc == 1){
       foreach($arrval as $arr){
           if($arr !=''){
           $str .= '{
@@ -1293,7 +1296,7 @@ class Flight_model extends CI_Model
                         "AirlineCode":"'.$arrvalair[$p].'",
                         "ETicketFlag":1,
                         "BasicAmount":'.$basicAmount.'
-                }';
+                },';
                    
           $p++;
           }
@@ -1311,8 +1314,7 @@ class Flight_model extends CI_Model
             }
        ';
    
-   
-            //$ch = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
+            //return $curlData;                                                         
             $ch = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
             curl_setopt($ch, CURLOPT_POSTFIELDS, $curlData);                                                                  
@@ -1323,8 +1325,8 @@ class Flight_model extends CI_Model
             );                                                                                                                   
 
         $result = curl_exec($ch);
+        
         $array = json_decode($result);
-       // return $array;      
                
         if($array->ResponseStatus == 1){
             foreach ($array->TaxOutput->TaxResFlightSegments as $details){
@@ -1373,11 +1375,136 @@ class Flight_model extends CI_Model
                    $val .= '</th></tr>';
                  
                    $val .= '</table>';
-            }
-                   
-                   
-                  return $val;
+            }     
+            return $val;
+          }
+        }else{
+           
+            $bamt = explode(",", $basicAmount);   
+            $curlData = '
+                    {
+                    "Authentication":{
+                            "LoginId":"'.FLIGHTID.'",
+                            "Password":"'.FLIGHTPASS.'"
+                    },
+                    "UserTrackId":"'.$track.'",
+                    "TaxInput":{
+                            "TaxReqFlightSegments":[{
+                        "FlightId":"'.$arrval['0'].'",
+                        "ClassCode":"'.$cccd['0'].'",
+                        "AirlineCode":"'.$arrvalair['0'].'",
+                        "ETicketFlag":1,
+                        "BasicAmount":'.$bamt['0'].'
+                }]
+                    }
                 }
+            ';
+            $curlData_1 = '
+                    {
+                    "Authentication":{
+                            "LoginId":"'.FLIGHTID.'",
+                            "Password":"'.FLIGHTPASS.'"
+                    },
+                    "UserTrackId":"'.$track.'",
+                    "TaxInput":{
+                            "TaxReqFlightSegments":[{
+                        "FlightId":"'.$arrval['1'].'",
+                        "ClassCode":"'.$cccd['1'].'",
+                        "AirlineCode":"'.$arrvalair['1'].'",
+                        "ETicketFlag":1,
+                        "BasicAmount":'.$bamt['1'].'
+                }]
+                    }
+                }
+            ';
+                $ch = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $curlData);                                                                  
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($curlData))                                                                       
+                ); 
+                $result = curl_exec($ch);
+                $array = json_decode($result);
+                curl_close ($ch); 
+                
+                /*********************/ 
+                
+                $ch1 = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
+                curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+                curl_setopt($ch1, CURLOPT_POSTFIELDS, $curlData_1);                                                                  
+                curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);                                                                      
+                curl_setopt($ch1, CURLOPT_HTTPHEADER, array(                                                                          
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($curlData_1))                                                                       
+                ); 
+                $result_1 = curl_exec($ch1);
+                $array_1 = json_decode($result_1);
+                curl_close ($ch1);
+                
+              if($array->ResponseStatus == 1){
+            foreach ($array->TaxOutput->TaxResFlightSegments as $details){
+                 $adul = 0; $chl = 0; $inf = 0;
+              if(count($details->AdultTax)>0){
+                 $adul= $details->AdultTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($details->ChildTax)>0){
+                 $chl= $details->ChildTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($details->InfantTax)>0){
+                 $inf= $details->InfantTax->FareBreakUpDetails->GrossAmount;
+              }
+              /****************************/
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax)>0){
+                 $adul= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax)>0){
+                 $chl= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax)>0){
+                 $inf= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
+              }
+              
+                $style= "style='border-bottom:1px solid #ccc;'";
+                   $style1= "style='border-bottom:1px solid #000;background-color:#ccc;'";
+                   $th= "style='padding:5px;font-weight:boald;'";
+                   $td= "style='padding-left:5px;padding-right:5px;'";
+                   $table= "style='border:1px solid #000;'";
+                   $val = '';
+                   $val .= "<h4>Your Fare Amount with Tax</h4>";
+                   $val .= "<table  width='100%' ".$table.">";
+                   
+                   $val .= "<tr ".$style.">";
+                   $val .= "<td ".$td.">".$adult." Adult</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_adult =  ($adult * $adul);
+                   $val .= '</td></tr>';
+                   
+                   $val .= "<tr ".$style.">";
+                   $val .= "<td ".$td.">".$child." Child</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_child =  ($child * $chl);
+                   $val .= '</td></tr>';
+                   
+                   $val .= "<tr ".$style.">";
+                   $val .= "<td ".$td.">".$infant." Infant</td>";
+                   $val .= '<td class="pull-right" '.$td.'>';
+                   $val .= '<em class="fa fa-rupee"></em>'.$s_infant = ($infant * $inf);
+                   $val .= '</td></tr>';
+                   
+                   $val .= "<tr ".$style1.">";
+                   $val .= "<th ".$th.">Total</th>";
+                   $val .= '<th class="pull-right" '.$th.'>';
+                   $val .= '<em class="fa fa-rupee"></em>'.($s_adult + $s_child + $s_infant);
+                   $val .= '</th></tr>';
+                 
+                   $val .= '</table>';
+            }     
+            return $val;
+          }  
+                
+        }   
     }
     
     public function getFareDomTotal($airlineId, $flightId, $classCode, $track, $basicAmount, $infant, $child, $adult,$tourType){
@@ -1387,17 +1514,18 @@ class Flight_model extends CI_Model
        }else{
            $inc = 1;
        }
-       $array = explode(",", $flightId);    
+        $array = explode(",", $flightId);    
       $arrval = array_map('trim', $array);
        $arrayair = explode(",", $airlineId);    
       $arrvalair = array_map('trim', $arrayair);
-      
-       $ccdarry = explode(",", $classCode);    
+          
+      $ccdarry = explode(",", $classCode);    
       $cccd = array_map('trim', $ccdarry);
       
       $str = '';
       $p = 0;
       $cnt = count($arrval);
+    if($inc == 1){
       foreach($arrval as $arr){
           if($arr !=''){
           $str .= '{
@@ -1406,7 +1534,7 @@ class Flight_model extends CI_Model
                         "AirlineCode":"'.$arrvalair[$p].'",
                         "ETicketFlag":1,
                         "BasicAmount":'.$basicAmount.'
-                }';
+                },';
                    
           $p++;
           }
@@ -1456,7 +1584,99 @@ class Flight_model extends CI_Model
             }     
             return $total;
           }
-
+        }else{
+            $bamt = explode(",", $basicAmount);   
+            $curlData = '
+                    {
+                    "Authentication":{
+                            "LoginId":"'.FLIGHTID.'",
+                            "Password":"'.FLIGHTPASS.'"
+                    },
+                    "UserTrackId":"'.$track.'",
+                    "TaxInput":{
+                            "TaxReqFlightSegments":[{
+                        "FlightId":"'.$arrval['0'].'",
+                        "ClassCode":"'.$cccd['0'].'",
+                        "AirlineCode":"'.$arrvalair['0'].'",
+                        "ETicketFlag":1,
+                        "BasicAmount":'.$bamt['0'].'
+                }]
+                    }
+                }
+            ';
+            $curlData_1 = '
+                    {
+                    "Authentication":{
+                            "LoginId":"'.FLIGHTID.'",
+                            "Password":"'.FLIGHTPASS.'"
+                    },
+                    "UserTrackId":"'.$track.'",
+                    "TaxInput":{
+                            "TaxReqFlightSegments":[{
+                        "FlightId":"'.$arrval['1'].'",
+                        "ClassCode":"'.$cccd['1'].'",
+                        "AirlineCode":"'.$arrvalair['1'].'",
+                        "ETicketFlag":1,
+                        "BasicAmount":'.$bamt['1'].'
+                }]
+                    }
+                }
+            ';
+                $ch = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $curlData);                                                                  
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($curlData))                                                                       
+                ); 
+                $result = curl_exec($ch);
+                $array = json_decode($result);
+                curl_close ($ch); 
+                
+                /*********************/ 
+                
+                $ch1 = curl_init(FLIGHTACTIONDOM.'GetTax');                                                                      
+                curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+                curl_setopt($ch1, CURLOPT_POSTFIELDS, $curlData_1);                                                                  
+                curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);                                                                      
+                curl_setopt($ch1, CURLOPT_HTTPHEADER, array(                                                                          
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($curlData_1))                                                                       
+                ); 
+                $result_1 = curl_exec($ch1);
+                $array_1 = json_decode($result_1);
+                curl_close ($ch1);
+                 if($array->ResponseStatus == 1){
+            foreach ($array->TaxOutput->TaxResFlightSegments as $details){
+                 $adul = 0; $chl = 0; $inf = 0;
+              if(count($details->AdultTax)>0){
+                 $adul= $details->AdultTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($details->ChildTax)>0){
+                 $chl= $details->ChildTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($details->InfantTax)>0){
+                 $inf= $details->InfantTax->FareBreakUpDetails->GrossAmount;
+              }
+              /****************************/
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax)>0){
+                 $adul= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax)>0){
+                 $chl= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
+              }
+              if(count($array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax)>0){
+                 $inf= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
+              }
+              
+              $total = (($adult * $adul) + ($child * $chl) + ($infant * $inf));
+               
+            }     
+            return $total;
+          }
+                
+        }
                 
     }
     
@@ -1464,13 +1684,12 @@ class Flight_model extends CI_Model
      ****** Book Ticket **********
      ****************************/
     
-    public function bookDomTicket($tourType = 'O'){ 
+    public function bookDomTicket($tourType = 'O',$bamt){ 
         $url = FLIGHTURL;       
      
       $city = $this->input->post('city');
       $code = $this->input->post('code');
       $cc = $this->input->post('classCode');
-      
        
        $cat   = $this->input->post('cat');
        $title   = $this->input->post('title');
@@ -1540,20 +1759,27 @@ class Flight_model extends CI_Model
                  }else{
                      $pas = "ADULT";
                  }
-                $dynamic .= '{
-                                "PassengerType": "'.$pas.'",
-                                "Title": "'.$title[$i].'",
-                                "FirstName": "'.$first_n[$i].'",
-                                "LastName": "'.$last_n[$i].'",
-                                "Gender": "'.$gen.'",
-                                "Age": '.$age.',
-                                "DateofBirth": "'.$mydob.'",
-                                "IdentityProofId": "",
-                                "IdentityProofNumber": "",
-                                "BookingSegments": [';
+                    $ramt = explode(",", $bamt);
                             foreach($this->input->post('f_Id') as $f_id){
                                
-                                $dynamic .= '{
+                                $dynamic .= '  {
+                                        "AirlineCode": "'.$code['0'].'",
+                                        "PaymentDetails": {
+                                                "CurrencyCode": "INR",
+                                                "Amount": '.$ramt[$inc].'
+                                        },
+                                        "TourCode": "",
+                                        "PassengerDetails": [{
+                                            "PassengerType": "'.$pas.'",
+                                            "Title": "'.$title[$i].'",
+                                            "FirstName": "'.$first_n[$i].'",
+                                            "LastName": "'.$last_n[$i].'",
+                                            "Gender": "'.$gen.'",
+                                            "Age": '.$age.',
+                                            "DateofBirth": "'.$mydob.'",
+                                            "IdentityProofId": "",
+                                            "IdentityProofNumber": "",
+                                            "BookingSegments": [{
                                                 "FlightId": "'.$f_id.'",
                                                 "ClassCode": "'.$cc[$inc].'",
                                                 "SpecialServiceCode": "",
@@ -1561,20 +1787,20 @@ class Flight_model extends CI_Model
                                                 "FrequentFlyerNumber": "",
                                                 "MealCode": "",
                                                 "SeatPreferId": ""
-                                        },';
+                                        }],
+                                        "LCCBaggageRequest": null,
+                                        "LCCMealsRequest": null
+                                    }]},';
                                $inc++;
                             } //$inc++;
                                 
-                         $dynamic .= '],
-                                        "LCCBaggageRequest": null,
-                                        "LCCMealsRequest": null
-                                    },';
+                        
 
             }
             
             
        }
-      
+      if($this->input->post('type') == 'O'){
         $curlData = '{
                         "Authentication": {
                                 "LoginId":"'.FLIGHTID.'",
@@ -1618,9 +1844,45 @@ class Flight_model extends CI_Model
                                 ]
                         }
                 }';
-       
+      }else{
+          $curlData = '{
+                        "Authentication": {
+                                "LoginId":"'.FLIGHTID.'",
+                                "Password":"'.FLIGHTPASS.'"
+                        },
+                        "UserTrackId": "'.$this->input->post('track').'",
+                        "BookInput": {
+                                "CustomerDetails": {
+                                        "Title": "'.$title['0'].'",
+                                        "Name": "'.$my_name.'",
+                                        "Address": "'.$this->input->post('add').'",
+                                        "City": "'.$city['0'].'",
+                                        "CountryId": "91",
+                                        "ContactNumber": "'.$this->input->post('mobile_no').'",
+                                        "EmailId": "'.$this->input->post('login_email').'",
+                                        "PinCode": "'.$this->input->post('zip').'"
+                                },
+                                "SpecialRemarks": "",
+                                "NotifyByMail": 0,
+                                "NotifyBySMS": 0,
+                                "AdultCount": '.$this->input->post('adult').',
+                                "ChildCount": '.$this->input->post('child').',
+                                "InfantCount": '.$this->input->post('infrount').',
+                                "BookingType": "'.$this->input->post('type').'",
+                                "TotalAmount": '.$this->input->post('amt').',
+                                "FrequentFlyerRequest": null,
+                                "SpecialServiceRequest": null,
+                                "FSCMealsRequest": null,
+                                "FlightBookingDetails": [
+                                        
+                                            '.$dynamic.'
+                                        
+                                ]
+                        }
+                }';
+      }
      
-            // echo $curlData."<br>";
+             echo $curlData."<br>";
             $ch = curl_init(FLIGHTACTIONDOM.'GetBook');                                                                      
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
             curl_setopt($ch, CURLOPT_POSTFIELDS, $curlData);                                                                  
@@ -1633,8 +1895,8 @@ class Flight_model extends CI_Model
             $result = curl_exec($ch);
         //$result='{"ResponseStatus":1,"UserTrackId":"RMSBW97099959971887984987888320705032020","BookOutput":{"FlightTicketDetails":[{"HermesPNR":"B6W75M","TransactionId":"100024762","CustomerDetails":{"Title":null,"Name":"Anurag Tripathi","Address":"Hyd","City":"","CountryId":"","ContactNumber":"8885465911","EmailId":"","PinCode":null},"AirlineDetails":[{"AirlineCode":"SG","AirlinePNR":"Y5P2VC","AirlineName":"SpiceJet","Address1":"319,Udyog Vihar","Address2":"Phase IV","City":"Gurgaon","ContactNumber":"1800 180 3333","FaxNumber":"Nil","EMailId":"custrelations@spicejet.com"}],"IATADetails":{"CRSPNR":"","IATAAgentNumber":"","IATAAgentName1":"","IATAAgentName2":"","TicketNumber":""},"TotalSegments":1,"TotalAmount":2994,"OtherCharges":"0.00","AdultCount":1,"ChildCount":0,"InfantCount":0,"BookingType":"O","TravelType":"D","IssueDateTime":"28\/11\/2015 13:21:57","BaseOrigin":"BOM","BaseDestination":"BLR","TourCode":"","PaymentDetails":{"CurrencyCode":"INR","Amount":2996},"TerminalContactDetails":{"TerminalName":"Swami Communications","Address1":"7-151, subhash nagar, Kalwakurthy, dist. mahaboobn","Address2":"","City":"","State":"HYD","Country":"INDIA","ContactNumber":"9985997675","EmailId":"chbhargav9396@gmail.com"},"PassengerDetails":[{"TicketNumber":"B6W75M1","TransmissionControlNo":"1000000001","PassengerType":"ADULT","Title":"Mr","FirstName":"Anurag","LastName":"Tripathi","Age":0,"IdentityProofId":"","IdentityProofNumber":"","PersonOrgId":"","LadderDetails":{"EndorsementRestriction":"","IssueInExchangeFor":"","FareCalculation":""},"BookedSegments":[{"TicketNumber":"B6W75M1","FlightNumber":"413","AirCraftType":"738","Origin":"BOM ","OriginAirport":"TER 1B","DepartureDateTime":"30\/11\/2015 08:10","Destination":"BLR","DestinationAirport":"","Arrivaldatetime":"30\/11\/2015 10:10","AirlineCode":"SG","ClassCode":"EESAVER","ClassCodeDesc":"ECONOMY","FareBasis":"","BaggageAllowed":"","StopOverAllowed":" ","FrequentFlyerId":"","FrequentFlyerNumber":"","SpecialServiceCode":"","MealCode":"","SeatPreferId":"","BasicCurrencyCode":"INR","CurrencyCode":"INR","BasicAmount":2242,"EquivalentFare":2242,"TaxDetails":[{"Description":"PSF","Amount":179},{"Description":"TRF","Amount":50},{"Description":"UDF","Amount":512}],"TotalTaxAmount":741,"TransactionFee":0,"ServiceCharge":11,"GrossAmount":2994}]}],"BookingRemarks":null}]}}';
             //print_r($result);
-           // $response = json_decode($result);
-            // echo "<br><hr><pre>"; 
+            $response = json_decode($result);
+             echo "<br><hr><pre>"; 
             print_r($response);
             die();
                 if($response->ResponseStatus == 1 ){
