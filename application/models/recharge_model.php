@@ -1498,7 +1498,7 @@ class Recharge_model extends CI_Model
                         $mrgin = $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"1","0","1");
                 
                         $this->db->where('trans_id',$vau);
-                        $updat2 = $this->db->update('trans_detail',array("trans_amt" => floatval($this->input->post('amount') - $mrgin ) , "cur_amount" => (($val2 - $this->input->post('amount'))+ $mrgin))); 
+                        $updat2 = $this->db->update('trans_detail',array("trans_amt" => floatval($this->input->post('amount') - $mrgin+5 ) , "cur_amount" => (($val2 - $this->input->post('amount'))+ $mrgin))); 
 
                         $this->db->where('recharge_id',$my_mo_id);
                         $update = $this->db->update('recharge_track',array("margin" => $mrgin)); 
