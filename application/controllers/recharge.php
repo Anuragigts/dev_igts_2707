@@ -45,7 +45,7 @@ class Recharge extends CI_Controller {
 		curl_close($ch);
        }
       }else{
-      
+       
         $rc = $url['0'];        
         if($rc == 'RC' || $rc == 'rc' || $rc == 'Rc'){
         $code = strtoupper ($url['1']);
@@ -173,8 +173,8 @@ class Recharge extends CI_Controller {
                $recharge_type = 0;
                $codeval = "";
                $V ="";
-               
-               echo  $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
+              
+                 $this->recharge_model->updateOff($req,"Incorrect pattern, Please Send Correct");
                //$number = $this->input->get('number', TRUE);
                $number = $this->input->get('mobilenumber', TRUE);
                 $ch = curl_init();
@@ -192,9 +192,13 @@ class Recharge extends CI_Controller {
         }
         if($codeval == "AIRTEL1"){
             $result = $this->recharge_model->doairteloff($url['2'],$url['3'],$req,$codeval); 
-        }else{
+        }else{ 
                 $opr_name = $codeval;
-                $swi = $this->settings_model->getSwitcher($opr_name);
+                $sender_n1 = $this->input->get('mobilenumber', TRUE);
+                $sender_no1 = substr($sender_n1, -10);
+                $id = $this->recharge_model->getId($sender_no1);
+                $swi = $this->settings_model->getSwitcher($opr_name,$id);
+                
                 if($swi == 0){
                         $nm = trim($url[2]);
                         echo  $this->recharge_model->updateOff($req,"Recharge Failed: for $nm Please Contact your Administrator");
@@ -212,6 +216,7 @@ class Recharge extends CI_Controller {
                          curl_close($ch);
                 }
                 else{ 
+                    
                     $result = $this->recharge_model->doRechargeoff( $recharge_type,$codeval,$V,trim($url['2']),$url['3'],$req);
                 }
         }

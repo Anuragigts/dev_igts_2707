@@ -2,6 +2,23 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/flight_status.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/flight_search.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/dmr_model.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/report_model.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/flight_dombook.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/assets/app/js/app.js</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/tr_history.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/flight_book.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/flight_model.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/flight_history.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/controllers/flight.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/recharge_reports.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/controllers/dmr.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/models/recharge_model.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/views/trasaction_reports.php</file>
+            <file>file:/C:/xampp/htdocs/developer/sc/trunk/application/controllers/reports.php</file>
+        </group>
     </open-files>
 </project-private>

@@ -131,9 +131,9 @@
                                       <th>Type</th>
                                       <th>MMID/Acc</th>
                                       <th >From Acc</th>
-                                      <th >Amount</th>
-                                     
+                                      <th >Amount</th>                                     
                                       <th >Status</th>                             
+                                      <th >Print</th>                             
                                    </tr>
                                 </thead>
                                 <tbody>
@@ -153,6 +153,7 @@
                                          <td><?php if($sc->MMID !=''){echo $sc->MMID;}else{echo $sc->TOACCOUNTNO;}?></td>
                                          <td><?php echo $sc->FROMACCOUNTNO;?></td>
                                          <td><?php echo $sc->TRANSACTIONAMOUNT;?></td>
+                                         <td><?php echo $sc->TRANSACTIONAMOUNT;?></td>
                                          
                                          <td><?php 
                                          if($sc->TRANSACTIONAMOUNT == '1.00'){
@@ -161,6 +162,8 @@
                                              echo "Success";
                                          }else{
                                          echo $sc->TRANSACTIONSTATUS;}?></td>
+                                         
+                                         <td><a href="<?php echo base_url();?>dmr/printDetail/<?php echo $sc->MERCHANTRANSID;?>" target="_blanck">Print</a></td>
                                      </tr>
                                         <?php }$i++;}?>
                                 </tbody>

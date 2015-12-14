@@ -1,11 +1,14 @@
 <?php
 class Report_model extends CI_Model{
         public function recharge_reports($gefr,$geto,$val){
+            
                 $this->db->select("r.*,r.recharge_id as rid,r.recharge_id as rid,q.*,q.status as st_re,m.module_name");
                 $this->db->from("recharge_track as r");
                 $this->db->join("module as m","r.recharge_type = m.module_id","inner");
                 $this->db->join("refund_req as q","r.recharge_id = q.recharge_id","left");
-                $this->db->where("done_by",$val);
+                if($val != ''){
+                    $this->db->where("done_by",$val);
+                }
                 $this->db->where("track_id !=","");
                 $this->db->where("cur_time >=",$gefr);
                 $this->db->where("cur_time <=",$geto);
@@ -69,7 +72,9 @@ class Report_model extends CI_Model{
         public function  offline_reports($gefr,$geto,$val){
                 $this->db->select("o.*,p.*");
                 $this->db->from("offtime as o");
-                $this->db->where("done_by",$val);
+                if($val != ''){
+                    $this->db->where("done_by",$val);
+                }
                 $this->db->join('profile as p','o.done_by = p.login_id','inner');
                 $this->db->where("( done >= '".$gefr."' and done <= '".$geto."' )");
                 $this->db->order_by('o.off_id', 'desc');
@@ -126,5 +131,17 @@ class Report_model extends CI_Model{
                 else{
                         return 0;
                 }
+        }
+        public function profile($val){
+             $this->db->select("*");
+            $this->db->from("profile");
+            $this->db->where("login_id",$val);
+            $query     =   $this->db->get();
+            if($query->num_rows()> 0){
+                return $query->row();
+            }else{
+                return array();
+            }
+            
         }
 }?>

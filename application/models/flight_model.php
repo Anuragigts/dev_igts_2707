@@ -962,7 +962,14 @@ class Flight_model extends CI_Model
      * Get ticket details
      */
     public function getTicketDetails($track){
-        $query = $this->db->get_where('flight_track', array('UserTrackId' => $track));
+        if($this->uri->segment(4) != ''){
+            $iv = $this->uri->segment(4);
+            $cond = " AND F_ID = $iv ";
+        }else{
+            $cond = '';
+        }
+        $query = $this->db->query("SELECT * FROM flight_track WHERE UserTrackId = '$track' $cond");
+       // $query = $this->db->get_where('flight_track', array('UserTrackId' => $track));
         if($query && $query->num_rows()== 1){
               return $query->row();
            }else{
@@ -1258,8 +1265,7 @@ class Flight_model extends CI_Model
 
         $result = curl_exec($ch);
         $array = json_decode($result);
-//        echo "<pre>";
-//        print_r($array);die();
+       
        if($array->ResponseStatus == '1'){
            return $array;
        }else{
@@ -1460,10 +1466,10 @@ class Flight_model extends CI_Model
                  $adul= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax->FareBreakUpDetails->GrossAmount;
               }
               if(count($array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax)>0){
-                 $chl= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
+                 $chl= $chl + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
               }
               if(count($array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax)>0){
-                 $inf= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
+                 $inf= $inf + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
               }
               
                 $style= "style='border-bottom:1px solid #ccc;'";
@@ -1565,6 +1571,7 @@ class Flight_model extends CI_Model
 
         $result = curl_exec($ch);
         $array = json_decode($result);
+       
        // return $array;      
                
         if($array->ResponseStatus == 1){
@@ -1647,6 +1654,7 @@ class Flight_model extends CI_Model
                 $result_1 = curl_exec($ch1);
                 $array_1 = json_decode($result_1);
                 curl_close ($ch1);
+               
                  if($array->ResponseStatus == 1){
             foreach ($array->TaxOutput->TaxResFlightSegments as $details){
                  $adul = 0; $chl = 0; $inf = 0;
@@ -1664,10 +1672,10 @@ class Flight_model extends CI_Model
                  $adul= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->AdultTax->FareBreakUpDetails->GrossAmount;
               }
               if(count($array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax)>0){
-                 $chl= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
+                 $chl= $chl + $array_1->TaxOutput->TaxResFlightSegments['0']->ChildTax->FareBreakUpDetails->GrossAmount;
               }
               if(count($array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax)>0){
-                 $inf= $adul + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
+                 $inf= $inf + $array_1->TaxOutput->TaxResFlightSegments['0']->InfantTax->FareBreakUpDetails->GrossAmount;
               }
               
               $total = (($adult * $adul) + ($child * $chl) + ($infant * $inf));
@@ -1760,7 +1768,7 @@ class Flight_model extends CI_Model
                      $pas = "ADULT";
                  }
                     $ramt = explode(",", $bamt);
-                            foreach($this->input->post('f_Id') as $f_id){
+                           // foreach($this->input->post('f_Id') as $f_id){
                                
                                 $dynamic .= '  {
                                         "AirlineCode": "'.$code['0'].'",
@@ -1769,7 +1777,9 @@ class Flight_model extends CI_Model
                                                 "Amount": '.$ramt[$inc].'
                                         },
                                         "TourCode": "",
-                                        "PassengerDetails": [{
+                                        "PassengerDetails": [';
+                                foreach($this->input->post('f_Id') as $f_id){
+                                    $dynamic .=    '{
                                             "PassengerType": "'.$pas.'",
                                             "Title": "'.$title[$i].'",
                                             "FirstName": "'.$first_n[$i].'",
@@ -1790,9 +1800,11 @@ class Flight_model extends CI_Model
                                         }],
                                         "LCCBaggageRequest": null,
                                         "LCCMealsRequest": null
-                                    }]},';
+                                    },';
+                                }
+                                $dynamic .=    ']},';
                                $inc++;
-                            } //$inc++;
+                          //  } //$inc++;
                                 
                         
 
@@ -1899,6 +1911,7 @@ class Flight_model extends CI_Model
              echo "<br><hr><pre>"; 
             print_r($response);
             die();
+            $trid = '';
                 if($response->ResponseStatus == 1 ){
                   foreach ($response->BookOutput->FlightTicketDetails as $detai){
                       //echo $detai->AirlineDetails['0']->AirlinePNR;
@@ -1953,7 +1966,7 @@ class Flight_model extends CI_Model
                        ); 
                        $insert = $this->db->insert('flight_track',$backup);
                       
-                        if($this->db->affected_rows() == 1){
+                        if($this->db->affected_rows() == 1 ){
                             $inserted = $this->db->insert_id();
                             foreach($detai->PassengerDetails as $itm){
                                 foreach($itm->BookedSegments as $item){
@@ -2003,13 +2016,15 @@ class Flight_model extends CI_Model
                                     $insert_tick = $this->db->insert('flight_passenger',$ticket);
                                 }   
                             }
-                            if($this->db->affected_rows() > 0){
-                               return 1;
-                            }else{
-                                return "Please try after some time.";
-                            }
+                            
                         }  
                   }
+                  if($this->db->affected_rows() > 0){
+                    return 1;
+                 }else{
+                     return "Please try after some time.";
+                 }
+                  
                     }else if($response->ResponseStatus == 2){
                         return 2;
                     }else if($response->ResponseStatus == 3){

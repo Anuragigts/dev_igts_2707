@@ -784,7 +784,7 @@
                                                                 $pp1 = $pp1  + $al1->AvailPaxFareDetails['0']->Child->GrossAmount;
                                                             }
                                                             if(count($al1->AvailPaxFareDetails['0']->Infant)>0){
-                                                                $pp1 = $pp1  + $al1->AvailPaxFareDetails['0']->Infant->GrossAmount;
+                                                                $pp1 =  $pp1  + $al1->AvailPaxFareDetails['0']->Infant->GrossAmount;
                                                             }
                                                             
                                                             ?>

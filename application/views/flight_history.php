@@ -116,7 +116,7 @@ only screen and (max-width: 760px),
                                     <td><?php if($view->TravelType == 'I'){echo "International";}else{echo "Domestic";} ?></td>
                                     <td><?php echo $view->TotalAmount ;?></td>
                                     <td>
-                                        <a href="<?php echo base_url()?>flight/Status/<?php echo $view->UserTrackId;?>"  class="btn btn-sm btn-info" >Get detail & Print</a>
+                                        <a href="<?php echo base_url()?>flight/Status/<?php echo $view->UserTrackId;?>/<?php echo $view->F_ID;?>"  class="btn btn-sm btn-info" >Get detail & Print</a>
                                        
                                     </td>
                                 </tr>

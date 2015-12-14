@@ -2467,7 +2467,7 @@
 			title : "Are you sure?",
 			text : "You are going to recharge the "+ op +" Mobile '"+ mo+"' with 'Rs. "+at+"'",
 		   // type : "info",
-			showCancelButton : true,
+			showCancelButton : true,			
 			confirmButtonColor : "#DD6B55",
 			confirmButtonText : "Yes",
 			cancelButtonText : "No!",
@@ -2475,7 +2475,15 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			 swal("Please Wait!", "...", "success");
+			 //swal("Please Wait!", "...", "error");
+			swal({
+			title : "Please Wait !",
+			text : "don't refresh your page...",		   
+			showCancelButton : false,
+			showConfirmButton : false,			
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  });
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your recharge request is cancelled", "error");
@@ -2505,7 +2513,15 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-                            swal("Please Wait!", "...", "success");
+                           // swal("Please Wait!", "...", "success");
+                           swal({
+			title : "Please Wait !",
+			text : "don't refresh your page...",		   
+			showCancelButton : false,
+			showConfirmButton : false,			
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  });
 			  $('#recharge-form').submit();
 			} else {
 			  swal("Cancelled", "Your "+op+" recharge request is cancelled", "error");
@@ -2556,7 +2572,15 @@
 			closeOnCancel : false
 		  }, function (isConfirm) {
 			if (isConfirm) {
-			 swal("Processing!", "Please Wait ...", "success");
+			 //swal("Processing!", "Please Wait ...", "success");
+			 swal({
+			title : "Please Wait !",
+			text : "don't refresh your page...",		   
+			showCancelButton : false,
+			showConfirmButton : false,			
+			closeOnConfirm : false,
+			closeOnCancel : false
+		  });
 			  $('#topup-form').submit();
 			} else {
 			  swal("Cancelled", "Your Rs. "+amt+" topup request is cancelled", "error");

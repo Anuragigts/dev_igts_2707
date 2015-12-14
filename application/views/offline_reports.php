@@ -8,7 +8,9 @@
              <li class="active">View Offline Reports</li>
           </ol> View  Offline Reports
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For viewing offline reports</span>
+          <span class="text-sm hidden-xs">For viewing offline reports
+          &nbsp;&nbsp;<a href='<?php echo base_url();?>reports/offline_reportsEXL/<?php echo $post_ary['getfr'];?>/<?php echo $post_ary['geto'];?>/<?php echo $post_ary['val'];?>' target="_blanck"  style="color: inherit" data-toggle="tooltip" data-placement="top" title="Download exl"><i class="fa fa-download fa-2x white" style="color:blue;" ></i></a>
+          </span>
           <!-- Breadcrumb below title-->
 
         </h3>

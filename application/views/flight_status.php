@@ -79,7 +79,10 @@
                                                 <?php echo $ticket_details->BookedByCusomter;?>
                                             </td>
                                         </tr>
-                                        <?php }?>
+                                        <?php }else{
+                                             $this->session->set_flashdata('err','Ticket booked check the status and print ticket from here.');  
+                                            redirect('flight/flightHistory');  
+                                        }?>
                                 </table>
                             </div>
                             <div class="col-lg-12 top-5">

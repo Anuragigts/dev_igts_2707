@@ -539,15 +539,26 @@ class Recharge_model extends CI_Model
                   }
             
         }
+        public function getId($sender_no){
+            $queryq = $this->db->query("SELECT l.*,p.* FROM login l "
+                    . "INNER JOIN profile p ON p.login_id = l.login_id WHERE l.login_mobile = $sender_no" );
+          
+            if($queryq && $queryq->num_rows()> 0){
+               return   $queryq->row()->login_id;
+            }else{
+                return 0;
+            }
+        }
         /***************************/
     public function doRechargeoff(  $recharge_type,$codeval,$V,$number,$amt,$req){
       $this->db->reconnect();
+      
         $sender_n = $this->input->get('mobilenumber', TRUE);
         $sender_no = substr($sender_n, -10);
        
             $queryq = $this->db->query("SELECT l.*,p.* FROM login l "
                     . "INNER JOIN profile p ON p.login_id = l.login_id WHERE l.login_mobile = $sender_no" );
-           
+          
         if($queryq && $queryq->num_rows()> 0){
            $login_id =   $queryq->row()->login_id;
             $current_amt = $this->db->get_where('current_virtual_amount', array('user_id' => $login_id));
@@ -647,7 +658,9 @@ class Recharge_model extends CI_Model
                         $final = explode('</PstrFinalOutPut><pstrError /></MOBILEBOOKINGDETAILSResponse>', $get_full);
 
                        $response = simplexml_load_string($final[0]);
-                      print_r($response);
+                       /********** Bachmark ***********/
+                  $this->benchmark->mark('code_start');
+                    print_r($response);
                        if($response->Status == 1){
                         $val2 = floatval($current_amt->row()->amount);
                     $now = (floatval($current_amt->row()->amount) - floatval($amt));
@@ -720,6 +733,78 @@ class Recharge_model extends CI_Model
                        }else{
                            return 1;
                        }
+                        $this->benchmark->mark('code_end');
+            //******* Execute Benchmark ************
+                        if($this->benchmark->elapsed_time('code_start', 'code_end') > 1.0000){
+                             $val2 = floatval($current_amt->row()->amount);
+                    $now = (floatval($current_amt->row()->amount) - floatval($amt));
+                    $insfrom   =   array(                      
+                            "amount"     => ($val2 - floatval($amt))
+                        );
+                    $this->db->where("user_id",$login_id);
+                    $query1 = $this->db->update("current_virtual_amount",$insfrom);
+                    $this->db->reconnect();
+                    $myupdate = array(
+                        "trans_from"    =>   $login_id,
+                        "trans_to"      =>     0,
+                        "cur_amount"      =>    ($val2 - $amt),
+                        "trans_amt"     =>     floatval($amt),
+                        "trans_remark"  =>     "Off-Line Recharge $mobile for amount of Rs.$amt",
+                        "type"  =>     "2",
+                        'trans_date' => date('Y-m-d H:i:s')
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                    $vau = $this->db->insert_id();
+                    
+                    $this->updateOff($req,"ESY TOPUP Recharge successfull on $mobile, Rs. $amt debited from your Esy Topup recharge account Total Amount is Rs. $now Thank you.");
+
+                    $ch = curl_init();
+                    $optArray = array(
+                    CURLOPT_URL => "http://bsms.slabs.mobi/spanelv2/api.php?username=chbhargav9&password=927276&to=$sender_no&from=ESYTOP&message=ESY+TOPUP+Rs.+$amt+debited+from+your+Esy+Topup+recharge+account+for+recharge+$mobile+,+Total+Amount+is+Rs.+$now+Thank+you.",
+                            CURLOPT_RETURNTRANSFER => true
+                    );
+                    curl_setopt_array($ch, $optArray);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                     $ad = $queryq->row()->admin_id;
+                     $md = $queryq->row()->master_distributor_id;
+                    $sd = $queryq->row()->super_distributor_id;
+                    $d = $queryq->row()->distributor_id;
+                    $my = $queryq->row()->login_id;
+                    $optna  =   strtolower($desc);
+                   
+                     $mrgin = $this->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"1","0","1");
+                
+                    $this->db->where('trans_id',$vau);
+                    $updat2 = $this->db->update('trans_detail',array("trans_amt" => floatval($amt - $mrgin ) , "cur_amount" => (($val2 - $amt)+ $mrgin))); 
+
+                    $va_amt = $amt-$mrgin;
+                    $now1 =$now+$mrgin;
+                    $this->updateOff($req,"ESY TOPUP Recharge successfull on $mobile, Rs. $va_amt   debited from your Esy Topup recharge account Total Amount is Rs. $now1 Thank you.");
+                    
+                    $this->db->reconnect();
+                        $data = array(                        
+                                'hrm_track'              => "$response->TrackId",
+                                'ref_num'                => "$response->RefNo",
+                                'trans_no'               => "$response->TransNo",
+                                'remarks'                => "$response->Remarks",
+                                'desc'                   => "$response->ItemDescription",
+                                'hrm_amount'             => "$response->Amount",
+                                'responce_time'          => "$response->DateTime",
+                                'status'                 =>  $response->Status,
+
+                            );
+                        $this->db->where('recharge_id',$my_mo_id);
+                        $update = $this->db->update('recharge_track',$data);
+
+                         if($this->db->affected_rows() == 1){
+                             return 0;
+                         }  else {
+                             return 2;
+                         }  
+                        }
                     }
 
                 }else{
@@ -960,7 +1045,7 @@ class Recharge_model extends CI_Model
                }
                $this->benchmark->mark('code_end');
             //******* Execute Benchmark ************
-               if($this->benchmark->elapsed_time('code_start', 'code_end') > 3.0000){
+               if($this->benchmark->elapsed_time('code_start', 'code_end') > 1.0000){
                     $data = array(                        
                         'hrm_track'              => "$track_id",
                         'ref_num'                => "Unknown",

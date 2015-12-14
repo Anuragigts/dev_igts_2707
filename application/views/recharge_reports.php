@@ -8,7 +8,9 @@
              <li class="active">View Recharge Reports</li>
           </ol> View Recharge Reports
           <!-- Small text for title-->
-          <span class="text-sm hidden-xs">For viewing recharge reports</span>
+          <span class="text-sm hidden-xs">For viewing recharge reports              
+              &nbsp;&nbsp;<a href='<?php echo base_url();?>reports/recharge_reportsEXL/<?php echo $post_ary['getfr'];?>/<?php echo $post_ary['geto'];?>/<?php echo $post_ary['val'];?>' target="_blanck"  style="color: inherit" data-toggle="tooltip" data-placement="top" title="Download exl"><i class="fa fa-download fa-2x white" style="color:blue;" ></i></a>
+          </span>
           <!-- Breadcrumb below title-->
 
         </h3>
@@ -24,14 +26,14 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>From Date<span class="red">*</span></label>
-                                            <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="from" value="<?= set_value('from');?>">
+                                            <input type="text" placeholder="<?php echo date('m/d/Y');?>" class="form-control datepicker" name="from" value="<?= set_value('from');?>">
                                             <span class="red"><?= form_error('from');?></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>To Date<span class="red">*</span></label>
-                                            <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="to" value="<?= set_value('to');?>">
+                                            <input type="text" placeholder="<?php echo date('m/d/Y');?>" class="form-control datepicker" name="to" value="<?= set_value('to');?>">
                                             <span class="red"><?= form_error('to');?></span>
                                         </div>
                                     </div>
@@ -51,7 +53,7 @@
                                         <div class="form-group">
                                             <label>Name</label>
                                             <select class="form-control" name="fname" id="fname">
-                                                <option value=""> Select  Name</option>
+                                                <option value=""> Get All</option>
                                             </select>
                                         </div>
                                     </div>

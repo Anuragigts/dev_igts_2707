@@ -2988,7 +2988,7 @@ class Dmr_model extends CI_Model
 
              $response = simplexml_load_string($final[0]);
 
-//             echo "<pre>";
+//            echo "<pre>";
 //             print_r($response);
 //             echo '</pre>';die();
              if(count($response) >0){
