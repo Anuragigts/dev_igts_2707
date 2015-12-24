@@ -181,7 +181,7 @@ class Reports extends CI_Controller {
                             $data["view"]     =   $this->report_model->offline_reports($gefr,$geto,$val);
                             
                     }else{
-                        $gefr = ''; $geto='';$val='aa';
+                        $gefr = ''; $geto='';$val='';
                         $data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
                     }
             }else{
@@ -194,7 +194,8 @@ class Reports extends CI_Controller {
 				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
 				$data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
                                  if($this->session->userdata("my_type") == "1"){
-                                    $val = '';
+                                     $val = '';
+                                    $data['post_ary'] = array('getfr' => '', 'geto' => '' , 'val' => '' );
                                 }
 				$data["view"]     =   $this->report_model->offline_reports($gefr,$geto,$val);
 			}
@@ -262,8 +263,14 @@ class Reports extends CI_Controller {
                             $exto     =   explode("/",$to);
                             $geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
                             $data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
+                             if($this->session->userdata("my_type") == "1"){
+                                    $val = $this->input->post("fname")?$this->input->post("fname"):'';                                    
+                                }
                             $data["view"]     =   $this->report_model->trasaction_reports($gefr,$geto,$val);
                             
+                    }else{
+                        $gefr = ''; $geto='';$val='';
+                        $data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
                     }
             }else{
 				$from   = date('m/d/Y');
@@ -274,6 +281,9 @@ class Reports extends CI_Controller {
 				$exto     =   explode("/",$to);
 				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"]." 23:59:59";
 				$data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
+                                if($this->session->userdata("my_type") == "1"){
+                                    $val = '';
+                                }
 				$data["view"]     =   $this->report_model->trasaction_reports($gefr,$geto,$val);
 			}
             $this->load->view('layout/inner_template',$data);

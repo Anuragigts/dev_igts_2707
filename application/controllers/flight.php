@@ -125,8 +125,14 @@ class Flight extends CI_Controller {
                             $to   = $this->input->post("to");
                             $exto     =   explode("/",$to);
                             $geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"];
+                            if($this->session->userdata("my_type") == "1"){
+                                    $val = $this->input->post("fname")?$this->input->post("fname"):'';                                    
+                                }
                             $data["view"]     =   $this->flight_model->flight_reports($gefr,$geto,$val);
                             
+                    }else{
+                        $gefr = ''; $geto='';$val='';
+                        $data['post_ary'] = array('getfr' => $gefr, 'geto' => $geto , 'val' => $val );
                     }
             }else{
 				$from   = date('m/d/Y');
@@ -136,6 +142,9 @@ class Flight extends CI_Controller {
 				$to   = date('m/d/Y');
 				$exto     =   explode("/",$to);
 				$geto   =   $exto["2"]."-".$exto["0"]."-".$exto["1"];
+                                if($this->session->userdata("my_type") == "1"){
+                                    $val = $this->input->post("fname")?$this->input->post("fname"):'';                                    
+                                }
 				$data["view"]     =   $this->flight_model->flight_reports($gefr,$geto,$val);
 			}
         $this->load->view('layout/inner_template',$data);

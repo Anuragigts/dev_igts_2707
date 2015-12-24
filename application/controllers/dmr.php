@@ -631,7 +631,7 @@ class Dmr extends CI_Controller {
        echo  $result = $this->dmr_model->dmrLogin1($card,$mo);
         
     }
-    public function dmrUserSearch(){
+    public function dmrUserSearch(){        
         if($this->session->userdata('my_type') != 4 && $this->session->userdata('my_type') != 5 ){$this->session->set_flashdata('err','Access Denied, Please contact to administrator.'); redirect('dashboard');}
          if( $this->session->userdata('iddmr') == '1'){redirect('dmr/beneficiaryList/'.$this->session->userdata('dmrcard').'/'.$this->session->userdata('dmrmo'));}
          

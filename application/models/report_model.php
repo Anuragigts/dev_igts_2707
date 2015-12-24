@@ -60,9 +60,12 @@ class Report_model extends CI_Model{
         public function  trasaction_reports($gefr,$geto,$val){
                 $this->db->select("t.*,p.first_name as frname,p.last_name as  lrname,po.first_name as tofname,po.last_name as tolname");
                 $this->db->from("trans_detail as t");
+                 if($val != ''){
+                    $this->db->where("( t.trans_from = ".$val." or t.trans_to = ".$val." )");
+                }
                 $this->db->join('profile as p','t.trans_from = p.login_id','inner');
                 $this->db->join('profile as po','t.trans_to = po.login_id','left');
-                $this->db->where("( t.trans_from = ".$val." or t.trans_to = ".$val." )");
+                
                 $this->db->where("( t.trans_date >= '".$gefr."' and t.trans_date <= '".$geto."' ) and ( t.module_type != 1 ) and t.trans_amt > 0");
                 $this->db->order_by('t.trans_id', 'desc');
                 $qu     =   $this->db->get();

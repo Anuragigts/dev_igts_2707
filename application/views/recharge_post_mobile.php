@@ -192,6 +192,7 @@
                                         <?php if($dl->status == 1){
                                             echo "Success";
                                         }else{ echo "Failure"; }?>
+                                         <a href="<?php echo base_url();?>recharge/postslip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                     </td>
                                 </tr>
                            <?php }else if($this->session->userdata('my_type') == 2){?>
@@ -207,6 +208,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+                                             <a href="<?php echo base_url();?>recharge/postslip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -223,6 +225,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+                                             <a href="<?php echo base_url();?>recharge/postslip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -239,6 +242,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+                                             <a href="<?php echo base_url();?>recharge/postslip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -255,6 +259,8 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+                                            
+                                            <a href="<?php echo base_url();?>recharge/postslip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>

@@ -26,14 +26,14 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>From Date<span class="red">*</span></label>
-                                            <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="from" value="<?= set_value('from');?>">
+                                            <input type="text" placeholder="<?php echo date('m/d/Y');?>" class="form-control datepicker" name="from" value="<?= set_value('from');?>">
                                             <span class="red"><?= form_error('from');?></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>To Date<span class="red">*</span></label>
-                                            <input type="text" placeholder="mm/dd/yyyy" class="form-control datepicker" name="to" value="<?= set_value('to');?>">
+                                            <input type="text" placeholder="<?php echo date('m/d/Y');?>" class="form-control datepicker" name="to" value="<?= set_value('to');?>">
                                             <span class="red"><?= form_error('to');?></span>
                                         </div>
                                     </div>

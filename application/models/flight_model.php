@@ -994,7 +994,10 @@ class Flight_model extends CI_Model
     public function flight_reports($gefr,$geto,$val){
          $this->db->select("r.*");
         $this->db->from("flight_track as r");
-        $this->db->where("DoneBy",$val);
+         if($val != ''){
+            $this->db->where("DoneBy",$val);
+        }
+       
         $this->db->where("DoneDate >=",$gefr);
         $this->db->where("DoneDate <=",$geto);
         $this->db->order_by('r.F_ID', 'desc');
