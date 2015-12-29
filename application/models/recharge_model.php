@@ -1691,4 +1691,14 @@ class Recharge_model extends CI_Model
             redirect('recharge/post_recharge');
         }
     }
+	
+	public function dthDetail($id){
+        $query = $this->db->query("SELECT * FROM recharge_track WHERE recharge_id = $id AND recharge_type = 2");
+         if($query && $query->num_rows()== 1){
+            return $query->row();
+        }else{
+            $this->session->set_flashdata('err','Invalid DTH details.');  
+            redirect('recharge/dth_recharge');
+        }
+    }
 }
