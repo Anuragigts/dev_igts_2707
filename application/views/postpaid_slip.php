@@ -130,7 +130,7 @@
                       td{padding-left:5px;}  
                     </style>
                     <center><img src="<?php echo base_url();?>assets/app/img/logoa.png">
-                        <h3><u>DMR Slip</u> </h3>
+                        <h3><u>Post Paid Slip</u> </h3>
                      </center>
                     
                         <div style="margin:20px; border:1px solid #ccc; padding: 10px;">
