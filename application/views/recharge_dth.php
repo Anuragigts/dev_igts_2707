@@ -6,7 +6,7 @@
           <ol class="breadcrumb pull-right">
              <li><a href="<?php echo base_url();?>dashboard">Dashboard</a>
              </li>                  
-             <li class="active">Recharge</li>                 
+             <li class="active">DTH</li>                 
           </ol>DTH
           <!-- Small text for title-->
            
@@ -171,6 +171,7 @@
                                         <?php if($dl->status == 1){
                                             echo "Success";
                                         }else{ echo "Failure"; }?>
+										<br><a href="<?php echo base_url();?>recharge/dth_slip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                     </td>
                                 </tr>
                            <?php }else if($this->session->userdata('my_type') == 2){?>
@@ -186,6 +187,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+											<br><a href="<?php echo base_url();?>recharge/dth_slip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -202,6 +204,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+										<br><a href="<?php echo base_url();?>recharge/dth_slip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -218,6 +221,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+											<br><a href="<?php echo base_url();?>recharge/dth_slip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
@@ -234,6 +238,7 @@
                                             <?php if($dl->status == 1){
                                                 echo "Success";
                                             }else{ echo "Failure"; }?>
+											<br><a href="<?php echo base_url();?>recharge/dth_slip/<?php echo $dl->recharge_id;?>" class="btn btn-success">Print</a>
                                         </td>
                                     </tr>
                                 <?php }?>
