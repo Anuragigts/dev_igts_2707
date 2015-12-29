@@ -1,55 +1,88 @@
 <?php
 class Api_model extends CI_Model
-{
-    public function checkLogin($agent){
-        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?><response>";
-       $id =  substr($agent, 8);
-       $query = $this->db->query("SELECT * FROM module_access WHERE login_id = $id");
-       if($query && $query->num_rows()> 0){
-           if($query->row()->dth == 1){
-               $xml .= "<status>1</status><isValid>1</isValid><message>User is valid</message></response>";
-               //$arr = array('status' => 1, 'isValid' => 1, 'message' => 'User is valid');
-               //return  json_encode($arr);
-           }else{
-               $xml .= "<status>0</status><isValid>0</isValid><message>User is invalid</message></response>";
-               //$arr = array('status' => 0, 'isValid' => 0, 'message' => 'User is invalid');
-              // return  json_encode($arr);
-           }
-       }else{
-           $xml .= "<status>0</status><isValid>0</isValid><message>User is invalid</message></response>";
-            //$arr = array('status' => 0, 'isValid' => 0, 'message' => 'User is invalid');
-            //return  json_encode($arr);
-        }
-        return $xml;
-    }
-    
-    public function isValidTransfer($agent,$amt){ 
-         $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?><response>";
-        $id = substr($agent, 8);
+{    
+    public function verify(){
+		$data 		= $this->input->get_post('xmlRequest');           
+			$xmldata 	= simplexml_load_string($data);	
+				$a = mt_rand(100000,999999); 
+               for ($i = 0; $i<10; $i++) 
+                {
+                    $a .= mt_rand(0,9);
+                }			
+        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?>";
+        $id = $xmldata->USERID;
         $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));        
-        if($query && $query->num_rows()== 1){
-            if(($query->row()->amount+500) > $amt){
-                $xml .= "<status>1</status><isValid>1</isValid><amount>$amt</amount><message>Transfer successfully</message></response>";
-                //$arr = array('status' => 1, 'isValid' => 1, 'amount' => "$amt", 'message' => 'Transfer successfully');
-               // return  json_encode($arr);
-            }else{
-                $xml .= "<status>0</status><isValid>0</isValid><message>Fail</message></response>";
-               //$arr = array('status' => 0, 'isValid' => 0, 'message' => 'Fail');
-              // return  json_encode($arr);
-           }
-              
+        if($query && $query->num_rows()== 1){            
+                $xml .= "<CHECKBALANCERESPONSE>
+						<STATUSCODE>0</STATUSCODE>
+						<STATUSDESCRIPTION>SUCCESS</STATUSDESCRIPTION>
+						<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+						<USERID>".$xmldata->USERID."</USERID>
+						<GIREFID>".$xmldata->GIREFID."</GIREFID>
+						<CHANNELPARTNERREFID>SWAMI".$a."</CHANNELPARTNERREFID>
+						<BALANCE>".$query->row()->amount."</BALANCE>
+						</CHECKBALANCERESPONSE>";
            }else{
-               $xml .= "<status>0</status><isValid>0</isValid><message>Fail</message></response>";
-               //$arr = array('status' => 0, 'isValid' => 0, 'message' => 'Fail');
-               //return  json_encode($arr);
+               $xml .= "<CHECKBALANCERESPONSE>
+						<STATUSCODE>1</STATUSCODE>
+						<STATUSDESCRIPTION>Fail</STATUSDESCRIPTION>
+						<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+						<USERID>".$xmldata->USERID."</USERID>
+						<GIREFID>".$xmldata->GIREFID."</GIREFID>
+						<CHANNELPARTNERREFID>SWAMI".$a."</CHANNELPARTNERREFID>
+						<BALANCE>0</BALANCE>
+						</CHECKBALANCERESPONSE>";
+           }
+            return $xml;
+	}
+	
+    public function isValidTransfer(){
+			$data 		= $this->input->get_post('xmlRequest');           
+			$xmldata 	= simplexml_load_string($data);	
+				$a = mt_rand(100000,999999); 
+               for ($i = 0; $i<10; $i++) 
+                {
+                    $a .= mt_rand(0,9);
+                }			
+        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?>";
+        $id = $xmldata->USERID;
+        $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));        
+        if($query && $query->num_rows()== 1){            
+                $xml .= "<VERIFICATIONRESPONSE>
+						<STATUSCODE>0</STATUSCODE>
+						<STATUSDESCRIPTION>SUCCESS</STATUSDESCRIPTION>
+						<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+						<USERID>".$xmldata->USERID."</USERID>
+						<GIREFID>".$xmldata->GIREFID."</GIREFID>
+						<CHANNELPARTNERREFID>SWAMI".$a."</CHANNELPARTNERREFID>
+						<BALANCE>".$query->row()->amount."</BALANCE>
+						</VERIFICATIONRESPONSE>";
+           }else{
+               $xml .= "<VERIFICATIONRESPONSE>
+						<STATUSCODE>1</STATUSCODE>
+						<STATUSDESCRIPTION>Fail</STATUSDESCRIPTION>
+						<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+						<USERID>".$xmldata->USERID."</USERID>
+						<GIREFID>".$xmldata->GIREFID."</GIREFID>
+						<CHANNELPARTNERREFID>SWAMI".$a."</CHANNELPARTNERREFID>
+						<BALANCE>0</BALANCE>
+						</VERIFICATIONRESPONSE>";
            }
             return $xml;
     }
     
-    public function sendSuccessInfo($agent,$amt,$beneficaryID,$track_id,$transstatus,$responseCode,$rrn,$statuscode,$beneficaryname){
-         $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?><response>"; 
+    public function sendSuccessInfo(){
+			$data 		= $this->input->get_post('xmlRequest');           
+			$xmldata 	= simplexml_load_string($data);	
+				$a = mt_rand(100000,999999); 
+               for ($i = 0; $i<10; $i++) 
+                {
+                    $a .= mt_rand(0,9);
+                }
+			$trackid = "SWAMI".$a;
+        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?>"; 
         $this->load->model('recharge_model');
-        $id = substr($agent, 8);        
+        $id = $xmldata->USERID;        
          $query = $this->db->query("SELECT * FROM profile WHERE login_id = $id");
          if($query && $query->num_rows()> 0){
             $ad     = $query->row()->admin_id;
@@ -58,94 +91,129 @@ class Api_model extends CI_Model
             $d      = $query->row()->distributor_id;
             $my     = $id;
             $optna  =   strtolower('dmr');
-            $amt    = $amt;
+            $amt    = $xmldata->NETAMOUNT;
             $this->recharge_model->trans_commission($ad,$md,$sd,$d,$my,$optna,$amt,"2","0","0");
             
             $up = array(
                      'login_id' => $id,
-                     'to_id'    => $beneficaryID,
+                     'to_id'    => 00,
                      'amount'    =>$amt,
-                     'track_id' => "$track_id",
-                     'status' => "$transstatus",
-                     'responce_code' => "$responseCode",
-                     'rrn' => "$rrn",
-                     'responce_cd' => "$statuscode",
-                     'ben_name' => "$beneficaryname"
+                     'track_id' => "$trackid",
+                     'status' => "Success",
+                     'responce_code' => "$xmldata->GIREFID",
+                     'rrn' => "AAA",
+                     'responce_cd' => "AAA",
+                     'ben_name' => "No Data"
             );         
                 $insert = $this->db->insert('transection_track',$up);
                 if($this->db->affected_rows() == 1){
-                     $xml .= "<status>1</status><message>Record saved successfully</message></response>";
-                    //$arr = array('status' => 1, 'message' => 'Record saved successfully.');
-                    //return  json_encode($arr);
-                    
+					$query1 = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
+					if($query1 && $query1->num_rows()== 1){ 
+                     $xml .= "<AGENTQUOTADEBITRESPONSE>
+							<STATUSCODE>0</STATUSCODE>
+							<STATUSDESCRIPTION>SUCCESS</STATUSDESCRIPTION>
+							<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+							<USERID>".$xmldata->USERID."</USERID>
+							<GIREFID>".$xmldata->GIREFID."</GIREFID>
+							<CHANNELPARTNERREFID>".$trackid."</CHANNELPARTNERREFID>
+							<TOTALAMOUNT>".$xmldata->TOTALAMOUNT."</TOTALAMOUNT>
+							<RECHARGEFEE>".$xmldata->RECHARGEFEE."</RECHARGEFEE>
+							<NETAMOUNT>".$xmldata->NETAMOUNT."</NETAMOUNT>
+							<BALANCE>".$query1->row()->amount."</BALANCE>
+							<METHODID>2</METHODID>
+							</AGENTQUOTADEBITRESPONSE>";
+					}
                 }else{
-                     $xml .= "<status>0</status><message>Not inserted</message></response>";
-                   // $arr = array('status' => 0, 'message' => 'Not inserted.');
-                  //  return  json_encode($arr);
+                     $xml .= "<AGENTQUOTADEBITRESPONSE>
+							<STATUSCODE>1</STATUSCODE>
+							<STATUSDESCRIPTION>FAIL</STATUSDESCRIPTION>
+							<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+							<USERID>".$xmldata->USERID."</USERID>
+							<GIREFID>".$xmldata->GIREFID."</GIREFID>
+							<CHANNELPARTNERREFID>".$trackid."</CHANNELPARTNERREFID>
+							<TOTALAMOUNT>".$xmldata->TOTALAMOUNT."</TOTALAMOUNT>
+							<RECHARGEFEE>".$xmldata->RECHARGEFEE."</RECHARGEFEE>
+							<NETAMOUNT>".$xmldata->NETAMOUNT."</NETAMOUNT>
+							<BALANCE>00</BALANCE>
+							<METHODID>2</METHODID>
+							</AGENTQUOTADEBITRESPONSE>";
                 }                 
             }else{
-                $xml .= "<status>0</status><message>Invalid User</message></response>";
-              // $arr = array('status' => 0, 'message' => 'Not inserted.');
-             //  return  json_encode($arr);
+                $xml .= "<AGENTQUOTADEBITRESPONSE>
+						<STATUSCODE>1</STATUSCODE>
+						<STATUSDESCRIPTION>FAIL</STATUSDESCRIPTION>
+						<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+						<USERID>".$xmldata->USERID."</USERID>
+						<GIREFID>".$xmldata->GIREFID."</GIREFID>
+						<CHANNELPARTNERREFID>".$trackid."</CHANNELPARTNERREFID>
+						<TOTALAMOUNT>".$xmldata->TOTALAMOUNT."</TOTALAMOUNT>
+						<RECHARGEFEE>".$xmldata->RECHARGEFEE."</RECHARGEFEE>
+						<NETAMOUNT>".$xmldata->NETAMOUNT."</NETAMOUNT>
+						<BALANCE>00</BALANCE>
+						<METHODID>2</METHODID>
+						</AGENTQUOTADEBITRESPONSE>";
            }
          return $xml;
     }
-    
-    public function sendSuccessTopupInfo($agent,$amt,$name, $serial, $topupval, $currnetvalue, $previousvalue, $topuptransid, $expirydate){
-        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?><response>"; 
-        $this->load->model('recharge_model');
-        $id = substr($agent, 8);  
-        $ser = (($amt * 0.45)/100);
-        $query2 = $this->db->get_where('current_virtual_amount', array('user_id' => $id));
-        
-        if($query2 && $query2->num_rows()== 1){ 
-            $totalcharge= $amt + $ser;
-            //$name = $this->session->userdata('dmrname').' '.$this->session->userdata('dmrlastname').' :'.$this->session->userdata('dmrcard');
-            $val2 = $query2->row()->amount;
-            $insfrom   =   array(                      
-                    "amount"     => ($val2 - $totalcharge)
-                );
-            $this->db->where("user_id",$id);
-            $query1 = $this->db->update("current_virtual_amount",$insfrom);
-
-             $myupdate = array(
-               "trans_from"    =>   $id,
-               "trans_to"      =>     0,
-              "cur_amount"      =>    ($val2 - $totalcharge),
-               "trans_amt"     =>     floatval($totalcharge),
-               "trans_remark"  =>     "Added in wallet with service charge to $name",
-                 "type"  =>     "2",
-                 'trans_date' => date('Y-m-d H:i:s')
-            );
-           $query =   $this->db->insert("trans_detail", $myupdate);
-           
-           $up = array(
-                     'login_id' => $id,
-                     'serial_no' => "$serial",
-                     'topup_val' => "$topupval",
-                     'current' => "$currnetvalue",
-                     'prev_val' => "$previousvalue",
-                     'trans_id' => "$topuptransid",
-                     'expiry' => "$expirydate",
-            );         
-                $insert = $this->db->insert('topup_track',$up);
-                if($this->db->affected_rows() == 1){
-                     $xml .= "<status>1</status><message>Record saved successfully</message></response>";
-                   // $arr = array('status' => 1, 'message' => 'Record saved successfully.');
-                   // return  json_encode($arr);
-                    
-                }else{
-                     $xml .= "<status>0</status><message>Invalid User</message></response>";
-                    //$arr = array('status' => 0, 'message' => 'Not inserted.');
-                   // return  json_encode($arr);
+	
+	public function returnAmtInfo(){
+		$data 		= $this->input->get_post('xmlRequest');           
+			$xmldata 	= simplexml_load_string($data);	
+				$a = mt_rand(100000,999999); 
+               for ($i = 0; $i<10; $i++) 
+                {
+                    $a .= mt_rand(0,9);
                 }
-        }else{
-            $xml .= "<status>0</status><message>Invalid User</message></response>";
-           //$arr = array('status' => 0, 'message' => 'Not inserted.');
-          // return  json_encode($arr);
-       }
-         return $xml;       
-    }
+		$trackid = "SWAMI".$a;
+        $xml = "<?xml version='1.0' encoding='utf-8' standalone='no'?>"; 
+		$id = $xmldata->USERID;
+		$amt = $xmldata->CREDITAMOUNT;
+        $query = $this->db->get_where('current_virtual_amount', array('user_id' => $id));        
+        if($query && $query->num_rows()== 1){ 
+			$val = $query->row()->amount;
+                   $insto   =   array(                      
+                        "amount"     => ($val + $amt)
+                    );
+					$this->db->where("user_id",$id);
+					$query1 = $this->db->update("current_virtual_amount",$insto);
+                    
+                     $myupdate = array(
+                        "trans_from"    =>     1,
+                        "trans_to"    =>     $id,
+                        "trans_amt"     =>     $amt,
+                        "trans_remark"     =>  "$xmldata->REASON"
+                     );
+                    $query =   $this->db->insert("trans_detail", $myupdate);
+                  
+                    
+               
+			$xml .= "<AGENTQUOTACREDITRESPONSE>
+					<STATUSCODE>0</STATUSCODE>
+					<STATUSDESCRIPTION>SUCCESS</STATUSDESCRIPTION>
+					<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+					<USERID>".$xmldata->USERID."</USERID>
+					<GIREFID>".$xmldata->GIREFID."</GIREFID>
+					<CHANNELPARTNERREFID>".$trackid."</CHANNELPARTNERREFID>
+					<CREDITAMOUNT>".$amt."</CREDITAMOUNT>
+					<BALANCE>".$val + $amt."</BALANCE>
+					<METHODID>3</METHODID>
+					</AGENTQUOTACREDITRESPONSE>";
+		}else{
+			$xml .= "<AGENTQUOTACREDITRESPONSE>
+					<STATUSCODE>1</STATUSCODE>
+					<STATUSDESCRIPTION>Fail</STATUSDESCRIPTION>
+					<AGENTCODE>".$xmldata->AGENTCODE."</AGENTCODE>
+					<USERID>".$xmldata->USERID."</USERID>
+					<GIREFID>".$xmldata->GIREFID."</GIREFID>
+					<CHANNELPARTNERREFID>".$trackid."</CHANNELPARTNERREFID>
+					<CREDITAMOUNT>".$amt."</CREDITAMOUNT>
+					<BALANCE>00</BALANCE>
+					<METHODID>3</METHODID>
+					</AGENTQUOTACREDITRESPONSE>";
+		}
+		return $xml;
+	}
+   
     public function getuser(){
         $query = $this->db->query("SELECT * FROM login WHERE user_type = 5 OR user_type = 4 ORDER BY login_id desc");
         if($this->db->affected_rows() > 0){
