@@ -450,4 +450,16 @@ class Recharge extends CI_Controller {
          $data['detail'] = $this->recharge_model->postDetail($this->uri->segment(3));
          $this->load->view('layout/inner_template',$data);
     }
+	
+	public function dth_slip(){
+         $data = array(
+              'title'         => 'ESY TOPUP :: DTH SLIP',
+              'metakeyword'   => '',
+              'metadesc'      => '',
+              'content'       => 'dth_slip'
+             );
+         
+         $data['detail'] = $this->recharge_model->dthDetail($this->uri->segment(3));
+         $this->load->view('layout/inner_template',$data);
+    }
 }
